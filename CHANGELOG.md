@@ -11,6 +11,17 @@ Planned producers and consumer on the shared candidate-item contract:
 - Triage review (consumer) — present the candidate queue for accept/reject and write accepted items to a backlog.
 - Source-directory triage (producer) — triage drops other projects push into the shared inbox.
 
+## [0.1.1] — 2026-06-06
+
+### Changed
+
+- Kept maintainer-only content out of user-facing surfaces: trimmed the repo README and plugin README to user content (install, usage, tuning), and moved the release loop, push/validate steps, and architecture-for-builders detail into a git-ignored `maintainer-notes.md`.
+- Repo README install section now documents both Claude Cowork (GUI) and Claude Code (CLI) paths.
+
+### Verified
+
+- Full functional test pass: first-run brief, ledger novelty/cadence suppression on a second run, quiet-day handling, and suite-mode candidate-queue emission all confirmed against the candidate-item contract.
+
 ## [0.1.0] — 2026-06-06
 
 Initial release.
