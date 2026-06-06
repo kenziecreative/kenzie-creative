@@ -11,6 +11,13 @@ Planned producers and consumer on the shared candidate-item contract:
 - Triage review (consumer) — present the candidate queue for accept/reject and write accepted items to a backlog.
 - Source-directory triage (producer) — triage drops other projects push into the shared inbox.
 
+## [0.1.2] — 2026-06-06
+
+### Fixed
+
+- `/intel-setup` now asks specific, predefined questions instead of improvising. The relevance context is gathered as open free-text in the user's own words (no role/persona menus), and the command explicitly forbids inferring the user's role, employer, or clients from the surrounding environment. Multiple-choice is reserved for genuinely discrete fields (evidence bar, timezone).
+- Removed specific company/product names from shared-doc examples so nothing implies the plugin is scoped to a particular organization (generic placeholders only).
+
 ## [0.1.1] — 2026-06-06
 
 ### Changed

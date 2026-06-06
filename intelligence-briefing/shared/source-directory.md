@@ -23,7 +23,7 @@ A small Markdown or JSON file describing something it thinks you might care abou
 
 ```markdown
 ---
-source_project: "client-acme-rebrand"
+source_project: "your-other-project"
 captured: 2026-06-06
 kind: implicit-task
 links: ["<optional permalink>"]

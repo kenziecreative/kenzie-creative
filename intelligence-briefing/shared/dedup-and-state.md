@@ -8,7 +8,7 @@ The suite keeps two distinct stores. Conflating them is the most likely design m
 
 ### 1. Per-producer ledger — "have I already reported this?"
 
-Each producer that scans a stream over time keeps its **own** ledger to answer one question: *have I already surfaced this, and has it genuinely advanced since?* This is what powers "report motion, not state." The environmental scan already has one (`./ledger.json`); a comms triage would keep its own so it does not re-raise the same Slack thread every morning.
+Each producer that scans a stream over time keeps its **own** ledger to answer one question: *have I already surfaced this, and has it genuinely advanced since?* This is what powers "report motion, not state." The environmental scan already has one (`./ledger.json`); a comms triage would keep its own so it does not re-raise the same chat thread every morning.
 
 A ledger is private to its producer. It is lightweight, it is not shared, and it is not the review queue. Its schema is the producer's business — the environmental scan's ledger schema is defined in its own SKILL.md.
 
