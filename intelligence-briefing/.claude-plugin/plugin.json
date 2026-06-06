@@ -1,0 +1,16 @@
+{
+  "name": "intelligence-briefing",
+  "version": "0.1.0",
+  "description": "A daily/weekly intelligence routine that gives you complete visibility into what you should care about. Combines an external-world scan (the environmental brief) with internal scans (meetings, comms) and a review step that triages candidates into your backlog. This first release ships the external scan plus the shared spine the other producers plug into.",
+  "author": {
+    "name": "Kelsey Ruger"
+  },
+  "keywords": [
+    "briefing",
+    "triage",
+    "intelligence",
+    "daily-routine",
+    "environmental-scan",
+    "attention-management"
+  ]
+}
