@@ -28,6 +28,8 @@ Before doing anything, read CLAUDE.md and load these values. They are the deploy
 - **Length budget** — max items per zone, max lead items, overall length. Default: 5 per zone, 3 lead, a two-minute read.
 - **Held beliefs** *(optional)* — enables the disconfirming slot. Default: empty.
 - **Paths** — briefs directory and ledger file. Default: `./briefs/` and `./ledger.json`.
+- **Output format** — `html` (default) or `markdown`. HTML produces a self-contained, styled brief (see step 9 and `references/html-brief.md`); markdown produces the plain brief per the OUTPUT CONTRACT. The brief's *content* is identical either way — this only sets how it's rendered.
+- **Theme** *(html only)* — `default` (system fonts, brand-neutral) or a path to a CSS override file in the deployment (e.g. `./brief-theme.css`) that supplies brand tokens. Default: `default`.
 - **Candidate queue** *(optional, suite mode)* — path to the shared candidate queue this brief contributes to. Default: empty (standalone mode). When set (default `./candidates.json` once the wider suite is installed), the brief also emits its actionable items into the shared queue so the review step can triage them alongside the internal scans. See SUITE INTEGRATION. Absence of this value changes nothing about the brief itself.
 
 ---
@@ -69,7 +71,9 @@ Each run, produce one brief by executing these steps in order:
 6. **Select the lead.** Identify the items — at most the configured lead maximum, sometimes zero — that would change a decision or a view. These form the lead. Each leaves a stub in its zone (see OUTPUT CONTRACT).
 7. **Synthesize.** Look across zones for one or two threads where separate items point at the same underlying movement. If none exists, produce no synthesis.
 8. **Verify.** Run the VERIFICATION pass against the assembled draft. This is a hard gate: the lead and synthesis may not be emitted until they pass.
-9. **Assemble & write.** Produce the brief per the OUTPUT CONTRACT and write it to the briefs directory as `YYYY-MM-DD.md`.
+9. **Assemble & write.** Produce the brief's content per the OUTPUT CONTRACT, then write it to the briefs directory in the configured **output format**:
+   - **html** (default) — render a self-contained styled file as `YYYY-MM-DD.html`, following `references/html-brief.md` (read it now). The content is exactly what the OUTPUT CONTRACT specifies; that reference only governs presentation.
+   - **markdown** — write the plain brief as `YYYY-MM-DD.md` exactly per the OUTPUT CONTRACT.
 10. **Update the ledger.** Append what you reported to the ledger per the LEDGER SCHEMA, then prune entries older than the configured window. Write the file back.
 
 ---
@@ -230,7 +234,7 @@ Structure: a JSON object with a `entries` array. Each entry:
 
 ## OUTPUT CONTRACT
 
-Write Markdown to the briefs directory as `YYYY-MM-DD.md`, in this structure. Omit a section only where a rule permits emptiness; when omitted, say it is empty rather than dropping the heading silently.
+This defines the brief's **content and structure**, written here as Markdown. It is the canonical spec regardless of output format: in `markdown` mode you write exactly this to `YYYY-MM-DD.md`; in `html` mode (the default) you render this same content into the styled template per `references/html-brief.md`. Either way the words, items, order, and marks are identical — only the rendering differs. Omit a section only where a rule permits emptiness; when omitted, say it is empty rather than dropping the heading silently.
 
 Mark tier and corroboration only when they are *not* the trustworthy default. Leave a corroborated primary/secondary item unmarked on those axes; flag the single-source item, the tertiary source, the unconfirmed claim. The marks exist to warn, not to decorate.
 

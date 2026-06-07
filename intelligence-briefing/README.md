@@ -28,6 +28,13 @@ One project = one brief. A personal scan and a brief you forward to your team ar
 - **Claude Code:** setup writes a `.claude/settings.json` into your project that pre-allows *only* the brief's own tools (web search/fetch and file read/write), so later runs don't prompt. You may be asked to trust the project folder once. You can edit or delete that file anytime.
 - **Cowork:** nothing to configure — web search is available by default and that file isn't used.
 
+## The brief itself
+
+Briefs render as a **self-contained HTML file** by default (`briefs/YYYY-MM-DD.html`) — clean cards on white, scannable, openable anywhere with no dependencies. Two knobs in `CLAUDE.md` under **Output**:
+
+- **Format** — `html` (default) or `markdown` for a plain text brief.
+- **Theme** *(html)* — `default` is brand-neutral with system fonts. Point it at a CSS override file in your project (e.g. `./brief-theme.css`) to apply your own brand tokens; the markup stays the same, only the look changes.
+
 ## Tuning after a few runs
 
 - **Briefs feel thin or noisy?** Sharpen the relevance context and the zone in/out examples in `CLAUDE.md` — the "out" near-misses do the most work.

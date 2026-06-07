@@ -36,7 +36,7 @@ Steps, in order:
    - `strict` — unconfirmed items only ever support "track" and "dig".
    Note they can also set the action gate and sharing gate independently for a hybrid. Default to `decision` if they don't care.
 
-5. Ask the user's **timezone** directly. Set everything else to defaults without asking: daily cadence, length budget (5 per zone, 3 lead, two-minute read), held beliefs empty, paths `./briefs/` and `./ledger.json`, suite mode off (candidate queue empty). Tell the user you've applied these and that any of them can be changed later by editing CLAUDE.md.
+5. Ask the user's **timezone** directly. Set everything else to defaults without asking: daily cadence, length budget (5 per zone, 3 lead, two-minute read), held beliefs empty, paths `./briefs/` and `./ledger.json`, output format `html` with theme `default`, suite mode off (candidate queue empty). Tell the user you've applied these and that any of them can be changed later by editing CLAUDE.md — including switching the brief to plain `markdown` or pointing `theme` at a brand CSS file.
 
 6. Read the config template at `${CLAUDE_PLUGIN_ROOT}/templates/CLAUDE.md`, fill in the [FILL] fields with the confirmed answers, leave defaults as-is where the user didn't override them, and write the result to `CLAUDE.md` in the project root.
 

@@ -11,6 +11,18 @@ Planned producers and consumer on the shared candidate-item contract:
 - Triage review (consumer) — present the candidate queue for accept/reject and write accepted items to a backlog.
 - Source-directory triage (producer) — triage drops other projects push into the shared inbox.
 
+## [0.2.0] — 2026-06-07
+
+### Added
+
+- **Styled HTML briefs.** The brief now renders as a self-contained HTML file (`YYYY-MM-DD.html`) by default — clean bordered cards on white, scannable lead/scan/synthesis layout, openable anywhere with no external dependencies. The design ships as `assets/brief.css` (system fonts, brand-neutral, no CDN), inlined into every brief; the skill fills it via a Write-only render step (no shell), following `skills/environmental-briefing/references/html-brief.md`.
+- **Output format + theme config.** New `Output` section in CLAUDE.md: `format` (`html` default, or `markdown` for the plain brief) and `theme` (`default`, or a path to a CSS override file supplying brand tokens). Same content and structure either way — only presentation changes.
+
+### Notes
+
+- The brief's content pipeline (gather → filter → classify → evidence bar → lead → synthesis → verify) is unchanged; the OUTPUT CONTRACT remains the canonical content spec and is now rendered into HTML or written as Markdown per `format`.
+- Theming is brand-neutral by design: the public plugin ships only the default theme. A deployment supplies its own brand by pointing `theme` at a local CSS file, keeping the distributed plugin tool- and brand-agnostic.
+
 ## [0.1.5] — 2026-06-07
 
 ### Fixed
