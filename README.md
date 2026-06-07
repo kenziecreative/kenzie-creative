@@ -1,30 +1,18 @@
-# Kenzie Creative — Plugin Marketplace
+# Kenzie Creative
 
-A **Claude plugin marketplace**: a catalog of small, focused plugins for staying on top of your world. Install only the ones you need; they compose through a shared directory convention without depending on one another.
+**Small, focused tools for staying on top of your world, by [Kenzie Creative](https://www.kenzienotes.com).**
 
-> Marketplace name: `kenzie-creative`. Repo: `kenziecreative/kenzie-creative`. The install steps below match exactly.
+Each tool here does one thing well and runs on its own. Instead of one program that tries to do everything, you install only the few that fit how you actually work — a brief that triages the outside world, and (in time) tools that triage your meetings, your messages, and the decisions waiting on you. They stay out of each other's way: every tool works alone, and when you run several in the same project they coordinate through shared files in that project rather than depending on one another.
 
-## What's in here
+You install them through Claude — once a tool is added, it shows up as commands and skills you can run in any project.
 
-```
-kenzie-creative/                          ← this repo = the marketplace
-├── .claude-plugin/
-│   └── marketplace.json                  ← the catalog of plugins
-├── contract/                             ← the directory convention plugins share (author docs)
-└── intelligence-briefing/                ← plugin: the external scan
-    ├── skills/environmental-briefing/    ← the environmental brief
-    ├── commands/                         ← /intel-setup, /brief
-    ├── assets/, templates/               ← brief stylesheet + per-deployment config
-    └── README.md                         ← how the plugin works (usage)
-```
+## The tools
 
-### Plugins
+### Intelligence Briefing
 
-| Plugin | What it does |
-|--------|--------------|
-| **intelligence-briefing** | The external scan — a daily/weekly environmental brief that triages the outside world into the few items worth your attention. Self-contained; writes a styled HTML brief. |
+A daily or weekly **environmental brief**: it scans the outside world — news, industry movement, research, policy, science — and triages it down to the few items actually worth your attention, keyed to a relevance context you set once. It's built for triage, not coverage, so a quiet day produces a short brief and that's correct. The result is a clean, self-contained page you can read anywhere or forward to your team. You set it up in a project with one command, and it can run on a schedule.
 
-More are planned (meeting triage, comms triage, review), each a separate small plugin you install independently. They share the directory convention in [`/contract`](./contract/README.md), so they coordinate through files in your project rather than depending on each other.
+→ **[Read the Intelligence Briefing guide](./intelligence-briefing/README.md)** for setup, scheduling, and tuning.
 
 ## Install
 
@@ -32,8 +20,8 @@ More are planned (meeting triage, comms triage, review), each a separate small p
 
 1. Open the **Customize** menu (left sidebar) → **Plugins** tab.
 2. Under **Personal plugins**, click **"+"** → **Add marketplace**.
-3. Enter this repository: `kenziecreative/kenzie-creative`.
-4. Install the plugin(s) you want.
+3. Enter the repository: `kenziecreative/kenzie-creative`.
+4. Install the tool you want.
 
 ### Claude Code (CLI)
 
@@ -42,13 +30,13 @@ More are planned (meeting triage, comms triage, review), each a separate small p
 /plugin install intelligence-briefing@kenzie-creative
 ```
 
-After installing intelligence-briefing, run **`/intel-setup`** in a project to configure your brief. See the [plugin README](./intelligence-briefing/README.md) for usage.
+Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`.
 
-## Getting updates
+## Updates
 
-Updates arrive as deliberate releases — you only get a new version when one is published.
+New versions arrive only when one is published — nothing changes under you.
 
-**Claude Cowork:** Customize → Plugins → refresh the `kenzie-creative` marketplace, then update the plugin.
+**Cowork:** Customize → Plugins → refresh the `kenzie-creative` marketplace, then update the tool.
 
 **Claude Code:**
 
@@ -58,16 +46,7 @@ Updates arrive as deliberate releases — you only get a new version when one is
 /reload-plugins
 ```
 
-Confirm with `/plugin list`. If a version doesn't change, your local catalog is cached — force a clean pull:
-
-```
-/plugin uninstall intelligence-briefing@kenzie-creative
-/plugin marketplace update kenzie-creative
-/plugin install intelligence-briefing@kenzie-creative
-/reload-plugins
-```
-
-> Naming: the **marketplace** is `kenzie-creative`; a **plugin** is e.g. `intelligence-briefing`. The qualified name is `intelligence-briefing@kenzie-creative`.
+If a version won't change, your local catalog is cached — uninstall and reinstall the tool to force a clean pull.
 
 ## License
 

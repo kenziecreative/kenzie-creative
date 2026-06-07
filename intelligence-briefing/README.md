@@ -1,52 +1,80 @@
 # Intelligence Briefing
 
-The **external scan**: a daily/weekly environmental brief that surveys the outside world — news, industry movement, research, policy, science — and triages it down to the few items worth your attention. Built for triage, not coverage: a quiet day produces a short brief, and that is correct.
+**A daily environmental brief that keeps the outside world from piling up, by [Kenzie Creative](https://www.kenzienotes.com).**
 
-This is a self-contained plugin. It's part of the [Kenzie Creative](../README.md) marketplace, where companion plugins (meeting triage, comms triage, review) cover the *internal* scan and the triage-to-backlog step — each installed separately. They coordinate through a shared directory convention, never by depending on each other, so this brief works perfectly on its own.
+Intelligence Briefing scans the world outside your work — news, industry movement, research, policy, science — and triages it down to the few things actually worth your attention. You tell it once who the brief serves and what makes something matter to you; from then on it reads broadly and reports narrowly, keyed to that context. It's built for triage, not coverage. On a quiet day it produces a short brief, and that is the correct answer, not a failure.
 
-## What's installed today
+What you get isn't a feed or a digest of everything that happened. It's a judgment: here are the handful of items that crossed your bar, why each one matters to you specifically, and what changed since the last time — written as a clean, self-contained page you can read anywhere or forward to your team.
 
-| Component | Type | What it does |
-|-----------|------|--------------|
-| `environmental-briefing` | Skill | The external scan. Produces a triaged daily brief from the outside world, keyed to your relevance context. |
-| `/intel-setup` | Command | Sets up a project as a briefing deployment — interviews you for your relevance context, writes the config, runs a first test brief. |
-| `/brief` | Command | Runs the brief on demand (the same thing a scheduled run does). |
+## What you get
 
-## Quick start
+**A triaged brief, not a firehose.** Every item has to clear a relevance bar you set. The brief surfaces the few that matter and stays silent on the rest — a short brief on a slow day is the system working, not failing.
 
-1. Install the plugin, then open the project where you want this brief.
-2. Run **`/intel-setup`** and answer the questions. The one that matters is your *relevance context* — who the brief serves and what makes something worth your attention. Everything else has a working default.
-3. Setup runs one test brief so you see real output right away.
-4. To run it daily (Cowork): type **`/schedule`**, set the prompt to `Run the environmental briefing skill for this project` (or `/brief`), and pick a time. A run skipped because your machine was asleep catches up automatically.
+**Reasons, not just links.** Each item comes with why it's on your desk, given who the brief serves. You're reading a take, not a headline list.
 
-One project = one brief. A personal scan and a brief you forward to your team are two projects.
+**A page that stands on its own.** Briefs render as a self-contained HTML file — clean cards on white, scannable, openable anywhere with no dependencies, and easy to forward.
 
-## Setup & permissions
+**Memory across runs.** The brief keeps a ledger of what it's already told you, so it reports what *changed* rather than repeating yesterday's news.
 
-- **First run:** setup creates a few files in the project, so you may be asked to approve file creation once. If your client offers an "allow for this project/session" option, choose it — one approval covers all of setup's writes instead of prompting on each.
-- The brief needs **web search** to scan the world. `/intel-setup` checks this up front; if web search isn't available yet, it tells you exactly what to approve before running — no half-finished brief.
-- **Claude Code:** setup writes a `.claude/settings.json` into your project that pre-allows *only* the brief's own tools (web search/fetch and file read/write), so later runs don't prompt. You may be asked to trust the project folder once. You can edit or delete that file anytime.
-- **Cowork:** nothing to configure — web search is available by default and that file isn't used.
+**It runs itself.** Set it on a schedule and the brief lands on its own. A run skipped because your machine was asleep catches up automatically.
+
+**It tunes to you.** A handful of knobs control how strict the relevance bar is, how it draws the line between in and out, and whether it actively challenges beliefs you've written down.
+
+## How it works
+
+You run one setup command that interviews you for your **relevance context** — who the brief serves and what makes something worth your attention. That's the one input that matters; everything else has a working default. Setup writes the config into your project and runs a first brief immediately, so you see real output right away.
+
+From there each brief follows the same path: scan the world broadly, filter against your relevance context, weigh each survivor against the evidence bar, and render the survivors into a page — reporting only what's new since the last run. You run it on demand or on a schedule; both do the same thing.
+
+One project equals one brief. A personal scan and a brief you forward to your team are two separate projects, each with its own relevance context.
+
+## Getting started
+
+After installing the plugin (see the [marketplace README](../README.md)), open the project where you want the brief and run:
+
+```
+/intel-setup
+```
+
+Answer the questions — the one that matters is your relevance context. Setup runs one test brief so you see output immediately. To run a brief any time after that:
+
+```
+/brief
+```
+
+To run it daily in Cowork, use `/schedule`, set the prompt to `Run the environmental briefing skill for this project` (or `/brief`), and pick a time.
 
 ## The brief itself
 
-Briefs render as a **self-contained HTML file** by default (`briefs/YYYY-MM-DD.html`) — clean cards on white, scannable, openable anywhere with no dependencies. Two knobs in `CLAUDE.md` under **Output**:
+Briefs render as a self-contained HTML file by default (`briefs/YYYY-MM-DD.html`). Two settings in `CLAUDE.md` under **Output** control presentation:
 
-- **Format** — `html` (default) or `markdown` for a plain text brief.
-- **Theme** *(html)* — `default` is brand-neutral with system fonts. Point it at a CSS override file in your project (e.g. `./brief-theme.css`) to apply your own brand tokens; the markup stays the same, only the look changes.
+- **Format** — `html` (default), or `markdown` for a plain-text brief.
+- **Theme** *(html only)* — `default` is brand-neutral with system fonts. Point it at a CSS override in your project (e.g. `./brief-theme.css`) to apply your own brand; the markup stays identical, only the look changes.
 
-## Tuning after a few runs
+## Tuning
 
-- **Briefs feel thin or noisy?** Sharpen the relevance context and the zone in/out examples in `CLAUDE.md` — the "out" near-misses do the most work.
-- **Low-confidence items reaching conclusions?** Tighten the evidence bar in `CLAUDE.md` toward `decision`, `shareable`, or `strict`.
-- **Same stories recurring?** The brief keeps a ledger so it reports what changed, not what it already told you.
-- **Want it to challenge you?** Fill in the held-beliefs section in `CLAUDE.md` to enable the disconfirming slot.
+The brief gets sharper after a few runs. Everything below is adjusted in your project's `CLAUDE.md`:
 
-## Companion plugins
+- **Brief feels thin or noisy?** Sharpen your relevance context and the in/out examples — the "out" near-misses do the most work.
+- **Weak items reaching conclusions?** Tighten the evidence bar toward `decision`, `shareable`, or `strict`.
+- **Want it to push back?** Fill in the held-beliefs section to turn on the disconfirming slot, where the brief looks for evidence against what you believe.
 
-These live alongside this one in the Kenzie Creative marketplace and are installed separately when you want them. Each writes into the same project's shared files (the [directory convention](../contract/README.md)), so adding one composes automatically with the brief — and skipping them changes nothing here.
+## Permissions
 
-- **Meeting triage** — explicit and implicit tasks and patterns from your meeting transcripts.
-- **Comms triage** — what matters from email and chat, without duplicating what your meetings already raised.
-- **Triage review** — presents everything worth acting on for accept/reject, and adds accepted items to your backlog.
-- **Source-directory triage** — pulls in items your other projects hand off.
+The brief needs **web search** to scan the world, and the ability to write its files into your project. It asks for these cleanly rather than failing halfway:
+
+- **Cowork:** nothing to configure — web search is available by default. Setup may ask once to approve file creation; if your client offers "allow for this project," choose it and you won't be prompted again.
+- **Claude Code:** setup writes a `.claude/settings.json` into your project that pre-allows *only* the brief's own tools (web search/fetch and file read/write), so later runs don't prompt. You may be asked to trust the folder once. Edit or delete that file anytime.
+
+`/intel-setup` checks for web search up front and tells you exactly what to approve before running, so you never get a half-finished brief.
+
+## Commands
+
+| Command | What it does |
+|---------|--------------|
+| `/intel-setup` | Sets up a project as a briefing deployment — interviews you for your relevance context, writes the config, runs a first test brief. |
+| `/brief` | Runs the brief on demand. The same thing a scheduled run does. |
+
+## License
+
+MIT — see [LICENSE](../LICENSE).
