@@ -15,7 +15,7 @@ Ask the user three questions. Ask them **one at a time** — don't stack them.
 
 **Question 1 — Research Type:**
 
-Ask the user which type of research they want to conduct:
+Ask the user which type of research they want to conduct. **Present the list in your reply text as a numbered or bulleted list, and accept the user's typed answer. Do NOT use AskUserQuestion for this — there are 11 types and AskUserQuestion would silently truncate the list to 4 options.** The same applies to Question 3's audience examples (6 examples) — present in reply text, not via AskUserQuestion.
 
 - **PRD Validation** — Pressure-test a Product Requirements Document against external evidence before engineering begins. Tests assumptions, technical choices, timeline estimates, market claims.
 - **Exploratory Thesis** — Build the evidence base for a thesis, concept, or vision. Validate core claims, map the landscape, identify opportunities and risks.
