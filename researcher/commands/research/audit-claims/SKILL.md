@@ -1,0 +1,268 @@
+---
+name: audit-claims
+description: Fact-check a research draft against source notes and promote to outputs if it passes
+argument-hint: "[filepath]"
+model: opus
+---
+
+# /research:audit-claims
+
+Audit a research draft for unsupported claims. If the audit passes, promote the draft from `research/drafts/` to `research/outputs/`. If it fails, the draft stays in `drafts/` until issues are fixed and the audit is re-run.
+
+## Input
+The user will provide a filepath to audit (should be a file in `research/drafts/`).
+
+## Process
+
+1. **Read the file to audit.**
+2. **Read `research/reference/source-standards.md`** for evidence rules.
+3. **Read `research/reference/writing-standards.md`** for precision preservation and synthesis rules.
+4. **Read `${CLAUDE_PLUGIN_ROOT}/reference/evidence-failure-modes.md`** for the catalog of evidence degradation patterns. Check for each pattern type during the audit.
+5. **For every factual claim in the document:**
+   - Does it trace to a file in `research/notes/` or a previous phase output? If yes, note the source.
+   - Is the claim accurately represented? Check against the source note — same numbers, same ranges, same qualifiers.
+   - Is the confidence language appropriate given the number of supporting sources?
+   - Are contradicting sources acknowledged?
+   - Is dated information flagged if older than 2 years?
+   - Are ranges preserved fully? (not narrowed, not midpointed)
+   - Are qualifiers from the source preserved? (not dropped during compression)
+   - If a number is carried from a previous phase, does it match the original exactly?
+6. **Cross-document consistency check:** If other files already exist in `research/outputs/` or `research/drafts/`, check whether this draft and those documents cite the same numbers for the same claims. Flag any inconsistencies.
+6a. **Canonical figures check:** Read `research/reference/canonical-figures.json`. If the file does not exist, note "No canonical figures registry yet — first phase of this research project or registry not yet populated. Skipping this check; it will activate once figures are registered." and continue to step 7. If the file exists but fails to parse as JSON, stop the audit and tell the user: "`research/reference/canonical-figures.json` exists but cannot be parsed as JSON. This is a registry corruption — restore from git or fix the file manually before re-running the audit. Do not promote the draft." Do not proceed until the file is valid. If the file exists and parses correctly, for every number in the draft that exists in the canonical registry, verify it matches exactly. Flag any discrepancy as high-severity.
+
+   **Drift detection (claim graph):** If `research/reference/claim-graph.json` exists and parses correctly, walk every claim node whose `figure_ids` array is non-empty. For each figure ID listed, look up the current value in the canonical-figures.json registry (already read above). If the registry value differs from the value stored when the claim was written (detectable when the claim text contains a specific figure that no longer matches the canonical value), annotate the claim node with a `drift_warning` object:
+   ```json
+   {
+     "figure_id": "<id from figure_ids>",
+     "expected_value": "<value stored in claim at last audit>",
+     "canonical_value": "<current registry value>"
+   }
+   ```
+   Write the annotated claim-graph.json back to disk. Do not alter the claim's `confidence_tier`. Collect all drift warnings for reporting in the findings table (step 7) and scorecard (step 8). If claim-graph.json does not exist or fails to parse, skip drift detection without comment — the graph is supplementary infrastructure; its absence does not block the audit.
+
+   **Transitive detection:** Drift is resolved in the same read pass — a figure ID may appear in multiple claim nodes. Flag all nodes referencing a revised figure; no separate traversal step is needed because `figure_ids` is a flat array on each node.
+
+   **Error handling:** If claim-graph.json exists but fails to parse as JSON, log a warning and skip drift detection — do not fail the audit. After writing drift_warning annotations back to disk, re-read the file and confirm it parses as valid JSON. If the write verification fails, log: "WARNING: claim-graph.json drift annotation write failed" and continue the audit.
+
+7. **Classify each issue found:**
+   - **Unsupported claim** — No source note backs this up
+   - **Misrepresented** — Source says something different than what's claimed
+   - **Missing attribution** — Claim is supportable but citation is missing
+   - **Stale data** — Information may be outdated
+   - **Contradiction ignored** — Sources disagree but only one side is presented
+   - **Range narrowed** — Source range was compressed or midpointed
+   - **Qualifier dropped** — Source qualification was lost in compression
+   - **Number drift** — Figure doesn't match the cited source
+   - **Cross-document inconsistency** — Same claim, different figures across documents
+   - **Drift detected** — A canonical figure this claim references has changed since the claim was written; `drift_warning` field has been set on the claim node in claim-graph.json
+8. **Generate audit scorecard:**
+   - Total specific claims checked: N
+   - Claims traced to source: N (X%)
+   - Claims matching source value and context: N (X%)
+   - Claims with appropriate qualifiers: N (X%)
+   - Issues found: N mismatches, N unsourced, N drift, N range narrowed
+   - Severity distribution: N high, N moderate, N low
+
+   - Drift warnings: N claims referencing figures that have changed since last audit
+     (claim IDs: [id1, id2, ...] — review canonical-figures.json for current values)
+
+   Section confidence tiers (weakest-link per section from claim graph):
+   - [Section name]: [minimum tier among claims in this section] — weakest claim: [claim id], [rationale]
+   - [Section name]: [minimum tier] — weakest claim: [claim id], [rationale]
+
+   Tier ordering: Insufficient (0) < Low (1) < Moderate (2) < High (3). For each section, group claim nodes by `section` field from claim-graph.json, take the minimum `confidence_tier` value. The node with the lowest score is the weakest link for that section.
+
+   Overall confidence: [minimum tier across all sections] (weakest-link determines overall)
+
+8a. **Compute per-section confidence tier:**
+
+   For each section of the draft, assess four inputs and produce a named tier (High / Moderate / Low / Insufficient):
+
+   **Four inputs:**
+   1. **Source count** — How many independent sources back this section's claims? Map to pattern-recognition-guide levels: Claim (1 source), Emerging (2–3 sources), Pattern (4+ sources). Echo-level sources (dependent sources sharing a common origin as identified during cross-reference) count as one, not multiple.
+   2. **Credibility tiers** — What is the highest credibility tier among the section's sources (from source-assessment-guide.md)? A mix of credibility tiers is stronger than uniform low-tier coverage.
+   3. **Evidence directness** — Are sources directly addressing the claim, or are they adjacent/inferred? Direct = source explicitly states the finding. Indirect = finding is inferred from related data, extrapolated, or adjacent to the claim.
+   4. **Staleness** — What proportion of the section's sources exceed the research type's staleness threshold (defined in the type template from process-source)? Majority stale = downgrade.
+
+   **Confidence tier definitions:**
+   - **High**: 4+ independent sources from credible tiers (official docs, analyst reports, peer-reviewed), majority direct evidence, no stale sources dominating
+   - **Moderate**: 2–3 independent sources with at least one credible-tier source, mostly direct evidence, stale sources are minority
+   - **Low**: 1–2 sources, or sources are primarily low-credibility (vendor marketing, blog posts), or evidence is mostly indirect, or stale sources dominate
+   - **Insufficient**: 0–1 sources for a section's claims, or all sources are the same low credibility tier with no triangulation
+
+   **Tier computation approach:**
+   - Start at the source-count level: Claim → Low, Emerging → Moderate, Pattern → High
+   - Upgrade if credibility is strong (all high-tier sources) or evidence is entirely direct
+   - Downgrade if credibility is weak (no high-tier sources), evidence is mostly indirect, or stale sources dominate
+   - Cap at Insufficient if fewer than 2 sources with no high-credibility source
+
+   Record the tier and a one-sentence rationale for each section. Add to the scorecard output (step 8) after severity distribution.
+
+8b. **Write claim graph nodes to `research/reference/claim-graph.json`.**
+
+   For every factual claim traced in step 5, construct a claim node using the data already in context:
+   - `id` — sequential prefix (c001, c002, ...) + slug from first 4-5 words of claim text (lowercase, hyphenated, non-alphanumeric stripped). Example: `"c001-market-size-exceeds-four"`. Sequential prefix guarantees uniqueness; slug makes IDs human-scannable.
+   - `text` — the claim text as traced in step 5
+   - `phase` — current phase number (read from `research/STATE.md` `Active phase` field)
+   - `section` — section name from the audit pass
+   - `confidence_tier` — tier computed in step 8a for this claim's section (High / Moderate / Low / Insufficient)
+   - `source_files` — array of note filenames traced in step 5
+   - `figure_ids` — array of figure IDs from canonical-figures.json that appear in this claim (empty array `[]` if none)
+   - `evidence_directness` — Direct / Indirect classification from step 8a
+   - `source_count` — integer count of independent sources from step 8a
+
+   Read `research/reference/claim-graph.json`. If the file does not exist, create it with `{"claims": []}`. If it exists but fails to parse as JSON, log a warning in the audit report and skip the graph write — do not fail the audit.
+
+   For claims already present in the graph (matched by `phase` + `section` + `text` equality), overwrite the existing node with the new data. For new claims, append to the `claims` array.
+
+   **Drift warning lifecycle:** On re-audit, the drift detection pass in step 6a evaluates all figure_ids against the current canonical registry before step 8b runs. If a previously drifted figure now matches (drift resolved), the node written here will have no `drift_warning` field. If drift persists, the `drift_warning` set by step 6a will be included in the overwritten node. Step 8b does not independently manage drift_warning — it inherits whatever state step 6a established for each node.
+
+   Write the updated JSON back to `research/reference/claim-graph.json`.
+
+   **After writing, verify the write succeeded.** Re-read the file and confirm it parses as valid JSON with a `claims` array. If the read fails or the array is missing, log: "WARNING: claim-graph.json write failed — graph incomplete for this phase. Re-run `/research:audit-claims` to retry graph write without re-running the full audit." Do not fail the audit or block promotion.
+
+9. **Write audit report to `research/audits/<original-filename>-audit.md`** with: scorecard, pass/fail determination, findings table, list of claims that need correction, and the confidence tier table (section name, tier, rationale) from step 8a.
+
+   **After writing, verify the write succeeded.** Re-read the file path you just wrote and confirm it exists and contains the scorecard, findings table, and confidence tier table sections. If the read fails or any of those sections is missing, do not report "audit report written" — surface the write failure to the user with the exact path that failed, and do not advance to the pass/fail step until the write is confirmed.
+
+## Pass/Fail Criteria
+
+A draft passes when:
+- Zero high-severity issues (unsupported claims, misrepresented data, number drift)
+- Zero moderate-severity issues left unresolved (range narrowed, qualifier dropped, cross-document inconsistency)
+- 100% of specific numerical claims trace to a source note or phase output with a matching value
+- Low-severity issues (missing attribution, stale data) are acceptable if documented in the audit report
+
+There is no percentage threshold. Every specific claim must check out. The scorecard is for visibility into the draft's quality, not for setting a "good enough" bar.
+
+**Confidence tiers are advisory — they indicate evidence strength, not audit compliance.** A section can be High confidence and fail (misrepresented claim) or Low confidence and pass (single source but accurately cited). A Low-confidence section that passes the audit is promoted with its tier visible in the audit report. Do not use confidence tier as a reason to fail or hold a draft.
+
+## After Audit
+
+- **If PASS:**
+  1. **Promote the draft.** Move the file from `research/drafts/` to `research/outputs/`.
+  2. **Close out the phase in `research/STATE.md`.** A passing audit is the end of the current phase's cycle. STATE.md must be advanced *before* the debrief so that any subsequent `/clear` leaves the project in a correct state — the user may jump straight to `/research:discover` on resume without running `/research:start-phase`, and `discover`'s pre-check depends on "Active phase" already pointing at Phase N+1.
+
+     Perform all of the following writes in a single STATE.md update:
+     - **Check off Verify.** In `Current Phase Cycle → Phase N`, change `- [ ] **Verify** …` to `- [x] **Verify** …`. Confirm all five steps (Collect, Connect, Assess, Synthesize, Verify) are now checked. If any earlier step is still unchecked, **verify artifacts before prompting the user.** For each unchecked step, check whether the expected artifact exists and is current:
+       - **Collect:** Phase N source notes exist in `research/notes/` (grep for `phase: N` or check filenames) AND corresponding entries exist in `research/sources/registry.md`.
+       - **Connect:** `research/cross-reference.md` contains Phase N cross-reference data (check for Phase N heading or entries citing Phase N sources).
+       - **Assess:** `research/gaps.md` contains a coverage assessment for Phase N.
+       - **Synthesize:** A draft for Phase N exists in `research/drafts/`.
+
+       If the artifacts confirm the step was completed (the expected files exist with Phase N content), this is a checkbox-only discrepancy caused by a context clear — silently mark the step checked and continue the closeout. Log one line per reconciled step: "Reconciled [Step]: artifacts confirm completion (e.g., 10 Phase N notes in registry, cross-reference.md updated YYYY-MM-DD)."
+
+       Only prompt the user when **artifacts are missing or ambiguous** — e.g., no Phase N notes exist, cross-reference.md has no Phase N data, or gaps.md doesn't cover Phase N. In that case, present three named options: **(a) cancel the closeout and re-run the missing cycle step** (the user goes back to run the relevant skill for whichever step lacks artifacts, then re-invokes audit-claims); **(b) authorize marking the step checked anyway** (the user confirms the step was completed through means not reflected in the standard artifacts); **(c) abort the audit promotion entirely and leave the draft in drafts/** (the audit report is still written, but the draft is not promoted and STATE.md is not advanced). Wait for the user to pick one. Do not proceed until they do, and do not leave STATE.md half-updated.
+     - **Mark the phase complete in Completed Phases.** Change `- [ ] Phase N: [Name]` to `- [x] Phase N: [Name] — COMPLETE [YYYY-MM-DD]`.
+     - **Read `research/research-plan.md`** to determine Phase N+1's name. If Phase N was the final phase in the plan, skip to the "final phase" branch below.
+     - **Advance `Active phase`** in `Current Position` from `N — [Phase N Name]` to `N+1 — [Phase N+1 Name]`.
+     - **Reset `Cycle step`** to `Collect (1 of 5)`.
+     - **Reset `Blocking on`** to `Nothing — ready to start.` (unless a real blocker carried over, in which case preserve it and note the phase transition).
+     - **Replace the Current Phase Cycle block** with a fresh Phase N+1 cycle checklist, all five steps unchecked, using the same format as the Phase 1 template in `/research:init`:
+
+       ```markdown
+       ### Phase N+1: [Name]
+       - [ ] **Collect** — Sources gathered for this phase's questions (start with /research:discover)
+       - [ ] **Connect** — `/research:cross-ref` run, cross-reference.md current
+       - [ ] **Assess** — `/research:check-gaps` run, coverage confirmed for this phase
+       - [ ] **Synthesize** — `/research:summarize-section` run, draft in `drafts/`, integrity checked
+       - [ ] **Verify** — `/research:audit-claims` passed, output promoted to `outputs/`
+       ```
+
+       The completed Phase N checklist is NOT preserved in `Current Phase Cycle` — its record lives in `Completed Phases`. `Current Phase Cycle` always reflects exactly one active phase.
+     - **Reset `Sources Processed` counters for the new phase:**
+       - `Sources for current phase: 0`
+       - Leave `Total count`, `Sources since last cross-reference`, `Last cross-reference`, and `Last gap check` as-is — those are project-wide or will be reset by their respective skills.
+     - **Update `Next Action`** to a specific executable command for Phase N+1. Prefer:
+
+       ```
+       Run /research:start-phase to brief Phase N+1, or /research:discover to jump straight to source collection. No sources collected yet for Phase N+1.
+       ```
+
+       `Next Action` must be a concrete command the user can execute after a fresh session load, not a phase-level description.
+
+     **Final phase branch.** If Phase N was the final phase in the research plan:
+     - Set `Active phase: — all phases complete`.
+     - Set `Cycle step: — all cycles complete`.
+     - Do NOT generate a new Current Phase Cycle block — remove it or replace it with `*(No active phase — all phases complete.)*`.
+     - Update `Next Action` to: `Run /research:progress to review the full project dashboard. Consider running /research:check-gaps one final time to confirm no unresolved items before wrap-up.`
+
+  3. **Present the phase debrief** (see below). The debrief runs *after* STATE.md is advanced, not before.
+
+- **If FAIL:** Do not promote the draft. Do not touch STATE.md. Execute the following steps in order — do not stop after step 1:
+
+  1. **Classify each issue as mechanical or judgment.**
+     - *Mechanical:* the correct value or wording is already knowable from the source notes, canonical-figures.json, or an analogous fix already made elsewhere in the same draft. Examples: misattributed range, typo'd figure, wrong citation pointing at a note that exists, qualifier strip that matches canonical data.
+     - *Judgment:* choosing between two plausible sources, rewriting a claim whose support is missing entirely, resolving a contradiction the draft got wrong.
+
+  2. **Apply every mechanical fix to the draft now.** Do not ask permission. Use the Edit tool to make each change in the draft file. This is not optional — if a fix is mechanical, apply it.
+
+  3. **List what you did and what remains.** For each mechanical fix applied, show: file, line, before → after. For each judgment issue, describe what needs to change and why the user must decide.
+
+  4. **Tell the user to re-run the audit.** End with: "Fixes applied. Re-run `/research:audit-claims <filepath>` to verify." Never auto-re-run — re-audit is always user-invoked so each audit is a fresh, full check (fixes can introduce new problems).
+
+## Phase Debrief (after pass)
+
+When a phase's audit passes, do NOT just say "Audit passed" and recommend clearing context. Present a comprehensive debrief of what the phase established. Read the promoted output file and present:
+
+1. **Key findings** — The substantive things this phase established, with specifics (numbers, comparisons, named entities). Not a one-line summary — cover all the major findings, not just the headline.
+2. **Surprises or counterintuitive results** — Anything that challenges assumptions or conventional wisdom.
+3. **Gaps that remain** — What this phase couldn't answer and why (data doesn't exist, sources conflict, needs internal verification).
+4. **Implications for upcoming phases** — How these findings shape what to look for next.
+
+After presenting the debrief, pause and invite the user to react:
+
+```
+That's what Phase {N} established. Anything you want to capture, question, or dig into before we move on?
+```
+
+Wait for the user to respond. They may:
+- Ask follow-up questions about specific findings
+- Want to capture a note for later (`research/notes-to-self.md`)
+- Challenge or comment on something the research surfaced
+- Say they're good to move on
+
+Only after the user is done reacting to the debrief, render the transition prompt (format defined in `${CLAUDE_PLUGIN_ROOT}/reference/prompt-templates-runtime.md`):
+
+───────────────────────────────────────────────────────────
+
+**▶ NEXT:** `/clear` then `/research:start-phase` — Start Phase [N+1] with a fresh context window.
+
+**Also available:**
+- `/research:progress` — See the overall project dashboard before clearing.
+- `/research:check-gaps` — Confirm no unresolved gaps from Phase [N] should be carried forward.
+
+**What to expect:** A fresh context window gives sharper analysis for the new phase. STATE.md and commonplace.md carry everything forward — no context is lost. Start-phase will read the research plan, gaps, commonplace entries, and open assumptions, and brief you on what Phase [N+1] needs.
+
+───────────────────────────────────────────────────────────
+
+## Non-Negotiable Rules
+
+- **No bypassing.** If the user asks to skip the audit or move a failed draft to outputs manually, refuse. Explain that the audit gate exists to protect research quality and that fixing the issues is faster than dealing with unreliable findings downstream.
+- **No soft passes.** Do not downgrade a high-severity issue to moderate to make the draft pass. If a claim doesn't trace to a source, it's unsupported regardless of whether the claim "feels right."
+- **Re-audit after fixes.** When a draft is fixed after a failed audit, run the full audit again — do not spot-check only the previously flagged issues. Fixes can introduce new problems. Re-audit is always user-invoked — the user runs `/research:audit-claims <same-filepath>` after fixing the draft, and each invocation is treated as a fresh audit (full check, no shortcuts). The agent does not automatically re-run audits in a loop.
+- **No confidence tier inflation.** Do not inflate confidence tiers. If a section relies on a single source, it is Low confidence regardless of how authoritative that source is. Single-source High confidence does not exist — triangulation requires multiple independent sources.
+- **A passing audit must advance STATE.md before the debrief.** Promotion, phase closeout (check off Verify, mark Phase N complete, advance Active phase to N+1, generate the new cycle checklist, reset Next Action) all happen in one atomic step before you present findings to the user. The debrief is for the user; the STATE.md advance is for the next session. The next session may start with `/clear` immediately followed by `/research:discover` (skipping `/research:start-phase` entirely) — if STATE.md still points at Phase N when that happens, discover will either error or silently re-discover a completed phase. If you cannot advance STATE.md cleanly — e.g., `research/research-plan.md` is missing Phase N+1 and Phase N was not marked as final, or the cycle checklist has unchecked steps you did not expect — stop, surface the discrepancy to the user, and do NOT leave STATE.md half-updated. Either the full closeout happens or none of it does.
+
+## Common Failure Modes
+
+| Failure Mode | Prevention |
+|---|---|
+| Soft passes — downgrading severity to make a draft pass | Every severity classification must cite the specific rule it violates. If a claim lacks a source, it is high-severity regardless of how plausible it sounds. |
+| Scope narrowing — auditing only "important" claims while skipping minor ones | Audit every factual claim, including numbers in passing references and claims inherited from prior phases. Minor claims are where drift hides. |
+| Treating audit as formality — skimming rather than tracing each claim to its source | For each claim, open the cited source note and verify the value. Do not rely on memory of what the source said. |
+| Post-fix spot-checking — only re-checking flagged issues after a fix | Re-run the full audit after fixes. Edits can introduce new mismatches, especially when adjusting ranges or qualifiers. |
+| Consistency blind spot — auditing the draft in isolation without checking other outputs | Always run the cross-document consistency check and canonical figures check. Same claim, different numbers across documents is high-severity. |
+| Conflating confidence with audit pass/fail — treating low confidence as a failure | Confidence tier measures evidence strength (how well-supported). Audit pass/fail measures evidence accuracy (how truthfully represented). A section with one source, accurately cited, passes the audit with Low confidence. Do not fail it for having thin evidence — flag the tier and let the user decide whether to add sources. |
+| Silent phase closeout — promoting the draft and presenting the debrief but leaving STATE.md pointing at the completed phase | On PASS, execute the full closeout sequence in `After Audit / If PASS` step 2 before presenting the debrief. Every write — check off Verify, mark Phase N complete, advance Active phase to N+1, reset Cycle step, replace Current Phase Cycle with a fresh Phase N+1 checklist, reset per-phase source counters, rewrite Next Action — must land in STATE.md atomically. If any part cannot be completed (e.g., research-plan.md has no Phase N+1), stop and surface the discrepancy instead of partially updating. The next session may skip `/research:start-phase` and run `/research:discover` directly — STATE.md must be correct before the debrief, not after. |
+| Leaving the completed phase's cycle checklist in Current Phase Cycle alongside the new one | `Current Phase Cycle` always reflects exactly one active phase. When advancing to Phase N+1, replace the Phase N checklist entirely — the completed record lives in `Completed Phases`, not in `Current Phase Cycle`. Two checklists in `Current Phase Cycle` is a bug, not a history feature. |
+| Listing issues without applying mechanical fixes — stopping after the report instead of editing the draft | On FAIL, the 4-step sequence is mandatory: classify → apply mechanical fixes → list changes → tell user to re-run. If a fix is mechanical (correct value knowable from sources), apply it with the Edit tool. Do not present fixes as suggestions — make the edits. |
+| Graph write blocking audit promotion — treating a claim-graph.json write failure as an audit failure | Graph write is supplementary infrastructure, not an evidence gate. If claim-graph.json cannot be written or parsed, log a WARNING in the audit report but continue to the pass/fail determination. The audit gate protects research quality; the graph is for downstream traceability (Phase 12). Never fail an audit or block promotion due to a graph write issue. |
+| Skipping drift detection when claim-graph.json exists — missing drift warnings because graph parse is slow or unexpected | Always attempt drift detection when claim-graph.json exists and parses. A drift_warning in the claim graph means a canonical figure changed after a claim was written — surfacing it is the point. Only skip if the file is absent or unparseable. |
+
+## Output
+Scorecard summary and pass/fail status.
+
+**If failed:** Execute the full 4-step fail sequence (classify → apply mechanical fixes → list changes and remaining issues → tell user to re-run). Do NOT render a transition prompt — a failed audit is a loop, not a transition. Do NOT stop after listing issues — if any fix is mechanical, apply it before responding to the user.
+
+**If passed:** confirm the promotion to `outputs/`, present the phase debrief (see above), wait for the user to react, and then render the transition prompt (format defined in `${CLAUDE_PLUGIN_ROOT}/reference/prompt-templates-runtime.md`). The transition prompt appears only after the user is done reacting to the debrief — not before.
