@@ -40,12 +40,28 @@ After installing, run **`/intel-setup`** in a project to configure your brief. S
 
 ## Getting updates
 
-When a new version is released, pull it:
+Updates arrive as deliberate releases — you only get a new version when one is published, not on every change.
 
-- **Cowork:** Customize → Plugins → update **intelligence-briefing** from the Plugins tab.
-- **Claude Code:** `/plugin marketplace update`, then `/plugin update intelligence-briefing`.
+**Claude Cowork:** Customize → Plugins → refresh the `intelligence-brief` marketplace, then update **intelligence-briefing**.
 
-You receive a new version only when one is published, so updates arrive as deliberate releases rather than on every change.
+**Claude Code:**
+
+```
+/plugin marketplace update intelligence-brief
+/plugin update intelligence-briefing
+/reload-plugins
+```
+
+Confirm it landed with `/plugin list` (or the `/plugin` → Installed tab). If the version doesn't change, your local catalog is cached — force a clean pull:
+
+```
+/plugin uninstall intelligence-briefing@intelligence-brief
+/plugin marketplace update intelligence-brief
+/plugin install intelligence-briefing@intelligence-brief
+/reload-plugins
+```
+
+> Naming: the **plugin** is `intelligence-briefing`; the **marketplace** is `intelligence-brief`. The qualified name is `intelligence-briefing@intelligence-brief`.
 
 ## License
 

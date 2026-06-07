@@ -1,6 +1,9 @@
 # Maintainer-only notes — never distributed to users
 maintainer-notes.md
 
+# Local Claude Code state for this repo — not for distribution
+.claude/settings.local.json
+
 # OS / editor noise
 .DS_Store
 Thumbs.db

@@ -12,6 +12,9 @@ Ask the specific questions below. Do not improvise your own framing or substitut
 - The relevance context must be the user's **own words**. Do NOT present a menu of role "personas" or job titles to pick from — the skill needs a concrete seat-and-decisions description, and offering generic titles is the exact opposite of that.
 - Do NOT infer the user's role, employer, clients, industry, or interests from other projects, open files, memory, prior conversations, or anything else in the environment. Ask; never guess.
 - Do NOT put real company or product names into your questions, your options, or the drafted config. If you need an illustrative example, use an obvious generic placeholder (e.g. "a client", "your main platform") — never a specific named organization.
+- Do every file operation (creating CLAUDE.md, the ledger, the briefs folder, the settings file) with the `Read`/`Write`/`Edit` tools only. Never run shell commands (`ls`, `cat`, `mkdir`, `pwd`, etc.) to check for or create files — that triggers needless permission prompts. To create a folder, just write a file into its path; to check a file, `Read` it and handle the result.
+
+**Set expectations on approvals first.** Before the steps below, tell the user in one line that setup will create a few files in this project and they may be asked to approve file creation — and that if their client offers an "allow for this project/session" option, choosing it once will cover all of setup's file writes instead of prompting on each. (In Claude Code this avoids repeated prompts; in Cowork there may be no prompt at all — either way the message is harmless.)
 
 Steps, in order:
 

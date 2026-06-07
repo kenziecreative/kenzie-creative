@@ -14,12 +14,19 @@ This release ships the external scan. The internal scans and review step are on 
 
 ## Quick start
 
-1. Create a Cowork **Project** and install this plugin.
-2. In the project, run **`/intel-setup`** and answer the questions. The one that matters is your *relevance context* — who the brief serves and what makes something worth your attention. Everything else has a working default.
+1. Install the plugin, then open the project where you want this brief.
+2. Run **`/intel-setup`** and answer the questions. The one that matters is your *relevance context* — who the brief serves and what makes something worth your attention. Everything else has a working default.
 3. Setup runs one test brief so you see real output right away.
-4. To run it daily: type **`/schedule`**, set the prompt to `Run the environmental briefing skill for this project` (or `/brief`), and pick a time. A run skipped because your machine was asleep catches up automatically.
+4. To run it daily (Cowork): type **`/schedule`**, set the prompt to `Run the environmental briefing skill for this project` (or `/brief`), and pick a time. A run skipped because your machine was asleep catches up automatically.
 
 One project = one brief. A personal scan and a brief you forward to your team are two projects.
+
+## Setup & permissions
+
+- **First run:** setup creates a few files in the project, so you may be asked to approve file creation once. If your client offers an "allow for this project/session" option, choose it — one approval covers all of setup's writes instead of prompting on each.
+- The brief needs **web search** to scan the world. `/intel-setup` checks this up front; if web search isn't available yet, it tells you exactly what to approve before running — no half-finished brief.
+- **Claude Code:** setup writes a `.claude/settings.json` into your project that pre-allows *only* the brief's own tools (web search/fetch and file read/write), so later runs don't prompt. You may be asked to trust the project folder once. You can edit or delete that file anytime.
+- **Cowork:** nothing to configure — web search is available by default and that file isn't used.
 
 ## Tuning after a few runs
 

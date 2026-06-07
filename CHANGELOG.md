@@ -11,6 +11,23 @@ Planned producers and consumer on the shared candidate-item contract:
 - Triage review (consumer) — present the candidate queue for accept/reject and write accepted items to a backlog.
 - Source-directory triage (producer) — triage drops other projects push into the shared inbox.
 
+## [0.1.5] — 2026-06-07
+
+### Fixed
+
+- The skill and `/intel-setup` now do all file operations with `Read`/`Write`/`Edit` only and never shell out (`ls`, `cat`, `mkdir`, `pwd`) to inspect or create files — removing needless Bash permission prompts. Existence checks are done by reading and handling the result; folders are made by writing a file into the path.
+
+### Added
+
+- `/intel-setup` opens with a one-line expectations note: it will create a few files, and choosing an "allow for this project/session" option once (if the client offers it) covers all of setup's writes instead of prompting per file. Worded to be harmless in Cowork, which may not prompt at all.
+- Documentation refresh: the marketplace README gives concrete install and update steps for both Cowork (GUI) and Claude Code (CLI), including the catalog-refresh sequence and a clean-reinstall fallback for stale caches; the plugin README documents the web-search requirement, the pre-flight check, the project `.claude/settings.json` setup writes, and first-run approval behavior.
+
+### Changed
+
+- Added `.claude/settings.local.json` to `.gitignore` so local Claude Code permission state isn't committed to the distributed repo.
+
+> Note: an unreleased 0.1.4 (docs-only) was folded into this release rather than tagged separately.
+
 ## [0.1.3] — 2026-06-06
 
 ### Fixed
