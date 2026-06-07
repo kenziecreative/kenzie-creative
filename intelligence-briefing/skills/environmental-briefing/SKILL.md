@@ -30,7 +30,6 @@ Before doing anything, read CLAUDE.md and load these values. They are the deploy
 - **Paths** — briefs directory and ledger file. Default: `./briefs/` and `./ledger.json`.
 - **Output format** — `html` (default) or `markdown`. HTML produces a self-contained, styled brief (see step 9 and `references/html-brief.md`); markdown produces the plain brief per the OUTPUT CONTRACT. The brief's *content* is identical either way — this only sets how it's rendered.
 - **Theme** *(html only)* — `default` (system fonts, brand-neutral) or a path to a CSS override file in the deployment (e.g. `./brief-theme.css`) that supplies brand tokens. Default: `default`.
-- **Candidate queue** *(optional, suite mode)* — path to the shared candidate queue this brief contributes to. Default: empty (standalone mode). When set (default `./candidates.json` once the wider suite is installed), the brief also emits its actionable items into the shared queue so the review step can triage them alongside the internal scans. See SUITE INTEGRATION. Absence of this value changes nothing about the brief itself.
 
 ---
 
@@ -199,13 +198,16 @@ Before emitting, audit the assembled draft as if you did not write it. Trust not
 
 ## LEDGER SCHEMA
 
-The ledger is a single JSON file at the configured path (default `./ledger.json`). It is the only state you keep, and its sole purpose is to serve "report motion, not state." Keep it lightweight — it is not a research archive.
+The ledger serves one purpose: "report motion, not state." It is a single JSON file at the configured path (default `./ledger.json`). Keep it lightweight — it is not a research archive.
 
-Structure: a JSON object with a `entries` array. Each entry:
+The ledger belongs to the **deployment directory**, not to this plugin: it is shared state that any plugin in the directory may read or write, following the convention in `/contract`. Each entry therefore carries a `source` tag naming the producer that wrote it. This brief only ever reads and writes its own `source: "environmental"` rows, so a shared ledger works whether or not other plugins are installed — and you never need to know whether they are.
+
+Structure: a JSON object with an `entries` array. Each entry:
 
 ```json
 {
   "id": "stable-slug-or-hash",
+  "source": "environmental",
   "title": "short item title",
   "zone": "zone name",
   "published": "YYYY-MM-DD",
@@ -217,8 +219,9 @@ Structure: a JSON object with a `entries` array. Each entry:
 ```
 
 - **id** is a stable identifier for the underlying story — a normalized slug of the core subject, not the headline — so the same story matches across runs even as coverage rephrases it. This is what the NOVELTY TEST matches against.
-- On a first run, create the file as `{ "entries": [] }`.
-- At step 1, read the whole file. At step 10, for each item reported today: if its id exists, update `last_seen`, `disposition`, and `last_state`; if new, append a full entry. Then drop entries whose `last_seen` is older than a sensible window for the cadence (e.g. 30 days for a daily brief). Write the file back whole.
+- **source** is always `"environmental"` for this brief. When reading the ledger, consider only entries with this source; ignore other producers' rows. (Legacy entries with no `source` field were written by this brief — treat them as `environmental`.)
+- If the ledger file does not exist, create it as `{ "entries": [] }`. Do this with the Write tool — never shell out to check for or create it.
+- At step 1, read the whole file. At step 10, for each item you reported today: if its id exists among your own rows, update `last_seen`, `disposition`, and `last_state`; if new, append a full entry (with `source: "environmental"`). Then drop your rows whose `last_seen` is older than a sensible window for the cadence (e.g. 30 days for a daily brief) — leave other producers' rows untouched. Write the file back whole.
 
 ---
 
@@ -265,21 +268,3 @@ Mark tier and corroboration only when they are *not* the trustworthy default. Le
 ```
 
 A lead item appears in full in the Lead and leaves a one-line stub in its zone pointing up, so the scan remains a complete index of the day. Each item carries: what happened, epistemic type, disposition, relevance, source (traceable), and — for Signals — an uncertainty note. Tier and corroboration shown only when non-default.
-
----
-
-## SUITE INTEGRATION (optional)
-
-This brief is the **external scan** in a larger intelligence routine. On its own it is complete — it writes a brief and keeps its own ledger, and everything above this section runs identically whether or not the rest of the suite is installed. This section governs one extra thing: contributing your findings to the shared review queue so they get triaged alongside the internal scans (meetings, comms).
-
-Run this step **only if a candidate queue path is configured** (see CONFIGURATION). If it is empty, skip this section entirely — do not create the file, do not mention it.
-
-When a candidate queue *is* configured, after step 9 (write the brief) and before step 10 (update the ledger), also do this:
-
-- Take the items you marked `act` or `track`, plus every lead item, and emit each as a **candidate item** per the shared contract at `${CLAUDE_PLUGIN_ROOT}/shared/candidate-item-contract.md`. Read that file once at the start of the run if the queue is configured. Items you marked only `note` stay in the brief and do not enter the queue — the queue is for things that may warrant an action or sustained watching, not for awareness-only items.
-- Set each candidate's `kind` to `watch-item` (for `track`) or `signal` (for `act`/lead that is not yet a concrete task). The environmental scan rarely produces an explicit assigned task; it produces things worth watching or deciding on. Do not invent tasks the world did not hand you — the same anti-manufacturing discipline from the RULES applies here.
-- Carry the item's existing classification straight across: epistemic type, tier, corroboration, disposition, qualifiers, and the traceable source all map onto the contract's fields. Nothing is re-judged; the candidate is the brief item in the shared shape.
-- Set `source` to `environmental:<zone>` and reuse the **same `id`** you use in the ledger, so the review step and the ledger refer to the same underlying story and cross-producer dedup (see `${CLAUDE_PLUGIN_ROOT}/shared/dedup-and-state.md`) can match it.
-- Append to the queue idempotently: if a candidate with that `id` is already present and unreviewed, update it in place rather than adding a duplicate. The evidence bar still applies — an item the sharing gate keeps out of the lead also stays out of the queue, because the queue is shared, reviewable output.
-
-The brief remains the human-facing artifact. The queue is a machine-facing handoff to the review step; it never changes what the reader sees in the brief.

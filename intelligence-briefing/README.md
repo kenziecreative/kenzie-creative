@@ -1,8 +1,8 @@
 # Intelligence Briefing
 
-A daily/weekly intelligence routine that keeps you aware of the things you might care about — across both the outside world and your own work. It pairs an **external scan** (news, industry movement, research, policy, science) with **internal scans** (meetings, communications) and a **review step** that triages everything worth acting on into your backlog. Built for triage, not coverage: a quiet day produces a short brief, and that is correct.
+The **external scan**: a daily/weekly environmental brief that surveys the outside world — news, industry movement, research, policy, science — and triages it down to the few items worth your attention. Built for triage, not coverage: a quiet day produces a short brief, and that is correct.
 
-This release ships the external scan. The internal scans and review step are on the roadmap below.
+This is a self-contained plugin. It's part of the [Kenzie Creative](../README.md) marketplace, where companion plugins (meeting triage, comms triage, review) cover the *internal* scan and the triage-to-backlog step — each installed separately. They coordinate through a shared directory convention, never by depending on each other, so this brief works perfectly on its own.
 
 ## What's installed today
 
@@ -42,11 +42,11 @@ Briefs render as a **self-contained HTML file** by default (`briefs/YYYY-MM-DD.h
 - **Same stories recurring?** The brief keeps a ledger so it reports what changed, not what it already told you.
 - **Want it to challenge you?** Fill in the held-beliefs section in `CLAUDE.md` to enable the disconfirming slot.
 
-## Roadmap
+## Companion plugins
 
-Coming in future releases, each feeding the same review step:
+These live alongside this one in the Kenzie Creative marketplace and are installed separately when you want them. Each writes into the same project's shared files (the [directory convention](../contract/README.md)), so adding one composes automatically with the brief — and skipping them changes nothing here.
 
-- **Meeting triage** — extracts explicit and implicit tasks and patterns from your meeting transcripts.
-- **Comms triage** — surfaces what matters from email and chat, without duplicating what your meetings already raised.
-- **Triage review** — presents everything worth acting on for your accept/reject, and adds accepted items to your backlog.
-- **Source-directory triage** — pulls in items your other projects hand off, so you get one unified view.
+- **Meeting triage** — explicit and implicit tasks and patterns from your meeting transcripts.
+- **Comms triage** — what matters from email and chat, without duplicating what your meetings already raised.
+- **Triage review** — presents everything worth acting on for accept/reject, and adds accepted items to your backlog.
+- **Source-directory triage** — pulls in items your other projects hand off.

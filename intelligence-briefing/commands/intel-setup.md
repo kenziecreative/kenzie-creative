@@ -3,7 +3,7 @@ description: Set up this project as a daily intelligence brief
 allowed-tools: Read, Write, Edit, AskUserQuestion, WebSearch, WebFetch
 ---
 
-Set up the current project as a daily environmental briefing deployment of the intelligence-briefing suite. The briefing logic lives in the `environmental-briefing` skill; this command produces the per-project configuration it reads.
+Set up the current project as a daily environmental briefing deployment. The briefing logic lives in the `environmental-briefing` skill; this command produces the per-project configuration it reads.
 
 Ask the specific questions below. Do not improvise your own framing or substitute your own questions — these are the questions setup is meant to ask. Ask one topic at a time and wait for each answer.
 
@@ -36,7 +36,7 @@ Steps, in order:
    - `strict` — unconfirmed items only ever support "track" and "dig".
    Note they can also set the action gate and sharing gate independently for a hybrid. Default to `decision` if they don't care.
 
-5. Ask the user's **timezone** directly. Set everything else to defaults without asking: daily cadence, length budget (5 per zone, 3 lead, two-minute read), held beliefs empty, paths `./briefs/` and `./ledger.json`, output format `html` with theme `default`, suite mode off (candidate queue empty). Tell the user you've applied these and that any of them can be changed later by editing CLAUDE.md — including switching the brief to plain `markdown` or pointing `theme` at a brand CSS file.
+5. Ask the user's **timezone** directly. Set everything else to defaults without asking: daily cadence, length budget (5 per zone, 3 lead, two-minute read), held beliefs empty, paths `./briefs/` and `./ledger.json`, output format `html` with theme `default`. Tell the user you've applied these and that any of them can be changed later by editing CLAUDE.md — including switching the brief to plain `markdown` or pointing `theme` at a brand CSS file.
 
 6. Read the config template at `${CLAUDE_PLUGIN_ROOT}/templates/CLAUDE.md`, fill in the [FILL] fields with the confirmed answers, leave defaults as-is where the user didn't override them, and write the result to `CLAUDE.md` in the project root.
 
@@ -58,4 +58,4 @@ Steps, in order:
 
 10. Tell the user how to schedule recurring runs: type `/schedule`, set the prompt to "Run the environmental briefing skill for this project" (or use `/brief`), match the frequency to their cadence, and pick a time. Mention that a run skipped because the machine was asleep catches up automatically via the grace window.
 
-If the user wants the full suite later (contributing to a shared review queue), point them to the "Suite mode" section of CLAUDE.md and `${CLAUDE_PLUGIN_ROOT}/shared/candidate-item-contract.md`.
+This brief stands alone. Other Kenzie Creative plugins (meeting triage, comms triage, review) can run in the same project and share the directory's state by convention — but this command sets up only the environmental brief and never depends on them.

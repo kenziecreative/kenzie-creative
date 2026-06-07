@@ -113,11 +113,3 @@ How the brief is rendered. The content is identical regardless — this only set
 
 - **Format:** html   <!-- html = self-contained styled file (YYYY-MM-DD.html); markdown = plain brief (YYYY-MM-DD.md) -->
 - **Theme:** default   <!-- html only. "default" = brand-neutral, system fonts. Or a path to a CSS override with brand tokens, e.g. ./brief-theme.css -->
-
----
-
-## Suite mode  (default: off — standalone brief)
-
-This brief is the external-scan component of the intelligence-briefing suite. On its own it just writes briefs. When the rest of the suite (meeting triage, comms triage, review) is in play, set the candidate queue path below so the brief also contributes its actionable findings to the shared review queue. Leave it empty to run the brief standalone — nothing else changes.
-
-- **Candidate queue file:** [empty]   <!-- set to ./candidates.json to enable suite mode; see the skill's SUITE INTEGRATION section -->

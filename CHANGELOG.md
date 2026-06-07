@@ -1,15 +1,21 @@
 # Changelog
 
-All notable changes to the `intelligence-briefing` plugin are documented here. This project follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
+Notable changes to the `intelligence-briefing` plugin. Follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/). (The marketplace it ships in was renamed to `kenzie-creative` as of 0.3.0; companion plugins — meeting triage, comms triage, review — are now separate plugins in that marketplace, not future releases of this one.)
 
 ## [Unreleased]
 
-Planned producers and consumer on the shared candidate-item contract:
+Planned as separate Kenzie Creative plugins, each conforming to the directory convention in `/contract`: meeting triage, comms triage, triage review, source-directory triage.
 
-- Meeting triage (producer) — extract explicit/implicit tasks and patterns from meeting transcripts.
-- Comms triage (producer) — surface items from email and chat, cross-checked against meeting candidates to avoid duplication.
-- Triage review (consumer) — present the candidate queue for accept/reject and write accepted items to a backlog.
-- Source-directory triage (producer) — triage drops other projects push into the shared inbox.
+## [0.3.0] — 2026-06-07
+
+### Changed
+
+- **Refocused to the external scan only.** Removed the suite scaffolding so the plugin does one thing well: the environmental brief. Dropped the optional SUITE INTEGRATION step and the candidate-queue config from the skill, the Suite-mode section from the config template, and `CONNECTORS.md` (the external scan needs no connectors).
+- **Shared state is now a directory convention, not in-plugin scaffolding.** The candidate-item / dedup / source-directory docs moved out of the plugin to the marketplace repo's `/contract`. The `ledger.json` is documented as directory-owned shared state with `source`-tagged rows; this brief reads/writes only its `source: "environmental"` rows, so a shared ledger works whether or not other plugins are installed. Legacy untagged ledger entries are treated as environmental (backward compatible).
+
+### Notes
+
+- Marketplace renamed `intelligence-brief` → `kenzie-creative`. Re-add the marketplace and reinstall: `intelligence-briefing@kenzie-creative`.
 
 ## [0.2.0] — 2026-06-07
 
