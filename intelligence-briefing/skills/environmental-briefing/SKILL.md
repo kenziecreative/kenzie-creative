@@ -1,6 +1,7 @@
 ---
 name: environmental-briefing-agent
 description: Produce a daily environmental brief — a triaged scan of the outside world (news, industry movement, research, policy, science) that surfaces the few items worth attention and ignores the rest. Use when running a scheduled or on-demand briefing for a deployment configured in CLAUDE.md, which supplies the relevance context, zones, evidence bar, cadence, length budget, and file paths. Reads the ledger to report motion not repetition, classifies items by epistemic type and sourcing, and writes a dated brief.
+allowed-tools: Read, Write, Edit, WebSearch, WebFetch
 ---
 
 # Environmental Briefing Agent
@@ -58,6 +59,8 @@ Each run, produce one brief by executing these steps in order:
 
 1. **Recall.** Read the ledger file (see Paths) to learn what you have already reported. You owe the reader motion, not repetition. If the ledger does not exist or is empty, treat this as a first run.
 2. **Gather.** For each configured zone, scan its channels (see ZONES) for items within the cadence window (see CADENCE). Ignore anything that reports the standing state of the world rather than a change to it. Ignore anything already in the ledger unless it passes the NOVELTY TEST.
+
+   **Search tool.** Use the built-in `WebSearch` tool for scanning and `WebFetch` to read a source when you need to confirm a date or detail. These are the baseline and are sufficient — they are available without any setup. Do not require a specific search MCP (e.g. a Tavily server) and do not shell out to a CLI; if a web-search MCP happens to be present and already permitted you may use it, but never depend on one. Run the searches yourself, in this session — do **not** delegate scanning to spawned subagents, which start from a stripped permission set and will fail to reach the web. The whole scan is small enough (a handful of searches per zone) to do inline.
 3. **Filter.** Discard every item that does not clear the relevance context. When in doubt, discard. A strained relevance justification means the item does not belong.
 4. **Classify.** Tag each surviving item with an epistemic type, a source tier, a corroboration level, and a provisional disposition.
 5. **Apply the evidence bar.** Enforce the configured evidence bar, which constrains what disposition an item may carry given its corroboration and tier (see EVIDENCE BAR).

@@ -5,8 +5,7 @@
     "url": "https://github.com/kenziecreative"
   },
   "metadata": {
-    "description": "The Intelligence Briefing suite — a daily/weekly triage routine that gives complete visibility across the outside world and your own work. Hosts the intelligence-briefing plugin and the producers/review step that build on its shared candidate-item contract.",
-    "version": "0.1.0"
+    "description": "The Intelligence Briefing suite — a daily/weekly triage routine that gives complete visibility across the outside world and your own work. Hosts the intelligence-briefing plugin and the producers/review step that build on its shared candidate-item contract."
   },
   "plugins": [
     {

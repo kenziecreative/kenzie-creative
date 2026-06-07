@@ -11,6 +11,22 @@ Planned producers and consumer on the shared candidate-item contract:
 - Triage review (consumer) — present the candidate queue for accept/reject and write accepted items to a backlog.
 - Source-directory triage (producer) — triage drops other projects push into the shared inbox.
 
+## [0.1.3] — 2026-06-06
+
+### Fixed
+
+- The briefing skill now names the built-in `WebSearch` (and `WebFetch`) as its baseline scan tools and runs the scan inline. Previously it said only "scan channels," so a host session could reach for an uninstalled search MCP or fan the scan out to subagents that lack web access — producing a multi-option permission wall. Subagent delegation for scanning is now explicitly disallowed.
+- Declared `allowed-tools` on the skill and commands (`Read, Write, Edit, WebSearch, WebFetch`) so the tool dependency is explicit.
+
+### Added
+
+- `/intel-setup` now writes a project `.claude/settings.json` that pre-allows only the brief's own tools (`WebSearch, WebFetch, Read, Write, Edit`), so Claude Code users aren't prompted on every run. Merges into an existing file rather than overwriting. (No effect in Cowork, which doesn't use this file.)
+- `/intel-setup` runs a pre-flight web-search capability check before the test brief, surfacing a single clear approval message instead of letting the run fail partway.
+
+### Removed
+
+- Dropped the redundant `metadata.version` from `marketplace.json` so the plugin's `version` is the single source of truth for updates.
+
 ## [0.1.2] — 2026-06-06
 
 ### Fixed

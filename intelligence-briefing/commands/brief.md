@@ -1,6 +1,6 @@
 ---
 description: Run the environmental brief for this project now
-allowed-tools: Read, Write, Edit, WebSearch
+allowed-tools: Read, Write, Edit, WebSearch, WebFetch
 ---
 
 Run the environmental briefing skill once for the current project, on demand.

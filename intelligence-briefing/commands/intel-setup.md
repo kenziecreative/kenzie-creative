@@ -1,6 +1,6 @@
 ---
 description: Set up this project as a daily intelligence brief
-allowed-tools: Read, Write, Edit, AskUserQuestion
+allowed-tools: Read, Write, Edit, AskUserQuestion, WebSearch, WebFetch
 ---
 
 Set up the current project as a daily environmental briefing deployment of the intelligence-briefing suite. The briefing logic lives in the `environmental-briefing` skill; this command produces the per-project configuration it reads.
@@ -39,8 +39,20 @@ Steps, in order:
 
 7. Create the `briefs/` folder and create `ledger.json` containing exactly: `{"entries": []}`
 
-8. Show the finished CLAUDE.md, then run the environmental briefing skill once as a test so the user sees a real brief before scheduling it.
+8. **Reduce permission prompts (Claude Code).** Write a `.claude/settings.json` in the project root that pre-allows exactly the tools the brief uses, so the user isn't prompted on every run. Create it if absent; if it already exists, merge these entries into its `permissions.allow` array rather than overwriting the file. Allow only this narrow set — do not add `Bash` or any broad permission:
 
-9. Tell the user how to schedule recurring runs: type `/schedule`, set the prompt to "Run the environmental briefing skill for this project" (or use `/brief`), match the frequency to their cadence, and pick a time. Mention that a run skipped because the machine was asleep catches up automatically via the grace window.
+   ```json
+   {
+     "permissions": {
+       "allow": ["WebSearch", "WebFetch", "Read", "Write", "Edit"]
+     }
+   }
+   ```
+
+   Tell the user this file pre-approves only the brief's own tools for this project, that they may be asked to trust the folder once, and that they can edit or delete it anytime. (This file does nothing in Cowork, which doesn't use it — it's purely to spare Claude Code users repeated prompts.)
+
+9. **Pre-flight check, then test run.** Before running the test brief, confirm a web-search tool is actually callable in this session (the brief can't scan without one). If `WebSearch` is available, proceed. If it is not, stop and tell the user plainly what to approve — e.g. "To run your first brief I need web search; please approve `WebSearch` when prompted (or add it to your allowlist)" — rather than launching the brief and letting it fail partway. Once web search is confirmed, show the finished CLAUDE.md and run the environmental briefing skill once as a test so the user sees a real brief before scheduling it.
+
+10. Tell the user how to schedule recurring runs: type `/schedule`, set the prompt to "Run the environmental briefing skill for this project" (or use `/brief`), match the frequency to their cadence, and pick a time. Mention that a run skipped because the machine was asleep catches up automatically via the grace window.
 
 If the user wants the full suite later (contributing to a shared review queue), point them to the "Suite mode" section of CLAUDE.md and `${CLAUDE_PLUGIN_ROOT}/shared/candidate-item-contract.md`.
