@@ -2,9 +2,11 @@
 
 **Small, focused tools for staying on top of your world, by [Kenzie Creative](https://www.kenzienotes.com).**
 
-Each tool here does one thing well and runs on its own. Instead of one program that tries to do everything, you install only the few that fit how you actually work — a brief that triages the outside world, and (in time) tools that triage your meetings, your messages, and the decisions waiting on you. They stay out of each other's way: every tool works alone, and when you run several in the same project they coordinate through shared files in that project rather than depending on one another.
+A **plugin marketplace for Claude** — works in both Claude Cowork (the desktop app) and Claude Code (the CLI). This repo is the catalog; each tool below is a plugin you can install into Claude and use in any project.
 
-You install them through Claude — once a tool is added, it shows up as commands and skills you can run in any project.
+Each tool does one thing well and runs on its own. Instead of one program that tries to do everything, you install only the few that fit how you actually work — a brief that triages the outside world, and (in time) tools that triage your meetings, your messages, and the decisions waiting on you. They stay out of each other's way: every tool works alone, and when you run several in the same project they coordinate through shared files in that project rather than depending on one another.
+
+Once a tool is installed, it shows up as commands and skills you can run in any Claude project.
 
 ## The tools
 
