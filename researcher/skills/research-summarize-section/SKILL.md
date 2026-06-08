@@ -1,5 +1,5 @@
 ---
-name: summarize-section
+name: research-summarize-section
 description: Synthesize processed source notes into a draft research output section
 argument-hint: "[section-name-or-phase-number]"
 model: opus

@@ -1,5 +1,5 @@
 ---
-name: start-phase
+name: research-start-phase
 description: Show what's needed to begin the next research phase — questions, prior findings, and context
 allowed-tools: Read, Grep, Glob
 model: sonnet

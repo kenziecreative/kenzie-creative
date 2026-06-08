@@ -1,5 +1,5 @@
 ---
-name: progress
+name: research-progress
 description: Show research project dashboard — phase status, source counts, and next action
 allowed-tools: Read, Grep, Glob
 model: sonnet

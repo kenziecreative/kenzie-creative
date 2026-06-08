@@ -1,5 +1,5 @@
 ---
-name: process-source
+name: research-process-source
 description: Process a URL, PDF, or document into a structured research note
 argument-hint: "[url-or-file-path]"
 ---

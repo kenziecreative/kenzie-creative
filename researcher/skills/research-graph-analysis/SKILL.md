@@ -1,5 +1,5 @@
 ---
-name: graph-analysis
+name: research-graph-analysis
 description: Analyze the claim graph for load-bearing claims, fragile foundations, and cheapest confidence upgrades
 allowed-tools: Read, Grep, Glob
 model: sonnet

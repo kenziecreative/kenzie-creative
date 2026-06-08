@@ -1,5 +1,5 @@
 ---
-name: check-gaps
+name: research-check-gaps
 description: Map research coverage and identify holes across all phases
 model: opus
 ---

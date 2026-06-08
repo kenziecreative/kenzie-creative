@@ -1,5 +1,5 @@
 ---
-name: cross-ref
+name: research-cross-ref
 description: Find patterns and connections across all processed research notes
 model: opus
 ---

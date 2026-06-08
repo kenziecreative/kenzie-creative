@@ -1,5 +1,5 @@
 ---
-name: init
+name: research-init
 description: Scaffold a structured research project with state management, evidence standards, and agent-driven workflows
 disable-model-invocation: true
 model: opus

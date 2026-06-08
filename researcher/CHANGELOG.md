@@ -2,6 +2,19 @@
 
 Notable changes to the Researcher plugin. As of v1.3.0 it ships from the Kenzie Creative marketplace as `researcher`; prior versions shipped as a standalone clone-and-use repo named `research-agent`. This changelog starts at v1.3.0 (the first marketplace release); pre-marketplace milestones lived in the source repo's planning artifacts rather than a published changelog.
 
+## [1.4.1] — 2026-06-08
+
+A structural fix so the plugin works in Cowork as well as Claude Code. The eleven `/research:*` entry points were previously authored as skills living under `commands/research/<name>/SKILL.md`. Claude Code (which also surfaces skills) found them; Cowork (which discovers commands from flat `commands/*.md` files) found nothing, so no slash commands appeared. v1.4.1 splits each entry point into a model-invokable skill plus a slash-command wrapper, matching the pattern used by `sage` and `intelligence-briefing`.
+
+### Changed
+
+- **`commands/research/<name>/SKILL.md` moved to `skills/research-<name>/SKILL.md`.** Each skill's frontmatter `name` was rewritten from the bare verb (e.g. `init`) to the prefixed form (e.g. `research-init`), so they surface as `researcher:research-init`, `researcher:research-discover`, and so on. Skill bodies are unchanged. `research-init` retains its `disable-model-invocation: true` flag (it's destructive); the other ten remain auto-invokable.
+- **New `commands/research/<name>.md` wrappers.** Eleven thin slash-command wrappers, one per skill, that delegate to the matching skill. Pattern matches `sage/commands/sage-run.md`. `/research:init`, `/research:discover`, `/research:process-source`, `/research:phase-insight`, `/research:check-gaps`, `/research:cross-ref`, `/research:start-phase`, `/research:progress`, `/research:summarize-section`, `/research:audit-claims`, `/research:graph-analysis` now resolve as real commands in both Cowork and Claude Code.
+
+### Fixed
+
+- **Slash commands now appear in Cowork.** Previously, none of the `/research:*` commands showed up in Cowork because no `commands/*.md` files existed — the directory contained skill bundles instead.
+
 ## [1.4.0] — 2026-06-07
 
 Four behavioral rewrites that close out assumptions still living in v1.3.x. v1.4 makes init work in any fresh folder, adds a hook backstop on the audit gate, surfaces per-phase discovery quality, and runs plan generation in the main agent's context.

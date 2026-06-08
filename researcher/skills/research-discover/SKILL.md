@@ -1,5 +1,5 @@
 ---
-name: discover
+name: research-discover
 description: "Execute type-aware, multi-channel source discovery for the current research phase"
 allowed-tools: [Bash, WebSearch, Read, Grep, Glob]
 model: sonnet

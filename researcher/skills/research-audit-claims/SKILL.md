@@ -1,5 +1,5 @@
 ---
-name: audit-claims
+name: research-audit-claims
 description: Fact-check a research draft against source notes and promote to outputs if it passes
 argument-hint: "[filepath]"
 model: opus
