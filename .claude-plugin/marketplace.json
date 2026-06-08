@@ -17,6 +17,11 @@
       "name": "researcher",
       "source": "./researcher",
       "description": "A structured research system: pick a topic, get a phased plan grounded in preliminary research, then work through it together — collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Standalone."
+    },
+    {
+      "name": "sage",
+      "source": "./sage",
+      "description": "The meeting round-up: turns a stream of meeting transcripts into a single living weekly document that surfaces action items, tracks cross-meeting threads, and keeps a forward watch list. Auto-pulls from Read.ai, Fireflies, or Granola; works on any transcript dropped into a source folder for everything else."
     }
   ]
 }
