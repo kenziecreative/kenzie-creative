@@ -29,12 +29,17 @@ Tool: `get_meeting_transcript`
 
 Returns the raw transcript by meeting ID. **Paid plans only** — see the plan-tier gate below.
 
-## Plan-tier gate (run at first invocation per session)
+## Pre-fetch gate (plan-tier check)
 
-Call `get_account_info` once per scheduled run, before attempting any fetches.
+The SKILL runs this gate before attempting any fetches (per Stage 2 step 2 in `SKILL.md`).
 
-- If the response indicates **free / Basic tier**: Sage cannot pull transcripts at all (the fetch tool is paid-only). Surface a clear message to the user: _"Granola free tier doesn't expose transcript fetch. Drop transcripts into `source/` instead, or upgrade Granola."_ Skip the MCP pull for this run; continue to sweep `source/` as normal.
-- If the response indicates **paid tier**: proceed normally.
+Call `get_account_info` once per scheduled run.
+
+- If the response indicates **free / Basic tier**: Sage cannot pull transcripts at all (the fetch tool is paid-only). Surface this message to the user verbatim and skip the MCP pull for this run; continue to sweep `source/` as normal:
+
+  > Granola free tier doesn't expose transcript fetch. Drop transcripts into `source/` instead, or upgrade Granola.
+
+- If the response indicates **paid tier**: the gate passes. Proceed.
 
 This is the right place to fail-fast rather than discovering it three calls deep into the pull.
 
