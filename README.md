@@ -4,7 +4,7 @@
 
 A **plugin marketplace for Claude** — works in both Claude Cowork (the desktop app) and Claude Code (the CLI). This repo is the catalog; each tool below is a plugin you can install into Claude and use in any project.
 
-Each tool does one thing well and runs on its own. Instead of one program that tries to do everything, you install only the few that fit how you actually work — a brief that triages the outside world, a research system that turns Claude into a rigorous research partner, and (in time) tools that triage your meetings, your messages, and the decisions waiting on you. They stay out of each other's way: every tool works alone; some plugins coordinate through shared files in the project when they're run together; others run entirely on their own.
+Each tool does one thing well and runs on its own. Instead of one program that tries to do everything, you install only the few that fit how you actually work — a brief that triages the outside world, a research system that turns Claude into a rigorous research partner, a meeting round-up that keeps a fast-moving week legible, and (in time) tools that triage your messages and the decisions waiting on you. They stay out of each other's way: every tool works alone; some plugins coordinate through shared files in the project when they're run together; others run entirely on their own.
 
 Once a tool is installed, it shows up as commands and skills you can run in any Claude project.
 
@@ -22,6 +22,12 @@ A **structured research system**: pick a topic, get a phased plan grounded in pr
 
 → **[Read the Researcher guide](./researcher/README.md)** for setup, research types, and the integrity model.
 
+### Sage
+
+A **weekly meeting round-up** that keeps a fast-moving week legible at a glance. Each meeting becomes a structured summary; every summary folds into one living round-up that tracks action items, cross-meeting threads, and a forward watch list. Pulls transcripts from Read.ai, Fireflies, or Granola via MCP; works on manually dropped transcripts for anything else. Built for the week where five conversations all touched the same decision and you need to know where it actually landed.
+
+→ **[Read the Sage guide](./sage/README.md)** for setup, supported services, and the round-up structure.
+
 ## Install
 
 ### Claude Cowork (desktop app)
@@ -37,9 +43,10 @@ A **structured research system**: pick a topic, get a phased plan grounded in pr
 /plugin marketplace add kenziecreative/kenzie-creative
 /plugin install intelligence-briefing@kenzie-creative
 /plugin install researcher@kenzie-creative
+/plugin install sage@kenzie-creative
 ```
 
-Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`; for research, run `/research:init`.
+Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`; for research, run `/research:init`; for the meeting round-up, run `/sage:setup`.
 
 ## Updates
 
@@ -53,6 +60,7 @@ New versions arrive only when one is published — nothing changes under you.
 /plugin marketplace update kenzie-creative
 /plugin update intelligence-briefing
 /plugin update researcher
+/plugin update sage
 /reload-plugins
 ```
 
