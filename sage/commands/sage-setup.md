@@ -111,7 +111,18 @@ Steps, in order:
 
    To merge: `Read` the existing `.claude/settings.json` if present, parse it as JSON, take the union of its existing `permissions.allow` array (if any) with the entries above, deduplicate, sort for stability, and write the file back. If the file doesn't exist, write a fresh one with just `{"permissions": {"allow": [...]}}`.
 
-   Tell the user this file pre-approves only Sage's own tools for this project, that they may be asked to trust the folder once, and that they can edit or delete it anytime. (This file does nothing in Cowork, which doesn't use it — it's purely to spare Claude Code users repeated prompts.)
+   **On successful write:** Tell the user this file pre-approves only Sage's own tools for this project, that they may be asked to trust the folder once, and that they can edit or delete it anytime. (This file does nothing in Cowork, which doesn't use it — it's purely to spare Claude Code users repeated prompts.)
+
+   **If the write fails** (the `.claude/` path is protected in the current surface, permission denied, anything else), do not retry and do not improvise. Surface this deterministic message and continue with step 10:
+
+   > Couldn't write `.claude/settings.json` in this session — that path is protected here. This is expected on the Cowork surface, where the file is inert anyway (Cowork doesn't use it). If you also use this project in Claude Code, add these entries to `.claude/settings.json` manually under `permissions.allow`:
+   >
+   > **Base:** `Read`, `Write`, `Edit`, `Glob`, `Grep`
+   > **Plus (for your MCP branch):** [list the same MCP tools you would have written for the user's branch]
+   >
+   > Then `Read`, `Write`, `Edit` access for the project's own files will work without per-call prompts.
+
+   Filling the second bullet with the actual tool list for the user's chosen MCP branch is required — don't leave a placeholder. The base set is constant; the MCP-specific lines vary per branch.
 
 10. **Test run.** What this looks like depends on what was configured:
 

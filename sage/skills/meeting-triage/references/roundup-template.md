@@ -97,6 +97,21 @@ After each summary lands, three integrations happen in order:
 2. **Update action items.** New ones go to "Open — this week." Items that resolved move to "Closed" with strikethrough. Items whose nature changed get reframed in place (e.g., "Sync with Peter on dedup" becomes "Dom + Peter own the dedup cleanup" once that decision lands — not a new item, an updated one).
 3. **Update cross-meeting threads.** If a meeting touches an existing thread, update the status column. If it surfaces a new thread, add a row.
 
+## Backfill runs (processing a week that's already ended)
+
+The Forward Watch List buckets above (**Tomorrow** / **Before EOW** / **Status checks needed** / **Next week** / **Deferred-OK**) assume the round-up is being built for the *current* week. On a backfill run — first deployment, a paused project resumed, or any run that processes meetings from a past week — future-tense buckets like "Tomorrow" and "Before EOW" don't apply retroactively.
+
+When the round-up covers a past week, relabel the buckets to reflect historical state:
+
+- **Before EOW (was <day DD>)** — items that needed to land before the past week's end. Whether they actually did is the status to check; surface unresolved ones in "Status checks needed."
+- **This week (week of <next Monday>)** — items that carried over from the backfilled week into the current week. The natural successor to "Next week" once "next" has arrived.
+- **Status checks needed** — same meaning regardless of timing. Questions framed at owners.
+- **Deferred-OK** — same meaning; no time pressure.
+
+Drop **Tomorrow** when it doesn't apply — better an honest empty than a relabel that breaks the bucket's meaning.
+
+The round-up should note the backfill state explicitly at the top — e.g. *"Living document — complete through: Friday <date> (week closed). Run: <date>."* — so a reader knows the round-up isn't tracking the current week.
+
 ## What goes in "Things the User Should Know"
 
 Items that **affect the user's work but aren't their action**. The distinction matters: action items are things she owes; FYI items are things she should know to make good calls.
