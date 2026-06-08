@@ -9,6 +9,25 @@ model: opus
 
 You are scaffolding a new research project. This skill creates the research infrastructure: directory structure, CLAUDE.md, STATE.md, reference protocols, source registry, gap tracker, cross-reference file, and a research plan tailored to the project's topic and type.
 
+## Step 0: Fresh-project guard
+
+Init only runs against fresh project directories. Before asking the user any questions, check whether `${CLAUDE_PROJECT_DIR}/research/STATE.md` exists.
+
+- **If `STATE.md` does not exist:** proceed to Step 1.
+- **If `STATE.md` exists:** stop. Print:
+
+  > There's already a research project here (`research/STATE.md` exists). Init only runs on fresh directories.
+  >
+  > To start over, either:
+  > - `mv research research.old` (preserves your existing work in a side directory), or
+  > - `rm -rf research source-material` (discards it), then re-run `/research:init`.
+  >
+  > To check the status of the existing project instead, run `/research:progress`.
+
+  Do not modify any files. Do not ask questions. Exit the skill.
+
+---
+
 ## Step 1: Gather Project Information
 
 Ask the user three questions. Ask them **one at a time** — don't stack them.
@@ -59,7 +78,7 @@ Before generating any plan, you must fully read every document the user has prov
 
 ### 2a. Save pasted or referenced content to source-material/
 
-If the user's Question 2 answer included a document path, URL, or pasted content, save it to `source-material/` with a descriptive filename — use the document's own title or a short slug derived from its first heading, not "source.txt" or "doc1.md". For URLs, fetch the full content with `export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && tvly extract "{url}" --format markdown` first; fall back to `export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && npx firecrawl-cli scrape "{url}" --format markdown`, then `WebFetch` if CLIs unavailable. The PATH export is required because `settings.json` env values do not expand shell variables. Never work from search snippets here — the plan generator will use what you save as ground truth.
+If the user's Question 2 answer included a document path, URL, or pasted content, save it to `source-material/` with a descriptive filename — use the document's own title or a short slug derived from its first heading, not "source.txt" or "doc1.md". For URLs, fetch the full content with `tvly extract "{url}" --format markdown` first; fall back to `npx firecrawl-cli scrape "{url}" --format markdown`, then `WebFetch` if CLIs unavailable. CLI commands use bare names — the plugin's `SessionStart` hook (`hooks/setup-paths.sh`) puts the necessary bin directories on PATH for every Bash call in the session. Never work from search snippets here — the plan generator will use what you save as ground truth.
 
 ### 2b. List and read every file in source-material/
 
@@ -71,9 +90,9 @@ Run `ls source-material/` and enumerate every file (ignore `.gitkeep`, `.DS_Stor
 
 If a file cannot be read (binary format, access error, corrupted, encrypted), stop and tell the user exactly which file and why. Do not proceed to Step 3 with that file unread. Offer the same options as `process-source` does for inaccessible URLs: the user pastes the text, the user provides an alternative format, or the user explicitly marks the file as "cannot read — proceed without it" (which is then recorded in the digest's Out of Scope section with the reason).
 
-### 2c. Write research/source-material-digest.md
+### 2c. Write the source-material digest
 
-Create `research/source-material-digest.md` using the structure below. This file is the ground truth for what the user handed you. The plan generator reads it, the research-integrity agent verifies the plan against it, and `/research:start-phase` reconciles future drops against it.
+Create `${CLAUDE_PROJECT_DIR}/research/source-material-digest.md` using the structure below. This file is the ground truth for what the user handed you. The plan generator reads it, the research-integrity agent verifies the plan against it, and `/research:start-phase` reconciles future drops against it.
 
 ```markdown
 # Source Material Digest
@@ -122,7 +141,7 @@ Populate every section. An empty section means "I checked and found nothing," an
 Step 4 (Generate the Research Plan) now has access to:
 - The verbal topic description (from Question 2)
 - The structured digest at `research/source-material-digest.md`
-- The raw files in `source-material/` (which the plan-generator subagent is required to re-read in full)
+- The raw files in `source-material/` (which Step 4's plan generation is required to re-read in full)
 
 If `source-material/` is empty (no non-dotfile files), Step 2 has no work to do — skip directly to Step 3 without creating a digest. Most projects start with an empty `source-material/` and rely entirely on discovery. The digest is only required when the user has provided seed documents.
 
@@ -137,46 +156,81 @@ If `source-material/` is empty (no non-dotfile files), Step 2 has no work to do 
 | Silently skipping an unreadable file | Any file in `source-material/` that cannot be read must be reported to the user with options. Do not mark the digest as complete while files remain unread. |
 | Dropping conversational context the user gave in Question 2 | Preserve the verbal topic description verbatim in the "Things the User Said in Conversation" section. The plan generator needs to see the verbal framing alongside the document facts. |
 
-## Step 3: Verify Directory Structure
+## Step 3: Create Directory Structure
 
-The directory structure already exists from the clone. Verify these directories are present:
+This is a fresh-project scaffold — do not assume any of these directories exist. Create them all, rooted at `${CLAUDE_PROJECT_DIR}` so the skill works regardless of the agent's current working directory.
+
+### 3a. Create the directory tree
+
+Create each leaf directory below by writing a `.gitkeep` file into it with the Write tool. Write creates parent directories implicitly, so each `.gitkeep` write also creates the directory. Do **not** use Bash `mkdir` — Write avoids permission prompts and is consistent with the rest of init's file operations.
 
 ```
-research/
-├── sources/
-├── notes/
-├── drafts/
-├── outputs/
-├── audits/
-├── reference/
-└── discovery/
-source-material/
+${CLAUDE_PROJECT_DIR}/research/sources/.gitkeep
+${CLAUDE_PROJECT_DIR}/research/notes/.gitkeep
+${CLAUDE_PROJECT_DIR}/research/drafts/.gitkeep
+${CLAUDE_PROJECT_DIR}/research/outputs/.gitkeep
+${CLAUDE_PROJECT_DIR}/research/audits/.gitkeep
+${CLAUDE_PROJECT_DIR}/research/reference/.gitkeep
+${CLAUDE_PROJECT_DIR}/research/discovery/.gitkeep
+${CLAUDE_PROJECT_DIR}/source-material/.gitkeep
 ```
 
-If any are missing, create them. Do NOT create `.claude/commands/`, `.claude/agents/`, or `.claude/settings.json` — these already exist in the repo root.
+Each `.gitkeep` is empty (zero-byte file). These exist solely to make Git track the empty directories until real content arrives.
+
+### 3b. Pre-allow researcher's tools in the project settings
+
+Write or merge `${CLAUDE_PROJECT_DIR}/.claude/settings.json` to pre-allow the tools researcher uses. This eliminates per-invocation permission prompts in Claude Code (the file is inert in Cowork — Cowork has its own permission model).
+
+**Read the file first.** If it does not exist, create it with this content:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Read",
+      "Write",
+      "Edit",
+      "Grep",
+      "Glob",
+      "Bash(tvly:*)",
+      "Bash(npx:*)",
+      "Bash(ls:*)",
+      "Bash(mv:*)"
+    ]
+  }
+}
+```
+
+**If the file already exists**, merge additively: read the existing JSON, ensure `permissions.allow` is an array, append any of the entries above that are not already present, write it back. Never overwrite a top-level key the user already set. If `permissions.allow` exists but is not an array, surface the discrepancy to the user and skip the merge — don't silently overwrite a hand-tuned config.
+
+The pattern mirrors `/intel-setup` in the `intelligence-briefing` plugin — additive merge, never replace.
 
 ## Step 4: Generate the Research Plan
 
-Read the matching type template from `${CLAUDE_PLUGIN_ROOT}/reference/templates/types/` to get the type-specific finding tags, validation standards, phase structure patterns, and credibility hierarchy.
+**Where this runs.** Plan generation runs **inline in your (the main agent's) context** by default. This works reliably on both Claude Code and Cowork. On Claude Code, where a fresh subagent context can sharpen analysis on long source-material reads, you MAY delegate plan generation to a `general-purpose` harness subagent with the same instructions block below. On Cowork, harness subagents do reach the web in current testing, but inline is still preferred. Unless you have a specific reason to delegate, follow the instructions below in your own context.
 
-Read the type-channel map from `${CLAUDE_PLUGIN_ROOT}/reference/discovery/type-channel-maps/{research-type}.md`. You will pass this content to the plan-generator subagent so it can produce the discovery strategy alongside the research plan.
+Read the matching type template from `${CLAUDE_PLUGIN_ROOT}/reference/templates/types/<research-type>.md` to get the type-specific finding tags, validation standards, phase structure patterns, and credibility hierarchy.
 
-Launch an agent (use `subagent_type: "general-purpose"`, model: `opus`) to generate the research plan. Provide the agent with:
+Read the type-channel map from `${CLAUDE_PLUGIN_ROOT}/reference/discovery/type-channel-maps/{research-type}.md`. You'll use this content to produce the discovery strategy alongside the research plan.
+
+You now have, in your own context:
 - The research type
 - The verbal topic description the user provided in Question 2 (preserved verbatim)
-- The full contents of `research/source-material-digest.md` if it exists (the structured facts extracted from every file in `source-material/` during Step 2). If no digest exists because `source-material/` was empty, note this explicitly to the subagent.
-- The absolute paths of every file in `source-material/` — the subagent is REQUIRED to Read each file in full itself before generating the plan, using the digest as a scaffold for verification, not as a substitute for the primary documents. If the subagent's plan does not visibly engage with facts specific to the source material, that is a failure.
-- The type-specific template content so the agent knows the finding tags, validation standards, and phase structure patterns
-- The audience and evidence standard answer, so the agent can calibrate phase depth and source requirements
-- The type-channel map content from `${CLAUDE_PLUGIN_ROOT}/reference/discovery/type-channel-maps/{research-type}.md`
+- The full contents of `research/source-material-digest.md` if it exists (the structured facts extracted from every file in `source-material/` during Step 2). If no digest exists because `source-material/` was empty, note this and proceed using the verbal topic description and preliminary research only.
+- The absolute paths of every file in `source-material/` — you are REQUIRED to Read each file in full before generating the plan, using the digest as a scaffold for verification, not as a substitute for the primary documents. If your plan does not visibly engage with facts specific to the source material, the plan has failed.
+- The type-specific template content (finding tags, validation standards, phase structure patterns)
+- The audience and evidence standard answer (calibrates phase depth and source requirements)
+- The type-channel map content
 
-Give the agent these instructions:
+Follow these instructions in your own context:
 
 ---
 
 ### Plan Generator Instructions
 
-You generate research plans for structured AI-assisted research projects. Your output is the content for a `research-plan.md` file that defines the entire research arc for a project.
+You are generating a research plan for a structured AI-assisted research project. Your output is the content for a `research-plan.md` file that defines the entire research arc for a project.
 
 **Audience calibration:** The evidence standard for this project is set by the audience. Use the audience context to:
 - Adjust the number of sources expected per phase (higher for external publication or investment due diligence, lower for personal knowledge building)
@@ -186,7 +240,7 @@ Do not override the evidence standard set by the audience. A personal knowledge 
 
 **Source Material Grounding — Non-Negotiable:**
 
-You have been given (a) a verbal topic description, (b) potentially a structured digest at `research/source-material-digest.md`, and (c) the absolute paths of every file in `source-material/`.
+You have (a) a verbal topic description from Question 2, (b) potentially a structured digest at `${CLAUDE_PROJECT_DIR}/research/source-material-digest.md`, and (c) the absolute paths of every file in `${CLAUDE_PROJECT_DIR}/source-material/`.
 
 If a digest and source-material files exist, before writing any phase you MUST Read each `source-material/` file in full. Do not rely solely on the digest — the digest is a scaffold that tells you what to look for, not a replacement for the primary documents. Use the Read tool with no offset and no limit (paginate explicitly for files over 2000 lines).
 
@@ -194,7 +248,7 @@ Every phase you generate must demonstrate engagement with the source material. "
 
 If the verbal description and the source material disagree (e.g., the user says "I'm pursuing a PhD" but the provided resume shows a terminated Master's with no doctoral enrollment), DO NOT pick a side. Flag the discrepancy in the Assumptions section of the research plan as an open question, and phrase Phase 1 so that it can resolve the discrepancy before committing to a framing.
 
-If `source-material/` is empty (no digest, no files), this section does not apply — proceed using the verbal topic description and your preliminary research.
+If `source-material/` is empty (no digest, no files), this section does not apply — proceed using the verbal topic description and preliminary research.
 
 **Your job:** Generate a complete research plan with:
 
@@ -327,18 +381,18 @@ These rules exist because agents can confabulate a subject when the provided des
 
 You have access to `tvly search` and `WebFetch` — use `tvly search` as your primary research tool (not WebSearch, which is the degraded fallback). Do preliminary research so the phases and questions are grounded, not generic. Derive the appropriate date range from the topic and research questions — do not assume a default. A historical analysis needs historical dates, a current-state analysis needs recent data, a projection needs future-looking ranges. **Preliminary research is for context only — it does not change the subject you were given.**
 
-Write the final research plan to `research/research-plan.md`.
+Write the final research plan to `${CLAUDE_PROJECT_DIR}/research/research-plan.md`.
 
 **Discovery Strategy Generation:**
 
-After generating the research plan, also produce `research/discovery/strategy.md`. Use the type-channel map content provided to you.
+After generating the research plan, also produce `${CLAUDE_PROJECT_DIR}/research/discovery/strategy.md`. Use the type-channel map content provided to you.
 
 For each phase in the research plan you just generated:
 - Find the matching Discovery Group in the type-channel map by keyword-matching the phase name to Discovery Group names (e.g., a phase named "Financial Analysis" matches a "Financial" or "Financials" Discovery Group)
 - If a match is found: record the phase name, its primary channels, and its secondary channels from the type-channel map
 - If no match is found: record the phase as "no discovery — uses existing sources"
 
-Write `research/discovery/strategy.md` with this format:
+Write `${CLAUDE_PROJECT_DIR}/research/discovery/strategy.md` with this format:
 
 ```markdown
 # Discovery Strategy: [Research Type]
@@ -366,7 +420,7 @@ no discovery — uses existing sources
 
 ---
 
-Wait for the agent to complete before proceeding.
+Once `${CLAUDE_PROJECT_DIR}/research/research-plan.md` and `${CLAUDE_PROJECT_DIR}/research/discovery/strategy.md` are written, proceed to Step 5.
 
 ## Step 5: Assemble and Write Files
 
@@ -564,18 +618,18 @@ Detailed protocols are in `research/reference/`. Read the relevant file when you
 | Writing & File Standards | `research/reference/writing-standards.md` | Writing output sections, naming files |
 | Tools Guide | `research/reference/tools-guide.md` | Using tvly, firecrawl-cli, and WebSearch/WebFetch for research discovery and extraction |
 
-Write the assembled CLAUDE.md to `CLAUDE.md`.
+Write the assembled CLAUDE.md to `${CLAUDE_PROJECT_DIR}/CLAUDE.md`.
 
 ### Reference Files
 
-Copy the following files to the project:
+Read each source and Write to the destination — do not use Bash `cp`, which can trigger permission prompts and obscures the operation in the transcript.
 
-1. Copy `${CLAUDE_PLUGIN_ROOT}/reference/writing-standards.md` to `research/reference/writing-standards.md`
-2. Copy `${CLAUDE_PLUGIN_ROOT}/reference/tools-guide.md` to `research/reference/tools-guide.md`
+1. Read `${CLAUDE_PLUGIN_ROOT}/reference/writing-standards.md` → Write to `${CLAUDE_PROJECT_DIR}/research/reference/writing-standards.md`
+2. Read `${CLAUDE_PLUGIN_ROOT}/reference/tools-guide.md` → Write to `${CLAUDE_PROJECT_DIR}/research/reference/tools-guide.md`
 
 ### source-standards.md
 
-Read `${CLAUDE_PLUGIN_ROOT}/reference/templates/source-standards.md` as a template. Replace the `[INSERT THE SOURCE CREDIBILITY HIERARCHY FROM THE MATCHING TYPE TEMPLATE]` placeholder with the Source Credibility Hierarchy from the matching type template. Write the result to `research/reference/source-standards.md`.
+Read `${CLAUDE_PLUGIN_ROOT}/reference/templates/source-standards.md` as a template. Replace the `[INSERT THE SOURCE CREDIBILITY HIERARCHY FROM THE MATCHING TYPE TEMPLATE]` placeholder with the Source Credibility Hierarchy from the matching type template. Write the result to `${CLAUDE_PROJECT_DIR}/research/reference/source-standards.md`.
 
 ### STATE.md
 
@@ -643,13 +697,13 @@ This field should always read like a command the user can execute, not a phase-l
 -->
 ```
 
-Write to `research/STATE.md`.
+Write to `${CLAUDE_PROJECT_DIR}/research/STATE.md`.
 
 ### Other Files
 
-- Copy `${CLAUDE_PLUGIN_ROOT}/reference/templates/registry.md` to `research/sources/registry.md`
+- Read `${CLAUDE_PLUGIN_ROOT}/reference/templates/registry.md` → Write to `${CLAUDE_PROJECT_DIR}/research/sources/registry.md`
 
-- Write `research/gaps.md` — use phase names from the generated research plan:
+- Write `${CLAUDE_PROJECT_DIR}/research/gaps.md` — use phase names from the generated research plan:
 
 ```markdown
 # Research Coverage Gaps
@@ -669,26 +723,40 @@ Tracks what's been covered and what's still missing across all research phases.
 [...etc for all phases]
 ```
 
-- Write `research/audits/gate-log.md`:
+- Write `${CLAUDE_PROJECT_DIR}/research/audits/gate-log.md`:
 
 ```markdown
 # Gate Log
 
-Permission gate decisions for writes to research/outputs/.
+Promotion authorization log for writes to research/outputs/. The PreToolUse hook in the researcher plugin (Claude Code only) reads the most recent row of this table to authorize a Write/Edit/MultiEdit targeting research/outputs/. /research:audit-claims appends a `pass` row immediately before promoting a draft.
 
 | Timestamp | Action | Result | File | Detail |
 |-----------|--------|--------|------|--------|
 ```
 
-- Copy `${CLAUDE_PLUGIN_ROOT}/reference/templates/cross-reference.md` to `research/cross-reference.md`
+- Write `${CLAUDE_PROJECT_DIR}/research/outputs/.gate-policy.md` with the following content (this file documents the gate for humans reading the directory; the hook itself reads gate-log.md):
 
-- Copy `${CLAUDE_PLUGIN_ROOT}/reference/templates/canonical-figures.json` to `research/reference/canonical-figures.json`
+```markdown
+# Output Directory Gate Policy
 
-- Write `research/reference/claim-graph.json` with initial content `{"claims": []}` — this is the claim graph registry, populated by `/research:audit-claims` during each phase's Verify step.
+Files in `research/outputs/` are promoted from `research/drafts/` by `/research:audit-claims` only. Direct Write/Edit/MultiEdit operations targeting this directory are blocked by a PreToolUse hook (Claude Code) until an authorizing row appears in `research/audits/gate-log.md` (within the last 120 seconds, result: pass, matching file path).
 
-- Write `research/reference/retrieval-log.json` with initial content `{"entries": []}` — this is the retrieval log registry, populated by `/research:discover` after each discovery run.
+The hook is inert in Cowork — Cowork has no PreToolUse hooks. In Cowork the gate is structural-only: `/research:audit-claims` is the only skill that writes here. Don't bypass it.
 
-- Write `research/commonplace.md` with the following initial content:
+The hook does not gate Bash operations (`mv`, `cp`, `rm`). `/research:audit-claims` typically uses `mv` for the promotion itself; the gate-log row is the durable audit-trail record of the authorization decision regardless of which tool performed the move.
+
+If you find yourself wanting to bypass the gate, you almost certainly want to re-run `/research:audit-claims` on the relevant draft instead. The gate exists to keep unaudited content out of the published outputs.
+```
+
+- Read `${CLAUDE_PLUGIN_ROOT}/reference/templates/cross-reference.md` → Write to `${CLAUDE_PROJECT_DIR}/research/cross-reference.md`
+
+- Read `${CLAUDE_PLUGIN_ROOT}/reference/templates/canonical-figures.json` → Write to `${CLAUDE_PROJECT_DIR}/research/reference/canonical-figures.json`
+
+- Write `${CLAUDE_PROJECT_DIR}/research/reference/claim-graph.json` with initial content `{"claims": []}` — this is the claim graph registry, populated by `/research:audit-claims` during each phase's Verify step.
+
+- Write `${CLAUDE_PROJECT_DIR}/research/reference/retrieval-log.json` with initial content `{"entries": []}` — this is the retrieval log registry, populated by `/research:discover` after each discovery run.
+
+- Write `${CLAUDE_PROJECT_DIR}/research/commonplace.md` with the following initial content:
 
 ```markdown
 # Commonplace Book
@@ -718,7 +786,7 @@ The file is private to the user. It does not affect research outputs, audits, or
 
 Before reporting to the user, verify the scaffolding is complete:
 
-1. **Run `ls research/`** — confirm all expected files and directories exist:
+1. **Run `ls ${CLAUDE_PROJECT_DIR}/research/`** — confirm all expected files and directories exist:
    - `research-plan.md`
    - `STATE.md`
    - `gaps.md`
@@ -727,6 +795,7 @@ Before reporting to the user, verify the scaffolding is complete:
    - `sources/registry.md`
    - `drafts/` (directory exists)
    - `outputs/` (directory exists)
+   - `outputs/.gate-policy.md`
    - `audits/gate-log.md`
    - `reference/source-standards.md`
    - `reference/writing-standards.md`
@@ -736,10 +805,9 @@ Before reporting to the user, verify the scaffolding is complete:
    - `reference/retrieval-log.json`
    - `discovery/strategy.md`
    - `source-material-digest.md` (only required if `source-material/` contains non-dotfiles; skip otherwise)
-2. **Read `CLAUDE.md`** — confirm it references the nine skills with `/research:*` qualified names and the correct finding tags for the selected research type.
-3. **Read `research/STATE.md`** — confirm the phase checklist matches the research plan and the Phase 1 cycle checklist is present with all five steps unchecked.
-4. **Verify source material is reflected in the plan.** If `research/source-material-digest.md` exists, invoke the research-integrity agent with both `research/research-plan.md` and `research/source-material-digest.md` and ask it to run the "Source Material Coverage" check (check 8 in the agent's documentation). If the agent reports any UNPROCESSED SOURCE MATERIAL FACT or PLAN-DIGEST CONTRADICTION findings, stop, present them to the user, and ask whether to (a) regenerate the plan with the missing facts included, (b) add the facts to the digest's Out of Scope section with a reason and re-run the check, or (c) accept the plan as-is and document the decision in `research/notes-to-self.md`. Do not proceed to Step 7 until the user chooses. If no digest exists, skip this sub-step.
-
+2. **Read `${CLAUDE_PROJECT_DIR}/CLAUDE.md`** — confirm it references the eleven skills with `/research:*` qualified names and the correct finding tags for the selected research type.
+3. **Read `${CLAUDE_PROJECT_DIR}/research/STATE.md`** — confirm the phase checklist matches the research plan and the Phase 1 cycle checklist is present with all five steps unchecked.
+4. **Verify source material is reflected in the plan.** If `${CLAUDE_PROJECT_DIR}/research/source-material-digest.md` exists, invoke the research-integrity agent with both `${CLAUDE_PROJECT_DIR}/research/research-plan.md` and the digest and ask it to run the "Source Material Coverage" check (check 8 in the agent's documentation). If the agent reports any UNPROCESSED SOURCE MATERIAL FACT or PLAN-DIGEST CONTRADICTION findings, stop, present them to the user, and ask whether to (a) regenerate the plan with the missing facts included, (b) add the facts to the digest's Out of Scope section with a reason and re-run the check, or (c) accept the plan as-is and document the decision in `${CLAUDE_PROJECT_DIR}/research/notes-to-self.md`. Do not proceed to Step 7 until the user chooses. If no digest exists, skip this sub-step.
 If anything is missing, create it before proceeding. If the CLAUDE.md references incorrect skill names or has mismatched finding tags, fix it.
 
 ## Step 7: Report

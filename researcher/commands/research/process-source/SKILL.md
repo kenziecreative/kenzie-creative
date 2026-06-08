@@ -36,15 +36,12 @@ The user will provide a URL, file path, or pasted content.
 
 1. **Check tool availability** (once per process-source invocation, not per source). Run via Bash:
    ```bash
-   export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && which tvly 2>/dev/null && echo "TIER1_OK" || echo "TIER1_MISSING" && which npx 2>/dev/null && echo "TIER2_OK" || echo "TIER2_MISSING"
+   which tvly 2>/dev/null && echo "TIER1_OK" || echo "TIER1_MISSING" && which npx 2>/dev/null && echo "TIER2_OK" || echo "TIER2_MISSING"
    ```
 
-   **CRITICAL: Every Bash call in this skill that invokes `tvly` or `npx` MUST prepend the same PATH export.** Claude Code's `settings.json` env block does NOT expand shell variables — `$HOME` and `$PATH` pass through as literal strings. The only place variable expansion works is inside the Bash tool's shell. The pattern for every CLI invocation is:
-   ```bash
-   export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && tvly extract "https://example.com" --format markdown
-   ```
+   CLI invocations use bare names — `tvly extract "..."`, `npx firecrawl-cli scrape "..."`. The plugin's `SessionStart` hook (`hooks/setup-paths.sh`) puts the relevant bin directories on PATH for every Bash call in the session. Do not prepend an inline `export PATH=...` — bare names match the project `settings.json` pre-allow patterns (`Bash(tvly:*)`, `Bash(npx:*)`) and suppress per-call permission prompts; a compound `export ... && tvly ...` does not match and prompts every time.
 
-   If a tier is still missing after PATH augmentation, run a diagnostic:
+   If a tier appears missing, run a diagnostic:
    ```bash
    ls "$HOME/.local/bin/tvly" 2>/dev/null && echo "EXISTS_ON_DISK" || echo "NOT_INSTALLED"
    ls "$HOME/.volta/bin/npx" 2>/dev/null || ls /usr/local/bin/npx 2>/dev/null || ls /opt/homebrew/bin/npx 2>/dev/null && echo "EXISTS_ON_DISK" || echo "NOT_INSTALLED"
@@ -52,10 +49,10 @@ The user will provide a URL, file path, or pasted content.
    Print a one-line status: "Tool check: tvly ✓, npx ✓" or "Tool check: tvly ✗ (not installed), npx ✓" or similar. Skip confirmed-missing tiers for the rest of this invocation.
 
 2. **Fetch the content.** For URLs, try each extraction tier in order, starting from the highest available tier confirmed in step 1:
-   - **Tier 1:** `export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && tvly extract "{url}" --format markdown` (via Bash)
-   - **Tier 2:** `export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && npx firecrawl-cli scrape "{url}" --format markdown --only-main-content` (via Bash)
+   - **Tier 1:** `tvly extract "{url}" --format markdown` (via Bash)
+   - **Tier 2:** `npx firecrawl-cli scrape "{url}" --format markdown --only-main-content` (via Bash)
    - **Tier 3:** `WebFetch` (built-in — always available, no CLI needed)
-   - **Floor:** `export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && npx playwright pdf "{url}" /tmp/extract-$(date +%s).pdf` then Read the PDF
+   - **Floor:** `npx playwright pdf "{url}" /tmp/extract-$(date +%s).pdf` then Read the PDF
 
    If a tier fails for a specific source at runtime (API error, timeout, 403 — not "command not found"), try the next tier for that source only. On the next source, start from the highest available tier again. Runtime failures are per-source, not per-session — a timeout on one URL does not mean the tool won't work on the next.
 

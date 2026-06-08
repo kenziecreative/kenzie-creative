@@ -35,9 +35,9 @@ Show the current state of the research project as a dashboard.
    - Failure name: "[filename] missing from ${CLAUDE_PLUGIN_ROOT}/reference/"
    - Failure description: "reference files guide source assessment, evidence evaluation, and output formatting — missing files degrade research quality"
 
-   **1e. Discovery strategy present** — When `research/` directory exists (active research project), check for a file matching `research/discovery-strategy*.md` or `research/discovery/*.md`.
+   **1e. Discovery strategy present** — When `research/` directory exists (active research project), check for `research/discovery/strategy.md` (the canonical path written by `/research:init` Step 4).
    - Failure name: "discovery strategy missing"
-   - Failure description: "a discovery strategy guides source finding — without one, source selection is ad-hoc"
+   - Failure description: "a discovery strategy guides source finding — `/research:init` writes `research/discovery/strategy.md` and `/research:discover` reads it; without one, source selection is ad-hoc."
    - If no `research/` directory exists, this check passes silently
 
 2. **Read `research/STATE.md`** for current position, active phase, and completed phases.
@@ -89,6 +89,16 @@ Infrastructure: [N]/5 checks passed
 **Source notes:** [N] total
 **Cross-reference patterns:** [N] identified
 **Blocking issues:** [Any gaps or issues preventing progress, or "None"]
+
+### Discovery Tier per Phase
+
+Read the `## Phase Tier Record` section from `research/STATE.md`. If the section exists, reproduce its table here verbatim — one row per phase that's been briefed. If the section is missing from STATE.md, print:
+
+```
+No tier records yet — `/research:start-phase` writes a row per phase as it begins. Each row reflects the highest discovery tier that returned results for that phase (Tier 1 = Tavily, Tier 2 = Firecrawl, Tier 3 = built-in WebSearch).
+```
+
+Do not synthesize a table from `retrieval-log.json` directly — start-phase is the system of record for this data, and reading it twice from different sources risks drift.
 
 **Next action:** [If health failures exist: "Fix infrastructure issues above before continuing — " then the original next action from STATE.md. If no health failures, show the original next action from STATE.md unchanged.]
 

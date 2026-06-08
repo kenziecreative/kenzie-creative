@@ -44,6 +44,26 @@ Users sometimes drop files into `source-material/` mid-project. If an unprocesse
    - If `strategy.md` does not exist, fall back to reading the type-channel map at `${CLAUDE_PLUGIN_ROOT}/reference/discovery/type-channel-maps/{research-type}.md` (get the research type from `CLAUDE.md`). Check whether any Discovery Group's phase keywords match the current phase name. No match = synthesis phase.
    - Store the result (discovery vs. synthesis) for use in the transition prompt.
 
+7. **Record the discovery tier for this phase in STATE.md.** Read `research/reference/retrieval-log.json`. Filter entries to those whose `phase` field matches the current active phase. From those entries, compute the **highest tier number that actually returned results** (`tier` values 1, 2, or 3 — see `/research:discover` Step 2.i for the field definition). The highest tier is the one to record: a phase that ran Tier 1 successfully is "Tier 1," a phase whose Tier 1 failed and Tier 3 returned results is "Tier 3."
+
+   - **If no retrieval-log entries match this phase yet:** record `no tier recorded — discovery hasn't run yet for this phase.`
+   - **If retrieval-log.json doesn't exist or fails to parse:** skip this step. Do not block the briefing on a missing log.
+
+   Update `research/STATE.md` by ensuring a `## Phase Tier Record` section exists and contains a row for the current phase. If the section is absent, append it after the `## Sources Processed` block. If a row for this phase already exists (e.g., phase was re-briefed mid-cycle), overwrite it. Row format:
+
+   ```
+   ## Phase Tier Record
+
+   | Phase | Discovery tier | Recorded at |
+   |---|---|---|
+   | 1 | Tier 1 (Tavily primary) | 2026-06-08T14:23:01Z |
+   | 2 | Tier 3 (WebSearch fallback — CLIs unavailable) | 2026-06-09T09:11:00Z |
+   ```
+
+   Use the phase number and name from STATE.md's Active phase. Format the tier label as `Tier <N> (<short reason>)` — examples: `Tier 1 (Tavily primary)`, `Tier 2 (Firecrawl fallback)`, `Tier 3 (WebSearch fallback — CLIs unavailable)`, `no tier recorded — discovery hasn't run yet for this phase`. Use the current UTC timestamp as `Recorded at`. The table provides per-phase visibility into discovery quality across the project's lifetime.
+
+   This is the only write start-phase performs; the rest of the briefing is read-only.
+
 ## Output
 
 Present a briefing for the phase:
@@ -130,4 +150,4 @@ Then render the appropriate transition prompt based on whether this is a discove
 | Skipping coverage snapshot when gaps.md exists | Always read and display gaps.md coverage data if the file exists. Lopsided coverage and adjacent-only matches are invisible without it — the user needs this to decide what sources to pursue. |
 | Skipping source-material reconciliation and starting a phase with an unprocessed user drop | Always diff `source-material/` against `source-material-digest.md` before presenting the phase briefing. A new file is a blocker, not a warning — the phase framing depends on its contents being integrated first. |
 
-This skill is read-only — it does NOT write any files.
+This skill performs **one write**: a single `## Phase Tier Record` row in `research/STATE.md` (see Process step 7). Everything else is read-only.

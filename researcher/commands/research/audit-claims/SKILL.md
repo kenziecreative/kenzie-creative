@@ -140,7 +140,19 @@ There is no percentage threshold. Every specific claim must check out. The score
 ## After Audit
 
 - **If PASS:**
-  1. **Promote the draft.** Move the file from `research/drafts/` to `research/outputs/`.
+  1. **Promote the draft.** This is a two-step operation: append a gate-log row first, then move the file.
+
+     1a. **Append a row to `research/audits/gate-log.md`.** The hook gate on `research/outputs/` reads this log to authorize the move (Claude Code only; the hook is inert in Cowork). Use the Edit tool to append a single row to the gate-log table. Row format (no leading spaces, single-line):
+
+         ```
+         | <ISO-8601 UTC timestamp> | promote | pass | research/outputs/<filename> | from research/drafts/<filename> |
+         ```
+
+         The timestamp must be current and in UTC with a trailing `Z` (format `YYYY-MM-DDTHH:MM:SSZ`). The `File` column path is project-relative (no `${CLAUDE_PROJECT_DIR}` prefix). The filename in both columns is the draft's basename — promotion preserves the filename across the move.
+
+         The gate hook authorizes a write to `research/outputs/<filename>` only when the most recent gate-log row's timestamp is within 120 seconds, the result column is `pass`, and the file column matches the write target. Append the row immediately before the move — any delay risks the 120s window expiring.
+
+     1b. **Move the file from `research/drafts/<filename>` to `research/outputs/<filename>`.** Prefer Bash `mv` (single operation, atomic on the same filesystem) over a Read+Write+delete sequence. The hook gates Write/Edit/MultiEdit, not Bash, so `mv` proceeds without consulting the gate-log — the row written in 1a is the durable audit record of the authorization decision regardless.
   2. **Close out the phase in `research/STATE.md`.** A passing audit is the end of the current phase's cycle. STATE.md must be advanced *before* the debrief so that any subsequent `/clear` leaves the project in a correct state — the user may jump straight to `/research:discover` on resume without running `/research:start-phase`, and `discover`'s pre-check depends on "Active phase" already pointing at Phase N+1.
 
      Perform all of the following writes in a single STATE.md update:

@@ -77,19 +77,19 @@ candidates and decide which ones to process — nothing gets processed automatic
 
 ### Step 1b: Tool availability pre-flight
 
-Before executing any queries, check which tool tiers are available. Run this single Bash command — it completes in milliseconds and handles PATH repair inline:
+Before executing any queries, check which tool tiers are available. Run this single Bash command — it completes in milliseconds:
 
 ```bash
-export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && which tvly 2>/dev/null && echo "TIER1_OK" || echo "TIER1_MISSING" && which npx 2>/dev/null && echo "TIER2_OK" || echo "TIER2_MISSING"
+which tvly 2>/dev/null && echo "TIER1_OK" || echo "TIER1_MISSING" && which npx 2>/dev/null && echo "TIER2_OK" || echo "TIER2_MISSING"
 ```
 
-**CRITICAL: Every Bash call in this skill that invokes `tvly` or `npx` MUST prepend the PATH export.** Claude Code's `settings.json` env block does NOT expand shell variables (`$HOME`, `$PATH` pass through as literal strings). The only place variable expansion works is inside the Bash tool's shell itself. The pattern for every CLI invocation is:
+CLI invocations use bare names — `tvly search "..."`, `npx firecrawl-cli ...`. The plugin's `SessionStart` hook (`hooks/setup-paths.sh`) puts the necessary bin directories on PATH for every Bash call in the session. The pattern for every CLI invocation is:
 
 ```bash
-export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" && tvly search "query" --depth advanced --max-results 8 --json
+tvly search "query" --depth advanced --max-results 8 --json
 ```
 
-This is not optional. Without it, `tvly` and `npx` will be invisible to the shell even when installed.
+Do not prepend an inline `export PATH=...` — bare names match the project `settings.json` pre-allow patterns (`Bash(tvly:*)`, `Bash(npx:*)`) and suppress per-call permission prompts in Claude Code; a compound `export ... && tvly ...` does not match and prompts every time. If `which tvly` returns nothing despite the hook, treat the tier as unavailable and fall through.
 
 Based on pre-flight results, set the tool availability for this run:
 
@@ -147,6 +147,7 @@ For each channel:
 | `phase` | string | Active phase name from STATE.md (Step 1 pre-check) |
 | `channel` | string | Channel name from the Discovery Group (e.g., "web-search", "academic", "financial") |
 | `tool` | string | Specific tool that executed (e.g., "tavily", "exa", "openalex", "crossref", "firecrawl", "websearch") |
+| `tier` | integer | Which tier actually ran (not the configured primary): 1 for `tvly`/`tvly extract`, 2 for `npx firecrawl-cli`, 3 for built-in `WebSearch`/`WebFetch`. HTTP-API channels (OpenAlex, EDGAR, ProPublica) record `tier: 1` when the primary API was reached; on fallback per the playbook degradation chain, record the tier of the tool that actually returned results. Per-tool entry — set at the moment of execution. |
 | `query` | string | Exact query string or URL submitted to the tool (from Step 2d substitution) |
 | `template` | string | Template letter used (A, B, or C from Step 2c selection) |
 | `results_count` | integer | Count of URLs returned before dedup (from Step 2f) |
@@ -154,6 +155,8 @@ For each channel:
 | `status` | string | One of: "found", "error", "degraded", "skipped" — mapped from Step 2g output |
 | `degraded_to` | string or null | Fallback tool name if status is "degraded"; null otherwise |
 | `deduped_count` | integer | Set to 0 here; updated after Step 4 dedup for multi-tool channels |
+
+The `tier` field and the `degraded_to` field are complementary. `tier` records what ran; `degraded_to` records the chain. An entry with `tier: 2` and `degraded_to: "firecrawl"` means Tier 1 was attempted and failed, and Tier 2 (Firecrawl) returned results. `tier: 3` always indicates built-in fallback — either both CLI tiers were missing in pre-flight, or both failed at runtime.
 
 **Multi-tool channels:** When a channel runs multiple tools (e.g., web-search runs Tavily then Exa), accumulate one entry per tool execution. A web-search channel with both tools succeeding produces two entries: one with `tool: "tavily"`, one with `tool: "exa"`. The Exa entry's `deduped_count` is updated after Step 4 to reflect URL matches collapsed against Tavily results.
 
@@ -198,6 +201,14 @@ When uncertain, default to DISCOVERED. Better to underestimate than to claim acc
 
 Write to `research/discovery/{phase}-candidates.md`. Create the `research/discovery/` directory if it does not exist.
 
+**Tier-3 banner.** Before writing the new file (or appending a re-run block), check the in-memory retrieval log entries for this run. If **every** entry has `tier: 3` (i.e., the entire run fell back to built-in WebSearch/WebFetch because both CLI tiers were unavailable), prepend a banner immediately above the Summary table:
+
+```
+> ⚠️ **Tier 3 (built-in WebSearch) only** — `tvly` and `npx firecrawl-cli` were unavailable for this run. Results are less targeted than Tier 1 (Tavily) or Tier 2 (Firecrawl). See `research/STATE.md` for the per-phase tier record. To restore Tier 1, install Tavily CLI (`curl -sSL https://tavily.com/install | sh`).
+```
+
+If any entry in the run has `tier: 1` or `tier: 2`, omit the banner — partial degradation already shows up in per-channel status lines and per-entry `degraded_to` markers, and a banner over a mixed run would over-state the problem. For appended re-runs (Step 6 re-discovery block), the banner is scoped to that re-run's entries only — write it above the re-discovery's own summary section, not at the top of the file.
+
 **New file format:**
 
 ```
@@ -207,6 +218,8 @@ Write to `research/discovery/{phase}-candidates.md`. Create the `research/discov
 **Phase:** {phase name}
 **Discovered:** {ISO timestamp}
 **Channels run:** {comma-separated list}
+
+[Tier-3 banner here if applicable — see above]
 
 ## Summary
 

@@ -108,9 +108,9 @@ The Bash tool runs in a non-interactive shell that does NOT source `~/.zshrc` or
 
 ### How PATH is configured in this project
 
-A `SessionStart` hook (`.claude/hooks/setup-paths.sh`) runs at the beginning of every session and writes real, expanded PATH entries to `CLAUDE_ENV_FILE`. This persists for the entire session — every Bash call inherits the correct PATH automatically. The hook detects common tool locations (`~/.volta/bin`, `~/.local/bin`, `/opt/homebrew/bin`, nvm directories) and only adds directories that actually exist on disk.
+A `SessionStart` hook (`hooks/setup-paths.sh`) runs at the beginning of every session and writes real, expanded PATH entries to `CLAUDE_ENV_FILE`. This persists for the entire session — every Bash call inherits the correct PATH automatically. The hook detects common tool locations (`~/.volta/bin`, `~/.local/bin`, `/opt/homebrew/bin`, nvm directories) and only adds directories that actually exist on disk.
 
-As belt-and-suspenders, the skills (`discover`, `process-source`, `init`) also include inline `export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" &&` prefixes on their CLI invocations. This is harmless if the hook already set PATH correctly, and protects against the hook being removed.
+Skill prose invokes CLI tools with bare names (`tvly search "..."`, `npx firecrawl-cli ...`). Bare names match the project `settings.json` pre-allow patterns (`Bash(tvly:*)`, `Bash(npx:*)`) and suppress per-call permission prompts in Claude Code. Do not prepend an inline `export PATH=...` — a compound `export ... && tvly ...` starts with `export`, doesn't match the pre-allow, and triggers a prompt every time. If the hook is missing or fails, the right response is to fix the hook, not to paper over it with inline exports.
 
 ### Diagnosing tool issues
 
@@ -127,5 +127,5 @@ If tools aren't found despite the hook:
 - **Skipping tiers** — Jumping to WebSearch when tvly is available. Always try Tier 1 first; the fallback chain handles unavailability automatically. This includes site-scoped queries — use `tvly search --include-domains "github.com"` instead of WebSearch with `site:github.com`. WebSearch is a last-resort fallback, never a parallel tool.
 - **Crawling without mapping** — Crawling a domain without running `tvly map` or `npx firecrawl-cli map` first wastes time on irrelevant sections.
 - **Manual search for systematic discovery** — Running `tvly search` manually for a full research project when `/research:discover` exists. Use the skill; it reads channel playbooks and handles degradation automatically.
-- **Hardcoding tool paths** — CLI commands use bare names (`tvly`, `npx firecrawl-cli`) but MUST be preceded by `export PATH="$HOME/.volta/bin:$HOME/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"` in the same Bash call. Do NOT rely on `settings.json` env.PATH for this — it doesn't expand variables.
+- **Inline `export PATH=...` before CLI calls** — Don't. The `SessionStart` hook sets PATH for the whole session and bare-name commands match the project `settings.json` pre-allow patterns. An inline export breaks the pre-allow match and triggers a permission prompt on every call.
 - **Assuming "command not found" means "not installed"** — The harness shell has a different PATH than your interactive terminal. A tool can exist on disk and still be invisible to the Bash tool. Always verify with `ls` before concluding a tool isn't installed.

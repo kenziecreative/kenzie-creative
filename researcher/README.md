@@ -22,7 +22,7 @@ I didn't want to take it on faith. I wanted a system where I could trace every c
 
 So I built a system that enforces the discipline. Claude does the heavy lifting (finding sources, processing documents, cross-referencing findings, drafting sections) but the system makes sure it does the work honestly. Sources are structured and registered. Figures are canonical. Drafts are audited before they ship. An integrity agent watches every write for fabrication, drift, and qualifier stripping.
 
-The complexity is in the system, not in your workflow. What you see: ten commands that guide you through a structured research cycle. What's behind them: source credibility assessment, independence-aware gap analysis, contradiction detection, cross-phase figure tracking, and a hard gate that blocks unaudited content from reaching the output directory.
+The complexity is in the system, not in your workflow. What you see: eleven commands that guide you through a structured research cycle. What's behind them: source credibility assessment, independence-aware gap analysis, contradiction detection, cross-phase figure tracking, and a workflow gate — with a PreToolUse hook backstop on Claude Code — that prevents unaudited content from reaching the output directory.
 
 — **Kelsey**
 
@@ -42,6 +42,15 @@ You don't need to be technical. You need [Claude Code](https://docs.anthropic.co
 
 ---
 
+## v1.4 Highlights
+
+- **Init creates a fresh project from scratch.** `/research:init` scaffolds `research/` and `source-material/` using the Write tool, rooted at `${CLAUDE_PROJECT_DIR}`. You can run it in any fresh folder.
+- **Hook gate on `outputs/`.** A PreToolUse hook blocks Write/Edit/MultiEdit operations targeting `research/outputs/` unless `/research:audit-claims` has authorized the write within the last 120 seconds via a row in `research/audits/gate-log.md`. Claude Code only; structural-rule-only in Cowork.
+- **Per-phase discovery tier recording.** `retrieval-log.json` entries carry a `tier` field (1 = Tavily, 2 = Firecrawl, 3 = built-in). `/research:start-phase` writes a `## Phase Tier Record` table to STATE.md. `/research:progress` surfaces it. A Tier-3 banner appears in candidate files when CLIs were unavailable for the run.
+- **Inline-first plan generation.** Init's Step 4 runs in the main agent's context by default, no subagent. Plan generation now works the same way on Claude Code and Cowork. Subagent delegation is an opt-in Claude Code optimization.
+
+---
+
 ## v1.3 Highlights
 
 - **CLI-first tool architecture.** Migrated from MCP tools to a 3-tier CLI fallback chain (Tavily CLI → Firecrawl CLI → built-in WebSearch/WebFetch). CLIs return structured JSON that the agent parses, keeping raw page content out of the context window. Local PDFs go through `pdftotext` instead of the built-in PDF reader for the same reason. The project works out of the box with zero CLIs installed — built-ins serve as the floor.
@@ -50,7 +59,7 @@ You don't need to be technical. You need [Claude Code](https://docs.anthropic.co
 - **Web search diversity.** Exa neural search runs as a parallel tier alongside Tavily, surfacing semantically relevant sources that keyword search misses. Results are deduplicated before you see them.
 - **Per-claim confidence.** Each claim gets its own confidence tier (High/Moderate/Low/Insufficient). Section confidence equals the weakest claim in that section, so thin evidence can't hide behind strong neighbors.
 - **Retrieval provenance.** Every discovery call is logged with its exact query, channel, and URLs returned, so any discovery run can be reproduced or audited later.
-- **CLI polish.** All 10 commands now use consistent formatting, clear next-action guidance, plain language, and progressive disclosure for long outputs.
+- **CLI polish.** All commands now use consistent formatting, clear next-action guidance, plain language, and progressive disclosure for long outputs.
 
 ---
 
@@ -144,6 +153,25 @@ The system uses a 3-tier fallback chain: Tavily CLI (primary), Firecrawl CLI (se
 /plugin install researcher@kenzie-creative
 ```
 
+### Recommended: Auto mode (Claude Code)
+
+A full Phase 1 cycle triggers 10 to 20 Bash permission prompts in default-prompt mode — mostly during `/research:init`'s preliminary web research and `/research:discover`'s per-channel queries. The plugin pre-allows its tools via `.claude/settings.json` written at init time, but some compound shell operations still prompt.
+
+Run Claude Code in Auto mode for the smoothest experience. Toggle with `/auto` or set it as your default in settings. Researcher's writes are gated by the plugin itself (the `outputs/` hook gate is the load-bearing guardrail, not the per-prompt confirmations), so the practical risk surface stays the same.
+
+Claude Cowork has its own permission model — Auto mode is not a Cowork concept. See the next section.
+
+### Running in Claude Code vs Claude Cowork
+
+Researcher runs on both surfaces and the core workflow is identical. A few mechanics differ:
+
+- **Hook gate on `research/outputs/`** is a Claude Code PreToolUse hook. In Cowork, hooks don't run; the gate is enforced as a structural workflow rule — `/research:audit-claims` is the only skill that writes to `outputs/`, and the discipline holds because no other skill targets that path. Same outcome, different enforcement.
+- **`.claude/settings.json` pre-allow merge** that init writes is a Claude Code permission file. Cowork ignores it and applies its own permission model. Nothing breaks; Cowork users just won't see the same prompt-suppression benefit.
+- **Plan generation in `/research:init` Step 4** runs inline in the main agent's context on both surfaces. On Claude Code only, you may optionally delegate it to a fresh subagent for sharper analysis on long source-material reads. Cowork stays inline.
+- **`PreCompact` hook** that warns when state hasn't been saved before context compresses is Claude Code only. Cowork has its own compaction model.
+
+If you're using Cowork, none of this requires configuration. The plugin detects the surface and behaves correctly.
+
 ### Initialize a Research Project
 
 Open the project folder where you want the research to live, then run:
@@ -152,7 +180,7 @@ Open the project folder where you want the research to live, then run:
 /research:init
 ```
 
-You can `/research:init` in any folder. The plugin lives in one place; each research project gets its own folder with its own state. Updates to the plugin reach every existing project the next time you open it.
+You can `/research:init` in any fresh folder. As of v1.4, init creates `research/` and `source-material/` from scratch — nothing needs to exist beforehand. If a `research/STATE.md` is already there from a prior init run, init will refuse and tell you how to start over. The plugin lives in one place; each research project gets its own folder with its own state. Updates to the plugin reach every existing project the next time you open it.
 
 ---
 
@@ -221,7 +249,7 @@ Research projects run across multiple sessions. The system is designed for that.
 
 Every phase completion, source processed, decision made, and gap identified is tracked in `STATE.md`. When you come back, whether it's the next day or next week, the system reads your state and picks up exactly where you left off. You don't need to re-explain anything.
 
-Context clears between phases are encouraged, not just tolerated. Each phase gets a fresh context window for sharper analysis, and `STATE.md` carries everything forward. A `PreCompact` hook warns you if state hasn't been saved before context compresses, so nothing gets lost.
+Context clears between phases are encouraged, not just tolerated. Each phase gets a fresh context window for sharper analysis, and `STATE.md` carries everything forward. On Claude Code, a `PreCompact` hook warns you if state hasn't been saved before context compresses, so nothing gets lost. Cowork has its own compaction model.
 
 ---
 
