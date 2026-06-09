@@ -47,10 +47,11 @@ Steps, in order:
    - **Other chosen.** The user's custom MCP must expose two tools: (1) one that enumerates recent meetings with stable IDs and dates, and (2) one that fetches a transcript by ID. If they can supply both, ask for these values one at a time:
      - Server name (the MCP server's registered name, without the `mcp__` prefix).
      - Enumerate-since tool name (the part after the server name).
-     - The name of the date-filter argument on that tool, and the date format it expects.
+     - The name of the date-filter argument on that tool (it may be a nested path like `filter.after`), and the date format it expects. If you don't know, default `enumerate_date_format` to `iso8601-utc-z` — many services reject timezone-offset datetimes and accept only UTC `Z` form.
      - Fetch-by-ID tool name.
      - The name of the ID argument on the fetch tool.
      - The field names in the enumerate response for `id`, `title`, `date`, and `attendees` (attendees may be null if the source doesn't provide them).
+     - (Optional) If the service's transcripts can be very long, ask whether the fetch tool supports windowed reads (the start/duration argument names) and/or whether there's a structured-minutes tool to fall back to — fill `chunk_start_arg`/`chunk_duration_arg` and/or `fallback_tool`/`fallback_id_arg`. Skip if not applicable.
 
      Set `meeting_mcp: custom` and fill the `custom_mcp:` block in the config from these answers. If the user can't supply the two tools (e.g. their service only exposes keyword search, or single-fetch with no enumerate), tell them auto-pull won't work cleanly and they should use `source/` drops instead — then set `meeting_mcp:` blank (None branch).
 
@@ -73,6 +74,8 @@ Steps, in order:
 6. **Write `CLAUDE.md`.** Read the template at `${CLAUDE_PLUGIN_ROOT}/templates/CLAUDE.md`, fill in the `[FILL]` fields with the confirmed answers from steps 2–4 (timezone, `meeting_mcp:` value, `custom_mcp:` block if applicable, `cadence:` value), leave defaults as-is where the user didn't override them, and write the result to `CLAUDE.md` in the project root.
 
    If the project already has a `CLAUDE.md`, do **not** overwrite it. Read the existing file, append a `## Sage configuration` section at the end containing the same filled fields (timezone, meeting_mcp, custom_mcp if applicable, cadence, paths), and write the merged file back.
+
+   **Verify the write before moving on.** After writing, `Read` `CLAUDE.md` back and confirm the `timezone:` value and the `meeting_mcp:` line (and the `custom_mcp:` block, if any) are actually present, with the values you just collected. If the read-back is missing them — or the write failed for any reason — do **not** report setup as successful and do **not** continue to the schedule step. A scheduled task created against missing config halts on every run. Instead, tell the user exactly what failed, show them the filled config block to paste into `CLAUDE.md` by hand, and stop. Setup must never finish reporting success with no persisted config; that silent failure broke earlier deployments (the timezone and `meeting_mcp` block were simply dropped).
 
 7. **Create the `source/` and `meetings/` folders.** Folders materialise as a side effect of writing a file into them. Write:
    - `./source/.gitkeep` with one-line content: `# Drop transcript files (.txt) into this folder. Sage processes them on the next run.`
@@ -107,6 +110,7 @@ Steps, in order:
    - **Custom.** Exact names built from the user's answers in step 3:
      - `mcp__<server_name>__<enumerate_tool>`
      - `mcp__<server_name>__<fetch_tool>`
+     - `mcp__<server_name>__<fallback_tool>` (only if a `fallback_tool` was supplied)
    - **None.** No MCP tools needed; just the base allowlist.
 
    To merge: `Read` the existing `.claude/settings.json` if present, parse it as JSON, take the union of its existing `permissions.allow` array (if any) with the entries above, deduplicate, sort for stability, and write the file back. If the file doesn't exist, write a fresh one with just `{"permissions": {"allow": [...]}}`.
@@ -132,10 +136,22 @@ Steps, in order:
 
     - **Transcripts already in `source/` (rare at first setup, but possible).** Run `/sage:run` once — the skill processes them and shows the resulting summary and round-up paths.
 
-11. **Schedule.** Tell the user how to register the recurring run:
+11. **Schedule.** The scheduled task runs from **its own directory, not this project**, so the prompt must name this project's **absolute path** — otherwise every run halts unable to find its config. This is the single most common setup failure. Get the path right here.
 
-    > Type `/schedule`, set the prompt to **`Run the meeting-triage skill for this project`** (or just `/sage:run`), and set the cadence you picked at step 4. A run skipped because the machine was asleep catches up automatically — but with meetings, an extra hour of delay is harmless.
+    Determine the absolute path of this project root (the folder where you just wrote `CLAUDE.md`). In Claude Code this is `${CLAUDE_PROJECT_DIR}`; in Cowork it's the absolute path of the connected folder. Call it `<PROJECT_PATH>`. Play it back to the user and confirm it's correct before continuing.
 
-    Don't try to register the schedule for the user. `/schedule` has its own approval flow and the user has to confirm the cron entry themselves.
+    Then tell the user to register the run:
+
+    > Type `/schedule` and set the prompt to exactly this — the absolute path is essential; without it the scheduled run cannot find your configuration:
+    >
+    > **`Run the Sage meeting-triage skill (invoke sage:meeting-triage) for the project located at <PROJECT_PATH>. Read configuration from <PROJECT_PATH>/CLAUDE.md (timezone, meeting_mcp, cadence). Ingest new transcripts, summarise each into the Monday-anchored week folder under <PROJECT_PATH>/meetings/, and update that week's weekly-roundup.md.`**
+    >
+    > For the schedule itself, the default is **every 2 hours, 7am–5pm, Monday–Friday** (`0 7-17/2 * * 1-5`) — adjust the interval to the cadence you picked at step 4. A run skipped because the machine was asleep catches up automatically; with meetings, an extra hour of delay is harmless.
+
+    Substitute `<PROJECT_PATH>` with the confirmed absolute path **everywhere it appears** before handing the prompt to the user. Never leave a placeholder, and never use a bare "this project" — that is exactly what leaves a scheduled run with nowhere to look.
+
+    Don't try to register the schedule for the user — `/schedule` has its own approval flow and the user confirms the cron entry themselves.
+
+    **End-of-day (tell the user):** there is no separate end-of-day task to set up. The same run re-buckets the Forward Watch List inline — when it fires at or after 5pm in your timezone and `source/` is clear, it does the end-of-day pass as part of that run.
 
 This setup stands alone. Other Kenzie Creative plugins (intelligence briefing, researcher) can run in the same project and share the directory's state by convention — but this command sets up only Sage and never depends on them.

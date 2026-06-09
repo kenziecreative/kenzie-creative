@@ -25,9 +25,10 @@ Before doing anything, read the deployment `CLAUDE.md` and load these values.
 **Shipped with defaults (override by editing CLAUDE.md):**
 
 - **`meeting_mcp:`** — one of `read-ai`, `fireflies`, `granola`, `custom`, or absent (source-only mode). Default: absent.
-- **`custom_mcp:`** — only when `meeting_mcp: custom`. The block of tool names and field mappings described in `references/adapters/_custom.md`.
+- **`custom_mcp:`** — only when `meeting_mcp: custom`. The block of tool names and field mappings described in `references/adapters/_custom.md`. Includes `enumerate_date_format` (how to format the date floor — `YYYY-MM-DD`, `iso8601-local`, or `iso8601-utc-z`), a possibly-nested `enumerate_date_arg`, and optional oversized-transcript fields (`chunk_start_arg`/`chunk_duration_arg`, `fallback_tool`/`fallback_id_arg`).
 - **Paths** — meetings root and source drop-box. Default: `./meetings/` and `./source/`. The manifest lives at `./manifest.json` in the deployment root.
 - **Cadence** — informational; the actual scheduling lives in `/schedule`. Default: 2h. You don't enforce this; the user's scheduled task does.
+- **`no_em_dashes:`** — output style flag. Default: `false`. When `true`, do not use em dashes (`—`) in any generated summary or round-up; use commas, parentheses, or hyphens instead. Some deployments forbid them, and a clean first write beats a post-pass.
 
 ---
 
@@ -96,9 +97,9 @@ If `meeting_mcp:` is set:
 
 1. **Adapter prep.** From the adapter spec you read in READ THESE FIRST, you now have the two tool names and arg shapes. If the adapter's **Status** section says the tool surface is beta or may shift, call `tools/list` first to resolve the current tool names rather than hardcoding them; fail clearly if the expected capabilities aren't present.
 2. **Pre-fetch gate.** If the adapter spec declares a pre-fetch gate (e.g. a plan-tier check that has to pass before fetches are allowed), run it now. If the gate fails, surface the adapter's stated user-facing message inline and skip the MCP pull for this run — continue to step 3 (the `source/` sweep still happens). If the adapter spec has no pre-fetch gate section, skip this step.
-3. **Enumerate.** Call the enumerate-since tool with a date floor at least one day before the latest `meeting_date` in the manifest (the one-day overlap covers timezone slop). On the first run, use the last 7 days as the floor. Paginate per the adapter spec.
+3. **Enumerate.** Call the enumerate-since tool with a date floor at least one day before the latest `meeting_date` in the manifest (the one-day overlap covers timezone slop). On the first run, use the last 7 days as the floor. Paginate per the adapter spec. **Format the floor as the adapter requires:** for custom adapters, follow `enumerate_date_format` — `iso8601-utc-z` means convert the local (configured-timezone) floor to UTC and emit the trailing-`Z` form (many services reject offset datetimes like `...-05:00`). If `enumerate_date_arg` is a dotted path (e.g. `filter.after`), nest the argument accordingly (`{"filter": {"after": "<floor>"}}`). Read returned dates as UTC and convert to the configured timezone for week-folder math.
 4. **Diff.** For each returned entry, build a stable ID using the adapter's prefix (e.g. `<adapter>_<id>`). If the ID is already in the manifest, skip. The remainder is the new work.
-5. **Fetch.** For each new entry, call the fetch-by-ID tool. Write the transcript to `./source/<title-slug>.txt`, with a small envelope at the top:
+5. **Fetch.** For each new entry, call the fetch-by-ID tool. **If the transcript is too large for a single tool result** (long meetings can exceed the inline token limit): if the adapter declares `chunk_start_arg`/`chunk_duration_arg`, fetch the transcript in successive time windows and concatenate them; otherwise, if it declares a `fallback_tool` (e.g. a structured-minutes tool), call that with `fallback_id_arg` and use its output in place of the raw transcript. Note which path was used (`full` / `chunked` / `minutes-fallback`) — record it in the envelope (`fetch_mode:`) and carry it into the summary so a reader knows the source was minutes rather than a verbatim transcript. Only when neither chunking nor a fallback is available does the oversized fetch fail for that one meeting (surface it and continue; it retries next run). Write the result to `./source/<title-slug>.txt`, with a small envelope at the top:
    ```
    ---
    source: <adapter-name>
@@ -107,9 +108,10 @@ If `meeting_mcp:` is set:
    meeting_date: <YYYY-MM-DD>
    attendees: <comma-separated, or "not provided">
    ingested_at: <ISO 8601>
+   fetch_mode: <full | chunked | minutes-fallback>
    ---
 
-   <raw transcript>
+   <raw transcript or structured minutes>
    ```
    `<title-slug>` is a kebab-case, lowercased, punctuation-stripped version of the meeting title, truncated to ~60 chars. If a file with that name already exists in `source/`, append a short hash suffix to disambiguate.
 

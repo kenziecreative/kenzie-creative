@@ -41,17 +41,24 @@ meeting_mcp: [FILL or leave blank]
 custom_mcp:
   server_name: [FILL]              # the MCP server's registered name (without mcp__ prefix)
   enumerate_tool: [FILL]           # tool name (the part after the server name)
-  enumerate_date_arg: [FILL]       # name of the date-filter argument on that tool
-  enumerate_date_format: YYYY-MM-DD   # format the date arg expects
+  enumerate_date_arg: [FILL]       # date-filter arg; may be a nested path, e.g. filter.after
+  enumerate_date_format: iso8601-utc-z   # YYYY-MM-DD | iso8601-local | iso8601-utc-z
   fetch_tool: [FILL]               # tool name for fetch-by-ID
   fetch_id_arg: [FILL]             # name of the ID argument on the fetch tool
   id_field: id                     # field name in the enumerate response that holds the meeting ID
   title_field: title               # field name for title
   date_field: date                 # field name for date
   attendees_field: participants    # field name for attendees (or null if not provided)
+  # Optional — only if the fetch tool can blow the token limit on long meetings:
+  chunk_start_arg: [FILL]          # arg that sets a transcript window's start (minutes)
+  chunk_duration_arg: [FILL]       # arg that sets the window length (minutes)
+  fallback_tool: [FILL]            # structured-minutes tool to use if the transcript is too large
+  fallback_id_arg: [FILL]          # ID arg on the fallback tool
 ```
 
 For Sage to auto-pull from a custom MCP, the MCP must expose two tools: one that enumerates recent meetings (with stable IDs + dates), and one that fetches a transcript by ID. If either is missing, use `source/` drops instead.
+
+Two quirks worth knowing: (1) **Date format.** Some services reject ISO datetimes carrying a timezone offset (`...-05:00`) and accept only UTC `Z` form — set `enumerate_date_format: iso8601-utc-z` for those, and Sage converts your local date floor to UTC. (2) **Long transcripts.** If a single transcript can exceed the model's input limit, fill the optional `chunk_*` and/or `fallback_tool` fields so Sage pages the transcript or falls back to structured minutes instead of failing.
 
 ---
 
@@ -76,6 +83,16 @@ manifest_path: ./manifest.json   # what's been processed
 ```
 
 These rarely need changing. `meetings/` will fill with `YYYY-MM-DD/` directories — one per week, dated by Monday — each containing the per-meeting summaries, transcript files, and the rolling `weekly-roundup.md` for that week.
+
+---
+
+## Output style  (optional)
+
+If your deployment forbids em dashes (some house styles do), set this and Sage will avoid them in generated summaries and the round-up — using commas, parentheses, or hyphens instead — so you don't need a cleanup pass.
+
+```yaml
+no_em_dashes: false
+```
 
 ---
 
