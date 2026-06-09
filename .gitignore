@@ -14,8 +14,8 @@ Thumbs.db
 
 # Per-deployment artifacts live in the user's Cowork project, not in this plugin repo.
 # Anchored to repo root so the shipped templates/CLAUDE.md is NOT ignored.
+# (Root /CLAUDE.md is intentionally tracked — it's the pointer to AGENTS.md, not a deployment artifact.)
 /briefs/
 /ledger.json
 /candidates.json
 /sources/
-/CLAUDE.md
