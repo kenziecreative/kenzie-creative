@@ -8,6 +8,16 @@ Each tool does one thing well and runs on its own. Instead of one program that t
 
 Once a tool is installed, it shows up as commands and skills you can run in any Claude project.
 
+## Plugins at a glance
+
+| Plugin | Version | What it does | Guide |
+|---|---|---|---|
+| Intelligence Briefing | 0.3.0 | Daily/weekly environmental brief that triages the outside world into a short, self-contained page | [guide](./intelligence-briefing/README.md) |
+| Researcher | 1.4.1 | Structured, audited research system — every claim traces back to a source | [guide](./researcher/README.md) |
+| Sage | 0.2.0 | Weekly meeting round-up built from transcripts — action items, cross-meeting threads, forward watch list | [guide](./sage/README.md) |
+
+Each version mirrors that plugin's `plugin.json`, which is the source of truth for updates.
+
 ## The tools
 
 ### Intelligence Briefing

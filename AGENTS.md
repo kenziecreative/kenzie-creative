@@ -40,7 +40,7 @@ Verification is split, not duplicated — each surface is tested by the only too
 ## Release & versioning
 
 - `plugin.json` `version` is the **single source of truth** for update propagation (not the git tag).
-- Per-plugin semver. Loop: edit → bump `version` → CHANGELOG entry → commit → tag → push.
+- Per-plugin semver. Loop: edit → bump `version` → CHANGELOG entry → update the plugin's row in the root README "Plugins at a glance" table (a manual mirror of `plugin.json`) → commit → tag → push.
 - **Tags are plugin-scoped:** `sage-v0.2.0`, `researcher-v1.4.1`, `intelligence-briefing-v0.3.0`. Legacy plain `vX.Y.Z` tags exist from early intelligence-briefing releases — don't reuse plain tags; they collide across plugins (there is already a plain `v0.2.0` and `v0.3.0`).
 - Installers update via the Cowork Plugins tab, or Claude Code `/plugin marketplace update kenzie-creative` + `/plugin update <plugin>`.
 
