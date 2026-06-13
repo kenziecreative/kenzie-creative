@@ -1,7 +1,7 @@
 {
   "name": "intelligence-briefing",
   "version": "0.3.0",
-  "description": "The external scan: a daily/weekly environmental brief that triages the outside world (news, industry movement, research, policy, science) into the few items worth your attention, written as a self-contained styled HTML brief. Part of the Kenzie Creative marketplace; self-contained and runs on its own.",
+  "description": "v0.3.0 \u2014 The external scan: a daily/weekly environmental brief that triages the outside world (news, industry movement, research, policy, science) into the few items worth your attention, written as a self-contained styled HTML brief. Part of the Kenzie Creative marketplace; self-contained and runs on its own.",
   "author": {
     "name": "Kelsey Ruger"
   },

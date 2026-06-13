@@ -1,0 +1,17 @@
+{
+  "name": "plugin-eval",
+  "version": "0.1.0",
+  "description": "v0.1.0 \u2014 An evaluation harness for plugins that produce AI-generated output. It drives a target plugin natively in an isolated runner, captures what it actually produces, and scores it against a per-target rubric of representative and adversarial scenarios \u2014 so you can change a skill, re-run the suite, and see what moved without standing up a full live project. Ships with a strategist target pack. Standalone; part of the Kenzie Creative marketplace.",
+  "author": {
+    "name": "Kelsey Ruger"
+  },
+  "keywords": [
+    "evaluation",
+    "eval",
+    "testing",
+    "regression",
+    "quality",
+    "rubric",
+    "scenarios"
+  ]
+}

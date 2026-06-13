@@ -1,7 +1,7 @@
 {
   "name": "researcher",
   "version": "1.4.1",
-  "description": "A structured research system: pick a topic, get a phased plan grounded in preliminary research, then work through it together — collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Standalone; runs on its own. Part of the Kenzie Creative marketplace.",
+  "description": "v1.4.1 \u2014 A structured research system: pick a topic, get a phased plan grounded in preliminary research, then work through it together \u2014 collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Standalone; runs on its own. Part of the Kenzie Creative marketplace.",
   "author": {
     "name": "Kelsey Ruger"
   },

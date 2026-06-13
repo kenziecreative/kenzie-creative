@@ -5,23 +5,33 @@
     "url": "https://github.com/kenziecreative"
   },
   "metadata": {
-    "description": "Kenzie Creative — a marketplace of small, focused plugins for staying on top of your world. Plugins share a directory-level convention (see /contract) so they compose without depending on each other."
+    "description": "Kenzie Creative \u2014 a marketplace of small, focused plugins for staying on top of your world. Plugins share a directory-level convention (see /contract) so they compose without depending on each other."
   },
   "plugins": [
     {
       "name": "intelligence-briefing",
       "source": "./intelligence-briefing",
-      "description": "The external scan: a daily/weekly environmental brief that triages the outside world (news, industry, research, policy, science) into the few items worth your attention. Self-contained; writes a styled HTML brief and keeps its own ledger."
+      "description": "v0.3.0 \u2014 The external scan: a daily/weekly environmental brief that triages the outside world (news, industry, research, policy, science) into the few items worth your attention. Self-contained; writes a styled HTML brief and keeps its own ledger."
     },
     {
       "name": "researcher",
       "source": "./researcher",
-      "description": "A structured research system: pick a topic, get a phased plan grounded in preliminary research, then work through it together — collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Standalone."
+      "description": "v1.4.1 \u2014 A structured research system: pick a topic, get a phased plan grounded in preliminary research, then work through it together \u2014 collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Standalone."
     },
     {
       "name": "sage",
       "source": "./sage",
-      "description": "The meeting round-up: turns a stream of meeting transcripts into a single living weekly document that surfaces action items, tracks cross-meeting threads, and keeps a forward watch list. Auto-pulls from Read.ai, Fireflies, or Granola; works on any transcript dropped into a source folder for everything else."
+      "description": "v0.2.0 \u2014 The meeting round-up: turns a stream of meeting transcripts into a single living weekly document that surfaces action items, tracks cross-meeting threads, and keeps a forward watch list. Auto-pulls from Read.ai, Fireflies, or Granola; works on any transcript dropped into a source folder for everything else."
+    },
+    {
+      "name": "strategist",
+      "source": "./strategist",
+      "description": "v0.1.0 \u2014 A structured strategic-thinking system: take a problem through one repeatable loop \u2014 Define, Split, Analyse, Insight, Story, Decide, Act \u2014 pulling the right framework from a 70-framework library at each stage, capturing the work in one living brief, and pressure-testing the reasoning before you commit. Standalone."
+    },
+    {
+      "name": "plugin-eval",
+      "source": "./plugin-eval",
+      "description": "v0.1.0 \u2014 An evaluation harness for plugins that produce AI-generated output. Drives a target plugin natively in an isolated, rubric-blind runner, captures what it produces, and scores it against representative and adversarial scenarios \u2014 so you can change a skill, re-run the suite, and see what moved without a full live project. Ships with a strategist target pack. Standalone."
     }
   ]
 }
