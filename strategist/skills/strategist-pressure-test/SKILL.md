@@ -35,7 +35,7 @@ Use the Task tool to launch the `strategist-critic` agent. Pass it:
 - The instruction to return findings in its standard format: each finding as
   `[type] — the issue — why it matters — what would resolve it`, where `type` is one of
   *Unstated Assumption, Logical Gap, Weak Inference, Alternative Framing, Failure Mode,
-  Internal Contradiction*.
+  Internal Contradiction, Fabricated Premise, Agent-Introduced Keystone*.
 
 The critic is generative and self-contained — it does no web research and checks no
 sources. It attacks the thinking, not the facts.

@@ -28,15 +28,24 @@ problem: [FILL — e.g. "Subscriber growth has reversed; how do we return to >1,
 
 ## Working Directory  (defaults shown)
 
-Where the loop keeps its state and the evolving strategy document.
+Where the loop keeps its state and the two strategy documents.
 
 ```yaml
-strategy_dir: ./strategy/        # STATE.md, brief.md, and stage artifacts live here
+strategy_dir: ./strategy/                    # STATE.md and both documents live here
+reader_brief: ./strategy/strategy-brief.md   # the clean reader-facing deliverable
 ```
 
-`strategy/brief.md` is the artefact — it grows a section per stage as you work the
-loop. `strategy/STATE.md` tracks where you are and what's next; the loop is resumable
-across sessions.
+The loop maintains **two documents**:
+
+- `strategy/brief.md` — the **working document**. It grows a section per stage and keeps
+  the full record: frameworks, dead-ends, reframes, the pressure-test. This is the audit
+  trail.
+- `strategy/strategy-brief.md` — the **reader-facing strategy brief**. Generated at the
+  Story stage and refreshed through Decide and Act. Structured around the strategy, no
+  process residue — this is what you hand to an exec or a partner.
+
+`strategy/STATE.md` tracks where you are and what's next; the loop is resumable across
+sessions.
 
 ---
 
@@ -80,7 +89,8 @@ no_em_dashes: false
 Strategist walks one problem through a seven-step loop — Define, Split, Analyse,
 Insight, Story, Decide, Act — and at each step it puts the relevant frameworks from its
 library in front of you, helps you pick and apply the right one, and writes the result
-into a single living `brief.md`. A critic can pressure-test your reasoning at any point.
+into the working `brief.md`. From the Story stage on it also produces a clean,
+reader-facing strategy brief. A critic can pressure-test your reasoning at any point.
 
-The brief is the artefact. Run `/strategist:init` to start, then work the stages in
-order — iterate back whenever a later stage changes your mind about an earlier one.
+Run `/strategist:init` to start, then work the stages in order — iterate back whenever a
+later stage changes your mind about an earlier one.

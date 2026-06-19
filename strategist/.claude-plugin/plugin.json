@@ -1,7 +1,7 @@
 {
   "name": "strategist",
-  "version": "0.1.0",
-  "description": "v0.1.0 \u2014 A structured strategic-thinking system: take a problem through one repeatable loop \u2014 Define, Split, Analyse, Insight, Story, Decide, Act \u2014 pulling the right framework from a 70-framework library at each stage, and pressure-testing your reasoning before you commit. Standalone; runs on its own. Part of the Kenzie Creative marketplace.",
+  "version": "0.2.0",
+  "description": "v0.2.0 \u2014 A structured strategic-thinking system: take a problem through one repeatable loop \u2014 Define, Split, Analyse, Insight, Story, Decide, Act \u2014 pulling the right framework from a 70-framework library at each stage, and pressure-testing your reasoning before you commit. Produces a working record and a clean reader-facing brief. Standalone; runs on its own. Part of the Kenzie Creative marketplace.",
   "author": {
     "name": "Kelsey Ruger"
   },

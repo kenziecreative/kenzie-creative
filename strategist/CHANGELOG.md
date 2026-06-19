@@ -3,6 +3,34 @@
 All notable changes to the Strategist plugin. Per-plugin semver; tags are plugin-scoped
 (`strategist-vX.Y.Z`).
 
+## 0.2.0 — 2026-06-19
+
+Posture and deliverable refinement, driven by the first full real-world run (Hello Alice
+Partner-Powered Agents). Additive and backward-compatible — existing projects keep working;
+the reader brief is created the next time they run Story.
+
+- **Posture rewritten as enumerable rules** in the stage engine (`strategist-stage`). The
+  old "Facilitator, not Service Desk" tone guidance becomes behavioral rules in two halves:
+  a *friction half* (push on the logic) and a *lane half* — conviction-source rule (assert
+  only on the strategy's mechanism or what the user stated, never on your own inference),
+  lane discipline (timing/feasibility/cost are the user's; don't gate the strategy on them),
+  provisional framing (your own frames are proposals, dropped on redirect), and stall-don't-
+  fabricate-don't-over-stall. Borrowed from Hello Alice's advisor "posture vs judgment" work.
+- **Two-part Self-Audit** replaces the single Pushback Audit: a friction check plus a lane &
+  fabrication check, run before each stage closes.
+- **Two documents.** The loop now maintains a working record (`brief.md`) *and* a clean
+  reader-facing brief (`strategy/strategy-brief.md`, configurable as `reader_brief`),
+  generated at Story and refreshed through Decide/Act. Reader-Brief Style Rules strip
+  process narration, framework labels, source links, and reconciliation notes, and enforce
+  a falsifiability bar on every claim.
+- **One isolated question per turn** — the ask is stated plainly on its own, not buried in
+  analysis. Working Dynamic calibration now updates after the first substantive exchange.
+- **Two new critic checks:** *fabricated/unowned premise* (a feasibility/timing/cost claim
+  the assistant inferred rather than the user establishing) and *agent-introduced keystone*
+  (a framing the assistant added quietly becoming the spine).
+- Docs (README, AGENTS, template config) and `/strategist:progress` updated for the
+  two-document model.
+
 ## 0.1.0 — 2026-06-13
 
 Initial release.

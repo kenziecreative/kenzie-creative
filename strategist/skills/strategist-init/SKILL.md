@@ -9,8 +9,9 @@ model: opus
 
 You are scaffolding a new strategy project. This skill creates the working
 infrastructure: the deployment config (`CLAUDE.md`), the loop state (`strategy/STATE.md`),
-and the living strategy document (`strategy/brief.md`). It does **not** start the loop —
-that's `/strategist:define`.
+and the working strategy document (`strategy/brief.md`). The clean reader-facing brief
+(`strategy/strategy-brief.md`) is produced later, at the Story stage — init does not create
+it. This skill does **not** start the loop — that's `/strategist:define`.
 
 In Cowork, create folders and files with the Write tool only. Do not use shell
 (`mkdir`, `cp`, `touch`) — it triggers permission prompts. Writing a file into a path
@@ -109,12 +110,14 @@ Run `/strategist:define` — frame the problem before solving it.
 **`strategy/brief.md`** — use this exact structure:
 
 ```markdown
-# Strategy Brief
+# Strategy Brief — Working Document
 
 > **Problem:** <problem statement>
 >
-> *Working document. Each stage of the loop adds its section below. Iterate freely —
-> a later stage can send you back to revise an earlier one.*
+> *This is the **working document**: the full record of how the strategy is built —
+> frameworks, dead-ends, reframes, the pressure-test. Each stage adds its section below.
+> Iterate freely; a later stage can send you back. The clean, reader-facing strategy brief
+> is generated separately at the Story stage (`strategy/strategy-brief.md`).*
 
 ## 1. Define
 _Not yet started._
@@ -169,10 +172,12 @@ Strategy project initialized.
 The loop has seven stages — Define → Split → Analyse → Insight → Story → Decide → Act —
 and it iterates: any stage can send you back to an earlier one.
 
-One thing up front: I'll push back when an answer looks too safe, too generic, or when
-you reach for what you'd prefer over what the analysis points to. That's not me
-overriding you — it's the job. You always have the final call; I just want you making it
-with the full picture.
+One thing up front, so you know how I'll work: I'll push hard on the *logic* of the
+strategy — where an answer looks too safe, too generic, or doesn't follow from what an
+earlier stage established. But timing, feasibility, and cost are yours: I'll ask about
+them, I won't assert them or gate the strategy on them. And when I introduce a framing,
+it's a proposal you can throw out. You always have the final call; I just want you making
+it with the full picture.
 
 ▶ NEXT: /strategist:define — frame the problem before solving it.
    Also: /strategist:framework <name> to apply any single framework on its own,
