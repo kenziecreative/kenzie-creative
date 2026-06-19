@@ -11,5 +11,10 @@ It presents this stage's framework menu from the library
 their situation, applies it with them, writes the result into `strategy/brief.md` under
 the Story section, and advances `strategy/STATE.md` to the next stage.
 
+Story is also where the **reader-facing strategy brief** is born: in addition to the
+working-doc section, this stage generates `strategy/strategy-brief.md` — the clean
+deliverable structured around the strategy, with no process residue (see the Reader-Brief
+Style Rules in the stage skill). Decide and Act refresh it afterward.
+
 The loop iterates: if this stage changes the user's mind about an earlier one, it points
 them back rather than forcing forward.

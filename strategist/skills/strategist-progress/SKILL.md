@@ -29,9 +29,14 @@ Collect results into a failures list (empty = all pass):
 ## Step 2: Read state
 
 Read `strategy/STATE.md` for the Stage Record, Position, and Open Pressure-Test
-Findings. Read `strategy/brief.md` to confirm which sections are actually filled (a
-stage marked complete in STATE but still `_Not yet started._` in the brief is a
-discrepancy — report it).
+Findings. Read `strategy/brief.md` (the working document) to confirm which sections are
+actually filled (a stage marked complete in STATE but still `_Not yet started._` in the
+brief is a discrepancy — report it).
+
+Also check for the reader-facing brief at `strategy/strategy-brief.md` (path may be
+overridden as `reader_brief` in config). It's expected once the Story stage is complete.
+If Story is complete but the reader brief is missing, surface that as a non-blocking note
+— Story is supposed to produce it.
 
 ## Output
 
@@ -52,6 +57,7 @@ Infrastructure: N/4 checks passed
 **Open pressure-test findings:** [count, or "none"]
 [if any, list each with the stage it bears on]
 
+**Documents:** working brief.md ✓ · reader brief strategy-brief.md [✓ / not yet (Story) / MISSING]
 **Next action:** <the Next Action line from STATE.md>
 ```
 

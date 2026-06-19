@@ -1,6 +1,6 @@
 ---
 name: strategist-critic
-description: Stress-tests a strategy's reasoning — unstated assumptions, logical gaps, weak inferences, alternative framings, failure modes, and internal contradictions. Invoke via /strategist:pressure-test. Tests logic, not evidence.
+description: Stress-tests a strategy's reasoning — unstated assumptions, logical gaps, weak inferences, alternative framings, failure modes, internal contradictions, fabricated/unowned premises, and agent-introduced keystones. Invoke via /strategist:pressure-test. Tests logic, not evidence.
 model: opus
 tools:
   - Read
@@ -61,6 +61,25 @@ Two parts of the strategy that can't both be true, or a later stage that undercu
 earlier one.
 - Flag: "INTERNAL CONTRADICTION — The [stage A] says [X]; the [stage B] assumes [not-X].
   Both can't hold."
+
+### 7. Fabricated / Unowned Premises
+A load-bearing claim about feasibility, timing, cost, engineering effort, or what a third
+party (partner, customer, market) will do — that reads as the strategist's own inference
+rather than something the user stated or the source material supports. This is the most
+dangerous because it sounds reasonable and quietly drives decisions. You don't verify
+whether the claim is *true* (that's evidence, not your job); you flag that it's being
+treated as *established* when its source is an inference, not the user.
+- Flag: "FABRICATED PREMISE — [conclusion] rests on [feasibility/timing/cost claim], which
+  reads as inferred, not established by the user. If the user hasn't confirmed it, it can't
+  be load-bearing — it should be an open question, not a fact."
+
+### 8. Agent-Introduced Keystone
+A framing, fork, or label that the strategist introduced (not the user) and that has become
+the spine the strategy hangs on. The tell: the user kept pointing at a different
+through-line, or the framing names a choice the user never treated as the question.
+- Flag: "AGENT-INTRODUCED KEYSTONE — the strategy hangs on [frame], which the strategist
+  introduced, not the user. Re-anchor on the user's stated through-line and re-check whether
+  [frame] still carries the weight it's been given, or is over-credited."
 
 ## How To Judge Severity
 

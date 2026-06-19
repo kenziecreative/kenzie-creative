@@ -15,7 +15,7 @@ Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then `/plugin
 - **intelligence-briefing** (0.3.0) — a daily/weekly environmental brief that triages the outside world into a self-contained HTML brief. *Triage-stream.*
 - **researcher** (1.4.1) — a structured, audited research system. *Standalone.*
 - **sage** (0.2.0) — meeting-transcript triage into a single living weekly round-up. *Standalone.*
-- **strategist** (0.1.0) — a seven-stage strategic-thinking loop over a 70-framework library, with a reasoning critic. *Standalone.*
+- **strategist** (0.2.0) — a seven-stage strategic-thinking loop over a 70-framework library, with a reasoning critic; outputs a working record plus a clean reader-facing brief. *Standalone.*
 - **plugin-eval** (0.1.0) — evaluation harness for AI-output plugins; blind runner + judge subagents score a target against scenario packs. *Standalone (dev/QA tooling).*
 
 Two author-side shapes (not surfaced to users as taxonomy): **triage-stream** plugins are small, recurring, and can compose through the `/contract` convention; **standalone systems** are heavier, project-shaped, and self-contained.
@@ -50,7 +50,7 @@ Verification is split, not duplicated — each surface is tested by the only too
 
 - `plugin.json` `version` is the **single source of truth** for update propagation (not the git tag).
 - Per-plugin semver. Loop: edit → bump `version` → **update the `v<X.Y.Z> — ` prefix in BOTH descriptions to match (`plugin.json` and the plugin's entry in `.claude-plugin/marketplace.json`)** → CHANGELOG entry → update the plugin's row in the root README "Plugins at a glance" table (a manual mirror of `plugin.json`) → `node dev/scripts/check-version-prefix.mjs` → `claude plugin validate ./<plugin>` and `claude plugin validate .` → commit → tag → push.
-- **Tags are plugin-scoped:** `sage-v0.2.0`, `researcher-v1.4.1`, `intelligence-briefing-v0.3.0`, `strategist-v0.1.0`, `plugin-eval-v0.1.0`. Legacy plain `vX.Y.Z` tags exist from early intelligence-briefing releases — don't reuse plain tags; they collide across plugins (there is already a plain `v0.2.0` and `v0.3.0`).
+- **Tags are plugin-scoped:** `sage-v0.2.0`, `researcher-v1.4.1`, `intelligence-briefing-v0.3.0`, `strategist-v0.2.0`, `plugin-eval-v0.1.0`. Legacy plain `vX.Y.Z` tags exist from early intelligence-briefing releases — don't reuse plain tags; they collide across plugins (there is already a plain `v0.2.0` and `v0.3.0`).
 - Installers update via the Cowork Plugins tab, or Claude Code `/plugin marketplace update kenzie-creative` + `/plugin update <plugin>`.
 
 **Why the version prefix is duplicated in the descriptions (UI workaround):** the marketplace card does not currently surface a plugin's `version` field — users see only the description. And there are two descriptions: the **browse cards render the catalog entry's description** (`.claude-plugin/marketplace.json`), while `plugin.json`'s description shows post-install. Both therefore start with `v<X.Y.Z> — ` so the version is visible everywhere. The risk is drift: bumping `version` without updating a prefix means the UI lies. `dev/scripts/check-version-prefix.mjs` asserts all three agree (version field, plugin.json prefix, catalog prefix) and exits non-zero on drift — run it in the release loop above. **This is a temporary workaround** (borrowed from the Hello Alice marketplace); if the marketplace card surfaces version natively, strip the prefixes and remove this step.

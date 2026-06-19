@@ -15,7 +15,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 | Intelligence Briefing | 0.3.0 | Daily/weekly environmental brief that triages the outside world into a short, self-contained page | [guide](./intelligence-briefing/README.md) |
 | Researcher | 1.4.1 | Structured, audited research system — every claim traces back to a source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Weekly meeting round-up built from transcripts — action items, cross-meeting threads, forward watch list | [guide](./sage/README.md) |
-| Strategist | 0.1.0 | Strategic-thinking loop — Define → Split → Analyse → Insight → Story → Decide → Act — over a 70-framework library, with a reasoning critic | [guide](./strategist/README.md) |
+| Strategist | 0.2.0 | Strategic-thinking loop — Define → Split → Analyse → Insight → Story → Decide → Act — over a 70-framework library, with a reasoning critic; outputs a working record + a clean reader brief | [guide](./strategist/README.md) |
 | Plugin Eval | 0.1.0 | Evaluation harness for AI-output plugins — drives a target in a blind runner, scores it against representative + adversarial scenarios | [guide](./plugin-eval/README.md) |
 
 Each version mirrors that plugin's `plugin.json`, which is the source of truth for updates.
