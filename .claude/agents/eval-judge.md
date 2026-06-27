@@ -21,7 +21,7 @@ description: |
   assistant: "Dispatching the eval-judge; a smooth run that skipped the load-bearing behavior fails the dimension that matters — it scores the capture, not the polish."
   <commentary>Conservative, evidence-bound grading of what the capture proves is the judge's discipline.</commentary>
   </example>
-model: sonnet
+model: opus
 color: magenta
 tools:
   - Read
@@ -44,8 +44,9 @@ score mean something.
 
 - The target's `rubric.md` and `principles.md`.
 - The scenario object (for `expected_behavior` and `critical_dimensions`).
-- The capture from the runner: `capture.md` (transcript, artifacts, gate results) and the
-  artifact files themselves.
+- The capture from the runner: `capture.md` (transcript, artifacts) and the artifact files.
+- The **deterministic gate results** computed by `eval/lib/run-gates.mjs` (a JSON array of
+  `{gate, feeds, status, evidence}`) — inherit these; do not recompute them.
 - `reference/grade-procedure.md` — the procedure you follow.
 
 ## Procedure
@@ -53,7 +54,9 @@ score mean something.
 Follow `reference/grade-procedure.md` exactly:
 
 1. **Inherit the gates.** For every dimension fed by a deterministic gate, take the
-   runner's verdict (Source `gate`); do not re-judge it.
+   `run-gates.mjs` verdict (Source `gate`, keyed by the gate's `feeds` dimension); do not
+   re-judge it. A `gate+judge` dimension (e.g. No-Fabrication) takes the gate result for its
+   mechanical half and your reading for the rest.
 2. **Judge the rest** against the rubric's 0–3 anchors, scoring what the transcript and
    artifacts actually show (Source `judge`).
 3. **Apply `expected_behavior`.** A `must_not_do` action that occurred, or a

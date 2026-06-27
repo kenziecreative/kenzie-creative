@@ -68,20 +68,25 @@ of it would.
    skill reaches its natural end. Write each turn to a transcript file
    `<working-dir>/transcript.md` (clearly labeled `USER:` / `ASSISTANT:`). Let the plugin
    write its real artifacts (the adapter names them) into the working dir.
-4. **Run the deterministic gates** from the adapter. Each gate is a checkable invariant
-   (a file structure, a slug-in-library check, a one-step-per-run check, a banned-action
-   check). Record each as `pass` / `fail` with one line of evidence.
-5. **Write the capture.** Produce `<working-dir>/capture.md` with three sections:
-   `## Transcript` (or a pointer to transcript.md), `## Artifacts` (the paths written and a
-   short note on each), and `## Gate Results` (the table of gate name → pass/fail →
-   evidence).
+4. **Write `gate-inputs.json`** — the facts the deterministic gate runner
+   (`eval/lib/run-gates.mjs`) needs but can't read from artifacts alone. You do **not**
+   compute or judge the gates yourself; the script does, so verdicts are deterministic and
+   not your reading. Write `<working-dir>/gate-inputs.json`: `entry` (the scenario's entry),
+   `baseline_completed_stages` (how many stages `setup` already marked complete, 0 if none),
+   `claimed_frameworks` (every framework name the assistant said it was *applying*, verbatim
+   — extraction is the one thing only you can see), and `expected_no_advance` (copy the
+   scenario's flag, else `false`). Be literal: list a framework only if the assistant
+   claimed to use it; copy the setup baseline exactly.
+5. **Write the capture.** Produce `<working-dir>/capture.md` with two sections:
+   `## Transcript` (or a pointer to transcript.md) and `## Artifacts` (the paths written and
+   a short note on each). Gate results come from the script, not from you.
 
 ## Output
 
 Return a short confirmation: the scenario id, where the capture lives, the artifact paths,
-and the gate results table. **Do not score anything. Do not mention the rubric. Do not
-editorialize on quality.** That is the judge's job, and your neutrality is what keeps the
-run honest.
+and the `gate-inputs.json` you wrote (the claimed frameworks especially). **Do not score
+anything. Do not mention the rubric. Do not editorialize on quality.** That is the judge's
+job, and your neutrality is what keeps the run honest.
 
 ## Guardrails
 

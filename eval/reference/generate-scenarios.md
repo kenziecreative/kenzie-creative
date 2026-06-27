@@ -29,8 +29,14 @@ Produce new scenarios as JSONL, one object per line, in the schema defined by
   scenarios produce vague grades.
 - **State the bar.** Fill `expected_behavior` with `must_include`, `must_not_include`,
   `must_not_do`, and `critical_dimensions`. These are what make the scenario gradable.
+- **Add `tone_notes` and `severity`.** `tone_notes` says how a good response should *feel* in
+  this situation (the judge reads it for voice — be specific about register). `severity` is
+  `blocker` (a `must_have` miss fails the whole suite — use for goldens), `high`, or `medium`.
+- **Set `expected_no_advance: true`** when the correct behavior is to *refuse* to capture a
+  result (a stonewalling user who only gives non-answers) — it inverts the advance/fill gates.
 
 Only add a golden when its behavior is genuinely load-bearing — an invariant whose
-regression would be a real bug. Goldens are few and consensus, not a wishlist.
+regression would be a real bug. Goldens are few and consensus, not a wishlist. After adding,
+update the target's `coverage.md` so the new class is recorded.
 
 Output only the new JSONL lines, ready to append. No preamble.

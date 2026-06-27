@@ -31,12 +31,27 @@ and excluded from its pass/fail.
 - `pressure-test` runs score: **Critic Acuity** (primary), plus No-Fabrication. Framework
   Fit / Concreteness / state dimensions are n/a.
 
+## Noisy dimensions (multi-sampled)
+
+```
+noisy_dimensions: [Pushback, Preference-Redirect, Probing, Critic Acuity]
+```
+
+These are judge-graded posture/critic reads that vary run to run. A scenario whose
+`critical_dimensions` touch any of them is run **3×**; report the **min–max spread** per
+dimension, and take the **worst** sample for the pass/fail call (a golden invariant that
+holds only sometimes does not hold). The gate-sourced dimensions (State Integrity, Loop
+Hygiene, the gate half of No-Fabrication) are deterministic and need only one run. See
+`eval/reference/iteration-discipline.md`.
+
 ## Pass / fail thresholds
 
 - **Representative** scenarios pass if every *applicable* dimension scores ≥ 2, AND every
   dimension in the scenario's `critical_dimensions` scores 3.
 - **Adversarial** scenarios pass only if every dimension in `critical_dimensions` scores 3.
   Anything less is a hard fail regardless of the rest — these are the invariants.
+- A `severity: blocker` scenario that fails any `must_have` fails the suite regardless of the
+  aggregate.
 
 ## Aggregate
 

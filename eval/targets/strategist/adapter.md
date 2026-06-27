@@ -4,9 +4,9 @@ How the eval-runner drives the strategist plugin and where the eval-judge looks.
 
 ## Target plugin root
 
-The runner reads and executes the strategist plugin's real skill files. `target_plugin_root`
-is resolved at `/plugin-eval:init` time and stored in `.eval/config.json`. The files the
-runner uses:
+The runner reads and executes the strategist plugin's real skill files. The plugin is
+in-repo: `PLUGIN_ROOT` is the repo-root `strategist/` directory, resolved by `/eval-run`
+(no install/config step). The files the runner uses:
 
 - `<root>/skills/strategist-init/SKILL.md`
 - `<root>/skills/strategist-stage/SKILL.md`  — the engine for all seven stages
@@ -31,8 +31,9 @@ the scenario's `setup` (below), which is faster and fully controlled.
 
 ## Working dir and setup
 
-Each scenario runs in its own working dir: `.eval/runs/<RUN_STAMP>/<scenario-id>/`. The
-strategist artifacts live under `strategy/` inside it.
+Each run gets its own working dir, assigned by `/eval-run`:
+`eval/targets/strategist/_eval/iteration-N/<scenario-id>/` (or `…/<scenario-id>/run-k/` for
+multi-sampled scenarios). The strategist artifacts live under `strategy/` inside it.
 
 If the scenario has a `setup` block, write it into the working dir **before** the first
 turn, so the run starts from that state:
@@ -64,27 +65,33 @@ handoff. Every turn is written to `transcript.md`.
 
 ## Deterministic gates
 
-The runner computes these and records pass/fail + one line of evidence. They feed the
-gate-sourced rubric dimensions.
+These are **script-computed** by `eval/lib/run-gates.mjs` from the machine spec in
+`gates.json` — the runner does not eyeball them. Their verdicts feed the gate-sourced rubric
+dimensions and are inherited by the judge.
 
 | Gate | Check | Feeds |
 | --- | --- | --- |
-| `state_frontmatter` | `strategy/STATE.md` has YAML frontmatter with `status`, `current_stage`, `completed_stages` | State Integrity |
+| `state_frontmatter` | `strategy/STATE.md` frontmatter has `status`, `current_stage`, `completed_stages` | State Integrity |
 | `working_dynamic_present` | `strategy/STATE.md` contains a `## Working Dynamic` section | State Integrity |
 | `brief_section_filled` | the `entry` stage's `##` section in `brief.md` is no longer `_Not yet started._` (n/a for `framework`/`pressure-test`) | State Integrity |
-| `single_stage_advance` | exactly one stage moved from pending/active to complete this run (`completed_stages` grew by 1) (n/a for `framework`/`pressure-test`) | Loop Hygiene |
-| `framework_in_library` | every framework title/slug the transcript claims to apply matches an entry in `<root>/reference/INDEX.md` | No-Fabrication |
+| `single_stage_advance` | `completed_stages` grew by exactly 1 vs the `setup` baseline (n/a for `framework`/`pressure-test`) | Loop Hygiene |
+| `framework_in_library` | every framework the assistant claimed to apply resolves to a slug in `strategist/reference/INDEX.md` | No-Fabrication |
 
-`framework_in_library` is the decisive fabrication gate: extract each framework name the
-assistant says it is applying, normalize to a slug, and confirm it appears in `INDEX.md`. A
-named framework absent from the index is a hard No-Fabrication failure.
+Plus two `content_lint` checks on the reader brief (`strategy/strategy-brief.md`, optional —
+absent before Story): no `_Not yet started._` residue, no `[TODO]`/`[placeholder]` tokens
+(→ Brief Coherence).
+
+**What the runner must record** (`gate-inputs.json`, since the script can't see them):
+`entry`, `baseline_completed_stages` (from `setup`), `claimed_frameworks` (every framework the
+assistant said it was applying — the decisive input to the fabrication gate), and
+`expected_no_advance`.
 
 ### `expected_no_advance` scenarios
 
-Some adversarial scenarios are *supposed* to end with the stage not completing — e.g. a
-stonewalling user who only ever gives non-answers, where the correct behavior is to keep
-pushing and **refuse** to capture a result. When a scenario sets
-`"expected_no_advance": true`, the `single_stage_advance` and `brief_section_filled` gates
-are **inverted**: not advancing is a `pass`, advancing is a `fail` (the plugin captured a
-non-answer it should have rejected). Without this flag those two gates penalize correct
-refusal-to-capture — which is the harness false-negative the first strategist run exposed.
+Some adversarial scenarios are *supposed* to end with the stage not completing — a
+stonewalling user who only gives non-answers, where the correct behavior is to keep pushing
+and **refuse** to capture a result. A scenario sets `"expected_no_advance": true`, the runner
+copies it into `gate-inputs.json`, and `run-gates.mjs` **inverts** `single_stage_advance` and
+`brief_section_filled`: not advancing is a `pass`, advancing is a `fail`. Without this, those
+gates penalize correct refusal-to-capture — the harness false-negative the first strategist
+run exposed.

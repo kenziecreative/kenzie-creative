@@ -1,0 +1,61 @@
+{
+  "target": "strategist",
+  "rubric_version": "1.1.0",
+  "gates": [
+    {
+      "name": "state_frontmatter",
+      "type": "frontmatter_keys",
+      "file": "strategy/STATE.md",
+      "keys": ["status", "current_stage", "completed_stages"],
+      "feeds": "State Integrity",
+      "na_for_entries": ["framework", "pressure-test"]
+    },
+    {
+      "name": "working_dynamic_present",
+      "type": "file_contains",
+      "file": "strategy/STATE.md",
+      "pattern": "## Working Dynamic",
+      "feeds": "State Integrity",
+      "na_for_entries": ["framework", "pressure-test"]
+    },
+    {
+      "name": "brief_section_filled",
+      "type": "section_filled",
+      "file": "strategy/brief.md",
+      "section_from": "entry",
+      "placeholder": "_Not yet started._",
+      "feeds": "State Integrity",
+      "na_for_entries": ["framework", "pressure-test"]
+    },
+    {
+      "name": "single_stage_advance",
+      "type": "completed_stages_delta",
+      "file": "strategy/STATE.md",
+      "delta": 1,
+      "feeds": "Loop Hygiene",
+      "na_for_entries": ["framework", "pressure-test"]
+    },
+    {
+      "name": "framework_in_library",
+      "type": "framework_in_library",
+      "index": "reference/INDEX.md",
+      "feeds": "No-Fabrication"
+    }
+  ],
+  "content_lint": [
+    {
+      "name": "reader_brief_no_residue",
+      "file": "strategy/strategy-brief.md",
+      "forbid": "_Not yet started\\._",
+      "feeds": "Brief Coherence",
+      "optional_file": true
+    },
+    {
+      "name": "reader_brief_no_placeholders",
+      "file": "strategy/strategy-brief.md",
+      "forbid": "\\[(TODO|TBD|placeholder|FILL)\\b",
+      "feeds": "Brief Coherence",
+      "optional_file": true
+    }
+  ]
+}

@@ -8,7 +8,7 @@ this; a human can also follow it by hand to grade a single captured response.
 - The target's `rubric.md` and `principles.md` (the yardstick).
 - The scenario object (for `expected_behavior` and `critical_dimensions`).
 - The captured run: the transcript (every turn) and the artifacts the plugin wrote.
-- The deterministic-gate results the runner already computed (inherit these).
+- The deterministic-gate results from `eval/lib/run-gates.mjs` (a JSON array; inherit these — do not recompute).
 
 ## Procedure
 
@@ -62,10 +62,20 @@ SUITE SUMMARY
 - Scenarios graded: N    Pass: X (Y%)    Fail: Z
 - Mean score by dimension: <table>
 - Pass-rate by kind (representative / adversarial): <table>
+- Noisy-dimension spread (multi-sampled scenarios): <id → dimension min–max across the 3 runs>
 - Failing scenarios (id → top issue): <list>
 - Patterns across failures: <2–3 sentences>
 - Next 3 things to fix, ranked: <list>
 ```
+
+**Multi-sampled (noisy) scenarios.** A scenario whose `critical_dimensions` touch the
+rubric's `noisy_dimensions` is run 3×. Report each noisy dimension as a **min–max spread**
+across the samples, not a single number; a wide spread is the finding (report it). For the
+pass/fail call on a noisy scenario, use the **worst** sample on its critical dimensions — a
+golden invariant that holds only sometimes does not hold.
+
+**Severity.** A `severity: blocker` scenario that fails any `must_have` fails the whole
+suite regardless of the aggregate.
 
 ## Filing split
 

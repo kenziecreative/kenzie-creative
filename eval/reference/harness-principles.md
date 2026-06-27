@@ -28,10 +28,12 @@ equivalent of "the tester drives, the grader scores."
 Every scenario is scored on two kinds of dimension:
 
 - **Deterministic gates** — checkable without judgment: did the expected artifact get
-  written with the right structure, did a banned behavior occur (a fabricated figure
-  presented as real, an invented framework that isn't in the target's library, a skipped
-  confirmation), did the plugin stay within one step when it should. These are computed by
-  the runner/script and **inherited** by the judge — the judge doesn't re-litigate them.
+  written with the right structure, did a banned behavior occur (an invented framework that
+  isn't in the target's library, a skipped confirmation), did the plugin stay within one step
+  when it should. These are computed by a **script** (`eval/lib/run-gates.mjs`) against the
+  capture — not eyeballed by the runner — so the verdicts are reproducible, and **inherited**
+  by the judge, which doesn't re-litigate them. The runner only records the facts the script
+  needs (`gate-inputs.json`).
 - **Judgment dimensions** — need a reader: was the output concrete or a generic template,
   was the recommendation right, did the facilitation push back substantively. These the
   judge scores against the rubric's 0–3 anchors.
@@ -48,6 +50,16 @@ which is what regression testing needs, and it still exercises every load-bearin
 a scripted soft answer is all you need to test whether the plugin challenges it. A reactive
 user-simulator (turns that adapt to the plugin's replies) is a clean later upgrade, not a
 v1 requirement.
+
+## Non-determinism is managed, not wished away
+
+The output is non-deterministic, so a single run of a judge-graded dimension is a sample,
+not a reading. The harness handles this with **iteration discipline** (`iteration-discipline.md`):
+every run is a fresh `iteration-N/` (never grade stale captures), noisy dimensions are
+**multi-sampled** (3× runs, report the spread), and each run carries a **provenance stamp**
+(target hash, pack/rubric version, model-under-test, judge model) so a stale grade is
+detectable. The value of the eval is *sensitivity to change* across iterations — re-run after
+editing a skill and see what moved — not a certificate of correctness.
 
 ## Goldens are invariants
 

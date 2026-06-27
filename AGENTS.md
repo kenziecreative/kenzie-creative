@@ -56,6 +56,21 @@ Verification is split, not duplicated — each surface is tested by the only too
 
 **Why the version prefix is duplicated in the descriptions (UI workaround):** the marketplace card does not currently surface a plugin's `version` field — users see only the description. And there are two descriptions: the **browse cards render the catalog entry's description** (`.claude-plugin/marketplace.json`), while `plugin.json`'s description shows post-install. Both therefore start with `v<X.Y.Z> — ` so the version is visible everywhere. The risk is drift: bumping `version` without updating a prefix means the UI lies. `dev/scripts/check-version-prefix.mjs` asserts every place agrees — the `version` field, the `plugin.json` prefix, the catalog prefix, the README table cell, and the AGENTS list entry (and that no plugin is missing from those indexes) — and exits non-zero on drift; run it in the release loop above. **This is a temporary workaround** (borrowed from the Hello Alice marketplace); if the marketplace card surfaces version natively, strip the prefixes and remove this step.
 
+## Evaluating plugins (internal)
+
+QA has two halves. The **authoring** half — is a plugin well-formed and well-written — is the
+release loop above (`check-version-prefix`, `claude plugin validate`, and plugin-dev's
+`skill-reviewer`/`plugin-validator`). The **runtime** half — when you actually run it, is the
+output good and does it communicate well — is the **`eval/`** harness: internal tooling, **not
+a published plugin** (no manifest, not in the catalog). It drives a target plugin's real skills
+blind through scripted scenarios, computes deterministic gates with `eval/lib/run-gates.mjs`,
+and scores the capture with a separate judge against a per-target rubric. Run it with
+`/eval-run --target <name>` after changing a plugin's skills; a red **golden** is a ship-blocker.
+It grades whether the plugin *behaved* well, never whether its recommendation was *correct*.
+Details and how to add a target: `eval/README.md` and `eval/AGENTS.md`. (Note: the
+`eval-runner`/`eval-judge` agents live in `.claude/agents/` and need a session reload to
+register after they're first added.)
+
 ## Cowork-safe HTML (for plugins that render HTML)
 
 Learned the hard way: system fonts as the real basis (web fonts are progressive enhancement only); **no JavaScript**; **no content-hiding entrance animations** (a CSS `opacity:0` reveal renders blank if the viewer doesn't run animations); flat design — bordered cards on white, no drop shadows. Plugins stay brand-neutral; a deployment applies its own brand by pointing a `theme` at a local CSS override.
