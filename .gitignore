@@ -19,3 +19,6 @@ Thumbs.db
 /ledger.json
 /candidates.json
 /sources/
+
+# eval/ run artifacts — captures + scorecards are regenerated, not committed.
+eval/**/_eval/

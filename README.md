@@ -16,7 +16,6 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 | Researcher | 1.4.1 | Structured, audited research system — every claim traces back to a source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Weekly meeting round-up built from transcripts — action items, cross-meeting threads, forward watch list | [guide](./sage/README.md) |
 | Strategist | 0.2.0 | Strategic-thinking loop — Define → Split → Analyse → Insight → Story → Decide → Act — over a 70-framework library, with a reasoning critic; outputs a working record + a clean reader brief | [guide](./strategist/README.md) |
-| Plugin Eval | 0.1.0 | Evaluation harness for AI-output plugins — drives a target in a blind runner, scores it against representative + adversarial scenarios | [guide](./plugin-eval/README.md) |
 
 Each version mirrors that plugin's `plugin.json`, which is the source of truth for updates.
 
@@ -46,12 +45,6 @@ A **strategic-thinking system**: it walks one problem through a single repeatabl
 
 → **[Read the Strategist guide](./strategist/README.md)** for the loop, the library, and the critic.
 
-### Plugin Eval
-
-An **evaluation harness for the plugins that produce AI-generated output** — the way you test them before they ship. It drives a target plugin natively (no browser needed — these plugins already live in the chat surface), runs it blind through a suite of representative and adversarial scenarios, captures what it actually produces, and scores it against a per-target rubric. Change a skill, re-run the suite, see what moved — without standing up a full live project every time. Ships with a strategist target pack; new targets are added by writing a pack, not changing the engine.
-
-→ **[Read the Plugin Eval guide](./plugin-eval/README.md)** for the runner/judge model, target packs, and the regression loop.
-
 ## Install
 
 ### Claude Cowork (desktop app)
@@ -69,7 +62,6 @@ An **evaluation harness for the plugins that produce AI-generated output** — t
 /plugin install researcher@kenzie-creative
 /plugin install sage@kenzie-creative
 /plugin install strategist@kenzie-creative
-/plugin install plugin-eval@kenzie-creative
 ```
 
 Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`; for research, run `/research:init`; for the meeting round-up, run `/sage:setup`; for a strategy, run `/strategist:init`.
@@ -88,7 +80,6 @@ New versions arrive only when one is published — nothing changes under you.
 /plugin update researcher
 /plugin update sage
 /plugin update strategist
-/plugin update plugin-eval
 /reload-plugins
 ```
 

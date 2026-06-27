@@ -27,11 +27,6 @@
       "name": "strategist",
       "source": "./strategist",
       "description": "v0.2.0 \u2014 A structured strategic-thinking system: take a problem through one repeatable loop \u2014 Define, Split, Analyse, Insight, Story, Decide, Act \u2014 pulling the right framework from a 70-framework library at each stage, capturing the work in a working record plus a clean reader-facing brief, and pressure-testing the reasoning before you commit. Standalone."
-    },
-    {
-      "name": "plugin-eval",
-      "source": "./plugin-eval",
-      "description": "v0.1.0 \u2014 An evaluation harness for plugins that produce AI-generated output. Drives a target plugin natively in an isolated, rubric-blind runner, captures what it produces, and scores it against representative and adversarial scenarios \u2014 so you can change a skill, re-run the suite, and see what moved without a full live project. Ships with a strategist target pack. Standalone."
     }
   ]
 }

@@ -16,7 +16,8 @@ Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then `/plugin
 - **researcher** (1.4.1) — a structured, audited research system. *Standalone.*
 - **sage** (0.2.0) — meeting-transcript triage into a single living weekly round-up. *Standalone.*
 - **strategist** (0.2.0) — a seven-stage strategic-thinking loop over a 70-framework library, with a reasoning critic; outputs a working record plus a clean reader-facing brief. *Standalone.*
-- **plugin-eval** (0.1.0) — evaluation harness for AI-output plugins; blind runner + judge subagents score a target against scenario packs. *Standalone (dev/QA tooling).*
+
+The marketplace also carries an internal **`eval/`** runtime-QA harness (not a published plugin — see "Evaluating plugins").
 
 Two author-side shapes (not surfaced to users as taxonomy): **triage-stream** plugins are small, recurring, and can compose through the `/contract` convention; **standalone systems** are heavier, project-shaped, and self-contained.
 
@@ -78,4 +79,4 @@ run it. New plugins start at `0.1.0`, tagged `<name>-v0.1.0`.
 Each plugin's own `AGENTS.md` carries its structure, mechanics, locked decisions, surface
 differences, and a `## Maintaining this plugin` section (the release ritual + that plugin's
 edit cautions): `intelligence-briefing/AGENTS.md`, `researcher/AGENTS.md`, `sage/AGENTS.md`,
-`strategist/AGENTS.md`, `plugin-eval/AGENTS.md`.
+`strategist/AGENTS.md`.
