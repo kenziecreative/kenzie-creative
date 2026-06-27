@@ -3,6 +3,26 @@
 All notable changes to the Strategist plugin. Per-plugin semver; tags are plugin-scoped
 (`strategist-vX.Y.Z`).
 
+## 0.2.1 — 2026-06-27
+
+Critic restraint fix, caught by the internal strategist eval (golden `adv-sound-strategy`).
+The pressure-test critic was over-applying v0.2.0's fabricated/unowned-premise check: on a
+sound brief it labeled the user's own $80k budget a "FABRICATED PREMISE" and padded the
+review with a generic 5-Whys critique and a "return to growth" gap — manufacturing serious
+flaws where the reasoning actually held, which trains the user to ignore the critic.
+
+- **`agents/strategist-critic.md`:** scoped the fabricated/unowned-premise check (#7) to fire
+  only on a claim the *agent inferred* that the strategy's logic *depends on* — explicitly
+  **not** on a decision the user owns (budget, timeline, target, scope). A number the user
+  chose is not a premise to prove.
+- Added a **"What Is Not A Finding"** section: user-owned decisions, generic method critiques
+  not grounded in this brief, the standard reading of the problem, and non-load-bearing
+  details are not flaws. Affirm sound reasoning and stop.
+
+Verified by re-eval: `adv-sound-strategy` now passes 3/3 samples (critic affirms, no
+manufactured premise); `adv-planted-contradiction` still catches the real cross-stage
+contradiction (no loss of edge).
+
 ## 0.2.0 — 2026-06-19
 
 Posture and deliverable refinement, driven by the first full real-world run (Hello Alice

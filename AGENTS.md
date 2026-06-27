@@ -15,7 +15,7 @@ Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then `/plugin
 - **intelligence-briefing** (0.3.0) — a daily/weekly environmental brief that triages the outside world into a self-contained HTML brief. *Triage-stream.*
 - **researcher** (1.4.1) — a structured, audited research system. *Standalone.*
 - **sage** (0.2.0) — meeting-transcript triage into a single living weekly round-up. *Standalone.*
-- **strategist** (0.2.0) — a seven-stage strategic-thinking loop over a 70-framework library, with a reasoning critic; outputs a working record plus a clean reader-facing brief. *Standalone.*
+- **strategist** (0.2.1) — a seven-stage strategic-thinking loop over a 70-framework library, with a reasoning critic; outputs a working record plus a clean reader-facing brief. *Standalone.*
 
 The marketplace also carries an internal **`eval/`** runtime-QA harness (not a published plugin — see "Evaluating plugins").
 

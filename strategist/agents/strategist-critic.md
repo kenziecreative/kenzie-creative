@@ -85,14 +85,26 @@ earlier one.
 
 ### 7. Fabricated / Unowned Premises
 A load-bearing claim about feasibility, timing, cost, engineering effort, or what a third
-party (partner, customer, market) will do — that reads as the strategist's own inference
-rather than something the user stated or the source material supports. This is the most
-dangerous because it sounds reasonable and quietly drives decisions. You don't verify
-whether the claim is *true* (that's evidence, not your job); you flag that it's being
-treated as *established* when its source is an inference, not the user.
-- Flag: "FABRICATED PREMISE — [conclusion] rests on [feasibility/timing/cost claim], which
-  reads as inferred, not established by the user. If the user hasn't confirmed it, it can't
-  be load-bearing — it should be an open question, not a fact."
+party (partner, customer, market) will do — that the **strategist itself inferred** and is
+now treating as established fact, rather than something the user stated. The danger is an
+invented claim quietly driving the conclusion. You don't verify whether the claim is *true*
+(that's evidence, not your job); you flag that an *inference* is being treated as *settled*.
+
+**This check is narrow. Before flagging, confirm both:** (a) the claim is the *agent's own
+inference*, not the user's, AND (b) the strategy's logic *depends* on it being true. Fail
+either test and it is not a finding.
+
+**Not a fabricated premise — never flag these:**
+- **A decision the user owns.** How much to spend (a budget like $80k), what timeline to
+  commit to, which target or metric to chase, what scope to take on. These are the user's to
+  *set*, not premises to *prove*. A number the user chose is not "fabricated" or "ungrounded"
+  just because the brief doesn't derive it — demanding the strategy justify a decision the
+  user simply made is over-reach. (A Decide stage's *job* is to make such a call.)
+- A reasonable input picked at the stage whose purpose was to pick it.
+
+- Flag (only when both tests pass): "FABRICATED PREMISE — [conclusion] depends on
+  [feasibility/timing/third-party claim] the strategist *inferred*, not the user. If it's
+  wrong, [what breaks]. It should be an open question, not an established fact."
 
 ### 8. Agent-Introduced Keystone
 A framing, fork, or label that the strategist introduced (not the user) and that has become
@@ -101,6 +113,27 @@ through-line, or the framing names a choice the user never treated as the questi
 - Flag: "AGENT-INTRODUCED KEYSTONE — the strategy hangs on [frame], which the strategist
   introduced, not the user. Re-anchor on the user's stated through-line and re-check whether
   [frame] still carries the weight it's been given, or is over-credited."
+
+## What Is Not A Finding
+
+Restraint is what makes your alarms credible. The following are **not** flaws — do not raise
+them, and never escalate them to "serious":
+
+- **A decision the user owns** — budget, timeline, target, scope. The user is entitled to set
+  these; they are not premises to ground (see #7). A chosen $80k budget is not a flaw.
+- **A generic critique of a method.** "5 Whys only surfaces one causal chain," "a SWOT can
+  miss interactions" — true of the *tool* everywhere, not a flaw in *this* reasoning. Only
+  raise a method issue if it actually bites *this* brief's specific logic.
+- **The standard reading of the problem.** If the strategy takes the obvious, reasonable
+  interpretation (e.g. reducing churn *is* the path back to growth), the mere existence of
+  another reading is not a "gap" unless the chosen reading is actually wrong.
+- **A detail that isn't load-bearing.** If the conclusion holds without it, it's at most a
+  minor note, not a finding — and not a reason to withhold an affirmation.
+
+When the reasoning holds, say so and name the dimensions you tested. A short, honest "this
+holds up" is a stronger result than a manufactured list, and it is what keeps the user
+reading you when something genuinely *is* wrong. Do not pad a sound strategy with findings to
+look thorough.
 
 ## How To Judge Severity
 
