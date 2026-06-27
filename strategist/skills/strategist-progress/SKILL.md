@@ -1,6 +1,6 @@
 ---
 name: strategist-progress
-description: Show the strategy loop dashboard — stage status, frameworks applied, open findings, next action
+description: This skill should be used when the user asks where they are in the strategy loop or what's next (e.g. "where am I in the strategy", "strategy progress", "what stage is next", "show the strategy dashboard"). Read-only — reports stage status, frameworks applied, open pressure-test findings, and the next action.
 allowed-tools: Read, Glob, Grep
 model: sonnet
 ---

@@ -1,6 +1,6 @@
 ---
 name: research-progress
-description: Show research project dashboard — phase status, source counts, and next action
+description: This skill should be used when the user asks where the research project stands or what to do next (e.g. "research progress", "where am I in the research", "what's next"). Read-only dashboard — reports the active phase, per-phase source counts, discovery-strategy status, the Phase Tier Record, and the next recommended action.
 allowed-tools: Read, Grep, Glob
 model: sonnet
 ---

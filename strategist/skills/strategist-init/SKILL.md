@@ -1,6 +1,6 @@
 ---
 name: strategist-init
-description: Scaffold a Strategist project — state, the working brief, and the deployment config
+description: This skill should be used when the user asks to start, initialize, or set up a Strategist project (e.g. "start a strategy", "set up strategist here", "new strategy project"). Scaffolds the loop state, the working brief, and the per-deployment config.
 disable-model-invocation: true
 model: opus
 ---

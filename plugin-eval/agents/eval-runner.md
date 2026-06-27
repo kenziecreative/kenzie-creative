@@ -1,7 +1,28 @@
 ---
 name: eval-runner
-description: Executes a target plugin faithfully against one scenario's scripted user turns, in an isolated scratch dir, and captures the transcript, artifacts, and deterministic-gate results. Blind to the rubric. Invoked by /plugin-eval:run.
+description: |
+  Use this agent when a target plugin needs a faithful, isolated execution against one
+  scenario's scripted user turns — playing the assistant by following the target's skill
+  files literally, capturing the transcript and artifacts, and running the deterministic
+  gates. It is blind to the rubric and never compensates for a missing instruction.
+  Dispatched programmatically by the /plugin-eval:run skill — one runner per scenario,
+  before the eval-judge scores the capture — not invoked directly by the user.
+
+  <example>
+  Context: The run skill is executing the golden set and needs each scenario run in a clean room.
+  user: "(run skill) Execute scenario adv-soft-answers-define against the target's skills and capture it."
+  assistant: "I'll dispatch the eval-runner to play the scenario through the target's skill files and write capture.md, blind to the rubric."
+  <commentary>Faithful, isolated execution of one scenario is exactly the runner's job — spawned by the run loop, not the user.</commentary>
+  </example>
+
+  <example>
+  Context: A skill change needs regression-checking and the run skill is fanning scenarios out in parallel.
+  user: "(run skill) Run this scenario in its own working dir and record the gate results."
+  assistant: "Dispatching an eval-runner for this scenario; it will execute the skills as written and return the gate table without scoring."
+  <commentary>One runner per scenario, isolated working dir, no scoring — the run skill's clean-room executor.</commentary>
+  </example>
 model: sonnet
+color: cyan
 tools:
   - Read
   - Write

@@ -1,6 +1,6 @@
 ---
 name: strategist-framework
-description: Apply or explain a single framework from the library, independent of the loop
+description: This skill should be used when the user asks to apply, explain, or look up a single strategy framework by name, outside the full loop (e.g. "apply SCQ", "explain the Eisenhower matrix", "use a driver tree on this"). Resolves the framework in the 70-entry library and applies it to the user's situation or explains it.
 allowed-tools: Read, Write, Edit, Glob, Grep
 model: sonnet
 ---

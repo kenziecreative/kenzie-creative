@@ -1,7 +1,8 @@
 # AGENTS.md — strategist
 
-Maintainer/agent guidance for working **on** the Strategist plugin. Current version:
-**0.2.0**. Standalone, self-contained strategic-thinking system.
+Maintainer/agent guidance for working **on** the Strategist plugin. Standalone,
+self-contained strategic-thinking system. (Current version lives in `plugin.json` and
+`CHANGELOG.md`.)
 
 > A plugin's `templates/CLAUDE.md` is a different thing: it's the per-deployment config
 > the plugin ships to *users*, not agent guidance. Don't conflate the two.
@@ -90,11 +91,26 @@ template.
   strategy inputs, that's a separate, opt-in concern — don't bolt a research gate onto the
   loop.
 
-## Left for the Claude Code / terminal pass
+## Maintaining this plugin
 
-Per the marketplace build model (Cowork = reviewer/spec owner, Claude Code = executor for
-Claude-Code mechanics + git): live-test the PreCompact hook and the settings pre-allow on
-Claude Code; for v0.2.0 also run the posture/two-document behavioral re-runs (see the
-revision spec); then bump/commit/tag (`strategist-v0.2.0`) and push. The marketplace
-registration (`marketplace.json`, root README table, root AGENTS list) tracks the plugin;
-confirm the version/description there match on release.
+- **Release:** follow **Release & versioning** in the root `AGENTS.md`. Bump `version` in
+  `plugin.json`, update the `v<X.Y.Z> — ` prefix in both descriptions (`plugin.json` + the
+  catalog entry in `.claude-plugin/marketplace.json`), the README "Plugins at a glance" row,
+  and the root `AGENTS.md` plugin list; add a `CHANGELOG.md` entry; then
+  `node dev/scripts/check-version-prefix.mjs` and `claude plugin validate ./strategist` +
+  `claude plugin validate .`; commit, tag **`strategist-v<X.Y.Z>`**, push.
+- **Authoring check (optional):** run plugin-dev's `skill-reviewer` over changed skills and
+  `plugin-validator` over the plugin to catch frontmatter/description regressions.
+- **Editing cautions specific to this plugin:**
+  - The 7 stage commands all drive the single `strategist-stage` engine — change posture or
+    behavior **there**, not per stage. The enumerable posture + two-part Self-Audit live in
+    `strategist-stage` Step 4; keep the two-document split (working `brief.md` vs
+    reader-facing `strategy-brief.md`) intact.
+  - The critic tests **logic, not evidence** — don't bolt a sourcing/research gate onto it.
+    Its two newest checks (fabricated/unowned premise, agent-introduced keystone) are
+    load-bearing; preserve them.
+  - The `reference/` library is namespaced `strategist:reference/<stage>/<slug>` and indexed
+    in `INDEX.md`; adding a framework is an entry + diagram + index update, no skill change.
+- See **Locked decisions** above before changing the loop shape, the critic's scope, or the
+  two-document model. Claude Code owns the live-test of the PreCompact hook and the
+  `.claude/settings.json` pre-allow (Cowork can't see them).

@@ -1,6 +1,6 @@
 ---
 name: research-audit-claims
-description: Fact-check a research draft against source notes and promote to outputs if it passes
+description: This skill should be used when the user asks to audit, fact-check, or verify the claims in a research draft before it ships, or to promote a draft to outputs (e.g. "audit this draft", "fact-check phase 2", "can this go to outputs"). Walks every claim against its cited source notes and, if it passes, logs the gate row and promotes the draft from research/drafts/ to research/outputs/.
 argument-hint: "[filepath]"
 model: opus
 ---

@@ -1,6 +1,8 @@
 # AGENTS.md — sage
 
-Maintainer/agent guidance for working **on** the Sage plugin. Current version: **0.2.0**.
+Maintainer/agent guidance for working **on** the Sage plugin. Standalone,
+self-contained meeting round-up system. (Current version lives in `plugin.json` and
+`CHANGELOG.md`.)
 
 > Not to be confused with `sage/templates/CLAUDE.md`, which is the per-deployment config Sage ships to users. This file is for whoever is editing Sage itself.
 
@@ -48,3 +50,31 @@ A named adapter (`granola.md`, `read-ai.md`, …) is just a pre-filled, quirk-do
 ## Out of scope (v2 ideas — don't build without a decision)
 
 More adapters, an HTML round-up, `/contract` integration, a memory layer.
+
+## Maintaining this plugin
+
+- **Release:** follow **Release & versioning** in the root `AGENTS.md`. Bump `version` in
+  `plugin.json`, update the `v<X.Y.Z> — ` prefix in both descriptions (`plugin.json` + the
+  catalog entry in `.claude-plugin/marketplace.json`), the README "Plugins at a glance" row,
+  and the root `AGENTS.md` plugin list; add a `CHANGELOG.md` entry; then
+  `node dev/scripts/check-version-prefix.mjs` and `claude plugin validate ./sage` +
+  `claude plugin validate .`; commit, tag **`sage-v<X.Y.Z>`**, push.
+- **Authoring check (optional):** run plugin-dev's `skill-reviewer` over changed skills and
+  `plugin-validator` over the plugin to catch frontmatter/description regressions.
+- **Editing cautions specific to this plugin:**
+  - One skill carries the whole pipeline (`skills/meeting-triage/SKILL.md`) and the body
+    **never names a service** — service specifics live in `references/adapters/`. Change
+    pipeline behaviour in the SKILL; change a service's quirks in its adapter.
+  - **Adding a named adapter** is a fixed workflow: a live-access agent drafts
+    `references/adapters/<service>.md`, then a maintainer registers it in the SKILL's "READ
+    THESE FIRST" list, adds the option (with its `.claude/settings.json` allowlist) to
+    `sage-setup.md` step 3, and bumps the version. See "Adding a named adapter" above.
+  - **Ingestion is manifest-gated and idempotent** — `source/` is the universal floor, MCP
+    auto-pull rides on top, and cross-source dedup collapses the same meeting from two
+    sources. Don't loosen the dedup rule or write the manifest mid-run.
+  - **The scheduled-task prompt MUST carry the absolute deployment path** (`sage-setup.md`
+    step 11). The task runs from its own directory, so a bare "this project" halts every
+    run. This was the v0.2.0 blocker fix — keep it, and keep setup's config-persisted
+    verification.
+- See **Locked decisions** above before changing the cadence default, the numbering-at-
+  processing-time rule, the attendee-enrichment exclusion, or the scheduling model.

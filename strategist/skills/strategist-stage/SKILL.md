@@ -1,6 +1,6 @@
 ---
 name: strategist-stage
-description: Run one stage of the strategy loop — present its frameworks, apply the chosen one, capture the result
+description: This skill should be used when the user asks to run or advance a stage of the strategy loop — Define, Split, Analyse, Insight, Story, Decide, or Act (e.g. "let's define the problem", "move to the analyse stage", "run decide"). Presents the stage's frameworks, applies the chosen one to the user's problem, and captures the result in the working brief.
 allowed-tools: Read, Write, Edit, Glob, Grep
 model: opus
 ---

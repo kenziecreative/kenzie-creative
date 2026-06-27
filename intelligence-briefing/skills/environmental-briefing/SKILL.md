@@ -1,6 +1,6 @@
 ---
 name: environmental-briefing-agent
-description: Produce a daily environmental brief — a triaged scan of the outside world (news, industry movement, research, policy, science) that surfaces the few items worth attention and ignores the rest. Use when running a scheduled or on-demand briefing for a deployment configured in CLAUDE.md, which supplies the relevance context, zones, evidence bar, cadence, length budget, and file paths. Reads the ledger to report motion not repetition, classifies items by epistemic type and sourcing, and writes a dated brief.
+description: This skill should be used when the user asks to run an environmental brief — a triaged scan of the outside world (news, industry movement, research, policy, science) that surfaces the few items worth attention and ignores the rest — for a deployment configured in CLAUDE.md (e.g. "run the daily brief", "what's happening in my world", "environmental scan", or a scheduled run). Reads the deployment's relevance context, zones, evidence bar, cadence, and paths from CLAUDE.md; reads the ledger to report motion not repetition; classifies items by epistemic type and sourcing; and writes a dated brief.
 allowed-tools: Read, Write, Edit, WebSearch, WebFetch
 ---
 

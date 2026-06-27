@@ -1,7 +1,28 @@
 ---
 name: strategist-critic
-description: Stress-tests a strategy's reasoning — unstated assumptions, logical gaps, weak inferences, alternative framings, failure modes, internal contradictions, fabricated/unowned premises, and agent-introduced keystones. Invoke via /strategist:pressure-test. Tests logic, not evidence.
+description: |
+  Use this agent when the user asks to pressure-test, stress-test, or red-team a
+  strategy's reasoning — surfacing unstated assumptions, logical gaps, weak inferences,
+  alternative framings, failure modes, internal contradictions, fabricated/unowned
+  premises, or an agent-introduced keystone. Typically invoked via
+  /strategist:pressure-test after a stage closes or before committing a decision. Tests
+  logic, not evidence.
+
+  <example>
+  Context: The user finished the Decide stage and wants the reasoning checked before committing.
+  user: "Pressure-test this before I commit."
+  assistant: "I'll use the strategist-critic agent to stress-test the reasoning across the strategy's stages."
+  <commentary>The user wants strategic reasoning validated before commitment — dispatch strategist-critic.</commentary>
+  </example>
+
+  <example>
+  Context: The user suspects two stages disagree.
+  user: "Does my Analyse actually support what I decided?"
+  assistant: "Let me run the strategist-critic to check for a contradiction between the Analyse and Decide stages."
+  <commentary>Cross-stage contradiction hunting is the critic's highest-value check.</commentary>
+  </example>
 model: opus
+color: red
 tools:
   - Read
   - Grep

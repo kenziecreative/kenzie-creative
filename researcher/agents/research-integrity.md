@@ -1,7 +1,29 @@
 ---
 name: research-integrity
-description: Watches research output for integrity issues — fabricated data, range narrowing, qualifier stripping, cross-phase drift, and internal inconsistencies. Invoke after writing any phase output, source note, or synthesis draft.
+description: |
+  Use this agent when research output needs an integrity check before it propagates —
+  after writing a source note, a synthesis draft, or a phase output, or when a number,
+  range, or qualifier might have drifted from its source. It watches for fabricated data,
+  interpolated figures, range narrowing, qualifier stripping, cross-phase drift, internal
+  inconsistencies, unsourced or confidence-inflated claims, and (when given both a plan and
+  a source digest) source material the plan skipped. Tests sourcing and consistency, not
+  prose quality. Typically invoked right after a write, before /research:audit-claims.
+
+  <example>
+  Context: The user just drafted a synthesis section and wants it checked before auditing.
+  user: "I finished the draft for phase 2 — can you check it before I audit?"
+  assistant: "I'll run the research-integrity agent over the phase 2 draft to catch any fabricated numbers, narrowed ranges, or stripped qualifiers before you promote it."
+  <commentary>A fresh draft is exactly the integrity agent's beat — check it before the audit gate.</commentary>
+  </example>
+
+  <example>
+  Context: A figure looks different from how it appeared in an earlier phase.
+  user: "This 18% feels off — didn't phase 1 say something different?"
+  assistant: "Let me use the research-integrity agent to compare it against canonical-figures.json and the phase 1 output for cross-phase drift."
+  <commentary>Cross-phase drift on a carried-forward number is a core integrity check — dispatch research-integrity.</commentary>
+  </example>
 model: sonnet
+color: yellow
 tools:
   - Read
   - Write

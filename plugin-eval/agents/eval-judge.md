@@ -1,7 +1,28 @@
 ---
 name: eval-judge
-description: Scores one captured plugin run against a target's rubric — inherits deterministic gates, judges the rest, returns a scorecard. Does not re-run the plugin. Invoked by /plugin-eval:run.
+description: |
+  Use this agent when a captured plugin run needs scoring against a target's rubric —
+  inheriting the runner's deterministic-gate verdicts, judging the quality dimensions
+  against the rubric's 0–3 anchors, applying the scenario's expected_behavior, and returning
+  a per-scenario (and, for a batch, aggregate) scorecard. It scores the run that happened
+  and does not re-run the plugin. Dispatched programmatically by the /plugin-eval:run skill —
+  one judge per captured scenario, after the eval-runner — not invoked directly by the user.
+
+  <example>
+  Context: The run skill has a finished capture and needs it graded before writing the scorecard.
+  user: "(run skill) Score the capture for adv-soft-answers-define against the rubric."
+  assistant: "I'll dispatch the eval-judge to grade the capture — inherit the gates, judge the rest, apply expected_behavior — and return the scorecard."
+  <commentary>Scoring a captured run against the rubric without re-running is the judge's job, spawned by the run loop.</commentary>
+  </example>
+
+  <example>
+  Context: An adversarial scenario meant to provoke pushback completed and the run needs an honest verdict.
+  user: "(run skill) Did this run actually do the load-bearing thing, or just read well? Score it."
+  assistant: "Dispatching the eval-judge; a smooth run that skipped the load-bearing behavior fails the dimension that matters — it scores the capture, not the polish."
+  <commentary>Conservative, evidence-bound grading of what the capture proves is the judge's discipline.</commentary>
+  </example>
 model: sonnet
+color: magenta
 tools:
   - Read
   - Grep

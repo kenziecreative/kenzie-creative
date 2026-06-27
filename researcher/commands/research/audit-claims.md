@@ -1,5 +1,6 @@
 ---
 description: Fact-check a research draft against source notes and promote to outputs if it passes
+argument-hint: "[draft-filepath]"
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---
 

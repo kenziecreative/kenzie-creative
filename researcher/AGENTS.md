@@ -1,6 +1,7 @@
 # AGENTS.md — researcher
 
-Maintainer/agent guidance for working **on** the Researcher plugin. Current version: **1.4.1**. Standalone, self-contained research system.
+Maintainer/agent guidance for working **on** the Researcher plugin. Standalone,
+self-contained research system. (Current version lives in `plugin.json` and `CHANGELOG.md`.)
 
 ## What it is
 
@@ -27,3 +28,28 @@ Hooks (the `outputs/` gate and `PreCompact`) and the `.claude/settings.json` pre
 ## v1.4 notes
 
 Init scaffolds `research/` and `source-material/` from scratch (rooted at `${CLAUDE_PROJECT_DIR}`); the `outputs/` hook gate landed as the hard backstop; per-phase discovery tier recording (Tier-3 banner + STATE.md table); inline-first plan generation so Cowork and Claude Code behave the same.
+
+## Maintaining this plugin
+
+- **Release:** follow **Release & versioning** in the root `AGENTS.md`. Bump `version` in
+  `plugin.json`, update the `v<X.Y.Z> — ` prefix in both descriptions (`plugin.json` + the
+  catalog entry in `.claude-plugin/marketplace.json`), the README "Plugins at a glance" row,
+  and the root `AGENTS.md` plugin list; add a `CHANGELOG.md` entry; then
+  `node dev/scripts/check-version-prefix.mjs` and `claude plugin validate ./researcher` +
+  `claude plugin validate .`; commit, tag **`researcher-v<X.Y.Z>`**, push.
+- **Authoring check (optional):** run plugin-dev's `skill-reviewer` over changed skills and
+  `plugin-validator` over the plugin to catch frontmatter/description regressions.
+- **Editing cautions specific to this plugin:**
+  - The `outputs/` gate is the hard backstop — nothing reaches `research/outputs/` except
+    through `/research:audit-claims`. On Claude Code it's a `PreToolUse` hook keyed to a
+    recent `gate-log.md` row; in Cowork it holds structurally because `research-audit-claims`
+    is the only skill that writes there. Don't add another writer to `outputs/`, and don't
+    loosen the hook without preserving the structural rule.
+  - Each command in `commands/research/` is a thin wrapper that delegates to its matching
+    `skills/research-*` engine — change behavior in the **skill**, not the wrapper, and keep
+    the wrapper's `description` and the skill's trigger description in sync.
+  - Plan generation in `/research:init` runs **inline** on both surfaces; subagent delegation
+    is a Claude Code optimization, not a requirement. Keep Cowork and Claude Code identical.
+  - The integrity spine (canonical-figures registry, claim graph, `research-integrity` agent)
+    is load-bearing anti-drift — it tests sourcing and consistency, not prose. Preserve the
+    registry and the post-write integrity pass; numbers must not drift across phases.

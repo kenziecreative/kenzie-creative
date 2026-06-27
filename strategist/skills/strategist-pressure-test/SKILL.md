@@ -1,6 +1,6 @@
 ---
 name: strategist-pressure-test
-description: Stress-test the current strategy's reasoning by dispatching the critic agent
+description: This skill should be used when the user asks to pressure-test, stress-test, or red-team the current strategy's reasoning (e.g. "pressure-test this strategy", "red-team my recommendation", "stress-test the decision"). Dispatches the strategist-critic subagent to interrogate assumptions, logic, and failure modes; tests logic, not evidence.
 allowed-tools: Read, Write, Edit, Glob, Grep, Task
 model: opus
 ---

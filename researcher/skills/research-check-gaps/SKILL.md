@@ -1,6 +1,6 @@
 ---
 name: research-check-gaps
-description: Map research coverage and identify holes across all phases
+description: This skill should be used when the user asks where the research is thin, what's missing, or what to chase next across the whole project (e.g. "where are the gaps", "what's not covered yet", "what should I research next"). Walks every phase, cross-references questions against processed sources, and updates research/gaps.md with covered, thin, and unaddressed areas.
 model: opus
 ---
 

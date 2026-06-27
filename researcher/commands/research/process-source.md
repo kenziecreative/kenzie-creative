@@ -1,5 +1,6 @@
 ---
 description: Process a URL, PDF, or document into a structured research note
+argument-hint: "[url-or-file-path]"
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch
 ---
 

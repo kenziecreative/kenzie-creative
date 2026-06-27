@@ -1,6 +1,6 @@
 ---
 name: meeting-triage
-description: Turn a stream of meeting transcripts into a single living weekly round-up. Each run ingests new transcripts (from a configured MCP and/or the `source/` folder), processes each into a structured per-meeting summary, files it into the current week's folder, and integrates it into one living `weekly-roundup.md` that tracks action items, cross-meeting threads, and a forward watch list. Service-agnostic — branches on `meeting_mcp:` in the deployment `CLAUDE.md` and loads the matching adapter spec. Invoked by `/sage:run` and by the user's scheduled task — same operation either way.
+description: This skill should be used when the user asks to process meeting transcripts or refresh the weekly round-up (e.g. "run sage", "process my meetings", "catch up on this week's meetings", "update the weekly round-up"). Ingests new transcripts from a configured meeting MCP and/or the `source/` folder, summarises each meeting into a fixed six-section structure, files it into the Monday-anchored week folder, and folds it into one living `weekly-roundup.md` tracking action items, cross-meeting threads, and a forward watch list. Service-agnostic — loads the matching adapter spec. Invoked by `/sage:run` and the user's scheduled task, same operation either way.
 allowed-tools: Read, Write, Edit, Glob, Grep
 ---
 

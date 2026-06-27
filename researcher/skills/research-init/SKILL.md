@@ -1,6 +1,6 @@
 ---
 name: research-init
-description: Scaffold a structured research project with state management, evidence standards, and agent-driven workflows
+description: This skill should be used when the user asks to start, set up, or scaffold a new structured research project (e.g. "start a research project", "set up researcher here", "initialize research on this topic"). Scaffolds research/ and source-material/, writes CLAUDE.md, STATE.md, the registry, gap and cross-reference files, the outputs-gate policy, and a type-tailored research plan. Refuses to run if a project already exists.
 disable-model-invocation: true
 model: opus
 ---

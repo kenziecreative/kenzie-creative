@@ -3,8 +3,12 @@
   "version": "0.2.0",
   "description": "v0.2.0 \u2014 The meeting round-up: turns a stream of meeting transcripts into a single living weekly document that surfaces action items, tracks cross-meeting threads, and keeps a forward watch list. Pulls from Read.ai, Fireflies, or Granola via MCP; works on manually dropped transcripts for anything else. Part of the Kenzie Creative marketplace; self-contained and runs on its own.",
   "author": {
-    "name": "Kelsey Ruger"
+    "name": "Kelsey Ruger",
+    "url": "https://github.com/kenziecreative"
   },
+  "homepage": "https://github.com/kenziecreative/kenzie-creative/tree/main/sage",
+  "repository": "https://github.com/kenziecreative/kenzie-creative",
+  "license": "MIT",
   "keywords": [
     "meetings",
     "triage",

@@ -3,8 +3,12 @@
   "version": "0.3.0",
   "description": "v0.3.0 \u2014 The external scan: a daily/weekly environmental brief that triages the outside world (news, industry movement, research, policy, science) into the few items worth your attention, written as a self-contained styled HTML brief. Part of the Kenzie Creative marketplace; self-contained and runs on its own.",
   "author": {
-    "name": "Kelsey Ruger"
+    "name": "Kelsey Ruger",
+    "url": "https://github.com/kenziecreative"
   },
+  "homepage": "https://github.com/kenziecreative/kenzie-creative/tree/main/intelligence-briefing",
+  "repository": "https://github.com/kenziecreative/kenzie-creative",
+  "license": "MIT",
   "keywords": [
     "briefing",
     "triage",

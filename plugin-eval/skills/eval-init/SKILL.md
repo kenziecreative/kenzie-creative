@@ -1,6 +1,6 @@
 ---
 name: eval-init
-description: Set up a plugin-eval run — pick a target pack, locate the target plugin's skills, scaffold the .eval working directory
+description: This skill should be used when the user asks to set up or initialize a plugin evaluation (e.g. "set up plugin-eval", "init the eval against strategist", "get the eval ready to run"). Picks a target pack from targets/, resolves where the target plugin's real skill files live, scaffolds the .eval/ working directory, and validates the pack before any run.
 disable-model-invocation: true
 allowed-tools: Read, Write, Glob, Grep
 ---

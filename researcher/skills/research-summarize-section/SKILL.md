@@ -1,6 +1,6 @@
 ---
 name: research-summarize-section
-description: Synthesize processed source notes into a draft research output section
+description: This skill should be used when the user asks to draft, synthesize, or write up a section from the sources collected so far (e.g. "draft the phase 2 section", "synthesize what we have on pricing", "write up the findings"). Pulls claims and evidence from relevant processed sources into a draft under research/drafts/ and stages it for the /research:audit-claims gate — never writes straight to outputs/.
 argument-hint: "[section-name-or-phase-number]"
 model: opus
 ---

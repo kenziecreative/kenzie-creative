@@ -1,6 +1,6 @@
 ---
 name: research-start-phase
-description: Show what's needed to begin the next research phase — questions, prior findings, and context
+description: This skill should be used when the user asks to begin or move to the next research phase (e.g. "start the next research phase", "begin research phase 3", "move to the next phase of the research"). Marks the next phase active in STATE.md, surfaces its questions and relevant carryover from prior phases, updates the Phase Tier Record, and points the user at discovery.
 allowed-tools: Read, Grep, Glob
 model: sonnet
 ---

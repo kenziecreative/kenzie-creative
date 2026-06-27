@@ -1,5 +1,6 @@
 ---
 description: Execute type-aware, multi-channel source discovery for the current research phase
+argument-hint: "[--channel <name>]"
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: research-discover
-description: "Execute type-aware, multi-channel source discovery for the current research phase"
+description: This skill should be used when the user asks to find or discover sources for the current research phase (e.g. "find sources", "discover sources for this phase", "go find material on this"). Runs the phase's type-aware discovery channels through the 3-tier stack (Tavily, Firecrawl, built-in web), records the tier reached, and writes a reviewable candidate list — never auto-feeding process-source. Accepts an optional --channel filter.
 allowed-tools: [Bash, WebSearch, Read, Grep, Glob]
 model: sonnet
 ---

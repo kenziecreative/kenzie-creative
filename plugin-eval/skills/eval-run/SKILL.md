@@ -1,6 +1,6 @@
 ---
 name: eval-run
-description: Run the evaluation loop against a target plugin — drive each scenario through a blind runner, score with the judge, write a timestamped scorecard. Use to "run the eval", "test the plugin", "run the golden set", "check for regressions". Requires /plugin-eval:init first.
+description: This skill should be used when the user asks to run a plugin evaluation or check a target plugin for regressions (e.g. "run the eval", "run the golden set", "test the plugin", "check for regressions", "run the adversarial scenarios"). Drives each scenario through a blind eval-runner, scores each capture with the eval-judge against the target's rubric, and writes a timestamped scorecard to .eval/reports/. Requires /plugin-eval:init first.
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Task
 ---
 
