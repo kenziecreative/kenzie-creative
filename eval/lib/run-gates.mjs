@@ -68,12 +68,14 @@ function fmList(fm, key) {
   return scalar ? [scalar[1].trim()].filter(Boolean) : null;
 }
 
-// The markdown body section under `## <title>` up to the next `## ` heading or
-// end of file. (Index-slice rather than a lookahead — JS regex has no \Z, so a
-// trailing-most section would otherwise fail to match.)
+// The markdown body section whose `## ` heading contains <title> as a word, up
+// to the next `## ` heading or end of file. Tolerates a numbered/decorated
+// heading (e.g. `## 1. Define`, `## 6. Decide — commit`). Index-slice rather
+// than a lookahead — JS regex has no \Z, so a trailing-most section would
+// otherwise fail to match.
 function section(text, title) {
   const esc = title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const m = new RegExp(`^##\\s+${esc}\\s*$`, "m").exec(text);
+  const m = new RegExp(`^##\\s+.*\\b${esc}\\b.*$`, "m").exec(text);
   if (!m) return null;
   const rest = text.slice(m.index + m[0].length);
   const next = rest.search(/^##\s/m);
@@ -111,7 +113,10 @@ function evalGate(gate) {
       if (text == null) return fail(`missing file ${gate.file}`);
       const title = gate.section_from === "entry" ? cap(entry) : gate.section;
       const body = section(text, title);
-      if (body == null) return fail(`no '## ${title}' section`);
+      // A missing section is "not filled" (route through the no-advance
+      // inversion) rather than a hard fail — a refusal scenario may legitimately
+      // never create the section.
+      if (body == null) return invertIfNoAdvance(false, `no '## ${title}' section (not filled)`);
       const filled = body.length > 0 && body !== gate.placeholder;
       return invertIfNoAdvance(filled, `'## ${title}' ${filled ? "filled" : "still placeholder"}`);
     }
