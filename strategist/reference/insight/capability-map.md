@@ -7,14 +7,10 @@ slug: capability-map
 aka: [Capability map, Capability maturity map, Business capability model]
 source: ""
 related: [heat-map, matrix, from-to, one-pager, 3x3-model, hub-n-spoke]
-image: assets/capability-map.png
 ---
-
 # Capability Map
 
 > A grid that inventories an organisation's capabilities by category and rates each one's maturity — so you can see, at a glance, where the business is strong, where it is weak, and where the gaps are relative to what the strategy requires.
-
-![Capability Map framework diagram](assets/capability-map.png)
 
 ## What It Is
 
@@ -75,7 +71,7 @@ The map makes the strategic gap unmistakable: Acme is strong at the content and 
 
 ## When To Use It
 
-Use a Capability Map when the strategy requires a capability assessment — when the question is not just "what will we do?" but "can we actually do it?" It is most useful in the Insight stage, after the strategic direction has been set and before the Act-stage execution plan is built.
+Use a Capability Map when the strategy requires a capability assessment — when the question is not just "what will we do?" but "can we actually do it?" It is most useful in the Insight stage, after the strategic direction has been set and before the Move-stage execution plan is built.
 
 Use a **Heat Map** when you need to rate items across multiple attributes rather than on a single maturity dimension. Use a **From:To** to show the transition from current capability state to target state. Use a **3×3 Model** when the assessment combines two independent dimensions (e.g., market attractiveness and ability to win) rather than a single maturity axis.
 

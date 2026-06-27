@@ -7,14 +7,10 @@ slug: storybrand
 aka: [SB7, StoryBrand 7, Building a StoryBrand, Hero's Journey for brands]
 source: "Donald Miller, Building a StoryBrand"
 related: [story-spine, 5-act, scqa]
-image: assets/storybrand.png
 ---
-
 # StoryBrand
 
 > A seven-part framework that structures any brand or marketing message around a simple story: the customer is the hero, your brand is the guide, and the plot is the customer's journey from problem to success.
-
-![StoryBrand framework diagram](assets/storybrand.png)
 
 ## What It Is
 

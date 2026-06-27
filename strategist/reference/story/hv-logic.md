@@ -7,14 +7,10 @@ slug: hv-logic
 aka: [Horizontal and Vertical Logic, Pyramid Logic Check]
 source: "Barbara Minto, The Pyramid Principle"
 related: [minto-pyramid, mece, scqa]
-image: assets/hv-logic.png
 ---
-
 # HV Logic
 
 > Two complementary tests — one running down the pyramid, one running across each level — that confirm your argument structure actually holds before you present it.
-
-![HV Logic framework diagram](assets/hv-logic.png)
 
 ## What It Is
 

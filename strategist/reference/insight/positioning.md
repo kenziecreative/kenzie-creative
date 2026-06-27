@@ -7,14 +7,10 @@ slug: positioning
 aka: [Positioning map, Perceptual map, Competitive map]
 source: ""
 related: [venn, matrix, segmentation, from-to, heat-map]
-image: assets/positioning.png
 ---
-
 # Positioning
 
 > A two-axis map that places your product and your competitors in the same visual space, so you can see where the market is crowded, where it's empty, and where you currently sit.
-
-![Positioning framework diagram](assets/positioning.png)
 
 ## What It Is
 
@@ -50,7 +46,7 @@ The map shows that the bottom-left is crowded with free and near-free content, t
 
 ## When To Use It
 
-Use a Positioning map when the core question is competitive: where do we sit in the market, and is there a better place to be? It is most useful in the Insight stage, after you have gathered Analyse-stage data on competitors, and before you commit to a strategic direction in Story or Decide.
+Use a Positioning map when the core question is competitive: where do we sit in the market, and is there a better place to be? It is most useful in the Insight stage, after you have gathered Analyse-stage data on competitors, and before you commit to a strategic direction in Synthesise.
 
 Use a **Venn** instead when the question is about overlap between attributes rather than placement on a spectrum. Use a **Segmentation** map when you need to show the size of customer groups rather than their preferences. Use a **From:To** when you've already decided on repositioning and want to show the before/after, rather than exploring the landscape.
 

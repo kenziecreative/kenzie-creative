@@ -7,14 +7,10 @@ slug: trend
 aka: [Line chart, Time-series chart, Trend line]
 source: ""
 related: [comparison, mix, cumulative, waterfall, actual-v-target]
-image: assets/trend.png
 ---
-
 # Trend
 
 > A chart that traces how a single value (or two values side by side) moves across time — so you can see the direction, pace, and inflection points of change.
-
-![Trend framework diagram](assets/trend.png)
 
 ## What It Is
 

@@ -5,7 +5,9 @@
 ## Where things stand
 
 - **On `main`, clean, in sync with origin.** checker green across all 4 mirrors; `claude plugin validate .` passes.
-- **Plugins:** intelligence-briefing 0.3.0, researcher 1.4.1, sage 0.2.0, **strategist 0.2.1** (tagged `strategist-v0.2.1`). plugin-eval is gone as a plugin — now the internal `eval/` harness.
+- **Plugins:** intelligence-briefing 0.3.0, researcher 1.4.1, sage 0.2.0, **strategist 0.2.1** on `main` (tagged `strategist-v0.2.1`). plugin-eval is gone as a plugin — now the internal `eval/` harness.
+- **strategist 0.3.0 — the Strategy Spine rebuild — committed on branch `strategist-strategy-spine-v0.3.0` (pending merge to `main`; the 0.2.1 lines above describe `main`, which has not moved yet).** Loop remapped to Define → Frame → Analyse → Insight → Synthesise → Story → Move (Decide folded into Synthesise + a commitment gate, Split→Frame, Act→Move); all 70 deck images stripped; the Strategy Spine + Metaskills/Learning-and-Teaching/Creating-Conditions canon shipped into `reference/frameworks/`; phase READMEs rewritten to teach tool selection; catalog metadata (manifest, marketplace card, root README/AGENTS) at 0.3.0. Plugin + marketplace validate. Eval iteration-4 golden: 6/7.
+- **Known follow-up (accepted; not a rebuild regression):** `adv-sound-strategy` Critic Acuity is unstable across samples (3·3·0) — the restraint guard in `agents/strategist-critic.md` occasionally inflates findings on a sound brief. The critic logic was unchanged by the rebuild (stage-name edits only); tighten the over-flagging guard in a future pass. **To finish the release:** merge to `main`, tag `strategist-v0.3.0`, push.
 - **Last commits:** `850e27d` strategist v0.2.1 critic fix · `4d92342` eval harness bug-fixes · `fc8a9dd`/`ffdb693`/`4730687` the eval reshape · earlier: self-maintaining machinery + plugin-dev conformance.
 
 ## What the eval proved (and fixed) this session

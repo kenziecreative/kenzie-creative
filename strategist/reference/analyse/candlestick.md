@@ -7,14 +7,10 @@ slug: candlestick
 aka: [Box plot, Box-and-whisker chart, OHLC chart, Candlestick chart]
 source: ""
 related: [distribution, comparison, scatter, rank]
-image: assets/candlestick.png
 ---
-
 # Candlestick
 
 > A chart that shows the spread of a data set — minimum, maximum, and middle percentiles — as a single visual shape per category, so you can compare not just typical values but the range and variability of each.
-
-![Candlestick framework diagram](assets/candlestick.png)
 
 ## What It Is
 

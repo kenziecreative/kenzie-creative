@@ -7,14 +7,10 @@ slug: continuum
 aka: [Slider diagram, Attribute spectrum, Continuum sliders]
 source: ""
 related: [from-to, positioning, matrix, heat-map]
-image: assets/continuum.png
 ---
-
 # Continuum
 
 > A set of horizontal sliders — one per strategic dimension — that shows where a product, brand, or organisation sits today on each spectrum and where the strategy is moving it, so the directional choices of the strategy become visible at a glance.
-
-![Continuum framework diagram](assets/continuum.png)
 
 ## What It Is
 

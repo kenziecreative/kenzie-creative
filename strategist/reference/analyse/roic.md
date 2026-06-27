@@ -7,14 +7,10 @@ slug: roic
 aka: [Return on Invested Capital, Return on Capital Employed]
 source: ""
 related: [cashflow, unit-economics, profit-margin, waterfall, marginal-return]
-image: assets/roic.png
 ---
-
 # ROIC
 
 > A metric that measures how efficiently a business converts its invested capital into operating profit — and a decomposition tree that shows exactly which lever is driving that efficiency.
-
-![ROIC framework diagram](assets/roic.png)
 
 ## What It Is
 

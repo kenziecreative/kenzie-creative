@@ -9,15 +9,15 @@ The scenario classes a strategist dev set should cover, mapped to the ids in
 | Class (entry) | Covered by | Status |
 | --- | --- | --- |
 | `define` | `rep-define-scq` | ✓ |
-| `split` | — | **gap** |
+| `frame` | — | **gap** |
 | `analyse` | `rep-analyse-waterfall` | ✓ |
 | `insight` | — | **gap** |
-| `story` | — | **gap** |
-| `decide` | `rep-decide-tree` | ✓ |
-| `act` | — | **gap** |
+| `synthesise` | `rep-synthesise-tree` | ✓ |
+| `story` | `rep-story-pyramid` | ✓ |
+| `move` | — | **gap** |
 | `framework` (lookup) | `rep-framework-eisenhower` | ✓ |
 
-Representative gaps (split, insight, story, act) are acceptable for the proof set — the
+Representative gaps (frame, insight, move) are acceptable for the proof set — the
 adversarial goldens already exercise the load-bearing behaviors across the loop — but they're
 the first scenarios to add when broadening coverage.
 
@@ -37,6 +37,6 @@ the first scenarios to add when broadening coverage.
 
 - **Calibration / Working Dynamic** — a scenario seeding `pushback_calibration: high` to test
   that the engine calibrates after the first exchange.
-- **Reader brief (Story onward)** — a representative `story`/`decide` run that produces the
-  clean `strategy-brief.md`, exercising the content-lint rules.
+- **Reader brief (Move onward)** — `rep-story-pyramid` covers the Story reader-brief birth and
+  the content-lint rules; a `move` run that refreshes `strategy-brief.md` would extend it.
 - **Insight visual** — an `insight` run that has to carry a finding in a layout, not prose.

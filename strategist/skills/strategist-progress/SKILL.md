@@ -23,8 +23,8 @@ Collect results into a failures list (empty = all pass):
    `current_stage`, and `completed_stages`.
 3. **Brief present** — `strategy/brief.md` exists.
 4. **Library reachable** — Glob `${CLAUDE_PLUGIN_ROOT}/reference/` and confirm
-   `INDEX.md` plus the seven stage directories (`define`, `split`, `analyse`, `insight`,
-   `story`, `decide`, `act`) are present.
+   `INDEX.md` plus the seven stage directories (`define`, `frame`, `analyse`, `insight`,
+   `synthesise`, `story`, `move`) are present.
 
 ## Step 2: Read state
 
@@ -50,10 +50,10 @@ Infrastructure: N/4 checks passed
 | # | Stage | Status | Framework(s) | Pressure-tested |
 |---|-------|--------|--------------|-----------------|
 | 1 | Define  | Complete | SCQ | ✓ |
-| 2 | Split   | Active   | —   | — |
+| 2 | Frame   | Active   | —   | — |
 | ... |
 
-**Loop position:** Define ▸ [Split] ▸ Analyse ▸ Insight ▸ Story ▸ Decide ▸ Act
+**Loop position:** Define ▸ [Frame] ▸ Analyse ▸ Insight ▸ Synthesise ▸ Story ▸ Move
 **Open pressure-test findings:** [count, or "none"]
 [if any, list each with the stage it bears on]
 

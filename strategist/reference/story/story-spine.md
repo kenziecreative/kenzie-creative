@@ -7,14 +7,10 @@ slug: story-spine
 aka: [Pixar Story Spine, Story Spine Framework, Once Upon A Time Structure]
 source: "Kenn Adams, The Story Spine"
 related: [5-act, storybrand, scqa]
-image: assets/story-spine.png
 ---
-
 # Story Spine
 
 > A six-sentence narrative skeleton — from stable world to disruption to resolution — that structures any business story in the same arc that makes fictional stories compelling.
-
-![Story Spine framework diagram](assets/story-spine.png)
 
 ## What It Is
 

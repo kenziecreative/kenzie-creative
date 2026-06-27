@@ -7,14 +7,10 @@ slug: mix
 aka: [Stacked bar chart, 100% stacked bar, Area chart, Mix shift analysis]
 source: ""
 related: [trend, comparison, distribution, waterfall, profit-margin]
-image: assets/mix.png
 ---
-
 # Mix
 
 > A chart that shows how the proportional composition of a whole shifts between two points in time or across categories — so you can see not just totals, but who is winning share within them.
-
-![Mix framework diagram](assets/mix.png)
 
 ## What It Is
 

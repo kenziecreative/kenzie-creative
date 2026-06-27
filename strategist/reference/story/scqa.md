@@ -7,14 +7,10 @@ slug: scqa
 aka: [Situation-Complication-Question-Answer, Barbara Minto narrative structure]
 source: "Barbara Minto, The Pyramid Principle"
 related: [minto-pyramid, hv-logic, mece, scq]
-image: assets/scqa.png
 ---
-
 # SCQA
 
 > A four-beat narrative structure — Situation, Complication, Question, Answer — that opens a strategy communication with the problem before delivering the recommendation, so the audience arrives at your conclusion feeling they demanded it.
-
-![SCQA framework diagram](assets/scqa.png)
 
 ## What It Is
 

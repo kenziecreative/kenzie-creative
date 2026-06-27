@@ -7,14 +7,10 @@ slug: profit-margin
 aka: [Margin Bridge, Revenue and Profit Chart, Margin Waterfall]
 source: ""
 related: [roic, cashflow, waterfall, actual-v-target, unit-economics]
-image: assets/profit-margin.png
 ---
-
 # Profit Margin
 
 > A stacked bar chart that shows revenue, cost, and profit together in each period, with a margin percentage overlay — so you see not just how much profit was made, but how much of every revenue dollar survived as profit.
-
-![Profit Margin framework diagram](assets/profit-margin.png)
 
 ## What It Is
 

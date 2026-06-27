@@ -7,18 +7,14 @@ slug: driver-tree
 aka: [Value driver tree, Logic tree (insight version)]
 source: ""
 related: [tabular, one-pager, from-to, hub-n-spoke]
-image: assets/driver-tree.png
 ---
-
 # Driver Tree
 
 > A branching tree diagram that decomposes a headline outcome into its levers and sub-drivers — and then labels each branch with the rationale or action that will move it — making the causal logic of a strategy visible in one view.
 
-![Driver Tree framework diagram](assets/driver-tree.png)
-
 ## What It Is
 
-The Insight-stage Driver Tree uses the same branching decomposition structure as the Split-stage Driver Tree, but its job is different: where the Split version is used analytically to explore and quantify what drives a metric, the Insight version is used to communicate the strategy — to show an audience which levers the organisation is pulling, why they were chosen, and how they add up to deliver the headline outcome.
+The Insight-stage Driver Tree uses the same branching decomposition structure as the Frame-stage Driver Tree, but its job is different: where the Frame version is used analytically to explore and quantify what drives a metric, the Insight version is used to communicate the strategy — to show an audience which levers the organisation is pulling, why they were chosen, and how they add up to deliver the headline outcome.
 
 The tree starts with an **Outcome** box on the left (the strategic goal). It branches right into **Levers** (the three to five major areas of change). Each lever branches further into **Drivers** (the specific actions within each lever). Beside each branch, a comment note explains the rationale, assumption, or expected impact of that branch.
 
@@ -63,7 +59,7 @@ The comment layer makes the difference: without it, the tree is a decomposition.
 
 Use the Insight Driver Tree when you want to show an audience not just what you are doing, but why those specific levers were chosen and how they add up to the goal. It is especially effective in board and investor presentations where the audience will probe the reasoning behind each bet.
 
-It is related to, but distinct from, the Split-stage [Driver Tree](../split/driver-tree.md), which is used analytically during problem-structuring. The Insight Driver Tree comes after the analysis is done and communicates the strategic choices that resulted from it.
+It is related to, but distinct from, the Frame-stage [Driver Tree](../frame/driver-tree.md), which is used analytically during problem-structuring. The Insight Driver Tree comes after the analysis is done and communicates the strategic choices that resulted from it.
 
 ## Things To Watch Out For
 
@@ -74,7 +70,7 @@ It is related to, but distinct from, the Split-stage [Driver Tree](../split/driv
 
 ## Related Frameworks
 
-- [Driver Tree](../split/driver-tree.md) — the analytical version used during the Split stage to decompose and quantify a metric; this Insight version communicates the resulting strategy.
+- [Driver Tree](../frame/driver-tree.md) — the analytical version used during the Frame stage to decompose and quantify a metric; this Insight version communicates the resulting strategy.
 - [Tabular](./tabular.md) — use when the priority is to present rated findings across multiple groups rather than the causal chain connecting them.
 - [One Pager](./one-pager.md) — the Driver Tree's Levers map directly onto the Pillars layer of a One Pager.
 - [Hub n' Spoke](./hub-n-spoke.md) — use when the components radiate equally from a central idea, without a strict causal hierarchy.

@@ -7,14 +7,10 @@ slug: waterfall
 aka: [Waterfall chart, Bridge chart]
 source: ""
 related: [trend, comparison, cumulative]
-image: assets/waterfall.png
 ---
-
 # Waterfall
 
 > A chart that explains the gap between a starting number and an ending number by showing every step that moved it — so you see not just *what* changed, but *what caused* the change.
-
-![Waterfall framework diagram](assets/waterfall.png)
 
 ## What It Is
 

@@ -7,14 +7,10 @@ slug: 5-whys
 aka: [Five Whys, Root Cause Analysis, Why Chain]
 source: "Sakichi Toyoda / Toyota Production System"
 related: [5w-h, yes-no, waterfall, driver-tree]
-image: assets/5-whys.png
 ---
-
 # 5 Why's
 
 > A root-cause technique that finds the underlying cause of a problem by asking "why" repeatedly — each answer becoming the input to the next question — until the chain bottoms out at something actionable.
-
-![5 Why's framework diagram](assets/5-whys.png)
 
 ## What It Is
 
@@ -78,4 +74,4 @@ Pair with **5W+H** when you want to enrich the diagnosis with context (who is af
 - [5W+H](./5w-h.md) — frames the problem from six angles (who, what, when, where, why, how) before drilling into causation; useful as a pre-step to 5 Why's.
 - [Yes/No](./yes-no.md) — a binary-branching logic tree; use when the diagnostic path involves conditional decisions rather than a simple causal chain.
 - [Waterfall](./waterfall.md) — quantifies the contribution of each factor to a net change; useful after 5 Why's to measure the scale of the root cause's impact.
-- [Driver Tree](../split/driver-tree.md) — decomposes a metric into its component drivers across multiple branches simultaneously; a broader alternative when there may be many concurrent causes.
+- [Driver Tree](../frame/driver-tree.md) — decomposes a metric into its component drivers across multiple branches simultaneously; a broader alternative when there may be many concurrent causes.

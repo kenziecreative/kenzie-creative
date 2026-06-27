@@ -7,14 +7,10 @@ slug: outcome
 aka: [Problem Definition Worksheet, Problem Definition Checklist]
 source: "Charles Conn & Robert McLean, Bulletproof Problem Solving"
 related: [scq, htdq]
-image: assets/outcome.png
 ---
-
 # Outcome
 
 > A seven-field checklist that interrogates a problem from every angle — decision-maker, success criteria, forces, timeframe, constraints, accuracy, and problem statement — so nothing critical is assumed away before the work begins.
-
-![Outcome framework diagram](assets/outcome.png)
 
 ## What It Is
 

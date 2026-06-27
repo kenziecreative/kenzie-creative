@@ -7,14 +7,10 @@ slug: image-column
 aka: [Image column layout, Visual column, Icon column]
 source: ""
 related: [tri-column, one-pager, hub-n-spoke, pyramid, canvas]
-image: assets/image-column.png
 ---
-
 # Image Column
 
 > A three-column layout that leads each column with a visual or diagram, follows it with explanatory text, and unites all three columns under a single synthesising takeaway.
-
-![Image Column framework diagram](assets/image-column.png)
 
 ## What It Is
 

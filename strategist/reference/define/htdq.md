@@ -7,14 +7,10 @@ slug: htdq
 aka: [Hero-Treasure-Dragon-Quest, HTDQ Sequence]
 source: "Albrecht Enders & Arnaud Chevallier, Solvable"
 related: [scq, outcome]
-image: assets/htdq.png
 ---
-
 # HTDQ
 
 > A four-part narrative frame — Hero, Treasure, Dragon, Quest — that defines a problem as a story so the urgency and direction are immediately clear.
-
-![HTDQ framework diagram](assets/htdq.png)
 
 ## What It Is
 

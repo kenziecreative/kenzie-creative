@@ -7,14 +7,10 @@ slug: canvas
 aka: [Business Model Canvas, Building-block canvas]
 source: "Alexander Osterwalder & Yves Pigneur, Business Model Generation"
 related: [one-pager, tri-column, matrix, from-to]
-image: assets/canvas.png
 ---
-
 # Canvas
 
 > A grid of named building blocks that maps all the components of a business model — or any complex topic — onto a single page so the parts and their relationships are visible simultaneously.
-
-![Canvas framework diagram](assets/canvas.png)
 
 ## What It Is
 

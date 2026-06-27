@@ -22,7 +22,7 @@ strategy.
    active strategy and stop (or, if they paste a strategy inline, test that instead).
 2. Otherwise read `strategy/brief.md`. Decide scope:
    - **No argument:** test the whole brief as it currently stands.
-   - **A stage named** (e.g. "pressure-test the decide stage"): test that section,
+   - **A stage named** (e.g. "pressure-test the synthesise stage"): test that section,
      plus the brief context it depends on.
 
 ## Step 2: Dispatch the critic
@@ -76,5 +76,5 @@ the relevant stage — point them there:
 3. The critic interrogates; the user decides. Never rewrite the strategy from findings —
    record them and hand back.
 4. Keep findings specific to this strategy. Generic "have you considered risks?" is
-   noise; "the Decide stage assumes churn is price-driven, but the Analyse stage's data
+   noise; "the Synthesise stage assumes churn is price-driven, but the Analyse stage's data
    points to onboarding — that contradiction is load-bearing" is signal.

@@ -7,14 +7,10 @@ slug: marginal-return
 aka: [Law of Diminishing Returns, Diminishing Marginal Returns]
 source: ""
 related: [unit-economics, waterfall, roic, cashflow]
-image: assets/marginal-return.png
 ---
-
 # Marginal Return
 
 > A curve that shows how each additional unit of input — money, time, headcount — yields progressively less output, and eventually none at all.
-
-![Marginal Return framework diagram](assets/marginal-return.png)
 
 ## What It Is
 

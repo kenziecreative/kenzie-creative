@@ -7,14 +7,10 @@ slug: venn
 aka: [Venn diagram, Overlap diagram]
 source: ""
 related: [matrix, positioning, from-to, segmentation]
-image: assets/venn.png
 ---
-
 # Venn
 
 > An overlap diagram that makes relationships between two to four groups visible — showing where they are distinct and, crucially, where they intersect.
-
-![Venn framework diagram](assets/venn.png)
 
 ## What It Is
 

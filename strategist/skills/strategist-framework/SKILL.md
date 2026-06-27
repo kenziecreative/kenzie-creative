@@ -22,14 +22,14 @@ loop.
    each, and ask which framework or stage they want. Don't dump all 70.
 4. **No match:** show the 3–5 closest matches by name and ask which they meant. Never
    invent a framework that isn't in the library.
-5. **Multiple matches** (e.g. `driver-tree` exists in both `split` and `insight`): show
+5. **Multiple matches** (e.g. `driver-tree` exists in both `frame` and `insight`): show
    both with their stage and gloss, and ask which they mean.
 
 ## Step 2: Load the entry
 
 Read the resolved file `${CLAUDE_PLUGIN_ROOT}/reference/<stage>/<slug>.md`. It contains:
 What It Is, Why It Works, How To Use It, a Worked Example, When To Use It, Things To
-Watch Out For, Related Frameworks, and an embedded diagram.
+Watch Out For, and Related Frameworks.
 
 ## Step 3: Explain or apply
 
@@ -37,9 +37,8 @@ Ask (or infer from how they phrased the request) whether they want to **understa
 or **use** it:
 
 - **Explain:** give them the framework's substance — what it is, why it works, when to
-  reach for it, and what to watch for — in your own words, grounded in the entry. Point
-  them to the diagram (`${CLAUDE_PLUGIN_ROOT}/reference/<stage>/assets/<slug>.png`) and
-  name a couple of Related Frameworks if useful.
+  reach for it, and what to watch for — in your own words, grounded in the entry. Name a
+  couple of Related Frameworks if useful.
 - **Apply:** walk them through the framework's How To Use It steps against their actual
   situation, the way the stage engine does — ask for the inputs it needs one step at a
   time, and produce a concrete, filled-in result. The entry's Worked Example sets the

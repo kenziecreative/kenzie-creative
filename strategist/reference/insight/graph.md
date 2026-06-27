@@ -7,14 +7,10 @@ slug: graph
 aka: [Chart insight page, Data insight slide]
 source: ""
 related: [tabular, tri-column, matrix, heat-map]
-image: assets/graph.png
 ---
-
 # Graph
 
 > A data chart paired with a written takeaway — headline statement, callout of the key data point, and "so what" bullets — so the audience gets both the evidence and its interpretation on the same page.
-
-![Graph framework diagram](assets/graph.png)
 
 ## What It Is
 

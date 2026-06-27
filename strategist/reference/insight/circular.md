@@ -7,14 +7,10 @@ slug: circular
 aka: [Circular diagram, Cycle diagram, Loop diagram, Flywheel]
 source: ""
 related: [journey, touchpoint, driver-tree, chevron, hub-n-spoke]
-image: assets/circular.png
 ---
-
 # Circular
 
 > A loop diagram that shows a repeating cycle — where each step is triggered by the one before it, and the last step feeds back into the first.
-
-![Circular framework diagram](assets/circular.png)
 
 ## What It Is
 

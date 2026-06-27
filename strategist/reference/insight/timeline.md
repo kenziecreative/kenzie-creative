@@ -7,14 +7,10 @@ slug: timeline
 aka: [Timeline chart, Milestone timeline, Historical timeline]
 source: ""
 related: [gantt, chevron, horizon, journey]
-image: assets/timeline.png
 ---
-
 # Timeline
 
 > A chronological diagram that places events, milestones, or decisions on a line — showing when things happened, in what order, and how much time separates them.
-
-![Timeline framework diagram](assets/timeline.png)
 
 ## What It Is
 

@@ -7,14 +7,10 @@ slug: rank
 aka: [Bump chart, Ranking chart, Rank movement chart]
 source: ""
 related: [comparison, cumulative, trend, scatter]
-image: assets/rank.png
 ---
-
 # Rank
 
 > A chart that tracks the changing position of multiple items across a series of time periods — so you can see not just who is winning, but who is gaining and who is losing ground.
-
-![Rank framework diagram](assets/rank.png)
 
 ## What It Is
 

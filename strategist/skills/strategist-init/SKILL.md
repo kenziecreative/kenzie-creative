@@ -73,19 +73,19 @@ updated: <current UTC timestamp, ISO 8601>
 
 - **Active:** Define
 - **Completed:** (none yet)
-- **Pending:** Split → Analyse → Insight → Story → Decide → Act
+- **Pending:** Frame → Analyse → Insight → Synthesise → Story → Move
 
 ## Stage Record
 
 | # | Stage | Status | Framework(s) applied | Pressure-tested |
 |---|-------|--------|----------------------|-----------------|
-| 1 | Define  | active  | — | — |
-| 2 | Split   | pending | — | — |
-| 3 | Analyse | pending | — | — |
-| 4 | Insight | pending | — | — |
-| 5 | Story   | pending | — | — |
-| 6 | Decide  | pending | — | — |
-| 7 | Act     | pending | — | — |
+| 1 | Define     | active  | — | — |
+| 2 | Frame      | pending | — | — |
+| 3 | Analyse    | pending | — | — |
+| 4 | Insight    | pending | — | — |
+| 5 | Synthesise | pending | — | — |
+| 6 | Story      | pending | — | — |
+| 7 | Move       | pending | — | — |
 
 ## Working Dynamic
 
@@ -122,7 +122,7 @@ Run `/strategist:define` — frame the problem before solving it.
 ## 1. Define
 _Not yet started._
 
-## 2. Split
+## 2. Frame
 _Not yet started._
 
 ## 3. Analyse
@@ -131,13 +131,13 @@ _Not yet started._
 ## 4. Insight
 _Not yet started._
 
-## 5. Story
+## 5. Synthesise
 _Not yet started._
 
-## 6. Decide
+## 6. Story
 _Not yet started._
 
-## 7. Act
+## 7. Move
 _Not yet started._
 ```
 
@@ -169,7 +169,7 @@ Strategy project initialized.
   Brief:     strategy/brief.md
   Config:    CLAUDE.md
 
-The loop has seven stages — Define → Split → Analyse → Insight → Story → Decide → Act —
+The loop has seven stages — Define → Frame → Analyse → Insight → Synthesise → Story → Move —
 and it iterates: any stage can send you back to an earlier one.
 
 One thing up front, so you know how I'll work: I'll push hard on the *logic* of the

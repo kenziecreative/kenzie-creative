@@ -7,14 +7,10 @@ slug: 3x3-model
 aka: [Nine-box grid, Segment assessment grid, GE-McKinsey Matrix]
 source: "Inspired by the GE-McKinsey Nine-Box Matrix"
 related: [matrix, positioning, segmentation, heat-map, ../decide/eisenhower]
-image: assets/3x3-model.png
 ---
-
 # 3x3 Model
 
 > A nine-box grid that evaluates segments — or any set of strategic options — on two dimensions simultaneously, producing a visual ranking that makes prioritisation decisions tractable.
-
-![3x3 Model framework diagram](assets/3x3-model.png)
 
 ## What It Is
 
@@ -35,7 +31,7 @@ The two-axis structure also does something important: it prevents the common fai
 3. **Score each item on both axes.** For each segment (or option), score it Low/Medium/High on Attractiveness and Low/Medium/High on Ability To Win. Document the evidence or logic behind each score — the scoring conversation is often where the most valuable strategic disagreements surface.
 4. **Plot each item in the grid.** Place each item in the cell that corresponds to its two scores.
 5. **Read the grid for strategy.** The top-right cell (High/High) = invest and grow. The bottom-left (Low/Low) = exit or harvest. The diagonal from bottom-right to top-left requires judgment: high attractiveness but low ability to win means a significant investment or a partnership may be needed to compete; high ability to win but low attractiveness means you're strong in a shrinking market.
-6. **Make the prioritisation explicit.** Use the grid to assign each segment a label (Invest, Selectively invest, Harvest, or Exit) and bring that categorisation forward into the Decide stage.
+6. **Make the prioritisation explicit.** Use the grid to assign each segment a label (Invest, Selectively invest, Harvest, or Exit) and bring that categorisation forward into the Synthesise stage.
 
 ## Worked Example
 
@@ -85,4 +81,4 @@ Use a **Matrix** (2×2) when you have four discrete options and a binary choice 
 - [Segmentation](./segmentation.md) — shows market or customer segment sizes and insights; build before the 3×3 to establish the segments you'll evaluate.
 - [Positioning](./positioning.md) — maps where your product sits relative to competitors on two continuous axes; use to understand the competitive context within a segment you've prioritised.
 - [Heat Map](./heat-map.md) — rates options across multiple attributes; use when more than two evaluative dimensions are needed and you can tolerate a more complex view.
-- [Eisenhower](../decide/eisenhower.md) — a 2×2 prioritisation grid for tasks and decisions; the same structural logic applied to urgency vs. importance.
+- [Eisenhower](../synthesise/eisenhower.md) — a 2×2 prioritisation grid for tasks and decisions; the same structural logic applied to urgency vs. importance.

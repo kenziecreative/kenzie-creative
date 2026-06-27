@@ -7,14 +7,10 @@ slug: from-to
 aka: [Before and after, Current-state to future-state, Target state diagram]
 source: ""
 related: [continuum, canvas, chevron, horizon]
-image: assets/from-to.png
 ---
-
 # From:To
 
 > A side-by-side comparison of the current state and the target state — each described in specific terms — that makes the gap a strategy must close visible and gives the audience a concrete picture of what success looks like.
-
-![From:To framework diagram](assets/from-to.png)
 
 ## What It Is
 

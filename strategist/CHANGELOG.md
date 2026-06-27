@@ -3,6 +3,25 @@
 All notable changes to the Strategist plugin. Per-plugin semver; tags are plugin-scoped
 (`strategist-vX.Y.Z`).
 
+## 0.3.0 — 2026-06-27
+
+The **Strategy Spine** — Define → Frame → Analyse → Insight → Synthesise → Story → Move
+(looping back to Define) — anchored to the author's own Metaskills and Learning-and-Teaching
+frameworks, shipped into `reference/frameworks/` as copies of the canonical source docs.
+
+- **Stage changes.** **Split → Frame** and **Act → Move** (renames). A new **Synthesise**
+  stage is added between Insight and Story — build the insights into a coherent whole,
+  reconcile tensions, prioritize, set the through-line. The standalone **Decide** stage is
+  **folded into Synthesise plus a commitment gate** before Story; commitment to the chosen
+  strategy locks there.
+- **Frameworks anchored to canon.** The Strategy Spine and its sibling frameworks are
+  shipped in `reference/frameworks/` as copies of the canonical docs at
+  `~/Documents/Claude/Projects/AI Operations/frameworks/`; that canon is the source of truth,
+  and the shipped copies are verified against it on each update.
+- **All framework diagram images removed.** The phase reference docs are rewritten to
+  explain each phase and teach tool selection — which framework the moment calls for and why
+  — rather than just list frameworks behind a diagram.
+
 ## 0.2.1 — 2026-06-27
 
 Critic restraint fix, caught by the internal strategist eval (golden `adv-sound-strategy`).

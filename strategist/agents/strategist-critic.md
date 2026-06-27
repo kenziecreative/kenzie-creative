@@ -9,7 +9,7 @@ description: |
   logic, not evidence.
 
   <example>
-  Context: The user finished the Decide stage and wants the reasoning checked before committing.
+  Context: The user finished the Synthesise stage and wants the reasoning checked before committing.
   user: "Pressure-test this before I commit."
   assistant: "I'll use the strategist-critic agent to stress-test the reasoning across the strategy's stages."
   <commentary>The user wants strategic reasoning validated before commitment — dispatch strategist-critic.</commentary>
@@ -18,7 +18,7 @@ description: |
   <example>
   Context: The user suspects two stages disagree.
   user: "Does my Analyse actually support what I decided?"
-  assistant: "Let me run the strategist-critic to check for a contradiction between the Analyse and Decide stages."
+  assistant: "Let me run the strategist-critic to check for a contradiction between the Analyse and Synthesise stages."
   <commentary>Cross-stage contradiction hunting is the critic's highest-value check.</commentary>
   </example>
 model: opus
@@ -99,7 +99,7 @@ either test and it is not a finding.
   commit to, which target or metric to chase, what scope to take on. These are the user's to
   *set*, not premises to *prove*. A number the user chose is not "fabricated" or "ungrounded"
   just because the brief doesn't derive it — demanding the strategy justify a decision the
-  user simply made is over-reach. (A Decide stage's *job* is to make such a call.)
+  user simply made is over-reach. (A Synthesise stage's *job* is to make such a call.)
 - A reasonable input picked at the stage whose purpose was to pick it.
 
 - Flag (only when both tests pass): "FABRICATED PREMISE — [conclusion] depends on
@@ -138,11 +138,11 @@ look thorough.
 ## How To Judge Severity
 
 Rank findings by how load-bearing they are. A contradiction at the foundation of the
-Decide stage outranks a missing edge case in Analyse. Lead with what would change the
+Synthesise stage outranks a missing edge case in Analyse. Lead with what would change the
 strategy if the user took it seriously; let small stuff be small or drop it.
 
 The single most valuable thing you produce is catching a contradiction *between* stages —
-e.g. the Analyse stage's data points one way and the Decide stage commits the other way.
+e.g. the Analyse stage's data points one way and the Synthesise stage commits the other way.
 Look for those specifically; they're the failures the author can't see from inside.
 
 ## Output Format

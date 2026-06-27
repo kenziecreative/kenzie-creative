@@ -9,9 +9,9 @@ self-contained strategic-thinking system. (Current version lives in `plugin.json
 
 ## What it is
 
-Turns Claude Code / Cowork into a strategy thinking-partner: one repeatable loop —
-Define → Split → Analyse → Insight → Story → Decide → Act (iterate) — backed by a
-70-framework library. Each stage presents its frameworks, recommends and applies the
+Turns Claude Code / Cowork into a strategy thinking-partner: one repeatable loop — the
+Strategy Spine: Define → Frame → Analyse → Insight → Synthesise → Story → Move (loops back
+to Define) — backed by a 70-framework library. Each stage presents its frameworks, recommends and applies the
 right one against the user's real problem, and captures the result in two documents: a
 working record (`strategy/brief.md`) and, from Story onward, a clean reader-facing brief
 (`strategy/strategy-brief.md`). A critic subagent pressure-tests the reasoning on request.
@@ -21,7 +21,7 @@ template.
 ## Structure
 
 - `commands/strategist/` — 11 thin command wrappers: `init`, the 7 stages (`define`,
-  `split`, `analyse`, `insight`, `story`, `decide`, `act`), `framework`, `pressure-test`,
+  `frame`, `analyse`, `insight`, `synthesise`, `story`, `move`), `framework`, `pressure-test`,
   `progress`.
 - `skills/` — 5 skills: `strategist-init` (scaffold), `strategist-stage` (the generic
   engine all 7 stage commands drive), `strategist-framework` (single-framework
@@ -29,8 +29,8 @@ template.
   (read-only dashboard).
 - `agents/strategist-critic.md` — the reasoning-critic subagent (no web, no sources;
   tests logic, not evidence).
-- `reference/` — read-only library: 70 framework entries across 7 stage directories, each
-  with an embedded diagram, plus per-stage `README.md` indexes and a master `INDEX.md`.
+- `reference/` — read-only library: 70 framework entries across 7 stage directories, plus
+  per-stage `README.md` indexes and a master `INDEX.md`.
   Frontmatter `name:` is namespaced `strategist:reference/<stage>/<slug>`.
 - `hooks/` — one PreCompact staleness check. No outputs gate.
 - `templates/CLAUDE.md` — the per-deployment config `/strategist:init` installs into the
@@ -41,7 +41,7 @@ template.
 - **The loop is the spine.** `strategy/STATE.md` holds loop position (stage record,
   completed/active/pending, open pressure-test findings); `strategy/brief.md` is the
   evolving working record, one section per stage; `strategy/strategy-brief.md` is the clean
-  reader-facing deliverable, spun out at Story and refreshed through Decide/Act. Sequential
+  reader-facing deliverable, spun out at Story and refreshed through Move. Sequential
   but resumable, and explicitly iterative — any stage can send the user back. The
   two-document write logic lives in `strategist-stage` Step 4 (Reader-Brief Style Rules).
 - **One engine, seven stages.** The 7 stage commands all invoke `strategist-stage` with a
@@ -80,8 +80,7 @@ template.
 ## Locked decisions
 
 - **Name/namespace:** plugin `strategist`, commands `/strategist:*`, library frontmatter
-  `strategist:reference/<stage>/<slug>`. (The library was built under an
-  `overnight-strategist:` namespace and realigned on import.)
+  `strategist:reference/<stage>/<slug>`.
 - **Critic in v1:** included (`/strategist:pressure-test` + `strategist-critic`).
 - **Two documents (v0.2.0):** working `brief.md` (process/audit trail) + reader-facing
   `strategy/strategy-brief.md` (clean deliverable, generated from Story onward). The reader
@@ -90,6 +89,19 @@ template.
 - **No evidence layer:** intentionally absent. If a future version wants sourced
   strategy inputs, that's a separate, opt-in concern — don't bolt a research gate onto the
   loop.
+
+## Canon sync — the shipped frameworks are copies
+
+- The Strategy Spine and its sibling frameworks live in `reference/frameworks/` as **copies
+  of canonical source docs** that live at `~/Documents/Claude/Projects/AI Operations/frameworks/`
+  (the Strategy Spine itself is `strategy-spine.md`; it draws on `metaskills.md` and
+  `learning-and-teaching.md`, with `creating-conditions.md` as the parent posture). That folder
+  is the **source of truth**.
+- When the plugin is updated, **verify the shipped copies still match canon** — re-copy from
+  the source docs if the canon has moved. This mirrors the propagation convention in that
+  frameworks folder's own `AGENTS.md`: updates propagate from the canonical source into the
+  copies here, never the other way around. Don't edit the substance of a shipped framework in
+  `reference/frameworks/` directly; change it in canon and re-sync.
 
 ## Maintaining this plugin
 

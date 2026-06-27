@@ -7,14 +7,10 @@ slug: cumulative
 aka: [Pareto chart, 80/20 chart, Cumulative distribution chart, Running total chart]
 source: ""
 related: [rank, comparison, waterfall, distribution, trend]
-image: assets/cumulative.png
 ---
-
 # Cumulative
 
 > A chart that shows both the individual size of each category and the running total they build toward — making it immediately visible that a small number of categories accounts for most of the result.
-
-![Cumulative framework diagram](assets/cumulative.png)
 
 ## What It Is
 

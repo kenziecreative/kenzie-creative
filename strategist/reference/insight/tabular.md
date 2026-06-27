@@ -7,14 +7,10 @@ slug: tabular
 aka: [Table layout, Grid format]
 source: ""
 related: [tri-column, heat-map, one-pager]
-image: assets/tabular.png
 ---
-
 # Tabular
 
 > A structured table or grid that organises multiple insights into rows and categories so an audience can scan, compare, and absorb takeaways without reading everything linearly.
-
-![Tabular framework diagram](assets/tabular.png)
 
 ## What It Is
 

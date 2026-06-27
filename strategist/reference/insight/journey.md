@@ -7,14 +7,10 @@ slug: journey
 aka: [Customer journey map, Experience map, Journey map]
 source: ""
 related: [touchpoint, circular, chevron, timeline, segmentation]
-image: assets/journey.png
 ---
-
 # Journey
 
 > A customer journey map that traces the experience of buying and using a product from the customer's perspective, phase by phase and step by step, with explicit callouts for the moments that matter most.
-
-![Journey framework diagram](assets/journey.png)
 
 ## What It Is
 

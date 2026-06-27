@@ -7,14 +7,10 @@ slug: pyramid
 aka: [Pyramid chart, Hierarchy pyramid, Brand pyramid]
 source: ""
 related: [one-pager, tri-column, driver-tree, hub-n-spoke, ../story/minto-pyramid]
-image: assets/pyramid.png
 ---
-
 # Pyramid
 
 > A layered triangle that organises ideas from foundational to pinnacle — showing that the higher levels are only possible because the lower levels exist and support them.
-
-![Pyramid framework diagram](assets/pyramid.png)
 
 ## What It Is
 

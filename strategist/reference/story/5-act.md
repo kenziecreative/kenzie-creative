@@ -7,14 +7,10 @@ slug: 5-act
 aka: [Five-Act Story Framework, Freytag's Pyramid adapted, Five Act Structure]
 source: "Gustav Freytag, Freytag's Pyramid"
 related: [story-spine, storybrand, scqa]
-image: assets/5-act.png
 ---
-
 # 5 ACT
 
 > A five-act narrative arc — Trends, Challenges, Big Idea, Benefit, Differentiators — adapted from classical dramatic structure to tell a forward-looking marketing or strategy story that builds to a compelling pitch.
-
-![5 ACT framework diagram](assets/5-act.png)
 
 ## What It Is
 

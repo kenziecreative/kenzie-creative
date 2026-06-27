@@ -7,14 +7,10 @@ slug: yes-no
 aka: [Yes/No Flowchart, Logic Tree, Decision Flowchart, Binary Decision Tree]
 source: ""
 related: [5-whys, 5w-h, decision-tree, hypothesis]
-image: assets/yes-no.png
 ---
-
 # Yes/No
 
 > A binary logic tree that guides a user to an answer by routing them through a sequence of yes-or-no questions, each branch leading either to the next question or to a defined outcome.
-
-![Yes/No framework diagram](assets/yes-no.png)
 
 ## What It Is
 
@@ -75,5 +71,5 @@ If the questions along the path are not cleanly binary — if each node involves
 
 - [5 Why's](./5-whys.md) — a root-cause chain for investigating *why* a problem occurred; Yes/No routes to categories, 5 Why's traces causes.
 - [5W+H](./5w-h.md) — maps the full context of a problem across six dimensions; use as preparation before encoding diagnostic logic into a Yes/No tree.
-- [Decision Tree](../decide/decision-tree.md) — the Decide-stage counterpart: handles multi-outcome branching with probability weighting; use when the path involves more than binary choices or uncertain outcomes.
-- [Hypothesis](../split/hypothesis.md) — a structured assertion about what is true; a Yes/No tree is one way to test a set of nested hypotheses systematically.
+- [Decision Tree](../synthesise/decision-tree.md) — the Synthesise-stage counterpart: handles multi-outcome branching with probability weighting; use when the path involves more than binary choices or uncertain outcomes.
+- [Hypothesis](../frame/hypothesis.md) — a structured assertion about what is true; a Yes/No tree is one way to test a set of nested hypotheses systematically.

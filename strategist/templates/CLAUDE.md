@@ -41,7 +41,7 @@ The loop maintains **two documents**:
   the full record: frameworks, dead-ends, reframes, the pressure-test. This is the audit
   trail.
 - `strategy/strategy-brief.md` — the **reader-facing strategy brief**. Generated at the
-  Story stage and refreshed through Decide and Act. Structured around the strategy, no
+  Story stage and refreshed through Move. Structured around the strategy, no
   process residue — this is what you hand to an exec or a partner.
 
 `strategy/STATE.md` tracks where you are and what's next; the loop is resumable across
@@ -64,7 +64,7 @@ depth: adaptive          # adaptive | full | light
 ## Pressure-Test  (default: on at decision points)
 
 Whether the loop offers `/strategist:pressure-test` automatically. `decision-points`
-offers it after Analyse, Decide, and Act — the stages where flawed reasoning is most
+offers it after Analyse, Synthesise, and Move — the stages where flawed reasoning is most
 costly. Set `always` to offer it after every stage, or `manual` to only run it when
 you ask.
 
@@ -86,8 +86,8 @@ no_em_dashes: false
 
 ## What Strategist does, in two lines
 
-Strategist walks one problem through a seven-step loop — Define, Split, Analyse,
-Insight, Story, Decide, Act — and at each step it puts the relevant frameworks from its
+Strategist walks one problem through a seven-step loop, the Strategy Spine — Define, Frame,
+Analyse, Insight, Synthesise, Story, Move — and at each step it puts the relevant frameworks from its
 library in front of you, helps you pick and apply the right one, and writes the result
 into the working `brief.md`. From the Story stage on it also produces a clean,
 reader-facing strategy brief. A critic can pressure-test your reasoning at any point.

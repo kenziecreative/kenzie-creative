@@ -7,14 +7,10 @@ slug: heat-map
 aka: [Traffic light chart, Maturity rating grid]
 source: ""
 related: [tabular, matrix, continuum, capability-map]
-image: assets/heat-map.png
 ---
-
 # Heat Map
 
 > A colour-coded grid that rates a set of items or attributes from low to high — using traffic-light colours, size signals, or percentage indicators — so an audience can instantly see where performance is strong, where it is weak, and what demands the most attention.
-
-![Heat Map framework diagram](assets/heat-map.png)
 
 ## What It Is
 

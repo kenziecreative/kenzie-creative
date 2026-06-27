@@ -22,7 +22,7 @@ literally:
 
 | `entry` | Runner executes | Notes |
 | --- | --- | --- |
-| `define` … `act` (any of the 7 stages) | `strategist-stage` SKILL for that stage | The main path. |
+| `define` … `move` (any of the 7 stages) | `strategist-stage` SKILL for that stage | The main path. |
 | `framework` | `strategist-framework` SKILL | First `user_message` carries the framework name/slug. |
 | `pressure-test` | `strategist-pressure-test` SKILL **and** the `strategist-critic` agent | The pressure-test step dispatches the critic; since the runner can't nest a subagent, it plays the critic itself by reading `agents/strategist-critic.md` and producing exactly the findings that agent would, then has the skill present them. |
 

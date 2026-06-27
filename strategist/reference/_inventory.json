@@ -1,492 +1,352 @@
 [
   {
     "stage": "define",
-    "name": "SCQ",
-    "slug": "scq",
-    "framework_page": 5,
-    "instructions_page": 6
-  },
-  {
-    "stage": "define",
     "name": "HTDQ",
-    "slug": "htdq",
-    "framework_page": 7,
-    "instructions_page": 8
+    "slug": "htdq"
   },
   {
     "stage": "define",
     "name": "Outcome",
-    "slug": "outcome",
-    "framework_page": 9,
-    "instructions_page": 10
+    "slug": "outcome"
   },
   {
-    "stage": "split",
-    "name": "Driver Tree",
-    "slug": "driver-tree",
-    "framework_page": 12,
-    "instructions_page": 13
+    "stage": "define",
+    "name": "SCQ",
+    "slug": "scq"
   },
   {
-    "stage": "split",
+    "stage": "frame",
     "name": "Bucketing",
-    "slug": "bucketing",
-    "framework_page": 14,
-    "instructions_page": 15
+    "slug": "bucketing"
   },
   {
-    "stage": "split",
+    "stage": "frame",
+    "name": "Driver Tree",
+    "slug": "driver-tree"
+  },
+  {
+    "stage": "frame",
     "name": "Hypothesis",
-    "slug": "hypothesis",
-    "framework_page": 16,
-    "instructions_page": 17
+    "slug": "hypothesis"
   },
   {
     "stage": "analyse",
-    "name": "Trend",
-    "slug": "trend",
-    "framework_page": 19,
-    "instructions_page": 20
+    "name": "5 Why's",
+    "slug": "5-whys"
   },
   {
     "stage": "analyse",
-    "name": "Comparison",
-    "slug": "comparison",
-    "framework_page": 21,
-    "instructions_page": 22
-  },
-  {
-    "stage": "analyse",
-    "name": "Mix",
-    "slug": "mix",
-    "framework_page": 23,
-    "instructions_page": 24
-  },
-  {
-    "stage": "analyse",
-    "name": "Distribution",
-    "slug": "distribution",
-    "framework_page": 25,
-    "instructions_page": 26
-  },
-  {
-    "stage": "analyse",
-    "name": "Scatter",
-    "slug": "scatter",
-    "framework_page": 27,
-    "instructions_page": 28
-  },
-  {
-    "stage": "analyse",
-    "name": "Cumulative",
-    "slug": "cumulative",
-    "framework_page": 29,
-    "instructions_page": 30
-  },
-  {
-    "stage": "analyse",
-    "name": "Candlestick",
-    "slug": "candlestick",
-    "framework_page": 31,
-    "instructions_page": 32
-  },
-  {
-    "stage": "analyse",
-    "name": "Rank",
-    "slug": "rank",
-    "framework_page": 33,
-    "instructions_page": 34
-  },
-  {
-    "stage": "analyse",
-    "name": "Unit Economics",
-    "slug": "unit-economics",
-    "framework_page": 35,
-    "instructions_page": 36
-  },
-  {
-    "stage": "analyse",
-    "name": "Waterfall",
-    "slug": "waterfall",
-    "framework_page": 37,
-    "instructions_page": 38
-  },
-  {
-    "stage": "analyse",
-    "name": "Marginal Return",
-    "slug": "marginal-return",
-    "framework_page": 39,
-    "instructions_page": 40
-  },
-  {
-    "stage": "analyse",
-    "name": "Cashflow",
-    "slug": "cashflow",
-    "framework_page": 41,
-    "instructions_page": 42
-  },
-  {
-    "stage": "analyse",
-    "name": "ROIC",
-    "slug": "roic",
-    "framework_page": 43,
-    "instructions_page": 44
+    "name": "5W+H",
+    "slug": "5w-h"
   },
   {
     "stage": "analyse",
     "name": "Actual v Target",
-    "slug": "actual-v-target",
-    "framework_page": 45,
-    "instructions_page": 46
+    "slug": "actual-v-target"
+  },
+  {
+    "stage": "analyse",
+    "name": "Candlestick",
+    "slug": "candlestick"
+  },
+  {
+    "stage": "analyse",
+    "name": "Cashflow",
+    "slug": "cashflow"
+  },
+  {
+    "stage": "analyse",
+    "name": "Comparison",
+    "slug": "comparison"
+  },
+  {
+    "stage": "analyse",
+    "name": "Cumulative",
+    "slug": "cumulative"
+  },
+  {
+    "stage": "analyse",
+    "name": "Distribution",
+    "slug": "distribution"
+  },
+  {
+    "stage": "analyse",
+    "name": "Marginal Return",
+    "slug": "marginal-return"
+  },
+  {
+    "stage": "analyse",
+    "name": "Mix",
+    "slug": "mix"
   },
   {
     "stage": "analyse",
     "name": "Profit Margin",
-    "slug": "profit-margin",
-    "framework_page": 47,
-    "instructions_page": 47
+    "slug": "profit-margin"
   },
   {
     "stage": "analyse",
-    "name": "5 Why\u2019s",
-    "slug": "5-whys",
-    "framework_page": 48,
-    "instructions_page": 49
+    "name": "Rank",
+    "slug": "rank"
   },
   {
     "stage": "analyse",
-    "name": "5W + H",
-    "slug": "5w-h",
-    "framework_page": 50,
-    "instructions_page": 51
+    "name": "ROIC",
+    "slug": "roic"
+  },
+  {
+    "stage": "analyse",
+    "name": "Scatter",
+    "slug": "scatter"
+  },
+  {
+    "stage": "analyse",
+    "name": "Trend",
+    "slug": "trend"
+  },
+  {
+    "stage": "analyse",
+    "name": "Unit Economics",
+    "slug": "unit-economics"
+  },
+  {
+    "stage": "analyse",
+    "name": "Waterfall",
+    "slug": "waterfall"
   },
   {
     "stage": "analyse",
     "name": "Yes/No",
-    "slug": "yes-no",
-    "framework_page": 52,
-    "instructions_page": 53
-  },
-  {
-    "stage": "insight",
-    "name": "Tabular",
-    "slug": "tabular",
-    "framework_page": 55,
-    "instructions_page": 56
-  },
-  {
-    "stage": "insight",
-    "name": "One Pager",
-    "slug": "one-pager",
-    "framework_page": 57,
-    "instructions_page": 58
-  },
-  {
-    "stage": "insight",
-    "name": "Canvas",
-    "slug": "canvas",
-    "framework_page": 59,
-    "instructions_page": 60
-  },
-  {
-    "stage": "insight",
-    "name": "Tri-Column",
-    "slug": "tri-column",
-    "framework_page": 61,
-    "instructions_page": 62
-  },
-  {
-    "stage": "insight",
-    "name": "Chevron",
-    "slug": "chevron",
-    "framework_page": 63,
-    "instructions_page": 64
-  },
-  {
-    "stage": "insight",
-    "name": "Horizon",
-    "slug": "horizon",
-    "framework_page": 65,
-    "instructions_page": 66
-  },
-  {
-    "stage": "insight",
-    "name": "Gantt",
-    "slug": "gantt",
-    "framework_page": 67,
-    "instructions_page": 68
-  },
-  {
-    "stage": "insight",
-    "name": "Driver Tree",
-    "slug": "driver-tree",
-    "framework_page": 69,
-    "instructions_page": 70
-  },
-  {
-    "stage": "insight",
-    "name": "Continuum",
-    "slug": "continuum",
-    "framework_page": 71,
-    "instructions_page": 72
-  },
-  {
-    "stage": "insight",
-    "name": "Heat Map",
-    "slug": "heat-map",
-    "framework_page": 73,
-    "instructions_page": 74
-  },
-  {
-    "stage": "insight",
-    "name": "Graph",
-    "slug": "graph",
-    "framework_page": 75,
-    "instructions_page": 76
-  },
-  {
-    "stage": "insight",
-    "name": "Matrix",
-    "slug": "matrix",
-    "framework_page": 77,
-    "instructions_page": 78
-  },
-  {
-    "stage": "insight",
-    "name": "From:To",
-    "slug": "from-to",
-    "framework_page": 79,
-    "instructions_page": 80
-  },
-  {
-    "stage": "insight",
-    "name": "Venn",
-    "slug": "venn",
-    "framework_page": 81,
-    "instructions_page": 82
-  },
-  {
-    "stage": "insight",
-    "name": "Positioning",
-    "slug": "positioning",
-    "framework_page": 83,
-    "instructions_page": 84
-  },
-  {
-    "stage": "insight",
-    "name": "Pyramid",
-    "slug": "pyramid",
-    "framework_page": 85,
-    "instructions_page": 86
-  },
-  {
-    "stage": "insight",
-    "name": "Circular",
-    "slug": "circular",
-    "framework_page": 87,
-    "instructions_page": 88
-  },
-  {
-    "stage": "insight",
-    "name": "Journey",
-    "slug": "journey",
-    "framework_page": 89,
-    "instructions_page": 90
-  },
-  {
-    "stage": "insight",
-    "name": "Touchpoint",
-    "slug": "touchpoint",
-    "framework_page": 91,
-    "instructions_page": 92
-  },
-  {
-    "stage": "insight",
-    "name": "Timeline",
-    "slug": "timeline",
-    "framework_page": 93,
-    "instructions_page": 94
-  },
-  {
-    "stage": "insight",
-    "name": "Capability Map",
-    "slug": "capability-map",
-    "framework_page": 95,
-    "instructions_page": 96
-  },
-  {
-    "stage": "insight",
-    "name": "Image Column",
-    "slug": "image-column",
-    "framework_page": 97,
-    "instructions_page": 98
-  },
-  {
-    "stage": "insight",
-    "name": "Segmentation",
-    "slug": "segmentation",
-    "framework_page": 99,
-    "instructions_page": 100
-  },
-  {
-    "stage": "insight",
-    "name": "Hub n\u2019 Spoke",
-    "slug": "hub-n-spoke",
-    "framework_page": 101,
-    "instructions_page": 101
+    "slug": "yes-no"
   },
   {
     "stage": "insight",
     "name": "3x3 Model",
-    "slug": "3x3-model",
-    "framework_page": 102,
-    "instructions_page": 103
+    "slug": "3x3-model"
   },
   {
-    "stage": "story",
-    "name": "Minto Pyramid",
-    "slug": "minto-pyramid",
-    "framework_page": 105,
-    "instructions_page": 106
+    "stage": "insight",
+    "name": "Canvas",
+    "slug": "canvas"
   },
   {
-    "stage": "story",
-    "name": "HV Logic",
-    "slug": "hv-logic",
-    "framework_page": 107,
-    "instructions_page": 107
+    "stage": "insight",
+    "name": "Capability Map",
+    "slug": "capability-map"
   },
   {
-    "stage": "story",
-    "name": "MECE",
-    "slug": "mece",
-    "framework_page": 108,
-    "instructions_page": 108
+    "stage": "insight",
+    "name": "Chevron",
+    "slug": "chevron"
   },
   {
-    "stage": "story",
-    "name": "SCQA",
-    "slug": "scqa",
-    "framework_page": 109,
-    "instructions_page": 109
+    "stage": "insight",
+    "name": "Circular",
+    "slug": "circular"
   },
   {
-    "stage": "story",
-    "name": "Story Spine",
-    "slug": "story-spine",
-    "framework_page": 110,
-    "instructions_page": 111
+    "stage": "insight",
+    "name": "Continuum",
+    "slug": "continuum"
+  },
+  {
+    "stage": "insight",
+    "name": "Driver Tree",
+    "slug": "driver-tree"
+  },
+  {
+    "stage": "insight",
+    "name": "From:To",
+    "slug": "from-to"
+  },
+  {
+    "stage": "insight",
+    "name": "Gantt",
+    "slug": "gantt"
+  },
+  {
+    "stage": "insight",
+    "name": "Graph",
+    "slug": "graph"
+  },
+  {
+    "stage": "insight",
+    "name": "Heat Map",
+    "slug": "heat-map"
+  },
+  {
+    "stage": "insight",
+    "name": "Horizon",
+    "slug": "horizon"
+  },
+  {
+    "stage": "insight",
+    "name": "Hub n' Spoke",
+    "slug": "hub-n-spoke"
+  },
+  {
+    "stage": "insight",
+    "name": "Image Column",
+    "slug": "image-column"
+  },
+  {
+    "stage": "insight",
+    "name": "Journey",
+    "slug": "journey"
+  },
+  {
+    "stage": "insight",
+    "name": "Matrix",
+    "slug": "matrix"
+  },
+  {
+    "stage": "insight",
+    "name": "One Pager",
+    "slug": "one-pager"
+  },
+  {
+    "stage": "insight",
+    "name": "Positioning",
+    "slug": "positioning"
+  },
+  {
+    "stage": "insight",
+    "name": "Pyramid",
+    "slug": "pyramid"
+  },
+  {
+    "stage": "insight",
+    "name": "Segmentation",
+    "slug": "segmentation"
+  },
+  {
+    "stage": "insight",
+    "name": "Tabular",
+    "slug": "tabular"
+  },
+  {
+    "stage": "insight",
+    "name": "Timeline",
+    "slug": "timeline"
+  },
+  {
+    "stage": "insight",
+    "name": "Touchpoint",
+    "slug": "touchpoint"
+  },
+  {
+    "stage": "insight",
+    "name": "Tri-Column",
+    "slug": "tri-column"
+  },
+  {
+    "stage": "insight",
+    "name": "Venn",
+    "slug": "venn"
+  },
+  {
+    "stage": "synthesise",
+    "name": "ABCD",
+    "slug": "abcd"
+  },
+  {
+    "stage": "synthesise",
+    "name": "Bezos",
+    "slug": "bezos"
+  },
+  {
+    "stage": "synthesise",
+    "name": "Bull & Bear",
+    "slug": "bull-and-bear"
+  },
+  {
+    "stage": "synthesise",
+    "name": "Decision Tree",
+    "slug": "decision-tree"
+  },
+  {
+    "stage": "synthesise",
+    "name": "Eisenhower",
+    "slug": "eisenhower"
+  },
+  {
+    "stage": "synthesise",
+    "name": "Evaluation",
+    "slug": "evaluation"
+  },
+  {
+    "stage": "synthesise",
+    "name": "Pros & Cons",
+    "slug": "pros-and-cons"
+  },
+  {
+    "stage": "synthesise",
+    "name": "SPADE",
+    "slug": "spade"
   },
   {
     "stage": "story",
     "name": "5 ACT",
-    "slug": "5-act",
-    "framework_page": 112,
-    "instructions_page": 113
+    "slug": "5-act"
+  },
+  {
+    "stage": "story",
+    "name": "HV Logic",
+    "slug": "hv-logic"
+  },
+  {
+    "stage": "story",
+    "name": "MECE",
+    "slug": "mece"
+  },
+  {
+    "stage": "story",
+    "name": "Minto Pyramid",
+    "slug": "minto-pyramid"
+  },
+  {
+    "stage": "story",
+    "name": "SCQA",
+    "slug": "scqa"
+  },
+  {
+    "stage": "story",
+    "name": "Story Spine",
+    "slug": "story-spine"
   },
   {
     "stage": "story",
     "name": "StoryBrand",
-    "slug": "storybrand",
-    "framework_page": 114,
-    "instructions_page": 115
+    "slug": "storybrand"
   },
   {
-    "stage": "decide",
-    "name": "Eisenhower",
-    "slug": "eisenhower",
-    "framework_page": 117,
-    "instructions_page": 118
-  },
-  {
-    "stage": "decide",
-    "name": "ABCD",
-    "slug": "abcd",
-    "framework_page": 119,
-    "instructions_page": 119
-  },
-  {
-    "stage": "decide",
-    "name": "Decision Tree",
-    "slug": "decision-tree",
-    "framework_page": 120,
-    "instructions_page": 121
-  },
-  {
-    "stage": "decide",
-    "name": "Pros & Cons",
-    "slug": "pros-and-cons",
-    "framework_page": 122,
-    "instructions_page": 123
-  },
-  {
-    "stage": "decide",
-    "name": "Evaluation",
-    "slug": "evaluation",
-    "framework_page": 124,
-    "instructions_page": 125
-  },
-  {
-    "stage": "decide",
-    "name": "Bezos",
-    "slug": "bezos",
-    "framework_page": 126,
-    "instructions_page": 127
-  },
-  {
-    "stage": "decide",
-    "name": "SPADE",
-    "slug": "spade",
-    "framework_page": 128,
-    "instructions_page": 129
-  },
-  {
-    "stage": "decide",
-    "name": "Bull & Bear",
-    "slug": "bull-and-bear",
-    "framework_page": 130,
-    "instructions_page": 131
-  },
-  {
-    "stage": "act",
-    "name": "Zero To One",
-    "slug": "zero-to-one",
-    "framework_page": 133,
-    "instructions_page": 133
-  },
-  {
-    "stage": "act",
-    "name": "Comms Deploy",
-    "slug": "comms-deploy",
-    "framework_page": 134,
-    "instructions_page": 135
-  },
-  {
-    "stage": "act",
-    "name": "Decision Grid",
-    "slug": "decision-grid",
-    "framework_page": 136,
-    "instructions_page": 137
-  },
-  {
-    "stage": "act",
-    "name": "GTM Stack",
-    "slug": "gtm-stack",
-    "framework_page": 138,
-    "instructions_page": 139
-  },
-  {
-    "stage": "act",
-    "name": "Execution Plan",
-    "slug": "execution-plan",
-    "framework_page": 140,
-    "instructions_page": 141
-  },
-  {
-    "stage": "act",
+    "stage": "move",
     "name": "Capability Drop",
-    "slug": "capability-drop",
-    "framework_page": 142,
-    "instructions_page": 143
+    "slug": "capability-drop"
+  },
+  {
+    "stage": "move",
+    "name": "Comms Deploy",
+    "slug": "comms-deploy"
+  },
+  {
+    "stage": "move",
+    "name": "Decision Grid",
+    "slug": "decision-grid"
+  },
+  {
+    "stage": "move",
+    "name": "Execution Plan",
+    "slug": "execution-plan"
+  },
+  {
+    "stage": "move",
+    "name": "GTM Stack",
+    "slug": "gtm-stack"
+  },
+  {
+    "stage": "move",
+    "name": "Zero To One",
+    "slug": "zero-to-one"
   }
 ]

@@ -7,14 +7,10 @@ slug: gantt
 aka: [Roadmap, Gantt chart, Implementation roadmap]
 source: ""
 related: [chevron, horizon, one-pager, timeline]
-image: assets/gantt.png
 ---
-
 # Gantt
 
 > A roadmap chart that places each strategic initiative on a time axis, grouped by pillar, so an audience can see what is happening, when it starts and ends, and how workstreams stack up across a planning period.
-
-![Gantt framework diagram](assets/gantt.png)
 
 ## What It Is
 

@@ -7,14 +7,10 @@ slug: segmentation
 aka: [Segmentation map, Market segmentation, Customer segmentation]
 source: ""
 related: [matrix, positioning, journey, touchpoint, heat-map, venn, 3x3-model]
-image: assets/segmentation.png
 ---
-
 # Segmentation
 
 > A market or customer segmentation map that shows how a market or customer base divides into macro categories and micro segments, with the relative size and a key insight for each.
-
-![Segmentation framework diagram](assets/segmentation.png)
 
 ## What It Is
 
@@ -61,7 +57,7 @@ The map makes Acme's strategic priority clear: career changers (Category 1, espe
 
 ## When To Use It
 
-Use a Segmentation map at any point where the strategy requires choosing where to compete. It is most useful in the Insight stage before a targeting or positioning decision is made — after Analyse-stage data (size, growth rates, customer data) has been gathered, and before the Story or Decide stage where you commit to a direction.
+Use a Segmentation map at any point where the strategy requires choosing where to compete. It is most useful in the Insight stage before a targeting or positioning decision is made — after Analyse-stage data (size, growth rates, customer data) has been gathered, and before the Synthesise stage where you commit to a direction.
 
 It is also useful for presenting an existing customer base when the purpose is to show which segments are growing, which are stalling, and which deserve more or less investment.
 

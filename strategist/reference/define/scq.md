@@ -7,14 +7,10 @@ slug: scq
 aka: [Situation-Complication-Question]
 source: "Barbara Minto, The Pyramid Principle"
 related: [htdq, outcome]
-image: assets/scq.png
 ---
-
 # SCQ
 
 > A three-part frame — Situation, Complication, Question — that turns a messy problem into a single, answerable question before you try to solve it.
-
-![SCQ framework diagram](assets/scq.png)
 
 ## What It Is
 

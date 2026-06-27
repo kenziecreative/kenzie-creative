@@ -7,14 +7,10 @@ slug: touchpoint
 aka: [Touchpoint map, Multi-channel touchpoint map, Channel map]
 source: ""
 related: [journey, circular, segmentation, heat-map, from-to]
-image: assets/touchpoint.png
 ---
-
 # Touchpoint
 
 > A multi-channel map that shows which device or channel a customer uses at each stage of their journey — so you can see where channels are missing, redundant, or switching customers off their path.
-
-![Touchpoint framework diagram](assets/touchpoint.png)
 
 ## What It Is
 

@@ -7,14 +7,10 @@ slug: matrix
 aka: [2x2 matrix, Four-quadrant matrix]
 source: ""
 related: [heat-map, continuum, positioning, canvas]
-image: assets/matrix.png
 ---
-
 # Matrix
 
 > A two-by-two grid that plots options, ideas, or entities against two key dimensions to reveal which quadrant each falls into — making trade-offs, priorities, and strategic choices visible in a single view.
-
-![Matrix framework diagram](assets/matrix.png)
 
 ## What It Is
 
@@ -63,7 +59,7 @@ The Matrix tells Acme to start with the two bottom-right quick wins (both can la
 
 Use the Matrix whenever you need to compare options across two dimensions and want to make the resulting prioritisation or grouping visual. It is among the most versatile layouts in a strategy deck because the axes can be customised to almost any strategic question.
 
-Common axis pairings: Impact vs. Effort (for prioritisation); Market Attractiveness vs. Competitive Strength (for portfolio decisions); Certainty of Problem vs. Certainty of Solution (Satell's Innovation Matrix, referenced in the diagram's example); Importance vs. Urgency (the Eisenhower variant, used in the Decide stage).
+Common axis pairings: Impact vs. Effort (for prioritisation); Market Attractiveness vs. Competitive Strength (for portfolio decisions); Certainty of Problem vs. Certainty of Solution (Satell's Innovation Matrix); Importance vs. Urgency (the Eisenhower variant, used in the Synthesise stage).
 
 Use **Positioning** instead when the matrix is specifically about competitive placement of a brand or product against named competitors. Use **Continuum** when the insight is about directional movement along one dimension rather than placement in a two-dimensional space.
 

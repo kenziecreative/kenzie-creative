@@ -7,14 +7,10 @@ slug: distribution
 aka: [Histogram, Distribution chart, Bell curve, Football field chart]
 source: ""
 related: [scatter, comparison, rank, candlestick]
-image: assets/distribution.png
 ---
-
 # Distribution
 
 > A chart that shows how a set of values spreads across a range — revealing whether the data clusters tightly in the middle, skews to one end, or splits into distinct groups.
-
-![Distribution framework diagram](assets/distribution.png)
 
 ## What It Is
 

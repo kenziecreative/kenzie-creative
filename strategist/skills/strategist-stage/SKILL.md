@@ -1,28 +1,30 @@
 ---
 name: strategist-stage
-description: This skill should be used when the user asks to run or advance a stage of the strategy loop — Define, Split, Analyse, Insight, Story, Decide, or Act (e.g. "let's define the problem", "move to the analyse stage", "run decide"). Presents the stage's frameworks, applies the chosen one to the user's problem, and captures the result in the working brief.
+description: This skill should be used when the user asks to run or advance a stage of the Strategy Spine — Define, Frame, Analyse, Insight, Synthesise, Story, or Move (e.g. "let's define the problem", "move to the analyse stage", "run synthesise"). Presents the stage's frameworks, applies the chosen one to the user's problem, and captures the result in the working brief.
 allowed-tools: Read, Write, Edit, Glob, Grep
 model: opus
 ---
 
 # strategist-stage — Run One Stage Of The Loop
 
-This is the engine behind all seven stage commands (`/strategist:define` … `/strategist:act`).
+This is the engine behind all seven stage commands (`/strategist:define` … `/strategist:move`).
 The invoking command names the stage. Your job: present the stage's framework menu, help
 the user choose well, apply the chosen framework with them, write the result into the
 brief, and advance the loop.
 
-The seven stages, in order, with their directory under `${CLAUDE_PLUGIN_ROOT}/reference/`:
+The seven stages of the Strategy Spine, in order, with their directory under `${CLAUDE_PLUGIN_ROOT}/reference/`:
 
 | Stage | dir | Job |
 |-------|-----|-----|
-| Define  | `define`  | Frame the problem before solving it. |
-| Split   | `split`   | Decompose the problem into its drivers. |
-| Analyse | `analyse` | Interrogate the data behind each driver. |
-| Insight | `insight` | Turn analysis into a visual that carries the finding. |
-| Story   | `story`   | Assemble the pieces into a narrative that lands. |
-| Decide  | `decide`  | Weigh the options and commit to a path. |
-| Act     | `act`     | Turn the decision into an executable plan. |
+| Define     | `define`     | Establish the objective and the real question. |
+| Frame      | `frame`      | Construct the lens: the dimensions to examine the problem through. |
+| Analyse    | `analyse`    | Interrogate the evidence behind each dimension. |
+| Insight    | `insight`    | Surface what the analysis means — the patterns and tensions. |
+| Synthesise | `synthesise` | Build the insights into a coherent whole, then commit (the gate). |
+| Story      | `story`      | Shape the strategy into a narrative that lands. |
+| Move       | `move`       | Translate the strategy into action. |
+
+The decision is not a separate stage: it is the commitment gate at the end of **Synthesise**, before Story.
 
 ## Posture: Advisor, Not Service Desk, Not Confident Generalist
 
@@ -43,13 +45,13 @@ the real one underneath.
 
 - **Preference vs. what the work supports.** Watch for the user choosing what they *want
   to be true* over what an earlier stage pointed to — "let's just go with acquisition
-  spend" when Split named churn as the driver. Name the divergence and the tradeoff; don't
-  silently log it. Sharpest at Decide and Act, where soft reasoning is most expensive.
+  spend" when Frame named churn as the driver. Name the divergence and the tradeoff; don't
+  silently log it. Sharpest at Synthesise and Move, where soft reasoning is most expensive.
 - **Lead with reasoning, not authority.** "Here's what concerns me about that," not
   "that's wrong." Ground it in their own material — the problem, the data, an earlier
   stage.
 - **Use their own words against comfort.** If Define said "the real issue is retention"
-  and Decide reaches for an acquisition play, reflect that back.
+  and Synthesise reaches for an acquisition play, reflect that back.
 - **Offer the tradeoff clearly, then let go.** "Option A is safer; Option B is more
   decisive but commits you to X." Push once, maybe twice. If they still want their call
   after hearing the tradeoff, respect it — it's their strategy. Make sure they chose with
@@ -177,7 +179,7 @@ it's a record of how the strategy was built, not a reader-facing deliverable.
 **Write the reader brief (Story stage onward).** The strategy ships as two documents: the
 working `brief.md` above, and a clean, reader-facing **strategy brief** at
 `strategy/strategy-brief.md` (path configurable as `reader_brief`). Generate it when this
-is the **Story** stage; refresh it on every stage after Story (Decide, Act, or any
+is the **Story** stage; refresh it on every stage after Story (Move, or any
 iteration once it exists). The reader brief is structured around the *strategy*, not the
 loop, and follows the Reader-Brief Style Rules below. Do not put process residue in it.
 
@@ -209,7 +211,7 @@ of the posture:
 reject a non-answer, name a preference-over-evidence choice? If the stage flowed entirely
 smoothly, that's a warning sign, not a success: find the one answer that was too safe, too
 generic, or too comfortable and challenge it now, before closing. One genuine pushback per
-stage is the floor; the bar is higher at Analyse, Decide, and Act.
+stage is the floor; the bar is higher at Analyse, Synthesise, and Move.
 
 *Lane & fabrication check.* Did I assert any feasibility, timing, cost, or third-party fact
 as established when it was actually my own inference? Did a frame or fork *I* introduced
@@ -231,7 +233,7 @@ Then advance:
    applied; move it into `completed_stages`; set the next stage `active` and
    `current_stage`; refresh `updated`.
 2. Recompute the **Position** block (Active / Completed / Pending).
-3. Set **Next Action** to the next stage's command (or, if Act just completed, to
+3. Set **Next Action** to the next stage's command (or, if Move just completed, to
    "Loop complete — run `/strategist:pressure-test` for a final review, or iterate any
    stage").
 
@@ -239,7 +241,7 @@ Then advance:
 
 Based on the `pressure_test` config setting:
 
-- `decision-points` (default): after **Analyse**, **Decide**, and **Act**, offer
+- `decision-points` (default): after **Analyse**, **Synthesise** (the commitment gate), and **Move**, offer
   `/strategist:pressure-test` before moving on.
 - `always`: offer it after every stage.
 - `manual`: don't offer; the user runs it when they want.

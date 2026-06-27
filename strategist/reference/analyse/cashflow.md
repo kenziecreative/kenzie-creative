@@ -7,14 +7,10 @@ slug: cashflow
 aka: [Discounted Cashflow, DCF, Net Present Value Analysis]
 source: ""
 related: [roic, unit-economics, waterfall, marginal-return, profit-margin]
-image: assets/cashflow.png
 ---
-
 # Cashflow
 
 > A method of valuing a business or opportunity by mapping cash in and cash out over time, then discounting future flows back to today's value to arrive at a net present value.
-
-![Cashflow framework diagram](assets/cashflow.png)
 
 ## What It Is
 

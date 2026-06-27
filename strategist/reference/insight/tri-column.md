@@ -7,14 +7,10 @@ slug: tri-column
 aka: [Three-column layout, Three-pillar page]
 source: ""
 related: [tabular, one-pager, image-column, chevron]
-image: assets/tri-column.png
 ---
-
 # Tri-Column
 
 > A three-column page layout that presents three parallel themes side by side, each with a sub-headline, supporting evidence, and a "so what" implication — so the audience sees a complete, balanced argument in a single view.
-
-![Tri-Column framework diagram](assets/tri-column.png)
 
 ## What It Is
 

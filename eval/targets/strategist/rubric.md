@@ -22,7 +22,7 @@ and excluded from its pass/fail.
 
 ## Applicability by entry
 
-- `define` / `split` / `analyse` / `insight` / `story` / `decide` / `act` runs score:
+- `define` / `frame` / `analyse` / `insight` / `synthesise` / `story` / `move` runs score:
   Framework Fit, Concreteness, Probing, No-Fabrication, State Integrity, Loop Hygiene,
   Brief Coherence. **Pushback** applies whenever the scenario contains a soft answer;
   **Preference-Redirect** applies whenever it contains a preference-over-evidence push.

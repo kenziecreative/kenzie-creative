@@ -7,14 +7,10 @@ slug: chevron
 aka: [Process arrow diagram, Phase flow diagram]
 source: ""
 related: [gantt, horizon, one-pager, timeline]
-image: assets/chevron.png
 ---
-
 # Chevron
 
 > A sequence of arrow-shaped blocks — one per phase — that visualises the step-by-step path from start to finish, so an audience can see both the destination and the route in a single view.
-
-![Chevron framework diagram](assets/chevron.png)
 
 ## What It Is
 

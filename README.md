@@ -15,7 +15,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 | Intelligence Briefing | 0.3.0 | Daily/weekly environmental brief that triages the outside world into a short, self-contained page | [guide](./intelligence-briefing/README.md) |
 | Researcher | 1.4.1 | Structured, audited research system — every claim traces back to a source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Weekly meeting round-up built from transcripts — action items, cross-meeting threads, forward watch list | [guide](./sage/README.md) |
-| Strategist | 0.2.1 | Strategic-thinking loop — Define → Split → Analyse → Insight → Story → Decide → Act — over a 70-framework library, with a reasoning critic; outputs a working record + a clean reader brief | [guide](./strategist/README.md) |
+| Strategist | 0.3.0 | Strategic-thinking loop — Define → Frame → Analyse → Insight → Synthesise → Story → Move — over a 70-framework library, with a reasoning critic; outputs a working record + a clean reader brief | [guide](./strategist/README.md) |
 
 Each version mirrors that plugin's `plugin.json`, which is the source of truth for updates.
 
@@ -41,7 +41,7 @@ A **weekly meeting round-up** that keeps a fast-moving week legible at a glance.
 
 ### Strategist
 
-A **strategic-thinking system**: it walks one problem through a single repeatable loop — Define → Split → Analyse → Insight → Story → Decide → Act — and at each step puts the right framework from a 70-framework library in front of you, helps you apply it to your actual situation, and writes the result into one living strategy brief. A critic can pressure-test your reasoning whenever you want it — testing the logic, not the evidence. Not a blank template; a worked strategy you can defend.
+A **strategic-thinking system**: it walks one problem through a single repeatable loop — Define → Frame → Analyse → Insight → Synthesise → Story → Move — and at each step puts the right framework from a 70-framework library in front of you, helps you apply it to your actual situation, and writes the result into one living strategy brief. A critic can pressure-test your reasoning whenever you want it — testing the logic, not the evidence. Not a blank template; a worked strategy you can defend.
 
 → **[Read the Strategist guide](./strategist/README.md)** for the loop, the library, and the critic.
 

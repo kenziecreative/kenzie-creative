@@ -7,14 +7,10 @@ slug: scatter
 aka: [Scatter plot, Dot chart, Bubble chart, XY chart]
 source: ""
 related: [distribution, comparison, rank, heat-map, positioning]
-image: assets/scatter.png
 ---
-
 # Scatter
 
 > A chart that plots individual data points across two axes to reveal whether — and how strongly — two variables relate to each other.
-
-![Scatter framework diagram](assets/scatter.png)
 
 ## What It Is
 

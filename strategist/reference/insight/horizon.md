@@ -7,14 +7,10 @@ slug: horizon
 aka: [Three Horizons, 3-Horizon model, McKinsey Three Horizons]
 source: "McKinsey, Three Horizons of Growth"
 related: [gantt, chevron, one-pager, from-to]
-image: assets/horizon.png
 ---
-
 # Horizon
 
 > A three-horizon time chart that organises strategic initiatives into near-term execution, medium-term capability-building, and long-term transformation — so a team can manage today's performance while investing in the future simultaneously.
-
-![Horizon framework diagram](assets/horizon.png)
 
 ## What It Is
 

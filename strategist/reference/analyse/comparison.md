@@ -7,14 +7,10 @@ slug: comparison
 aka: [Bar chart, Column chart, Horizontal bar chart]
 source: ""
 related: [trend, rank, mix, waterfall, actual-v-target]
-image: assets/comparison.png
 ---
-
 # Comparison
 
 > A chart that places discrete values side by side so the differences between them are immediately readable — the default tool for answering "which is bigger and by how much?"
-
-![Comparison framework diagram](assets/comparison.png)
 
 ## What It Is
 

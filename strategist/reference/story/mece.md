@@ -7,14 +7,10 @@ slug: mece
 aka: [Mutually Exclusive Collectively Exhaustive]
 source: "Barbara Minto, The Pyramid Principle"
 related: [minto-pyramid, hv-logic, scqa]
-image: assets/mece.png
 ---
-
 # MECE
 
 > A two-part test for any list of arguments or categories: each item must be distinct from every other (mutually exclusive), and together they must cover the whole problem with nothing left out (collectively exhaustive).
-
-![MECE framework diagram](assets/mece.png)
 
 ## What It Is
 
@@ -70,7 +66,7 @@ The revised list is MECE: four distinct causes, together covering the full probl
 
 ## When To Use It
 
-Apply MECE any time you are constructing a list of arguments, categories, or drivers — not just in written communication, but in analysis. It is the natural companion to the [Driver Tree](../split/driver-tree.md) in the Split stage, where a problem is broken into its constituent drivers; those drivers must be MECE or the tree will double-count causes or miss them.
+Apply MECE any time you are constructing a list of arguments, categories, or drivers — not just in written communication, but in analysis. It is the natural companion to the [Driver Tree](../frame/driver-tree.md) in the Frame stage, where a problem is broken into its constituent drivers; those drivers must be MECE or the tree will double-count causes or miss them.
 
 In the Story stage, it is the structural test for Level 2 arguments in the Minto Pyramid. It is also the test to run on any categorical breakdown in a slide: market segments, revenue streams, risk categories.
 

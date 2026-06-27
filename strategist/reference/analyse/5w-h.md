@@ -7,14 +7,10 @@ slug: 5w-h
 aka: [Five Ws and How, Kipling Method, Who What When Where Why How]
 source: "Rudyard Kipling (Six Honest Serving Men)"
 related: [5-whys, yes-no, driver-tree, scq, htdq]
-image: assets/5w-h.png
 ---
-
 # 5W+H
 
 > A six-angle investigation framework — Who, What, When, Where, Why, How — that maps the full terrain of a problem before you attempt to solve it.
-
-![5W+H framework diagram](assets/5w-h.png)
 
 ## What It Is
 
@@ -72,6 +68,6 @@ Use 5W+H early in the Analyse stage when a problem has surfaced but is not yet w
 
 - [5 Why's](./5-whys.md) — drills into the "Why" dimension with a sequential root-cause technique; use 5W+H to set context, then 5 Why's to find the cause.
 - [Yes/No](./yes-no.md) — binary decision tree; use when the diagnostic path involves conditional "if-then" logic after the problem is mapped.
-- [Driver Tree](../split/driver-tree.md) — decomposes a metric into its drivers across multiple branches; use when the "What" from 5W+H is a quantitative metric with multiple contributing causes.
+- [Driver Tree](../frame/driver-tree.md) — decomposes a metric into its drivers across multiple branches; use when the "What" from 5W+H is a quantitative metric with multiple contributing causes.
 - [SCQ](../define/scq.md) — the Define-stage frame for stating the problem; use before 5W+H when the problem needs to be clearly articulated first.
 - [HTDQ](../define/htdq.md) — the narrative Define frame; complements 5W+H by giving the problem a stakeholder-oriented story structure.

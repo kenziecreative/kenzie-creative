@@ -7,14 +7,10 @@ slug: one-pager
 aka: [Strategy on a page, SOAP, Single-page summary]
 source: ""
 related: [canvas, tri-column, gantt, chevron]
-image: assets/one-pager.png
 ---
-
 # One Pager
 
 > A single-page visual that distils an entire strategy into its headline vision, its three to five strategic pillars, and the enabling capabilities that make it executable — so anyone can grasp the full picture at a glance.
-
-![One Pager framework diagram](assets/one-pager.png)
 
 ## What It Is
 

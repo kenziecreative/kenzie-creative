@@ -7,14 +7,10 @@ slug: actual-v-target
 aka: [Actuals vs. Budget, Variance Analysis, Performance vs. Plan]
 source: ""
 related: [trend, comparison, waterfall, profit-margin]
-image: assets/actual-v-target.png
 ---
-
 # Actual v Target
 
 > A chart that overlays what actually happened against what was planned — period by period — so variances are immediate and the direction of drift is clear at a glance.
-
-![Actual v Target framework diagram](assets/actual-v-target.png)
 
 ## What It Is
 

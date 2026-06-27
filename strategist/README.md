@@ -6,8 +6,8 @@ Part of the Kenzie Creative marketplace. A standalone system — self-contained,
 project-shaped, runs on its own.
 
 Strategist turns Claude Code into a thinking partner that walks one problem through a
-single repeatable loop — **Define → Split → Analyse → Insight → Story → Decide → Act** —
-and at each step puts the right framework in front of you, helps you apply it to your
+single repeatable loop, the Strategy Spine — **Define → Frame → Analyse → Insight →
+Synthesise → Story → Move** — and at each step puts the right framework in front of you, helps you apply it to your
 actual situation, and captures the result. You get two documents: a working record of how
 the strategy was built, and a clean reader-facing brief for the people you need to move. A
 critic can pressure-test your reasoning whenever you want it.
@@ -34,13 +34,13 @@ critic catches the assumptions you can't see from inside your own argument.
 Strategist is one loop with seven stages. You work them in order, and you iterate — a
 later stage can send you back to revise an earlier one.
 
-1. **Define** — frame the problem before solving it. *(SCQ, HTDQ, Outcome)*
-2. **Split** — decompose the problem into its drivers. *(Driver Tree, Bucketing, Hypothesis)*
-3. **Analyse** — interrogate the data behind each driver. *(18 chart & reasoning frameworks)*
-4. **Insight** — turn analysis into a visual that carries the finding. *(25 layouts)*
-5. **Story** — assemble the pieces into a narrative that lands. *(Minto, MECE, SCQA, StoryBrand…)*
-6. **Decide** — weigh the options and commit. *(Eisenhower, Decision Tree, Bezos, SPADE…)*
-7. **Act** — turn the decision into an executable plan. *(Execution Plan, GTM Stack…)*
+1. **Define** — establish the objective and the real question the strategy must answer.
+2. **Frame** — construct the lens: choose the dimensions and perspectives to examine the problem through.
+3. **Analyse** — interrogate the evidence behind each dimension.
+4. **Insight** — surface what the analysis means: the non-obvious truths, patterns, and tensions.
+5. **Synthesise** — build the insights into a coherent whole; reconcile tensions, prioritize, and set the through-line.
+6. **Story** — shape the strategy into a narrative that lands and can be carried.
+7. **Move** — translate the strategy into action: ownership, priorities, and the conditions for execution.
 
 Each stage presents its frameworks, recommends the one that fits your situation, applies
 it with you, and writes the result into the working document, `strategy/brief.md` —
@@ -49,14 +49,13 @@ Strategist also produces `strategy/strategy-brief.md`: the clean, reader-facing 
 brief, structured around the strategy with no process residue, for an exec or a partner.
 `strategy/STATE.md` tracks where you are; the loop is resumable across sessions.
 
-Behind the loop is a **library of 70 frameworks**, one markdown entry each with an
-embedded diagram, organised by stage. You can also reach any framework directly with
+Behind the loop is a **library of 70 frameworks**, one markdown entry each, organised by stage. You can also reach any framework directly with
 `/strategist:framework <name>`, inside a project or not.
 
 ## Commands
 
 - `/strategist:init` — scaffold a strategy project (state, brief, config).
-- `/strategist:define` … `/strategist:act` — the seven stages of the loop.
+- `/strategist:define` … `/strategist:move` — the seven stages of the loop.
 - `/strategist:framework <name>` — apply or explain any single framework on its own.
 - `/strategist:pressure-test` — stress-test the current reasoning with the critic.
 - `/strategist:progress` — see where you are in the loop and what's next.
@@ -66,7 +65,7 @@ embedded diagram, organised by stage. You can also reach any framework directly 
 `/strategist:pressure-test` dispatches the `strategist-critic` — a subagent that attacks
 your reasoning, not your evidence. It looks for unstated assumptions, logical gaps, weak
 inferences, alternative framings, failure modes, and contradictions *between* stages (the
-Analyse data pointing one way while Decide commits the other). It also flags two failure
+Analyse data pointing one way while Synthesise commits the other). It also flags two failure
 modes specific to an AI thinking-partner: a **fabricated premise** (a feasibility, timing,
 or cost claim the assistant inferred rather than you establishing it) and an
 **agent-introduced keystone** (a framing the assistant added quietly becoming the spine).

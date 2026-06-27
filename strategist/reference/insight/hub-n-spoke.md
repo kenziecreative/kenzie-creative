@@ -7,14 +7,10 @@ slug: hub-n-spoke
 aka: [Hub and spoke, Radial diagram, Spider diagram]
 source: ""
 related: [pyramid, driver-tree, circular, one-pager, image-column, tri-column]
-image: assets/hub-n-spoke.png
 ---
-
 # Hub n' Spoke
 
 > A radial diagram that places one central idea at the hub and connects it to surrounding components — communicating that the components are all expressions of, or inputs to, the same core concept.
-
-![Hub n' Spoke framework diagram](assets/hub-n-spoke.png)
 
 ## What It Is
 

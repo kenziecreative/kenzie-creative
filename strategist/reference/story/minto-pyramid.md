@@ -7,14 +7,10 @@ slug: minto-pyramid
 aka: [Pyramid Principle, Answer-First Communication]
 source: "Barbara Minto, The Pyramid Principle"
 related: [hv-logic, mece, scqa, scq]
-image: assets/minto-pyramid.png
 ---
-
 # Minto Pyramid
 
 > A three-level structure for organising any argument — answer first, reasons second, evidence third — so the audience always knows where they stand.
-
-![Minto Pyramid framework diagram](assets/minto-pyramid.png)
 
 ## What It Is
 
