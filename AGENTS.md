@@ -49,16 +49,33 @@ Verification is split, not duplicated — each surface is tested by the only too
 ## Release & versioning
 
 - `plugin.json` `version` is the **single source of truth** for update propagation (not the git tag).
-- Per-plugin semver. Loop: edit → bump `version` → **update the `v<X.Y.Z> — ` prefix in BOTH descriptions to match (`plugin.json` and the plugin's entry in `.claude-plugin/marketplace.json`)** → CHANGELOG entry → update the plugin's row in the root README "Plugins at a glance" table (a manual mirror of `plugin.json`) → `node dev/scripts/check-version-prefix.mjs` → `claude plugin validate ./<plugin>` and `claude plugin validate .` → commit → tag → push.
+- Per-plugin semver. The version is mirrored by hand in four places; **`node dev/scripts/check-version-prefix.mjs` guards all four** and fails on drift (or on a plugin missing from an index), so let it be the backstop rather than trusting yourself to catch every spot. Loop: edit → bump `version` → **update the `v<X.Y.Z> — ` prefix in BOTH descriptions (`plugin.json` and the plugin's entry in `.claude-plugin/marketplace.json`)** → update the plugin's version in the root README "Plugins at a glance" table **and** the root `AGENTS.md` "Plugins (current versions)" list → CHANGELOG entry → `node dev/scripts/check-version-prefix.mjs` → `claude plugin validate ./<plugin>` and `claude plugin validate .` → optional authoring review (plugin-dev `skill-reviewer` / `plugin-validator`) → commit → tag → push.
 - **Tags are plugin-scoped:** `sage-v0.2.0`, `researcher-v1.4.1`, `intelligence-briefing-v0.3.0`, `strategist-v0.2.0`, `plugin-eval-v0.1.0`. Legacy plain `vX.Y.Z` tags exist from early intelligence-briefing releases — don't reuse plain tags; they collide across plugins (there is already a plain `v0.2.0` and `v0.3.0`).
 - Installers update via the Cowork Plugins tab, or Claude Code `/plugin marketplace update kenzie-creative` + `/plugin update <plugin>`.
 
-**Why the version prefix is duplicated in the descriptions (UI workaround):** the marketplace card does not currently surface a plugin's `version` field — users see only the description. And there are two descriptions: the **browse cards render the catalog entry's description** (`.claude-plugin/marketplace.json`), while `plugin.json`'s description shows post-install. Both therefore start with `v<X.Y.Z> — ` so the version is visible everywhere. The risk is drift: bumping `version` without updating a prefix means the UI lies. `dev/scripts/check-version-prefix.mjs` asserts all three agree (version field, plugin.json prefix, catalog prefix) and exits non-zero on drift — run it in the release loop above. **This is a temporary workaround** (borrowed from the Hello Alice marketplace); if the marketplace card surfaces version natively, strip the prefixes and remove this step.
+**Why the version prefix is duplicated in the descriptions (UI workaround):** the marketplace card does not currently surface a plugin's `version` field — users see only the description. And there are two descriptions: the **browse cards render the catalog entry's description** (`.claude-plugin/marketplace.json`), while `plugin.json`'s description shows post-install. Both therefore start with `v<X.Y.Z> — ` so the version is visible everywhere. The risk is drift: bumping `version` without updating a prefix means the UI lies. `dev/scripts/check-version-prefix.mjs` asserts every place agrees — the `version` field, the `plugin.json` prefix, the catalog prefix, the README table cell, and the AGENTS list entry (and that no plugin is missing from those indexes) — and exits non-zero on drift; run it in the release loop above. **This is a temporary workaround** (borrowed from the Hello Alice marketplace); if the marketplace card surfaces version natively, strip the prefixes and remove this step.
 
 ## Cowork-safe HTML (for plugins that render HTML)
 
 Learned the hard way: system fonts as the real basis (web fonts are progressive enhancement only); **no JavaScript**; **no content-hiding entrance animations** (a CSS `opacity:0` reveal renders blank if the viewer doesn't run animations); flat design — bordered cards on white, no drop shadows. Plugins stay brand-neutral; a deployment applies its own brand by pointing a `theme` at a local CSS override.
 
+## Adding a new plugin
+
+Run **`/new-plugin`** (the marketplace skill at `.claude/skills/new-plugin/`). It scaffolds a
+fully-conformant tree from the templates in that skill's `references/` — full `plugin.json`
+metadata, the standard `AGENTS.md` skeleton with a `## Maintaining this plugin` section, a
+README, a CHANGELOG opened at `0.1.0`, and a starter command + skill — then **registers the
+plugin in all three root indexes** (`marketplace.json`, the README "Plugins at a glance"
+table, and the "Plugins (current versions)" list above) and validates. A scaffolded plugin
+passes `check-version-prefix.mjs` and `claude plugin validate .` with no manual cleanup.
+
+If scaffolding by hand instead: the three registration points are the easy ones to forget —
+the checker now fails when a plugin is missing from the README table or the AGENTS list, so
+run it. New plugins start at `0.1.0`, tagged `<name>-v0.1.0`.
+
 ## Per-plugin detail
 
-Each plugin's own `AGENTS.md` carries its structure, mechanics, locked decisions, and surface differences: `intelligence-briefing/AGENTS.md`, `researcher/AGENTS.md`, `sage/AGENTS.md`.
+Each plugin's own `AGENTS.md` carries its structure, mechanics, locked decisions, surface
+differences, and a `## Maintaining this plugin` section (the release ritual + that plugin's
+edit cautions): `intelligence-briefing/AGENTS.md`, `researcher/AGENTS.md`, `sage/AGENTS.md`,
+`strategist/AGENTS.md`, `plugin-eval/AGENTS.md`.

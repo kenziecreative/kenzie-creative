@@ -1,14 +1,22 @@
 #!/usr/bin/env node
 // check-version-prefix.mjs
 //
-// Lints that every plugin's version is consistent across the three places it
-// appears, because the marketplace card does not currently surface the
-// `version` field — users see only the description. Until that's fixed, each
-// plugin's version is carried as a `v<X.Y.Z> — ` prefix in BOTH descriptions
-// (plugin.json AND the catalog entry in .claude-plugin/marketplace.json), and
-// this script asserts all three agree. The browse cards render the CATALOG
-// description, not plugin.json's, so a prefix only in plugin.json never shows
-// where people actually look.
+// Lints that every plugin's version is consistent across every place it
+// appears. The marketplace card does not currently surface the `version`
+// field — users see only the description — so each plugin's version is carried
+// as a `v<X.Y.Z> — ` prefix in BOTH descriptions (plugin.json AND the catalog
+// entry in .claude-plugin/marketplace.json). The browse cards render the
+// CATALOG description, not plugin.json's, so a prefix only in plugin.json never
+// shows where people actually look.
+//
+// Beyond those two descriptions, the version is also mirrored by hand in two
+// human-facing indexes at the repo root, and this script now guards those too:
+//   - README.md "Plugins at a glance" table (the Version column)
+//   - AGENTS.md "Plugins (current versions)" list (the (X.Y.Z) after each name)
+// A plugin missing from either index is also a failure — that catches the
+// "forgot to register the new plugin" case the /new-plugin scaffold protects
+// against. The single source of truth is plugin.json `version`; everything else
+// must agree with it.
 //
 // See AGENTS.md → "Release & versioning" for the release loop and why this
 // exists. This is a temporary UI workaround — when the marketplace card
@@ -137,10 +145,71 @@ for (const entry of catalog.plugins ?? []) {
   console.log(`OK    catalog:${entry.name}  v${version}`);
 }
 
+// --- root index checks: README table + AGENTS.md list ---
+//
+// Both mirror each plugin's version in a human-edited index. We assert the
+// listed version matches plugin.json, and that no known plugin is absent.
+
+function checkRootMirror({ label, file, rowRegex, nameGroup, versionGroup, missingHint }) {
+  const path = resolve(repoRoot, file);
+  let text;
+  try {
+    text = readFileSync(path, "utf8");
+  } catch (e) {
+    console.error(`FAIL  ${label}  could not read ${file}: ${e.message}`);
+    failures += 1;
+    return;
+  }
+  const found = new Set();
+  for (const line of text.split("\n")) {
+    const m = line.match(rowRegex);
+    if (!m) continue;
+    const name = m[nameGroup];
+    if (!versionByName.has(name)) continue; // not a known plugin row
+    const listed = m[versionGroup];
+    const expected = versionByName.get(name);
+    found.add(name);
+    if (listed !== expected) {
+      console.error(
+        `FAIL  ${label}:${name}  ${file} lists v${listed} ≠ plugin version ${expected}`
+      );
+      failures += 1;
+    } else {
+      console.log(`OK    ${label}:${name}  v${listed}`);
+    }
+  }
+  for (const name of versionByName.keys()) {
+    if (!found.has(name)) {
+      console.error(`FAIL  ${label}:${name}  not listed in ${missingHint}`);
+      failures += 1;
+    }
+  }
+}
+
+// README row:  | Display Name | X.Y.Z | … | [guide](./<dir>/README.md) |
+checkRootMirror({
+  label: "readme",
+  file: "README.md",
+  rowRegex: /^\|[^|]*\|\s*(\d+\.\d+\.\d+)\s*\|.*\]\(\.\/([\w-]+)\/README\.md\)/,
+  nameGroup: 2,
+  versionGroup: 1,
+  missingHint: "README.md 'Plugins at a glance' table",
+});
+
+// AGENTS row:  - **<dir>** (X.Y.Z) — …
+checkRootMirror({
+  label: "agents",
+  file: "AGENTS.md",
+  rowRegex: /^- \*\*([\w-]+)\*\* \((\d+\.\d+\.\d+)\)/,
+  nameGroup: 1,
+  versionGroup: 2,
+  missingHint: "AGENTS.md 'Plugins (current versions)' list",
+});
+
 if (failures > 0) {
   console.error(`\n${failures} check(s) failed.`);
   process.exit(1);
 }
 console.log(
-  `\nAll ${plugins.length} plugin(s) and ${catalog.plugins?.length ?? 0} catalog entr(ies) carry a matching v-prefix.`
+  `\nAll ${plugins.length} plugin(s) agree across plugin.json, the catalog, the README table, and the AGENTS list.`
 );

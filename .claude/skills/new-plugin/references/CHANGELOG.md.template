@@ -1,0 +1,10 @@
+# Changelog — {{NAME}}
+
+All notable changes to the {{TITLE}} plugin. Per-plugin semver; tags are plugin-scoped
+(`{{NAME}}-vX.Y.Z`).
+
+## 0.1.0 — {{DATE}}
+
+Initial release.
+
+- {{DESCRIPTION}}

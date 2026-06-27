@@ -1,0 +1,12 @@
+# {{TITLE}} — deployment config
+
+<!-- This file is installed into the USER's project by the plugin's setup command. It is
+     the per-deployment configuration the plugin reads at runtime — NOT agent guidance for
+     working on the plugin. Fill the [BRACKETED] fields per deployment. -->
+
+## Configuration
+
+- timezone: [e.g. America/Chicago]
+<!-- List only the one or two inputs that actually change this plugin's behavior for a
+     deployment (relevance context, source folder, cadence, output format/theme, etc.).
+     Keep it short — the fewer required fields, the better the first-run experience. -->

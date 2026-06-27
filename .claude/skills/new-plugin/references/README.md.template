@@ -1,0 +1,25 @@
+# {{TITLE}}
+
+{{DESCRIPTION}}
+
+Part of the [Kenzie Creative marketplace](https://github.com/kenziecreative/kenzie-creative).
+
+## Install
+
+```
+/plugin marketplace add kenziecreative/kenzie-creative
+/plugin install {{NAME}}@kenzie-creative
+```
+
+## Setup
+
+<!-- How a user configures a deployment: which command runs setup, what the one or two
+     inputs that matter are. The plugin installs templates/CLAUDE.md into the project. -->
+
+## Use
+
+<!-- The main commands and what they do. Keep it to what a user needs, not internals. -->
+
+## What it does
+
+<!-- A short, honest description of behavior and its limits. -->

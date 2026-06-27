@@ -1,0 +1,11 @@
+---
+description: {{TITLE}} — run the {{NAME}} skill
+allowed-tools: Read, Write, Edit, Glob, Grep
+---
+
+Run the `{{NAME}}` skill and follow its steps.
+
+<!-- Thin wrapper: it delegates to the skill of the same name. If this command takes an
+     argument, add a frontmatter line like:
+       argument-hint: "<what the argument is, e.g. a topic or name>"
+     and reference $ARGUMENTS / $1 in the body. Argument-less commands omit argument-hint. -->

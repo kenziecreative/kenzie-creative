@@ -1,0 +1,44 @@
+# AGENTS.md — {{NAME}}
+
+Maintainer/agent guidance for working **on** the {{TITLE}} plugin. {{SHAPE_CAP}};
+self-contained. (Current version lives in `plugin.json` and `CHANGELOG.md`.)
+
+> A plugin's `templates/CLAUDE.md` is a different thing: it's the per-deployment config
+> the plugin ships to *users*, not agent guidance. Don't conflate the two.
+
+## What it is
+
+{{DESCRIPTION}}
+
+<!-- One paragraph: what the plugin does, for whom, and what "correct" output looks like. -->
+
+## Structure
+
+- `commands/` — thin command wrappers (one `.md` per slash command).
+- `skills/` — the logic (one `SKILL.md` per skill).
+- `templates/CLAUDE.md` — the per-deployment config installed into the user's project.
+<!-- standalone only: list agents/, hooks/, reference/ if present. -->
+
+## Key mechanics
+
+<!-- The few things a maintainer must understand: the core flow, any state files, the
+     tooling discipline (which tools it uses and why), how the pieces connect. -->
+
+## Surface differences (Claude Code vs Cowork)
+
+<!-- Anything that behaves differently across surfaces: hooks, settings pre-allow,
+     subagents, file ops. If nothing differs, say so. -->
+
+## Maintaining this plugin
+
+- **Release:** follow **Release & versioning** in the root `AGENTS.md`. Bump `version` in
+  `plugin.json`, update the `v<X.Y.Z> — ` prefix in both descriptions (`plugin.json` + the
+  catalog entry in `.claude-plugin/marketplace.json`), the README "Plugins at a glance" row,
+  and the root `AGENTS.md` plugin list; add a `CHANGELOG.md` entry; then
+  `node dev/scripts/check-version-prefix.mjs` and `claude plugin validate ./{{NAME}}` +
+  `claude plugin validate .`; commit, tag **`{{NAME}}-v<X.Y.Z>`**, push.
+- **Authoring check (optional):** run plugin-dev's `skill-reviewer` over changed skills and
+  `plugin-validator` over the plugin to catch frontmatter/description regressions.
+- **Editing cautions specific to this plugin:**
+  <!-- 2–4 bullets: the gotchas a future editor must respect. Fill these in as the plugin
+       develops — locked decisions, invariants, what NOT to change without a decision. -->

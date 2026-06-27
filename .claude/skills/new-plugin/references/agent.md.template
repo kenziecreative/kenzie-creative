@@ -1,0 +1,30 @@
+---
+name: {{NAME}}-agent
+description: |
+  Use this agent when <conditions for dispatching it>. Typically invoked via <how — a
+  command or a parent skill>.
+
+  <example>
+  Context: <the situation that calls for this agent>.
+  user: "<what the user says>"
+  assistant: "I'll use the {{NAME}}-agent to <do what>."
+  <commentary><why this agent is the right call here>.</commentary>
+  </example>
+model: inherit
+color: blue
+tools:
+  - Read
+  - Grep
+  - Glob
+---
+
+# {{TITLE}} Agent
+
+You are <role and domain>. <System prompt in second person: core responsibilities, the
+analysis process step by step, quality standards, output format, and edge cases.>
+
+<!-- Frontmatter notes:
+     - `color` is required by convention: pick blue|cyan|green|yellow|magenta|red.
+     - `description` uses a YAML literal block (|) so the <example> blocks keep their
+       formatting. Give 1-2 worked <example> blocks with a <commentary> line each.
+     - `model: inherit` keeps the parent model; set sonnet|opus|haiku to pin one. -->

@@ -1,0 +1,13 @@
+{
+  "name": "{{NAME}}",
+  "version": "0.1.0",
+  "description": "v0.1.0 — {{DESCRIPTION}}",
+  "author": {
+    "name": "Kelsey Ruger",
+    "url": "https://github.com/kenziecreative"
+  },
+  "homepage": "https://github.com/kenziecreative/kenzie-creative/tree/main/{{NAME}}",
+  "repository": "https://github.com/kenziecreative/kenzie-creative",
+  "license": "MIT",
+  "keywords": [{{KEYWORDS}}]
+}
