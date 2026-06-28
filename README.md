@@ -12,6 +12,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 
 | Plugin | Version | What you get | Guide |
 |---|---|---|---|
+| Goal Setting | 0.1.0 | Set business goals that survive contact with reality — and actually operate against them, not abandon them by February | [guide](./goal-setting/README.md) |
 | Intelligence Briefing | 0.3.0 | Know what actually moved in your world today, without wading through the whole news cycle | [guide](./intelligence-briefing/README.md) |
 | Researcher | 1.4.1 | Research you can stand behind, with every claim traced back to a real source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Always know where a decision landed and who owes what, across a whole week of meetings | [guide](./sage/README.md) |
@@ -21,6 +22,12 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 Each version mirrors that plugin's `plugin.json`, which is the source of truth for updates.
 
 ## The tools
+
+### Goal Setting
+
+**Set business goals that survive contact with reality, then actually operate against them — not a vision board you abandon by February.** It runs one opinionated method in two arcs: a six-stage Setup Arc (orient → horizons → anchors → goals → systems → pre-mortem) that builds goals from *what game am I playing* all the way to goals stress-tested before launch, and a five-cadence Ongoing Arc (a 60-second daily writing ritual, a weekly pulse, and monthly/quarterly/annual reviews) that keeps them alive. It's a rigorous chief-of-staff, not a cheerleader: it enforces a hard cap of three active goals, and a critic stress-tests your goal formulations so you can't quietly lie to yourself.
+
+→ **[Read the Goal Setting guide](./goal-setting/README.md)** for the two arcs, the three-goal rule, and the critic.
 
 ### Intelligence Briefing
 
@@ -65,6 +72,7 @@ Each version mirrors that plugin's `plugin.json`, which is the source of truth f
 
 ```
 /plugin marketplace add kenziecreative/kenzie-creative
+/plugin install goal-setting@kenzie-creative
 /plugin install intelligence-briefing@kenzie-creative
 /plugin install researcher@kenzie-creative
 /plugin install sage@kenzie-creative
@@ -72,7 +80,7 @@ Each version mirrors that plugin's `plugin.json`, which is the source of truth f
 /plugin install thinkers@kenzie-creative
 ```
 
-Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`; for research, run `/research:init`; for the meeting round-up, run `/sage:setup`; for a strategy, run `/strategist:init`. Thinkers needs no setup — just describe a situation or run `/thinkers:identify`.
+Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`; for research, run `/research:init`; for the meeting round-up, run `/sage:setup`; for a strategy, run `/strategist:init`; for goals, run `/goal-setting:init`. Thinkers needs no setup — just describe a situation or run `/thinkers:identify`.
 
 ## Updates
 
@@ -84,6 +92,7 @@ New versions arrive only when one is published — nothing changes under you.
 
 ```
 /plugin marketplace update kenzie-creative
+/plugin update goal-setting
 /plugin update intelligence-briefing
 /plugin update researcher
 /plugin update sage

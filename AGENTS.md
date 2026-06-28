@@ -12,6 +12,7 @@ Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then `/plugin
 
 ## Plugins (current versions)
 
+- **goal-setting** (0.1.0) — a business goal-setting method in two arcs: a six-stage Setup Arc + a five-cadence Ongoing Arc over a Markdown `goals/` state dir, with a three-goal-rule hard cap and a goal-formulation critic. *Standalone.*
 - **intelligence-briefing** (0.3.0) — a daily/weekly environmental brief that triages the outside world into a self-contained HTML brief. *Triage-stream.*
 - **researcher** (1.4.1) — a structured, audited research system. *Standalone.*
 - **sage** (0.2.0) — meeting-transcript triage into a single living weekly round-up. *Standalone.*
@@ -94,7 +95,7 @@ run it. New plugins start at `0.1.0`, tagged `<name>-v0.1.0`.
 
 Each plugin's own `AGENTS.md` carries its structure, mechanics, locked decisions, surface
 differences, and a `## Maintaining this plugin` section (the release ritual + that plugin's
-edit cautions): `intelligence-briefing/AGENTS.md`, `researcher/AGENTS.md`, `sage/AGENTS.md`,
-`strategist/AGENTS.md`.
+edit cautions): `goal-setting/AGENTS.md`, `intelligence-briefing/AGENTS.md`, `researcher/AGENTS.md`,
+`sage/AGENTS.md`, `strategist/AGENTS.md`.
 
 ## Imported Claude Cowork project instructions
