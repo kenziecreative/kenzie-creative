@@ -1,0 +1,101 @@
+# Strategies
+
+97 entries.
+
+- [Anchoring](anchoring.md) — Setting or challenging an opening reference point that shapes how later offers, concessions, and judgments feel.
+- [Asymmetric Warfare](asymmetric-warfare.md) — Competing across unequal capabilities by avoiding the stronger side's preferred contest.
+- [Authority](authority.md) — The influence created when people treat a person, role, credential, or institution as a legitimate guide.
+- [Backward Induction](backward-induction.md) — Reasoning backward in time, from the end of a game to the beginning, to determine the optimal sequence of actions.
+- [BATNA (Best Alternative to a Negotiated Agreement)](batna-best-alternative-to-a-negotiated-agreement.md) — Your best course of action if you can’t reach a deal with the other party.
+- [Beginner's Mind](beginner-s-mind.md) — Holding expertise lightly enough that new information can still surprise you.
+- [Boundary Setting](boundary-setting.md) — Naming and holding a limit on your own participation so another person's behavior does not control your choices.
+- [Brinkmanship](brinkmanship.md) — Creating leverage by moving a conflict close to a costly threshold and making the other side fear escalation.
+- [Coalition Building](coalition-building.md) — Joining actors with partially overlapping interests so they can achieve what none could achieve alone.
+- [Commitment and Consistency](commitment-and-consistency.md) — The pressure to behave in ways that match what we have already said, chosen, or become identified with.
+- [Contextualizing](contextualizing.md) — Shaping the surrounding conditions that determine how an interaction is interpreted.
+- [Crazy Person Strategy](crazy-person-strategy.md) — Performing irrationality or unpredictability to make others afraid of challenging you.
+- [Deadline Master Plan](deadline-master-plan.md) — Using real timing constraints to clarify leverage, urgency, and walk-away choices in a negotiation.
+- [Dominant Strategy](dominant-strategy.md) — A strategy that is the best choice for a player, no matter what the other players do.
+- [Emotional Regulation](emotional-regulation.md) — The ability to feel emotion without letting it choose your next move for you.
+- [Empathy Mapping](empathy-mapping.md) — A collaborative tool used to gain a deeper insight into customers and other stakeholders.
+- [First-Mover Advantage](first-mover-advantage.md) — The advantage that can come from entering, defining, or occupying a space before others do.
+- [Flexible Approaches](flexible-approaches.md) — Adapting means while preserving the goal as new evidence changes the terrain.
+- [Framing](framing.md) — Defining how an issue should be understood so people notice some options, stakes, and tradeoffs over others.
+- [Groupthink](groupthink.md) — A group decision failure where harmony, loyalty, or consensus pressure suppresses dissent and critical thought.
+- [Hardball Tactics](hardball-tactics.md) — Aggressive pressure moves used to force concessions, best understood defensively and used only with strong ethical constraints.
+- [Herd Behavior](herd-behavior.md) — People copying the actions of a larger group, often because the group seems to know something.
+- [Information Asymmetry](information-asymmetry.md) — A power difference created when one party has relevant information the other party lacks.
+- [Intent questioning](intent-questioning.md) — The discipline of asking "why is this person framing it this way?" before reacting to what they're saying — surfacing the goal behind the c…
+- [Leverage Longevity](leverage-longevity.md) — Using patience, durability, and long time horizons as strategic advantages.
+- [Liking](liking.md) — The influence created when warmth, similarity, familiarity, or admiration makes a person easier to trust.
+- [Logrolling](logrolling.md) — Trading across issues so each side gives on lower-priority items to gain what matters most.
+- [Minimax](minimax.md) — Choosing the move that minimizes your maximum possible loss.
+- [Mixed Strategies](mixed-strategies.md) — Choosing randomly from several possible actions to keep your opponent from predicting your moves.
+- [Moral Hazard](moral-hazard.md) — A risk distortion where one party can take upside while someone else bears much of the downside.
+- [Nash Equilibrium](nash-equilibrium.md) — A stable state in a game where no player can do better by unilaterally changing their strategy.
+- [Non-Zero-Sum Games](non-zero-sum-games.md) — A situation where the interacting parties’ aggregate gains and losses can be more or less than zero.
+- [Opportunity Cost](opportunity-cost.md) — The value of the next-best alternative that you give up when you make a choice.
+- [Overconfidence Bias](overconfidence-bias.md) — A decision risk where confidence outruns evidence, competence, or control.
+- [Pareto Efficiency](pareto-efficiency.md) — A state where no one can be made better off without making someone else worse off.
+- [Parkinson's Law](parkinson-s-law.md) — Work tends to expand to fill the time, attention, and complexity allowed for it.
+- [Reciprocity](reciprocity.md) — The social pull to respond in kind to help, concessions, respect, harm, or trust.
+- [Redundancy](redundancy.md) — Extra capacity or backup paths that keep a system functioning when something fails.
+- [Reputation Capital](reputation-capital.md) — Accumulated credibility that changes how others interpret your actions before the full evidence is available.
+- [Resource Management](resource-management.md) — The process of planning, scheduling, and allocating resources to achieve a goal.
+- [Scarcity](scarcity.md) — The increase in perceived value or urgency when something appears limited, exclusive, or disappearing.
+- [Scenario Analysis](scenario-analysis.md) — The process of analyzing possible future events by considering alternative possible outcomes.
+- [Screening](screening.md) — Designing choices, questions, or tests that help reveal information you cannot directly observe.
+- [Sequential Games](sequential-games.md) — Games where players take turns making their moves, and have some information about the other players’ previous moves.
+- [Shadow of the Future](shadow-of-the-future.md) — The expectation of future interaction that makes present behavior more cooperative.
+- [Signaling](signaling.md) — A credible action that reveals private qualities, intentions, constraints, or commitments.
+- [Signals and Noise](signals-and-noise.md) — Separating information that changes the decision from noise that merely feels salient.
+- [Social Proof](social-proof.md) — Treating other people's behavior as evidence about what is correct, safe, desirable, or normal.
+- [Splitting the Difference](splitting-the-difference.md) — A midpoint compromise that can resolve small gaps but can also reward arbitrary anchors.
+- [Stackelberg Leadership](stackelberg-leadership.md) — A model of strategic leadership where one player (the leader) commits to a strategy first, and the other players (the followers) must then…
+- [Supremacy Dynamics](supremacy-dynamics.md) — Competing by matching your strengths against another party's vulnerabilities while staying alert to ethics and escalation.
+- [The 48 Laws of Power](the-48-laws-of-power.md) — A source lens for recognizing status games, court politics, and manipulative power tactics.
+- [The Abilene Paradox](the-abilene-paradox.md) — A group choosing something no individual actually wants because everyone misreads everyone else's preferences.
+- [The Art of Deception](the-art-of-deception.md) — The strategic shaping of false belief so another party makes a decision on bad information.
+- [The Art of Seduction](the-art-of-seduction.md) — A source lens for how desire, attention, fantasy, and identity can shape influence.
+- [The Art of War](the-art-of-war.md) — A source lens for indirect strategy, terrain, timing, information, and avoiding unnecessary conflict.
+- [The Availability Heuristic](the-availability-heuristic.md) — A strategy-facing safeguard against mistaking vivid or recent examples for representative evidence.
+- [The Black Swan Theory](the-black-swan-theory.md) — A rare, high-impact event that sits outside the model and is often explained too neatly after it happens.
+- [The Categorical Imperative](the-categorical-imperative.md) — An ethical test that asks whether the rule behind your action could be followed by everyone without contradiction or disrespect.
+- [The Compounding Effect](the-compounding-effect.md) — Small repeated actions accumulating into outcomes that look disproportionate later.
+- [The Confirmation Bias](the-confirmation-bias.md) — A strategy-facing safeguard against building decisions only from evidence that already agrees with you.
+- [The Decoy Effect](the-decoy-effect.md) — A choice-design effect where an inferior third option makes a target option look more attractive.
+- [The Dollar Auction](the-dollar-auction.md) — A game that illustrates how people can get trapped into an escalating commitment to a losing course of action.
+- [The Ellsberg Paradox](the-ellsberg-paradox.md) — A decision paradox showing that people often prefer known risks over ambiguous probabilities.
+- [The Fear of the Unknown](the-fear-of-the-unknown.md) — The anxiety created when uncertainty makes outcomes, risks, or identity feel hard to predict.
+- [The Fifth Column](the-fifth-column.md) — Insider-aligned sabotage or influence that advances an outside interest from within a group.
+- [The Fog of War](the-fog-of-war.md) — The confusion of acting under incomplete, changing, and unreliable information.
+- [The Golden Rule](the-golden-rule.md) — Treat others with the consideration you would reasonably want if you were in their position.
+- [The Hindsight Bias](the-hindsight-bias.md) — A strategy-facing safeguard against rewriting uncertainty after the outcome is known.
+- [The Honey Trap](the-honey-trap.md) — Using attraction, intimacy, or desire to create vulnerability, extract information, or gain control.
+- [The Impostor Syndrome](the-impostor-syndrome.md) — A pattern of discounting competence and fearing exposure despite meaningful evidence of ability.
+- [The Infinite Game](the-infinite-game.md) — A game that is played not to win, but to continue playing.
+- [The Laws of Human Nature](the-laws-of-human-nature.md) — A source lens for reading recurring motives, defenses, and social patterns in yourself and others.
+- [The Legacy Mindset](the-legacy-mindset.md) — Making decisions with attention to the people, systems, and consequences that will outlive your immediate role.
+- [The Long-Term Vision](the-long-term-vision.md) — A clear picture of a desired future that helps people choose, persist, and coordinate over time.
+- [The Marathon Mindset](the-marathon-mindset.md) — Pacing effort so important work can continue long enough to matter.
+- [The Monty Hall Problem](the-monty-hall-problem.md) — A probability puzzle showing why new information must be interpreted through the process that produced it.
+- [The OODA Loop](the-ooda-loop.md) — A four-stage decision-making cycle: Observe, Orient, Decide, and Act.
+- [The Peter Principle](the-peter-principle.md) — A promotion failure where success in one role is mistaken for readiness for a different role.
+- [The Power of Hope](the-power-of-hope.md) — The motivation created by a believable path from present difficulty to a better future.
+- [The Power of Narrative](the-power-of-narrative.md) — The way stories organize facts, emotion, identity, causality, and action.
+- [The Prince](the-prince.md) — A lens on power politics that asks how rulers gain, keep, and justify control under insecurity.
+- [The Prisoner’s Dilemma](the-prisoner-s-dilemma.md) — A situation where two individuals acting in their own self-interest do not produce the optimal outcome.
+- [The Role of Ego](the-role-of-ego.md) — The way self-image, status, and the need to be right can distort judgment.
+- [The Role of Intuition](the-role-of-intuition.md) — Fast pattern recognition that should be treated as a signal to inspect, not a fact to obey.
+- [The Social Contract](the-social-contract.md) — The shared expectation that people accept limits and obligations in exchange for protection, legitimacy, and common benefit.
+- [The Stag Hunt](the-stag-hunt.md) — A game that models the conflict between the safety of individual action and the rewards of social cooperation.
+- [The Sunk Cost Fallacy](the-sunk-cost-fallacy.md) — A strategy-facing safeguard against letting unrecoverable past investment control the next decision.
+- [The Tragedy of the Commons](the-tragedy-of-the-commons.md) — A situation where individual users, acting independently according to their own self-interest, behave contrary to the common good of all us…
+- [The Trojan Horse](the-trojan-horse.md) — A hidden threat packaged as a gift, opportunity, tool, favor, or harmless request.
+- [The Veil of Ignorance](the-veil-of-ignorance.md) — A fairness test: design the rule as if you did not know what position you would occupy under it.
+- [The War of Attrition](the-war-of-attrition.md) — A game where two players engage in a costly conflict, and the winner is the one who can hold out the longest.
+- [Tit-for-Tat](tit-for-tat.md) — Start with cooperation, respond proportionally to defection, and return to cooperation when the other side does.
+- [Utilitarianism](utilitarianism.md) — An ethical lens that judges choices by their consequences for overall well-being and suffering.
+- [Win-Win Mindset](win-win-mindset.md) — A negotiation stance that looks for ways to increase joint value without abandoning boundaries.
+- [Zero-Sum Games](zero-sum-games.md) — A situation where one person’s gain is exactly equal to another person’s loss.
+- [ZOPA (Zone of Possible Agreement)](zopa-zone-of-possible-agreement.md) — The range of terms where both sides are better off agreeing than walking away.

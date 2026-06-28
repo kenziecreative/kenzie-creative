@@ -1,0 +1,20 @@
+{
+  "name": "thinkers",
+  "version": "0.1.0",
+  "description": "v0.1.0 — A reasoning counselor backed by a 243-pattern reference corpus — cognitive biases, fallacies, persuasion and manipulation tactics, bad-faith moves, and strategies. Five skills: identify what's happening (including self-recognition of your own behavior), explain a named pattern, practice spotting them, work through a decision, and stress-test your thinking. Standalone; runs on its own. Part of the Kenzie Creative marketplace.",
+  "author": {
+    "name": "Kelsey Ruger",
+    "url": "https://github.com/kenziecreative"
+  },
+  "homepage": "https://github.com/kenziecreative/kenzie-creative/tree/main/thinkers",
+  "repository": "https://github.com/kenziecreative/kenzie-creative",
+  "license": "MIT",
+  "keywords": [
+    "reasoning",
+    "cognitive-biases",
+    "critical-thinking",
+    "decision-making",
+    "manipulation-tactics",
+    "counsel"
+  ]
+}

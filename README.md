@@ -16,6 +16,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 | Researcher | 1.4.1 | Structured, audited research system — every claim traces back to a source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Weekly meeting round-up built from transcripts — action items, cross-meeting threads, forward watch list | [guide](./sage/README.md) |
 | Strategist | 0.3.0 | Strategic-thinking loop — Define → Frame → Analyse → Insight → Synthesise → Story → Move — over a 70-framework library, with a reasoning critic; outputs a working record + a clean reader brief | [guide](./strategist/README.md) |
+| Thinkers | 0.1.0 | Reasoning counselor over a 243-pattern corpus — identify, explain, practice, decide, spar; names what's happening without over-applying high-stakes labels | [guide](./thinkers/README.md) |
 
 Each version mirrors that plugin's `plugin.json`, which is the source of truth for updates.
 

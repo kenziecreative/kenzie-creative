@@ -16,6 +16,7 @@ Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then `/plugin
 - **researcher** (1.4.1) — a structured, audited research system. *Standalone.*
 - **sage** (0.2.0) — meeting-transcript triage into a single living weekly round-up. *Standalone.*
 - **strategist** (0.3.0) — a seven-stage strategic-thinking loop over a 70-framework library, with a reasoning critic; outputs a working record plus a clean reader-facing brief. *Standalone.*
+- **thinkers** (0.1.0) — a reasoning counselor over a 243-pattern corpus (biases, fallacies, persuasion/manipulation tactics, bad-faith moves, strategies); five skills — identify, explain, practice, decide, spar — that name what's happening without over-applying high-stakes labels. *Standalone.*
 
 The marketplace also carries an internal **`eval/`** runtime-QA harness (not a published plugin — see "Evaluating plugins").
 

@@ -1,0 +1,21 @@
+{
+  "target": "thinkers",
+  "rubric_version": "1.0.0",
+  "gates": [
+    {
+      "name": "pattern_in_corpus",
+      "type": "framework_in_library",
+      "index": "reference/INDEX.md",
+      "feeds": "Pattern Fidelity"
+    }
+  ],
+  "content_lint": [
+    {
+      "name": "voice_tell",
+      "file": "transcript.md",
+      "forbid": "the toolkit draws|the load-bearing parts are",
+      "feeds": "Voice/Posture",
+      "optional_file": true
+    }
+  ]
+}

@@ -27,6 +27,11 @@
       "name": "strategist",
       "source": "./strategist",
       "description": "v0.3.0 \u2014 A structured strategic-thinking system: take a problem through one repeatable loop \u2014 Define, Frame, Analyse, Insight, Synthesise, Story, Move \u2014 pulling the right framework from a 70-framework library at each stage, capturing the work in a working record plus a clean reader-facing brief, and pressure-testing the reasoning before you commit. Standalone."
+    },
+    {
+      "name": "thinkers",
+      "source": "./thinkers",
+      "description": "v0.1.0 \u2014 A reasoning counselor backed by a 243-pattern reference corpus \u2014 cognitive biases, fallacies, persuasion and manipulation tactics, bad-faith moves, and strategies. Five skills: identify what's happening (including self-recognition of your own behavior), explain a named pattern, practice spotting them, work through a decision, and stress-test your thinking. Standalone."
     }
   ]
 }

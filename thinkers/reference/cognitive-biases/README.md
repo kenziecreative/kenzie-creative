@@ -1,0 +1,80 @@
+# Cognitive Biases
+
+76 entries.
+
+- [Actor-Observer Bias](actor-observer-bias.md) — Explaining your own behavior through circumstances while explaining other people's similar behavior through character.
+- [Ambiguity Effect](ambiguity-effect.md) — People tend to avoid options where they feel they are unable to understand the risks because of missing information.
+- [Anchoring Effect](anchoring-effect.md) — The tendency to rely too heavily on the first piece of information offered (the “anchor”) when making decisions.
+- [Anticipation of Rewards](anticipation-of-rewards.md) — People are more excited by the prospect of a reward than the reward itself.
+- [Apophenia](apophenia.md) — The tendency to perceive meaningful connections between unrelated things.
+- [Attention](attention.md) — The cognitive process of selectively concentrating on one aspect of the environment while ignoring other things.
+- [Availability Bias](availability-bias.md) — The tendency to overestimate the likelihood of events that are more easily recalled in memory, often because they are recent or emotionally…
+- [Brand Loyalty](brand-loyalty.md) — Sticking with a familiar brand, vendor, product, thinker, or identity marker even when better alternatives may exist.
+- [Catharsis](catharsis.md) — The incorrect belief that venting your anger will make it go away.
+- [Choice Bracketing](choice-bracketing.md) — People tend to draw boundaries around the amount of information they consider when making a decision.
+- [Cognitive Dissonance](cognitive-dissonance.md) — The mental discomfort experienced by a person who holds two or more contradictory beliefs, ideas, or values, or is confronted by new inform…
+- [Confabulation](confabulation.md) — The creation of false memories, perceptions, or beliefs about the self or the world, without the conscious intention to deceive.
+- [Confirmation Bias](confirmation-bias.md) — The tendency to notice, seek, interpret, and remember information that supports what one already believes or wants to believe.
+- [Consistency Bias](consistency-bias.md) — We incorrectly remember our past attitudes and behavior as resembling our present attitudes and behavior.
+- [Cult Indoctrination](cult-indoctrination.md) — A coercive social process that narrows identity, information, relationships, and autonomy around a group, leader, ideology, or totalizing m…
+- [Decision Regret](decision-regret.md) — The feeling of regret after making a decision, often leading to rationalization or a change in future choices.
+- [Deindividuation](deindividuation.md) — Losing self-awareness, restraint, or personal accountability when absorbed into a group, crowd, role, or anonymous setting.
+- [Diagnosis Bias](diagnosis-bias.md) — The tendency to lock onto an early label for a person or situation and then interpret later evidence through that label.
+- [Dunbar's Number](dunbar-s-number.md) — The idea that people have limited cognitive and social capacity for maintaining stable relationships, often summarized around a rough group…
+- [Ego Depletion](ego-depletion.md) — The idea that self-control or willpower draws upon a limited pool of mental resources that can be used up.
+- [Embodied Cognition](embodied-cognition.md) — The view that thinking is shaped by the body, physical state, movement, sensation, and environment rather than happening only as abstract r…
+- [Enclothed Cognition](enclothed-cognition.md) — The possibility that clothing can influence the wearer's mindset and behavior through physical experience and symbolic meaning.
+- [Endowment Effect](endowment-effect.md) — People value things more highly once they own them.
+- [Expectation](expectation.md) — The powerful influence that our expectations have on our perception and our experience.
+- [Extinction Burst](extinction-burst.md) — The temporary increase in a behavior that is being targeted for extinction.
+- [False Equivalence](false-equivalence.md) — Treating two things as meaningfully equal because they share a surface similarity, while ignoring differences in evidence, scale, context,…
+- [Fundamental Attribution Error](fundamental-attribution-error.md) — Over-explaining another person's behavior through character while under-explaining it through situation, constraint, role, or incentive.
+- [Halo Effect](halo-effect.md) — Letting one positive impression spill over into judgments about unrelated traits, quality, or credibility.
+- [Hindsight Bias](hindsight-bias.md) — The tendency to see past events as being more predictable than they actually were.
+- [Hyperbolic Discounting](hyperbolic-discounting.md) — People tend to prefer smaller, immediate rewards over larger, later rewards.
+- [Impact Bias](impact-bias.md) — People tend to overestimate the emotional impact of future events, both in intensity and duration.
+- [In-Group Bias](in-group-bias.md) — The tendency to favor members of one’s own group over out-group members.
+- [Information Avoidance](information-avoidance.md) — Avoiding information because knowing it might create anxiety, force a decision, threaten identity, or require action.
+- [Intertemporal Choice](intertemporal-choice.md) — People lack empathy for their future-selves and make decisions based on current feelings.
+- [Introspection Illusion](introspection-illusion.md) — The tendency for people to overestimate their ability to understand their own mental states, and to believe that their self-assessments are…
+- [Just-World Bias](just-world-bias.md) — The tendency to believe that the world is a fair place where people get what they deserve, and deserve what they get.
+- [Learned Helplessness](learned-helplessness.md) — A state of passivity and inaction that results from repeated exposure to uncontrollable negative events.
+- [Loss Aversion](loss-aversion.md) — People prefer avoiding losses to acquiring equivalent gains.
+- [Mental Accounting](mental-accounting.md) — People tend to think about the world in terms of specific accounts, where value isn't interchangeable.
+- [Narrative Bias](narrative-bias.md) — The tendency to interpret information as part of a larger story or pattern, even when the events are unconnected.
+- [Negativity Bias](negativity-bias.md) — The tendency to give more weight to negative experiences or information than to positive ones, and to recall negative information more read…
+- [Normalcy Bias](normalcy-bias.md) — The refusal to plan for, or react to, a disaster or a paradigm shift that has never happened before.
+- [Optimism Bias](optimism-bias.md) — The tendency to be overly optimistic, overestimating the likelihood of positive outcomes and underestimating the likelihood of negative one…
+- [Placebo Effect](placebo-effect.md) — People's experiences align with their expectations about what will happen.
+- [Pluralistic Ignorance](pluralistic-ignorance.md) — A situation where a majority of group members privately reject a norm, but assume (incorrectly) that most others accept it.
+- [Priming](priming.md) — Prior exposure to a cue making related thoughts, feelings, interpretations, or responses more accessible later.
+- [Procrastination](procrastination.md) — The act of delaying or postponing tasks, often despite knowing there will be negative consequences.
+- [Self-Enhancement Bias](self-enhancement-bias.md) — The tendency to view oneself in an overly favorable light.
+- [Self-Fulfilling Prophecies](self-fulfilling-prophecies.md) — A prediction that causes itself to become true, due to the behavior it generates.
+- [Self-Handicapping](self-handicapping.md) — The strategy of creating obstacles to one's own performance, so that potential failure can be blamed on the obstacle rather than on a lack…
+- [Self-Serving Bias](self-serving-bias.md) — The tendency to attribute our successes to our own character or abilities, but our failures to external factors beyond our control.
+- [Social Loafing](social-loafing.md) — Exerting less effort in a group because individual contribution is hard to see, measure, or connect to outcomes.
+- [Status Quo Bias](status-quo-bias.md) — The preference for the current state of affairs, and the tendency to see any change from that baseline as a loss.
+- [Subjective Validation](subjective-validation.md) — The tendency to perceive a vague, general statement as personally meaningful and accurate.
+- [Supernormal Releasers](supernormal-releasers.md) — Exaggerated stimuli that trigger stronger attention, desire, fear, reward, or attachment than the ordinary stimuli they imitate.
+- [Surprise & Adaptation](surprise-adaptation.md) — People pay strong attention to novelty and surprise, then often get less emotional return as the same stimulus becomes familiar.
+- [Survivorship Bias](survivorship-bias.md) — The logical error of concentrating on the people or things that “survived” some process and inadvertently overlooking those that did not be…
+- [The Affect Heuristic](the-affect-heuristic.md) — The tendency to let our emotional response to a situation dictate our decisions and judgments, often in a snap.
+- [The Backfire Effect](the-backfire-effect.md) — The tendency of some people to resist accepting evidence that conflicts with their beliefs, and to strengthen their support for those belie…
+- [The Benjamin Franklin Effect](the-benjamin-franklin-effect.md) — The tendency to like someone more after you do them a favor.
+- [The Bystander Effect](the-bystander-effect.md) — Becoming less likely to help or intervene when other people are present because responsibility and certainty are diffused.
+- [The Dunning-Kruger Effect](the-dunning-kruger-effect.md) — A cognitive bias whereby people with low ability at a task overestimate their ability, while experts tend to underestimate their own.
+- [The Framing Effect](the-framing-effect.md) — Drawing different conclusions from the same information, depending on how that information is presented.
+- [The Illusion of Asymmetric Insight](the-illusion-of-asymmetric-insight.md) — The belief that we know others better than they know us, and that we know ourselves better than others know themselves.
+- [The Illusion of Control](the-illusion-of-control.md) — The tendency to believe we can control or influence outcomes that we demonstrably have no influence over.
+- [The Illusion of External Agency](the-illusion-of-external-agency.md) — The tendency to perceive intentional action or design in random or natural events.
+- [The Illusion of Transparency](the-illusion-of-transparency.md) — The tendency to overestimate the degree to which our internal states are known by others.
+- [The Misattribution of Arousal](the-misattribution-of-arousal.md) — The tendency to misidentify the source of physical arousal, attributing it to the wrong cause.
+- [The Misinformation Effect](the-misinformation-effect.md) — The tendency for post-event information to interfere with the memory of the original event.
+- [The Moment (Peak-End Rule)](the-moment-peak-end-rule.md) — The tendency to judge an experience based on its most intense point and its ending, rather than on the sum of all its moments.
+- [The Overjustification Effect](the-overjustification-effect.md) — The tendency for external rewards to undermine intrinsic motivation.
+- [The Public Goods Game](the-public-goods-game.md) — A social dilemma where everyone benefits from a shared good, but each individual has an incentive to contribute less and rely on others.
+- [The Representativeness Heuristic](the-representativeness-heuristic.md) — The tendency to judge the likelihood of an event by how well it matches a particular prototype or stereotype in our minds.
+- [The Spotlight Effect](the-spotlight-effect.md) — The tendency to overestimate how much other people notice our appearance or behavior.
+- [The Ultimatum Game](the-ultimatum-game.md) — A bargaining model showing that people may reject an unfair offer even when rejection costs them.
+- [Third-Person Effect](third-person-effect.md) — Believing persuasive media, propaganda, advertising, or social influence affects other people more than it affects you.
