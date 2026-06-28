@@ -1,0 +1,20 @@
+{
+  "name": "goal-setting",
+  "version": "0.1.0",
+  "description": "v0.1.0 — Set business goals that survive contact with reality, then actually operate against them — not a vision board you abandon by February. A six-stage Setup Arc takes you from what game you're playing to goals stress-tested before launch; a five-cadence Ongoing Arc (daily writing to annual vision check) keeps them alive. A hard cap of three active goals and a critic that won't let you lie to yourself keep it honest. Standalone.",
+  "author": {
+    "name": "Kelsey Ruger",
+    "url": "https://github.com/kenziecreative"
+  },
+  "homepage": "https://github.com/kenziecreative/kenzie-creative/tree/main/goal-setting",
+  "repository": "https://github.com/kenziecreative/kenzie-creative",
+  "license": "MIT",
+  "keywords": [
+    "goal-setting",
+    "okrs",
+    "habits",
+    "business-strategy",
+    "accountability",
+    "systems"
+  ]
+}
