@@ -1,0 +1,53 @@
+{
+  "target": "goal-setting",
+  "rubric_version": "1.0.0",
+  "gates": [
+    {
+      "name": "state_frontmatter",
+      "type": "frontmatter_keys",
+      "file": "goals/STATE.md",
+      "keys": ["mode", "current_stage", "completed_stages"],
+      "feeds": "State Integrity",
+      "na_for_entries": ["progress"]
+    },
+    {
+      "name": "working_dynamic_present",
+      "type": "file_contains",
+      "file": "goals/STATE.md",
+      "pattern": "## Working Dynamic",
+      "feeds": "State Integrity",
+      "na_for_entries": ["progress"]
+    },
+    {
+      "name": "setup_stage_advance",
+      "type": "completed_stages_delta",
+      "file": "goals/STATE.md",
+      "delta": 1,
+      "feeds": "Loop Hygiene",
+      "na_for_entries": ["daily", "weekly", "monthly", "quarterly", "annual", "restart", "pressure-test", "progress"]
+    },
+    {
+      "name": "cadence_entry_logged",
+      "type": "file_contains",
+      "file": "goals/journal.md",
+      "pattern": "\\*\\*\\[20\\d\\d-\\d\\d-\\d\\d\\]\\s*(daily|weekly|monthly|quarterly|annual|restart)",
+      "feeds": "Journal Integrity",
+      "na_for_entries": ["orient", "horizons", "anchors", "goals", "systems", "premortem", "pressure-test", "progress"]
+    },
+    {
+      "name": "method_in_library",
+      "type": "framework_in_library",
+      "index": "reference/INDEX.md",
+      "feeds": "No-Fabrication"
+    }
+  ],
+  "content_lint": [
+    {
+      "name": "active_no_placeholders",
+      "file": "goals/active.md",
+      "forbid": "\\[(TODO|TBD|placeholder|FILL)\\b",
+      "feeds": "State Integrity",
+      "optional_file": true
+    }
+  ]
+}
