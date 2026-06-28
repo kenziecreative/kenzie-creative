@@ -12,6 +12,10 @@ Thumbs.db
 .idea/
 .vscode/
 
+# Local agent/CLI tooling — not part of the marketplace
+.agents/
+.codex/
+
 # Per-deployment artifacts live in the user's Cowork project, not in this plugin repo.
 # Anchored to repo root so the shipped templates/CLAUDE.md is NOT ignored.
 # (Root /CLAUDE.md is intentionally tracked — it's the pointer to AGENTS.md, not a deployment artifact.)
