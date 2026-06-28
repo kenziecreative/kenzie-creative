@@ -5,33 +5,33 @@
     "url": "https://github.com/kenziecreative"
   },
   "metadata": {
-    "description": "Kenzie Creative \u2014 a marketplace of small, focused plugins for staying on top of your world. Plugins share a directory-level convention (see /contract) so they compose without depending on each other."
+    "description": "Kenzie Creative — a marketplace of small, focused plugins for staying on top of your world. Plugins share a directory-level convention (see /contract) so they compose without depending on each other."
   },
   "plugins": [
     {
       "name": "intelligence-briefing",
       "source": "./intelligence-briefing",
-      "description": "v0.3.0 \u2014 The external scan: a daily/weekly environmental brief that triages the outside world (news, industry, research, policy, science) into the few items worth your attention. Self-contained; writes a styled HTML brief and keeps its own ledger."
+      "description": "v0.3.0 — Start the day knowing what actually moved in your world, without reading the whole internet to find it. It scans news, industry, research, policy, and science, triages it down to the few items worth your attention (keyed to a relevance context you set once), and writes them up as a clean, self-contained page you can read anywhere or forward. Self-contained; runs on its own."
     },
     {
       "name": "researcher",
       "source": "./researcher",
-      "description": "v1.4.1 \u2014 A structured research system: pick a topic, get a phased plan grounded in preliminary research, then work through it together \u2014 collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Standalone."
+      "description": "v1.4.1 — Get research you can stand behind, not a confident summary that might be invented. Pick a topic and work through a phased plan together: collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim back to a real source before it reaches output. A research partner, not a summarizer. Standalone."
     },
     {
       "name": "sage",
       "source": "./sage",
-      "description": "v0.2.0 \u2014 The meeting round-up: turns a stream of meeting transcripts into a single living weekly document that surfaces action items, tracks cross-meeting threads, and keeps a forward watch list. Auto-pulls from Read.ai, Fireflies, or Granola; works on any transcript dropped into a source folder for everything else."
+      "description": "v0.2.0 — End the week knowing where every decision landed and what's owed, even when five meetings all touched the same thing. It turns a stream of transcripts into one living weekly round-up of action items, cross-meeting threads, and a forward watch list. Pulls from Read.ai, Fireflies, or Granola via MCP; works on any dropped transcript otherwise. Self-contained."
     },
     {
       "name": "strategist",
       "source": "./strategist",
-      "description": "v0.3.0 \u2014 A structured strategic-thinking system: take a problem through one repeatable loop \u2014 Define, Frame, Analyse, Insight, Synthesise, Story, Move \u2014 pulling the right framework from a 70-framework library at each stage, capturing the work in a working record plus a clean reader-facing brief, and pressure-testing the reasoning before you commit. Standalone."
+      "description": "v0.3.0 — Think a hard problem all the way through and come out with a strategy you can defend, not a blank framework template. It walks one problem through a repeatable loop (Define, Frame, Analyse, Insight, Synthesise, Story, Move), puts the right framework from a 70-framework library in front of you at each step, and pressure-tests your reasoning before you commit. Produces a working record and a clean reader-facing brief. Standalone."
     },
     {
       "name": "thinkers",
       "source": "./thinkers",
-      "description": "v0.1.0 \u2014 A reasoning counselor backed by a 243-pattern reference corpus \u2014 cognitive biases, fallacies, persuasion and manipulation tactics, bad-faith moves, and strategies. Five skills: identify what's happening (including self-recognition of your own behavior), explain a named pattern, practice spotting them, work through a decision, and stress-test your thinking. Standalone."
+      "description": "v0.1.0 — Make sense of a confusing situation: what's actually happening, whether your own thinking is off, and what to do about it. It names the bias, fallacy, persuasion or manipulation tactic, or strategic move at work from a 243-pattern library, carefully (it separates real gaslighting from an ordinary disagreement before handing you a heavy label). Five skills: identify, explain, practice, decide, spar. Talks like a counselor, not a textbook. Standalone."
     }
   ]
 }
