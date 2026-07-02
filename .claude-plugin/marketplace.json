@@ -19,6 +19,11 @@
       "description": "v0.3.0 — Start the day knowing what actually moved in your world, without reading the whole internet to find it. It scans news, industry, research, policy, and science, triages it down to the few items worth your attention (keyed to a relevance context you set once), and writes them up as a clean, self-contained page you can read anywhere or forward. Self-contained; runs on its own."
     },
     {
+      "name": "photo-generator",
+      "source": "./photo-generator",
+      "description": "v1.1.0 — Get a professional-grade photo from a plain-language description, without knowing what a key light or an 85mm prime is. A guided workflow turns your scene into a physics-aware Nano Banana Pro prompt — camera, lens, lighting, and color grade chosen from a curated reference library — then generates the image via the Gemini API at the right aspect ratio for print, social, or hero use. /photo-setup handles the API key and an optional default house style; batch and variations modes cover shot lists and multiple takes. Standalone."
+    },
+    {
       "name": "researcher",
       "source": "./researcher",
       "description": "v1.4.1 — Get research you can stand behind, not a confident summary that might be invented. Pick a topic and work through a phased plan together: collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim back to a real source before it reaches output. A research partner, not a summarizer. Standalone."

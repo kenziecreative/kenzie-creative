@@ -26,3 +26,4 @@ Thumbs.db
 
 # eval/ run artifacts — captures + scorecards are regenerated, not committed.
 eval/**/_eval/
+__pycache__/
