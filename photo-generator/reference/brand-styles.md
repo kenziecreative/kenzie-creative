@@ -1,8 +1,8 @@
 # Brand Styles Reference
 
 This file defines brand-specific photography defaults. Use with the `--style` flag:
-- `/create-photo-prompt --style "Hello Alice"` — Quick mode with brand defaults
-- `/create-photo-prompt --full --style "Hello Alice"` — Full walkthrough with brand defaults as recommendations
+- `/generate-photo --style "Hello Alice"` — Quick mode with brand defaults
+- `/generate-photo --full --style "Hello Alice"` — Full walkthrough with brand defaults as recommendations
 
 ---
 

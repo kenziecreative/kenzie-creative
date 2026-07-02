@@ -14,6 +14,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 |---|---|---|---|
 | Goal Setting | 0.1.0 | Set business goals that survive contact with reality — and actually operate against them, not abandon them by February | [guide](./goal-setting/README.md) |
 | Intelligence Briefing | 0.3.0 | Know what actually moved in your world today, without wading through the whole news cycle | [guide](./intelligence-briefing/README.md) |
+| Photo Generator | 1.1.0 | Get a professional-grade photo from a plain-language description, without knowing what a key light or an 85mm prime is | [guide](./photo-generator/README.md) |
 | Researcher | 1.4.1 | Research you can stand behind, with every claim traced back to a real source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Always know where a decision landed and who owes what, across a whole week of meetings | [guide](./sage/README.md) |
 | Strategist | 0.3.0 | Think a hard problem all the way through, and come out with a strategy you can defend | [guide](./strategist/README.md) |
@@ -34,6 +35,12 @@ Each version mirrors that plugin's `plugin.json`, which is the source of truth f
 **Start the day knowing what actually moved in your world, without reading the whole internet to find it.** It scans the outside world — news, industry movement, research, policy, science — and triages it down to the few items worth your attention, keyed to a relevance context you set once. It's built for triage, not coverage, so a quiet day produces a short brief and that's correct. What you get is a clean, self-contained page you can read anywhere or forward to your team. You set it up in a project with one command, and it can run on a schedule.
 
 → **[Read the Intelligence Briefing guide](./intelligence-briefing/README.md)** for setup, scheduling, and tuning.
+
+### Photo Generator
+
+**Get a professional-grade photo from a plain-language description — without knowing what a key light or an 85mm prime is.** `/generate-photo` walks you from a scene description to a complete, physics-aware Nano Banana Pro prompt — camera body, lens, lighting setup, semantic cleanup, and color grade, each chosen from a curated reference library — then optionally renders the image directly via the Gemini API at the right aspect ratio and resolution for print, social, or hero-banner use. Brand styles apply a house look in one flag; batch mode works through a whole shot list, and variations give you multiple distinct takes. `/photo-setup` handles the API key once (pasted into a local file, never the chat) and an optional default style.
+
+→ **[Read the Photo Generator guide](./photo-generator/README.md)** for setup, flags, platforms, and brand styles.
 
 ### Researcher
 
@@ -74,13 +81,14 @@ Each version mirrors that plugin's `plugin.json`, which is the source of truth f
 /plugin marketplace add kenziecreative/kenzie-creative
 /plugin install goal-setting@kenzie-creative
 /plugin install intelligence-briefing@kenzie-creative
+/plugin install photo-generator@kenzie-creative
 /plugin install researcher@kenzie-creative
 /plugin install sage@kenzie-creative
 /plugin install strategist@kenzie-creative
 /plugin install thinkers@kenzie-creative
 ```
 
-Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`; for research, run `/research:init`; for the meeting round-up, run `/sage:setup`; for a strategy, run `/strategist:init`; for goals, run `/goal-setting:init`. Thinkers needs no setup — just describe a situation or run `/thinkers:identify`.
+Once a tool is installed, open the project where you want to use it and follow that tool's guide — for the brief, run `/intel-setup`; for research, run `/research:init`; for the meeting round-up, run `/sage:setup`; for a strategy, run `/strategist:init`; for goals, run `/goal-setting:init`; for photos, run `/photo-setup`. Thinkers needs no setup — just describe a situation or run `/thinkers:identify`.
 
 ## Updates
 
@@ -94,6 +102,7 @@ New versions arrive only when one is published — nothing changes under you.
 /plugin marketplace update kenzie-creative
 /plugin update goal-setting
 /plugin update intelligence-briefing
+/plugin update photo-generator
 /plugin update researcher
 /plugin update sage
 /plugin update strategist
