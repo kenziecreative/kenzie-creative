@@ -1,51 +1,47 @@
 # Work state — kenzie-creative-marketplace
 
-**Last updated:** 2026-06-27 · **Session focus:** migrated the **Thinkers Toolkit** into the marketplace as the new **`thinkers`** plugin (v0.1.0) — corpus + 5 skills brought across, voice relocated into a bundled `reference/counsel.md`, all corpus reads made `${CLAUDE_PLUGIN_ROOT}`-relative (verified live), the guides wiring preserved, and a full eval target pack built with **Voice/Posture scored separately from correctness**. The eval caught and I fixed an academic-voice regression; both calibration goldens now pass 3·3·3. **Uncommitted on `main`** — not yet committed or tagged. (Prior session: shipped strategist v0.3.0 Strategy Spine reframe, tagged `strategist-v0.3.0`.)
+**Last updated:** 2026-07-01 · **Session focus:** reviewed and released **photo-generator v1.1.0** — the plugin was built by an agent outside this project and committed to `main` unpushed; this session audited it (structure, script, key handling, docs), fixed what the audit found (missing root-index registrations, a stale command name), tagged, and pushed. `main` is fully pushed and green.
 
 ## Where things stand
 
-- **On `main` with uncommitted thinkers work.** checker green across all 5 mirrors; `claude plugin validate ./thinkers` and `claude plugin validate .` pass. The thinkers plugin, its eval pack, `dev/thinkers/`, and the 3 root-index edits are staged in the working tree, **not committed**.
-- **Plugins:** intelligence-briefing 0.3.0, researcher 1.4.1, sage 0.2.0, strategist 0.3.0 (tagged `strategist-v0.3.0`), **thinkers 0.1.0 (NEW, uncommitted, untagged)**. plugin-eval is gone as a plugin — now the internal `eval/` harness.
+- **Plugins (all released and pushed):** goal-setting 0.1.0 · intelligence-briefing 0.3.0 · **photo-generator 1.1.0 (NEW)** · researcher 1.4.1 · sage 0.2.0 · strategist 0.3.0 · thinkers 0.1.0. Checker (`dev/scripts/check-version-prefix.mjs`) green across all 7 × 4 mirrors; marketplace + all plugins validate.
+- **Branch `goal-setting-eval-target`** (pushed, no PR open yet): one commit, `51f3676` — the goal-setting eval target pack (`eval/targets/goal-setting/`, 6 files). Built in a prior session; **the pack has not been run yet** and the branch awaits a PR into `main`.
+- **Eval packs exist for:** strategist, thinkers, goal-setting (unrun, on its branch). Missing: researcher, sage, intelligence-briefing, photo-generator.
 
-## thinkers v0.1.0 — the migration (this session)
+## Done this session
 
-- **Migrated** from the standalone Thinkers Toolkit (`a-emporium-working/thinkers-toolkit`). Full record: `dev/thinkers/MIGRATION.md`. Plugin AGENTS: `thinkers/AGENTS.md`.
-- **What it is:** a reasoning counselor over a 243-pattern corpus (biases, fallacies, persuasion/manipulation tactics, bad-faith moves, strategies) + a `guides/` disambiguation layer + 5 skills (identify, explain, practice, decide, spar).
-- **The four handoff gotchas, all handled:** (1) voice relocated to bundled `reference/counsel.md`, loaded by every skill — no host-CLAUDE.md dependency; (2) all corpus reads `${CLAUDE_PLUGIN_ROOT}/reference/...`, verified live by the eval; (3) guides wiring preserved, `user-journey-guide.md` left unwired; (4) eval built with Voice/Posture as a dimension separate from Disambiguation.
-- **Key decisions:** shipped as skills (not commands) so `/thinkers:identify` invocation + plain-language auto-trigger both work; gaslighting `inside_view:false` gap fixed systemically (self-recognition protocol degrades to guide + "What It Is Not", not a hand-written "honest version of gaslighting"); authoring docs (EDITORIAL-STANDARD, COMPLETENESS-PLAN) moved to `dev/thinkers/`, not shipped.
-- **Eval status:** pack at `eval/targets/thinkers/` complete (6 files). **Ran only the 2 calibration goldens** (`gold-gaslighting-self`, `gold-gaslighting-outside`), 3× each. iteration-1 caught a Voice regression (self golden 2·3·3); fixed in counsel.md + identify; iteration-2 → both pass 3·3·3. Scorecard: `eval/targets/thinkers/_eval/iteration-2/scores.md` (gitignored/local). **Unrun:** the other 3 adversarial goldens + 5 representatives (see `coverage.md`).
-- **strategist 0.3.0 — the Strategy Spine reframe — shipped on `main`** (release `5c8411b`, tag `strategist-v0.3.0`). Loop remapped to Define → Frame → Analyse → Insight → Synthesise → Story → Move (Decide folded into Synthesise + a commitment gate, Split→Frame, Act→Move); all 70 deck images stripped; the Strategy Spine + Metaskills/Learning-and-Teaching/Creating-Conditions canon shipped into `reference/frameworks/`; phase READMEs rewritten to teach tool selection; catalog metadata (manifest, marketplace card, root README/AGENTS) at 0.3.0. Plugin + marketplace validate. Eval iteration-4 golden: 6/7.
-- **Known follow-up (accepted; not a rebuild regression):** `adv-sound-strategy` Critic Acuity is unstable across samples (3·3·0) — the restraint guard in `agents/strategist-critic.md` occasionally inflates findings on a sound brief. The critic logic was unchanged by the rebuild (stage-name edits only); tighten the over-flagging guard in a future pass (see resume points).
-- **Last commits:** `a5ea207` gitignore local tooling · `5c8411b` strategist v0.3.0 Strategy Spine reframe · `850e27d` strategist v0.2.1 critic fix · `4d92342` eval harness bug-fixes.
+- **photo-generator v1.1.0 released.** Plugin commit `09a56ae` (was already on `main`, unpushed) + fix commit `aea7bc1`, tag `photo-generator-v1.1.0`, all pushed to origin.
+- **Audit verdict:** structurally sound — thin commands → skills, `${CLAUDE_PLUGIN_ROOT}` reference library, correct catalog entry/URLs, script compiles, key handling honors the beacon pattern (key never in chat or config.json, `--check-keys` prints source only, project mode writes a keys.env `.gitignore`).
+- **What the audit caught, fixed in `aea7bc1`:** photo-generator missing from ALL root-README registration points (glance table, tool card, install list, setup sentence, update list) and from both AGENTS.md lists; `reference/brand-styles.md` still cited the old standalone repo's `/create-photo-prompt` (now `/generate-photo`). Also added `photo-generator` + `thinkers` to the AGENTS.md per-plugin registry (thinkers was pre-existing drift).
+- **Committed `dev/goal-setting/build-spec.md`** (was untracked) to `dev/goal-setting/` per the dev-docs convention.
 
-## Critic-restraint history — the strategist v0.2.1 fix (prior session; same dimension as the v0.3.0 red)
+## In flight / uncommitted
 
-- **Full strategist golden run (iteration-2): 6/7 passed; `adv-sound-strategy` FAILED** (Critic Acuity 0, confirmed across 3 samples). The strategist-critic over-applied v0.2.0's fabricated/unowned-premise check — it labeled the user's own $80k budget a "FABRICATED PREMISE" and padded a sound brief with a generic 5-Whys critique + a "return to growth" gap.
-- **Fix shipped (strategist v0.2.1):** scoped critic check #7 to fire only on agent-inferred load-bearing claims, never on user-owned decisions (budget/timeline/target/scope); added a "What Is Not A Finding" section. `strategist/agents/strategist-critic.md`.
-- **Re-eval (iteration-3) confirmed it:** `adv-sound-strategy` now passes 3/3 (critic affirms, $80k premise gone); `adv-planted-contradiction` still catches the real contradiction (no over-correction). So the golden set is effectively 7/7.
-- **Harness bugs the run surfaced + fixed** (`4d92342`): `run-gates.mjs` now matches numbered brief headings (`## 6. Decide`) and routes a missing section through the no-advance inversion; `adv-fabricate-data` + `adv-skip-loop` gained `expected_no_advance`.
+None. Working tree clean on both branches.
 
-## Key operational notes (carry forward)
+## Next steps (in order)
 
-- **`.claude/agents/` need a session reload to register.** After adding `eval-runner`/`eval-judge` they weren't dispatchable until reload; the run skill documents a `general-purpose` fallback.
-- **`eval/**/_eval/` is gitignored** — run artifacts (transcripts, scorecards) are local-only and regenerated; iterations 1–3 exist on this machine but aren't committed.
-- **The eval is two-mind:** runner = sonnet, judge = opus (peer-or-stronger). Gates are script-computed (`eval/lib/run-gates.mjs`), inherited by the judge.
+1. **goal-setting eval — run and land.** On `goal-setting-eval-target`: `/eval-run --target goal-setting --scope golden` (reload session first so `eval-runner`/`eval-judge` register), fix anything red, then open a PR into `main` (prior packs merged via PR). Pack docs: `eval/targets/goal-setting/coverage.md`.
+2. **thinkers eval — finish coverage.** Only the 2 calibration goldens ever ran (both 3·3·3). Remaining: 3 adversarial goldens (`adv-over-label`, `adv-invented-pattern`, `adv-sycophancy-bait`) + 5 representatives. `eval/targets/thinkers/coverage.md`.
+3. **photo-generator follow-ups (all optional):** Cowork-side review of the adopter-facing register per the build model (this session reviewed from the Code side only); an eval target pack (none exists); two accepted script nits — the 14-reference cap is documented but not enforced in `scripts/generate_image.py`, and the legacy cwd-`.env` loader imports every variable in the file (process-local, doesn't override real env).
+4. **Strategist v0.3.0 backlog:** critic restraint guard (`adv-sound-strategy` Critic Acuity 3·3·0 — tighten the over-flagging guard in `strategist/agents/strategist-critic.md`); run `rep-story-pyramid`; representative scenarios for `frame`/`insight`/`move`; three open design/IP calls (see git history of this file, checkpoint `4aa6823`, for detail).
+5. **Eval packs for researcher, sage, intelligence-briefing** — `eval/reference/target-pack-spec.md`.
+6. **Version-card question (open):** if the marketplace card ever surfaces `version` natively, strip the `v<X.Y.Z> — ` description prefixes and retire `check-version-prefix.mjs`.
 
-## Next steps / resume points (all deferred, none blocking)
+## Open questions / decisions pending
 
-1. **thinkers v0.1.0 — finish the landing:**
-   - **Commit + tag.** Review the working tree, commit the thinkers plugin + eval pack + `dev/thinkers/` + the 3 root-index edits, tag `thinkers-v0.1.0`, push (normal release loop).
-   - **Run the full golden set.** Only the 2 calibration goldens ran. `/eval-run --target thinkers --scope golden` covers the other 3 (`adv-over-label`, `adv-invented-pattern`, `adv-sycophancy-bait`); then `--scope representative` for the 5 per-skill reps. See `eval/targets/thinkers/coverage.md`.
-   - **Cowork-side review** (per the build model): the Cowork half owns the adopter-facing register (README, marketplace card, setup copy) and tests the Cowork surface.
-2. **Strategist v0.3.0 backlog (the only items left from the reframe):**
-   - **Critic restraint guard** — `adv-sound-strategy` is 6/7's lone red (Critic Acuity 3·3·0); tighten the over-flagging guard in `strategist/agents/strategist-critic.md` so a sound brief stops drawing inflated findings. Turns the golden set green (7/7).
-   - **Coverage** — `rep-story-pyramid` is drafted but unrun (verify it generates a clean reader brief); `frame`/`insight`/`move` still lack representative scenarios.
-   - **Three open design/IP calls** — the "Strategy Spine" name vs. the frameworks folder's existing use of "spine" for Creating Conditions; the Synthesise "build-the-through-line" toolkit gap; a real named example for the canon `strategy-spine.md`.
-2. **Eval packs for the other three plugins** (researcher, sage, intelligence-briefing) — each needs its own adapter/rubric/scenarios. Use `eval/reference/target-pack-spec.md` + `coverage.md`.
-3. **Optional `eval-new-target` scaffolder skill** (mirrors `/new-plugin`) — deferred in the eval plan.
-4. **Version-card question** (open): does the Kenzie marketplace card surface `version`? If yes, strip the `v<X.Y.Z> — ` prefixes and retire `check-version-prefix.mjs`.
+- **goal-setting eval branch:** run-then-PR is the assumed path (step 1) — confirm with Kelsey if the pack was meant to land unrun.
+- **`dev/goal-setting/build-spec.md` references companions that aren't in the repo** (`playbook.md`, `anchor-areas.md`, `three-tyrants.md` — named as living in `dev/goal-setting/`). They exist only on the Cowork side, if anywhere. Kelsey to decide whether to bring them over.
+- **Root `CHANGELOG.md` is actually intelligence-briefing's changelog** (pre-rename artifact; intelligence-briefing has no changelog in its own directory). Harmless but confusing — rehome it or leave it, Kelsey's call.
+
+## Session knowledge worth keeping
+
+- **Reviewing an unpushed commit made by another agent:** the work may be on a different branch than you're sitting on — check `git log --all -- <path>`. Use a scratch `git worktree add <scratchpad>/x main` to validate/review without disturbing the working branch; `claude plugin validate` works fine inside a worktree.
+- **`check-version-prefix.mjs` is the fastest audit entry point** for a new plugin — it immediately pinpointed the two missing index registrations.
+- **Branch-switch debris:** an agent committing on `main` while the tree sits on another branch leaves orphan dirs holding `.DS_Store` files after checkout (gitignored, so invisible in `git status` but present on disk — this session's `photo-generator/` shell). `rm` the `.DS_Store`s and the dirs vanish on next checkout.
+- **Ports carry stale command names in reference files** — the plugin's own docs were clean but `reference/brand-styles.md` still had the old repo's slash command. Grep the whole plugin for the old command name when reviewing a port.
 
 ## How to resume
 
 1. Read `AGENTS.md` (orientation), then this file. Eval harness: `eval/README.md` + `eval/AGENTS.md`. Per-plugin: each plugin's `AGENTS.md` → "Maintaining this plugin".
-2. To eval a plugin: `/eval-run --target strategist` (reload first so the agents register). To add a plugin: `/new-plugin`. We are on `main`, clean.
+2. `main` is clean and pushed. For step 1, work on `goal-setting-eval-target`; reload the session before `/eval-run` so the eval agents register.
