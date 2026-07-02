@@ -1,6 +1,6 @@
 ---
 description: Generate professional photos using the Nano Banana Pro engine — guided prompt build, optional direct image generation
-allowed-tools: Read, Write, Glob, Bash
+allowed-tools: Read, Write, Glob, Bash, AskUserQuestion
 ---
 
 Generate a professional photo.

@@ -1,7 +1,7 @@
 ---
 name: photo-generate
 description: This skill should be used when the user asks to generate a professional photo, create a Nano Banana Pro prompt, or invokes /generate-photo (e.g. "generate a headshot in the Hello Alice style", "create a hero image for the site", "make a product photo"). Guides scene, camera, lens, lighting, and post-processing choices from the bundled reference library, assembles a physics-aware prompt, and optionally generates the image via the Gemini API.
-allowed-tools: Read, Write, Glob, Bash
+allowed-tools: Read, Write, Glob, Bash, AskUserQuestion
 ---
 
 # photo-generate — Guided Professional Photo Generation
@@ -9,6 +9,28 @@ allowed-tools: Read, Write, Glob, Bash
 Turn a plain-language scene description into a complete Nano Banana Pro prompt, and
 optionally render it via the Gemini API. The invoking command passes flags; parse them
 from the arguments before starting.
+
+## Presentation & decision points (apply throughout)
+
+- **Every decision with enumerable choices goes through the AskUserQuestion tool** —
+  never a prose bullet list ending in "let me know". This covers: the essential
+  questions, scene type, full-mode gear/lighting/post picks, render-or-not, batch
+  confirmation, the cost guard, and the refinement offer. Free-form input (the scene
+  description, refinement change requests, exact text to keep legible) stays
+  conversational — do not force it into options.
+- **Separate output sections with a `---` horizontal rule**: style banner · preset
+  summary · the assembled prompt · what happens next. Each is its own visual block.
+- **The assembled prompt always goes in a fenced code block** — copyable and visually
+  distinct from the conversation around it. Never inline it in prose.
+- One sentence of framing beats a paragraph. The reference-library reasoning (why this
+  camera, why this light) is one line per choice unless the user asks for more.
+
+## Key hygiene (hard rules)
+
+Never read, print, echo, or copy the **value** of any API key — not from `keys.env`,
+not from a `.env`, not from the environment, not between files. Key presence is checked
+only via the script's `--check-keys` (it reports the source, never the value). On a
+key error, point at `/photo-setup`; do not open or inspect key files yourself.
 
 ## Flags
 
@@ -67,19 +89,25 @@ Fast generation using brand defaults or scene presets.
 ### With `--style`:
 
 1. **Scene description.** Ask: "Describe the scene you want to create." Get specifics —
-   what the subject is doing, the environment, any required elements.
-2. **Essential questions.** Ask only:
-   - "Do you need to preserve a specific subject's identity?" (face, product)
-   - "Any specific objects to remove or avoid in the scene?"
-   - "Any text/labels that need to stay legible?"
+   what the subject is doing, the environment, any required elements. (Free-form —
+   conversational, not AskUserQuestion.)
+2. **Essential questions** — one AskUserQuestion call, three questions:
+   - *Identity* — "Preserve a specific subject's identity (face, product)?"
+     Options: "No — generic subject" / "Yes — I'll provide reference photo(s)".
+     If yes, collect the file paths conversationally afterward.
+   - *Cleanup* — "Anything to remove or avoid in the frame?"
+     Options: "Nothing specific" / "Yes — I'll list them".
+   - *Text* — "Any text/labels that must stay legible?"
+     Options: "No text in scene" / "Yes — I'll give the exact text".
 3. **Generate the prompt.** Combine the scene with the brand's Master Prompt Template
    from the brand styles file. Apply brand rules automatically (e.g., Hello Alice always
    gets "Authentic Professionalism" subject treatment). Output the complete prompt.
 
 ### Without `--style` (generic):
 
-1. **Scene type.** Ask: "What type of photo are you working with?" — Portrait, Product,
-   Food, Interior, Lifestyle, or Other (describe).
+1. **Scene type** — AskUserQuestion: "What type of photo are you working with?"
+   Options: Portrait / Product / Food / Interior or Lifestyle (the built-in "Other"
+   covers everything else).
 2. **Find a preset.** Read `${CLAUDE_PLUGIN_ROOT}/reference/scene-presets.md` and find
    the best match. Present it with a brief explanation; ask if they want adjustments.
 3. **Essential questions.** Same three as above.
@@ -99,17 +127,21 @@ Complete guided workflow. If `--style` is also provided, brand defaults become t
    for the 14-slot system. Ask about additional reference images — lighting references,
    mood references, subject angles (for identity preservation), gear samples. If they
    have references, build a slot assignment and collect the file paths for `--ref`.
-3. **Camera selection.** Read `${CLAUDE_PLUGIN_ROOT}/reference/cameras.md`. Guide by
-   scene type and desired look; explain why specific cameras trigger specific training data.
-4. **Lens selection.** Read `${CLAUDE_PLUGIN_ROOT}/reference/lenses.md`. Guide by scene
-   type, depth of field, subject isolation.
-5. **Lighting setup.** Read `${CLAUDE_PLUGIN_ROOT}/reference/lighting.md`. Guide by mood.
-   Be specific: light position, quality (soft/hard/diffused), additional lights (rim, fill, back).
+3. **Camera selection.** Read `${CLAUDE_PLUGIN_ROOT}/reference/cameras.md`. Offer the
+   pick via AskUserQuestion: the recommendation first (labeled "(Recommended)") plus
+   2–3 alternatives fitting the scene, one line each on the look they trigger.
+4. **Lens selection.** Read `${CLAUDE_PLUGIN_ROOT}/reference/lenses.md`. Same
+   AskUserQuestion pattern — recommended lens first, alternatives by depth of field
+   and subject isolation.
+5. **Lighting setup.** Read `${CLAUDE_PLUGIN_ROOT}/reference/lighting.md`. Same
+   AskUserQuestion pattern, options keyed to mood. The chosen setup is then written
+   specifically: light position, quality (soft/hard/diffused), additional lights
+   (rim, fill, back).
 6. **Semantic cleanup.** Get SPECIFIC — not "remove clutter" but "remove the three
    magazines and phone charger"; not "clean background" but "replace visible power cables
    with matching wall texture". If `--style`, remind the user of the brand's cleanup rules.
-7. **Post-processing.** Read `${CLAUDE_PLUGIN_ROOT}/reference/post-processing.md`. Match
-   the color grade to the aesthetic goals.
+7. **Post-processing.** Read `${CLAUDE_PLUGIN_ROOT}/reference/post-processing.md`.
+   AskUserQuestion — recommended grade first, alternatives matched to the aesthetic goals.
 8. **Assemble the prompt** using this structure:
 
 ```
@@ -152,6 +184,19 @@ Ensure text '[EXACT TEXT]' remains crisp and legible, following 3D perspective a
 
 ---
 
+## Delivering the prompt (quick and full mode)
+
+1. One line of context (style used, key choices), then `---`, then **the complete
+   prompt in a fenced code block**, then `---` again.
+2. **If `--generate` was passed**, go straight to Image Generation below.
+3. **If not**, close with one AskUserQuestion — "The prompt is ready. What next?":
+   - "Render it now (Recommended)" — current platform/size defaults, stated in the description
+   - "Render with different platform/size" — then ask which, from the platform table
+   - "Tweak the prompt first" — take changes conversationally, re-deliver
+   - "Done — prompt only"
+
+---
+
 ## Batch Mode (`--batch <file>`)
 
 Shot-list mode: many images in one run, minimal ceremony. Implies `--generate`.
@@ -160,15 +205,17 @@ Shot-list mode: many images in one run, minimal ceremony. Implies `--generate`.
    or plain lines — each entry is one scene description, optionally prefixed with a
    shot name and optionally carrying an inline platform override (e.g.
    `hero shot (hero-banner): founder at a whiteboard...`). Show the parsed list —
-   name, platform, scene — and get a confirmation before generating anything.
+   name, platform, scene — then confirm via AskUserQuestion:
+   "Proceed with these N shots" / "Let me correct the list" / "Cancel".
 2. **Ask the three essential questions ONCE** for the whole batch (identity
    preservation, objects to remove, text to keep legible). Apply the answers to
    every shot.
 3. **Build one prompt per entry** using quick mode with the shared settings: style
    (flag or default), platform (per-entry override, else `--platform`, else
    `social-square`), size. No per-entry interviewing.
-4. **Cost guard:** if the run is more than 3 images (entries × variations), state the
-   total image count and get a one-word confirm before rendering.
+4. **Cost guard:** if the run is more than 3 images (entries × variations), confirm
+   via AskUserQuestion — "Render all N images" / "Cancel" — with the total count in
+   the question text.
 5. **Render sequentially**, one script call per image. Output names: `output/<slug>.png`
    from the shot name (or a slug of the scene's first words). A failed shot does not
    stop the batch — record the error and continue.
@@ -217,9 +264,10 @@ python3 "${CLAUDE_PLUGIN_ROOT}/scripts/generate_image.py" "<prompt>" \
    (and relay the script's manual options). On a missing-dependency error, relay
    `pip3 install google-genai`.
 
-5. **Offer one refinement.** After showing the result, ask: "Want to refine it?"
-   If yes, take their change description and re-run the script with the just-generated
-   file passed as `--ref` and a prompt of the form: "Using the reference image as the
-   base, keep everything identical except: <requested changes>." Save as the same name
-   with a `-r1` (then `-r2`, …) suffix. Repeat while they keep requesting changes;
-   skip this offer in batch mode.
+5. **Offer one refinement.** After showing the result, AskUserQuestion:
+   "Happy with this render?" — "Yes, done" / "Refine it" / "Re-render as-is (new take)".
+   On "Refine it", take the change description conversationally, then re-run the script
+   with the just-generated file passed as `--ref` and a prompt of the form: "Using the
+   reference image as the base, keep everything identical except: <requested changes>."
+   Save as the same name with a `-r1` (then `-r2`, …) suffix. Repeat while they keep
+   requesting changes; skip this offer in batch mode.

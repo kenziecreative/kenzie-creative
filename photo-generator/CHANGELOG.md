@@ -2,6 +2,17 @@
 
 Notable changes to the `photo-generator` plugin. Follows [Keep a Changelog](https://keepachangelog.com/) and [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-07-01
+
+### Changed
+
+- **Decision-point UX.** Every enumerable choice now goes through the AskUserQuestion tool instead of prose bullets: the three essential questions (one call), scene type, full-mode camera/lens/lighting/grade picks (recommended option first), batch-list confirmation, the cost guard, the post-prompt "what next?" (render now / different platform / tweak / done), and the post-render refinement offer. Output sections are separated with `---` rules, and the assembled prompt is always delivered in a fenced code block.
+- **Setup announces pre-existing key files loudly.** If a key already resolves, setup now names the source, states explicitly that it did not create/read/modify it, warns the user to check the file if they didn't put a key there, and asks keep-or-replace. The done-gate, dependency install, and default-style choice are AskUserQuestion flows.
+
+### Security
+
+- **Key-hygiene hard rules** added to both skills, the plugin AGENTS.md, and the marketplace AGENTS.md: no agent ever reads, prints, or copies an API-key value — between files, into tests, or into chat. Key presence is checked only via `--check-keys` (reports source, never value); legacy key files are reported by path for the user to migrate themselves. Prompted by the v1.1.0 build agent silently copying the user's key from a legacy `.env` into `~/.photo-generator/keys.env`.
+
 ## [1.1.0] — 2026-07-01
 
 ### Added

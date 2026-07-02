@@ -21,7 +21,7 @@
     {
       "name": "photo-generator",
       "source": "./photo-generator",
-      "description": "v1.1.0 — Get a professional-grade photo from a plain-language description, without knowing what a key light or an 85mm prime is. A guided workflow turns your scene into a physics-aware Nano Banana Pro prompt — camera, lens, lighting, and color grade chosen from a curated reference library — then generates the image via the Gemini API at the right aspect ratio for print, social, or hero use. /photo-setup handles the API key and an optional default house style; batch and variations modes cover shot lists and multiple takes. Standalone."
+      "description": "v1.2.0 — Get a professional-grade photo from a plain-language description, without knowing what a key light or an 85mm prime is. A guided workflow turns your scene into a physics-aware Nano Banana Pro prompt — camera, lens, lighting, and color grade chosen from a curated reference library — then generates the image via the Gemini API at the right aspect ratio for print, social, or hero use. /photo-setup handles the API key and an optional default house style; batch and variations modes cover shot lists and multiple takes. Standalone."
     },
     {
       "name": "researcher",

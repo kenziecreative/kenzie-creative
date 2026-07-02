@@ -38,6 +38,16 @@ the Gemini image API (`--generate`). Brand presets apply a house style in one fl
   — it is the single source of truth `/photo-setup` calls. Setup **never clobbers** an
   existing `keys.env` or `photo-styles.md`, and keys are never stored in `config.json`
   or asked for in conversation.
+- **Key hygiene binds maintainers too, not just the runtime skills:** no agent working
+  on this plugin ever reads, prints, or copies an API-key *value* — not between files,
+  not into tests, not "to migrate" it. (v1.1.0's build agent copied the user's key from
+  a legacy `.env` into `~/.photo-generator/keys.env`; that prompted this rule.) Testing
+  `--generate` uses whatever key already resolves via `--check-keys`, with the user's
+  go-ahead. If a legacy key file turns up, report its path and stop.
+- **Decision-point UX is deliberate (v1.2.0):** enumerable choices go through
+  AskUserQuestion, output sections are separated with `---` rules, and the assembled
+  prompt is always a fenced code block. Don't regress these to prose bullets when
+  editing the skills.
 - **Style resolution:** project `photo-styles.md` > `~/.photo-generator/photo-styles.md`
   > bundled `reference/brand-styles.md`; no `--style` flag falls back to
   `default_style` in `~/.photo-generator/config.json` (`--style none` bypasses).

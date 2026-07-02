@@ -14,7 +14,7 @@ Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then `/plugin
 
 - **goal-setting** (0.1.0) — a business goal-setting method in two arcs: a six-stage Setup Arc + a five-cadence Ongoing Arc over a Markdown `goals/` state dir, with a three-goal-rule hard cap and a goal-formulation critic. *Standalone.*
 - **intelligence-briefing** (0.3.0) — a daily/weekly environmental brief that triages the outside world into a self-contained HTML brief. *Triage-stream.*
-- **photo-generator** (1.1.0) — a guided photography director: plain-language scene → physics-aware Nano Banana Pro prompt (camera, lens, lighting, grade from a bundled reference library), optionally rendered via the Gemini API; batch, variations, and a refinement loop. *Standalone.*
+- **photo-generator** (1.2.0) — a guided photography director: plain-language scene → physics-aware Nano Banana Pro prompt (camera, lens, lighting, grade from a bundled reference library), optionally rendered via the Gemini API; batch, variations, and a refinement loop. *Standalone.*
 - **researcher** (1.4.1) — a structured, audited research system. *Standalone.*
 - **sage** (0.2.0) — meeting-transcript triage into a single living weekly round-up. *Standalone.*
 - **strategist** (0.3.0) — a seven-stage strategic-thinking loop over a 70-framework library, with a reasoning critic; outputs a working record plus a clean reader-facing brief. *Standalone.*
@@ -42,6 +42,10 @@ Verification is split, not duplicated — each surface is tested by the only too
 - **File deletion is gated per folder.** Until you approve it (a delete prompt appears the first time), `rm` and git's own lock-cleanup fail with `Operation not permitted` on the FUSE mount — even on files you just created. Approve once and both `rm` and sandbox `git` work normally for that folder. This — not "git is broken in Cowork" — is why earlier sessions saw commits leave stale `.git/*.lock` files behind.
 - **git tag/push is still safest from a real terminal** (network + credentials), but commits and tags work from the Cowork sandbox once deletion is enabled for the folder.
 - **Setup commands use Read/Write/Edit/Glob, never shell** (`mkdir`/`ls`/`cat`) — shell triggers permission prompts. To create a folder, write a file into its path.
+
+## Credential hygiene (binds every agent working in this repo)
+
+Never read, print, echo, or copy the **value** of any credential (API key, token) — not from `.env` files, not from the environment, not between files, not into tests or chat. Plugins that need keys use a beacon pattern: the *user* pastes the value into a local key file directly; agents only ever check *presence* via a mechanism that reports the source without the value (e.g. photo-generator's `--check-keys`). If a legacy key file is found during a port or build, report its path to the user and let them migrate it themselves — the photo-generator v1.1.0 build agent silently copying a key between files is the incident this rule exists to prevent.
 
 ## Dev docs & work state
 
