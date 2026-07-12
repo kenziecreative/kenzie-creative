@@ -121,8 +121,12 @@ re-litigate; build to them.)
   `plugin.json`, update the `v<X.Y.Z> — ` prefix in both descriptions (`plugin.json` + the
   catalog entry in `.claude-plugin/marketplace.json`), the README "Plugins at a glance" row,
   and the root `AGENTS.md` plugin list; add a `CHANGELOG.md` entry; then
-  `node dev/scripts/check-version-prefix.mjs` and `claude plugin validate ./goal-setting` +
-  `claude plugin validate .`; commit, tag **`goal-setting-v<X.Y.Z>`**, push.
+  `node dev/scripts/check-version-prefix.mjs`,
+  `node dev/scripts/lint-doctrine-drift.mjs --plugin goal-setting` (release-blocking —
+  when a change retires wording, add the phrase to
+  `dev/scripts/drift-configs/goal-setting.json` in the same commit), and
+  `claude plugin validate ./goal-setting` + `claude plugin validate .`; commit, tag
+  **`goal-setting-v<X.Y.Z>`**, push.
 - **Authoring check (optional):** run plugin-dev's `skill-reviewer` over changed skills and
   `plugin-validator` over the plugin to catch frontmatter/description regressions.
 - **Editing cautions specific to this plugin:**

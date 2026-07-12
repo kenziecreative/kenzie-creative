@@ -1,0 +1,152 @@
+{
+  "pluginRoot": "goal-setting",
+  "scanRoots": ["skills", "agents", "commands", "reference", "templates", "hooks"],
+  "stalePhrases": [
+    {
+      "id": "old_promise",
+      "pattern": "won't let you lie to yourself",
+      "flags": "i",
+      "reason": "retired marketing promise — softened in 0.2.0 to 'red-teams every goal before you commit' (Decision C3; checklist row 6)"
+    },
+    {
+      "id": "direct_neuroscience",
+      "pattern": "based on direct neuroscience",
+      "flags": "i",
+      "reason": "unsourced biology claim — softened in 0.2.0 to attention/commitment framing (Decision F3)"
+    },
+    {
+      "id": "nervous_system_embed",
+      "pattern": "embeds? (it|the goal) in(to)? the nervous system",
+      "flags": "i",
+      "reason": "unsourced biology claim — softened in 0.2.0 (Decision F3)"
+    },
+    {
+      "id": "science_underneath_heading",
+      "pattern": "The science underneath",
+      "reason": "playbook section renamed 'The model underneath' in 0.2.0 (F3) — a resurrected reference points at a heading that no longer exists"
+    },
+    {
+      "id": "aggregate_weekly_bool",
+      "pattern": "- `system_executed`: bool",
+      "reason": "aggregate weekly schema — superseded in 0.2.0 by per-Objective records with unknown/mixed (blind F5a)"
+    },
+    {
+      "id": "mitigations_quarterly_only",
+      "pattern": "revisited at every quarterly review",
+      "reason": "storage-only mitigation cadence — superseded in 0.2.0 by weekly/monthly trigger sweeps + heartbeat routing (blind F6)"
+    },
+    {
+      "id": "old_friction_challenge",
+      "pattern": "find the one answer that was too soft and challenge it",
+      "reason": "pre-valve mandatory dissent — superseded in 0.2.0 by the provenance valve ('named, graded sound' is a legitimate outcome; blind F8)"
+    },
+    {
+      "id": "untyped_restart_hold",
+      "pattern": "note that transition condition",
+      "reason": "prose-only restart hold — superseded in 0.2.0 by the typed state machine (restart_phase/system/clean_weeks/queue; blind F4 + pass-2)"
+    },
+    {
+      "id": "hook_user_narration",
+      "pattern": "STATE\\.md may be stale",
+      "reason": "hook message narrated plumbing at the user's register — re-addressed to the agent in 0.2.0 (invariant 3)"
+    }
+  ],
+  "requiredSections": [
+    {
+      "file": "reference/heartbeat.md",
+      "markers": [
+        "## 1. Trust order",
+        "## 2. Restore stance",
+        "## 3. Additive migration",
+        "## 4. Compute what's overdue, and route",
+        "## 5. Keep the machinery backstage"
+      ]
+    },
+    {
+      "file": "skills/goal-setting-init/SKILL.md",
+      "markers": [
+        "## Working Dynamic",
+        "## Coaching Memory",
+        "## Backstage Tasks",
+        "## Candidate Backlog",
+        "restart_clean_weeks",
+        "**`goals/history.md`**"
+      ]
+    },
+    {
+      "file": "skills/goal-setting-pulse/SKILL.md",
+      "markers": ["### Restart hold"]
+    },
+    {
+      "file": "skills/goal-setting-review/SKILL.md",
+      "markers": ["THE GATE"]
+    },
+    {
+      "file": "templates/CLAUDE.md",
+      "markers": ["## Session start"]
+    }
+  ],
+  "contracts": [
+    {
+      "id": "disposition_vocabulary",
+      "pattern": "achieved \\| missed \\| abandoned \\|[\\s>]+superseded",
+      "files": [
+        "reference/schemas.md",
+        "reference/playbook.md",
+        "skills/goal-setting-init/SKILL.md"
+      ]
+    },
+    {
+      "id": "system_status_enum",
+      "pattern": "active \\| paused \\| retired \\| replaced",
+      "files": [
+        "reference/schemas.md",
+        "reference/playbook.md"
+      ]
+    },
+    {
+      "id": "weekly_answer_vocabulary",
+      "pattern": "yes \\| no \\| unknown \\| (\\*\\*)?mixed",
+      "files": [
+        "reference/schemas.md",
+        "reference/playbook.md"
+      ]
+    },
+    {
+      "id": "fired_trigger_status",
+      "pattern": "triggered_active",
+      "files": [
+        "reference/schemas.md",
+        "reference/playbook.md",
+        "reference/heartbeat.md",
+        "skills/goal-setting-pulse/SKILL.md",
+        "skills/goal-setting-review/SKILL.md"
+      ]
+    },
+    {
+      "id": "unchecked_sweep_state",
+      "pattern": "unchecked",
+      "files": [
+        "reference/schemas.md",
+        "reference/heartbeat.md",
+        "skills/goal-setting-pulse/SKILL.md"
+      ]
+    },
+    {
+      "id": "typed_restart_flags",
+      "pattern": "restart_clean_weeks",
+      "files": [
+        "skills/goal-setting-init/SKILL.md",
+        "skills/goal-setting-restart/SKILL.md",
+        "skills/goal-setting-pulse/SKILL.md"
+      ]
+    },
+    {
+      "id": "revision_record_format",
+      "pattern": "revised \\[",
+      "files": [
+        "skills/goal-setting-review/SKILL.md"
+      ]
+    }
+  ]
+}

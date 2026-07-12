@@ -115,13 +115,19 @@ note at `dev/blind-reviews/goal-setting-pass2-2026-07.md` (primary checkout):
 - **Golden-set rubric anchors** — the 0–3 anchor text ships with a DRAFT banner; scores
   are uncalibrated until approved.
 
+### Deferred, then landed pre-release
+
+- **Drift-lint config** — the shared lint (`dev/scripts/lint-doctrine-drift.mjs`,
+  strategist builder's deliverable) didn't exist at build time; it landed with strategist
+  v0.4.x, so `dev/scripts/drift-configs/goal-setting.json` ships in this release after
+  all: nine retired-phrase tripwires from this release's supersessions, required-section
+  markers for the surfaces other doctrine points at, and seven reader/writer vocabulary
+  contracts (dispositions, System enum, weekly answers, trigger statuses, typed restart
+  flags). Release-blocking; run
+  `node dev/scripts/lint-doctrine-drift.mjs --plugin goal-setting` in the release loop.
+
 ### Deferred
 
-- **Drift-lint config** — the shared plugin-configurable lint
-  (`dev/scripts/lint-doctrine-drift.mjs`, strategist builder's deliverable) did not exist
-  at build time; goal-setting's config (stale phrases, playbook-vs-skill canon pairs,
-  reader/writer contract checks) follows as a patch once it lands. Not built twice, per
-  the coordination guide.
 - **Organizational-operation fork** (G1) — deferred by Decision of Record.
 
 ## 0.1.0 — 2026-06-28
