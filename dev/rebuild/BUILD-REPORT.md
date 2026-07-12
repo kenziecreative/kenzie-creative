@@ -143,3 +143,20 @@ All 7 plugin(s) agree across plugin.json, the catalog, the README table, and the
 - The pass-2 re-attack packet should be re-rsynced from the rebuilt plugin per `dev/STATE.md`.
 - An eval pack for intelligence-briefing is a known follow-up (STATE.md); the spec did not include it in this build and none was built.
 - Watch-list items from the judgment calls, if any prove wrong in use: proposals living in `drivers.json` (1), export-time-only STEEP with null stored fields (2), the run-record `reckoning` flag (3), active-only export (10).
+
+---
+
+## 7. STOP B outcome (2026-07-12, same session — caveat recorded)
+
+STOP B was designed to run on a different model in a fresh session; at Kelsey's direction it ran in the build session instead. **The caveat is real: the builder checked its own work.** To compensate, the pass did not re-run the build checklist — it hunted the pass-1 failure family specifically (config fields read by no step; schema fields written by nobody; promises without mechanics; cross-file drift), and the genuinely independent check remains the staged pass-2 re-attack.
+
+**Four gaps found, all in that family, all fixed in commit `0bc256c`** (tag moved from `9ee08d1` to `0bc256c`; validation re-run green at both scopes plus the version checker):
+
+1. The template's **Overall length** field was read by no step — the briefing skill's CONFIGURATION never listed it (v0.3.0 did). Added.
+2. **`supporting_observations` / `observation_count` on drivers had no writer** — scan step 6 attached observations to drivers only on the observation side. Now mirrored.
+3. **Thread `status` transitions had no writer, and new threads didn't inherit `driver_ids`** — scan step 7 now carries `driver_ids` and matches against all statuses (dormant stories return as themselves); the review skill owns dormant/closed transitions on the user's say-so ("A story that's over").
+4. **Suspect cells now read their `miss` records in `feedback.json`** before widening channels — the miss names exactly what the channels were blind to.
+
+**Release completed:** branch `review/intelligence-briefing` and tag `intelligence-briefing-v1.0.0` pushed to `origin` (github.com/kenziecreative/kenzie-creative). Per the review protocol, pass 2 attacks the shipped version; findings become the next release, not tag surgery.
+
+**Pass-2 packet staged** per `dev/convergence/codex-review-protocol.md`: clean-room copy refreshed at `~/Projects/_scratch/kenzie-blind-reviews/intelligence-briefing/plugin/` (11 files, AGENTS.md/CHANGELOG.md stripped, no narrative leaks), and `PASS-2-PROMPT.md` written beside it — break-the-repairs brief, finding→fix-location map with zero rationale, Finding 8 disclosed as not addressed, §11 locks disclosed as locked, raw pass-1 verdict as appendix. Kelsey runs Codex; the verdict comes back through the consumption pipeline (one-inbox: the triage note files to `core-kenzie-marketplace/dev/blind-reviews/intelligence-briefing-pass2-2026-07.md`).

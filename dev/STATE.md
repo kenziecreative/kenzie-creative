@@ -1,83 +1,50 @@
 # Work state — kenzie-creative-marketplace
 
-**Last updated:** 2026-07-12 · **Session focus:** intelligence-briefing rebuild **designed**. The v1.0.0 build spec is written, complete, and passes STOP A. **Nothing in it is open. The next session is the Fable 5 build.**
+**Last updated:** 2026-07-12 · **Session focus:** intelligence-briefing v1.0.0 **BUILT, VERIFIED, TAGGED, PUSHED**. Pass-2 packet staged. **The next action is Kelsey running Codex pass 2.**
 
 ## Where things stand
 
-- **intelligence-briefing (0.3.0 → 1.0.0)** — **SPEC COMPLETE, BUILD PENDING.** Branch `review/intelligence-briefing`. The build spec is `dev/rebuild/intelligence-briefing-v1-build-spec.md` (committed, not gitignored — unlike `blind-reviews/` and `convergence/`). It is self-contained: a fresh agent builds from it with no conversation. All four previously-open decisions are locked (see below). **The next action is a model switch, not more design.**
+- **intelligence-briefing (1.0.0)** — **SHIPPED on branch `review/intelligence-briefing`**, tag `intelligence-briefing-v1.0.0` (commit `0bc256c`), branch + tag pushed to origin. Built by Fable 5 in one session from `dev/rebuild/intelligence-briefing-v1-build-spec.md`; proof trail in `dev/rebuild/BUILD-REPORT.md` (read it first — §2 has every judgment call, §7 the STOP B outcome). All ten review-standard points pass. **Caveat of record: STOP B ran in the build session at Kelsey's direction** (builder checked its own work; it hunted the pass-1 failure family and found/fixed four read-by-nobody gaps, commit `0bc256c`). The independent check is pass 2. **Not yet merged to main** — that call follows the pass-2 verdict.
 - **strategist (0.4.1)** — convergence release + pass-2 hardening on main, tagged and pushed. Ported patterns SHIPPED-UNTESTED (no live session yet). Full account: `strategist/CHANGELOG.md`.
 - **goal-setting (0.2.1)** — SHIPPED 2026-07-12. Rubric anchors calibrated; nothing open on Kelsey. Next verification step: first golden-set run (`/eval-run --target goal-setting`).
 - **researcher (1.4.1)** — releases last (A1). Register port (D1) and evidence architecture (B1) still wait on Kelsey's sessions.
-- **eval harness** — two pack follow-ups queued. No eval target exists for intelligence-briefing; one is a rebuild deliverable, not a prerequisite.
+- **eval harness** — two pack follow-ups queued. No eval target exists for intelligence-briefing; one is a v1.x deliverable now that the rebuild has shipped (the spec deliberately excluded it from the build).
 
 ## Done this session
 
-- **Read the one real brief this product ever produced** (`~/Projects/_shared/Core Intelligence/briefs/2026-06-07.html`, run once, 2026-06-07, never again — Kelsey paused it because the shape needed changing, not because it was useless). **This reframed the entire rebuild.**
-- **The reframe, which is the load-bearing insight of the session:** the product already produces intelligence and throws it away every morning. The synthesis paragraph is a driver, born and killed the same day. The "Watch for" line is a signpost with a due date that nobody ever checks. The relevance judgment is written and discarded. The brief writes the *intelligence* into HTML for a human and writes a *shopping list* into the ledger for itself. **The rebuild is not "add an intelligence layer." It is "stop discarding the one you already produce."**
-- **Tier 3 resolved:** build the loop (observation → driver → re-decision), do not build the products that read from it. Falsifiers first, drivers as plumbing (never a dashboard), the review conversation as the trust mechanism, the reckoning in. Estimates and the I&W apparatus cut **on value, not cost**.
-- **Two Codex-assumed surfaces designed:** the review conversation (§7) and requirements-depth-without-a-form (§8).
-- **Strategic Foresight interop designed** (§10): export **drivers, not observations**; foresight's driver vocabulary adopted verbatim so the handoff is lossless.
-- **Build spec written** to `dev/rebuild/intelligence-briefing-v1-build-spec.md`, 14 sections, narrative first.
-- **Spec audited against a Fable-5 whole-job-handoff rubric** and a real defect was found and fixed (see Session knowledge).
-- **No plugin code changed.** Working tree was clean at `969bed5`; only the spec and this file are new.
-
-## In flight / uncommitted
-
-None. The spec is committed. `review/intelligence-briefing` is clean.
+- **intelligence-briefing v1.0.0 built** per the spec, one pass: three skills (environmental-scan / environmental-briefing / intelligence-review), the `intel/` state layer (observations with `captured_evidence`, drivers with append-only confidence logs, signposts, threads, coverage matrix, run records, feedback), `/brief` chaining scan→brief, `/intel-export`, re-derivation verification, the reckoning, the two text-only fixes (action gate identical in three places; README breadth claim earned). §2 preserved; every §11 item absent.
+- **STOP B verification** (same-session, caveat above): four gaps in the read-by-nobody/written-by-nobody family found and fixed (`0bc256c`); validation green at both scopes; tag moved to the fix commit; branch + tag pushed.
+- **Pass-2 packet staged** per `dev/convergence/codex-review-protocol.md`: clean-room copy refreshed at `~/Projects/_scratch/kenzie-blind-reviews/intelligence-briefing/plugin/` (11 files, narrative stripped, leak-grepped); `PASS-2-PROMPT.md` written (break-the-repairs, finding→fix map zero-rationale, Finding 8 disclosed NOT addressed, §11 locks disclosed, raw pass-1 verdict appended).
 
 ## Next steps (in order)
 
-1. **STOP A → BUILD (Fable 5).** Clear context, switch model to **Fable 5**, set **effort `high` or `xhigh`**, stay on `review/intelligence-briefing`. Then paste the opening turn below. **Do not try to steer it conversationally.** Expect minutes-long turns; that is normal, not a hang.
-2. **STOP B → verify (Opus 4.8).** Switch back. Read `dev/rebuild/BUILD-REPORT.md` **first** — the build is required to write it, and it is the only record of every judgment call Fable made where the spec left room. Then verify against the ten-point review standard in the spec's THE HANDOFF section. Then release (v1.0.0, tag `intelligence-briefing-v1.0.0`).
-3. **Stage the pass-2 disclosed re-attack** against the *rebuilt* architecture per `dev/convergence/codex-review-protocol.md`. Re-rsync the clean-room packet from the rebuilt plugin into `~/Projects/_scratch/kenzie-blind-reviews/intelligence-briefing/`; do not create a parallel staging dir. Codex attacking a coverage matrix, a thread registry, and observation-backed re-derivation is a far more valuable review than attacking bolt-ons.
-4. **Kelsey: strategist STOP package** — `dev/convergence/review-queue/strategist-rubric-anchors.md`, plus two eval-pack follow-ups (`single_stage_advance` must accept 0.4.1's honest statuses; pin `adv-preference-over-evidence`'s end-state).
-5. **goal-setting: first golden-set run.** Nothing gates it.
-
-## Opening turn for the Fable 5 build session
-
-**Copy-paste this verbatim after clearing context, switching to Fable 5, and setting effort.** The spec carries everything; the prompt does not need to.
-
-```
-Build intelligence-briefing v1.0.0.
-
-Read dev/rebuild/intelligence-briefing-v1-build-spec.md in full, starting with THE HANDOFF
-section — it names the outcome, the source pack you must read before writing anything, your
-tool access, the boundaries, the review standard, the proof trail, and what to do when you
-hit something the spec doesn't settle.
-
-Read the whole source pack it names, including the one real brief the product ever produced.
-That artifact is the reason Section 2 exists.
-
-Two constraints will feel wrong and are not negotiable. Section 2 is a do-not-touch list.
-Section 11 is a do-not-build list. Both are product decisions with the reasoning written
-down, not scaffolding. If you find yourself about to improve past either one, stop and write
-it in the build report instead.
-
-Stay on the current branch. Write dev/rebuild/BUILD-REPORT.md as you go. Run the ten-point
-review standard before you tag.
-```
+1. **Kelsey: run Codex pass 2.** Fresh Codex context. Packet: `~/Projects/_scratch/kenzie-blind-reviews/intelligence-briefing/PASS-2-PROMPT.md` + `plugin/`. Paste the verdict back into a session for consumption.
+2. **Consume the verdict** per the protocol pipeline: verify every citation both directions, triage against `intelligence-briefing/AGENTS.md` locks (collisions are price tags, not work), file the note to `/Users/kelseyruger/Projects/_shared/core-kenzie-marketplace/dev/blind-reviews/intelligence-briefing-pass2-2026-07.md` (ONE INBOX — absolute path, not this worktree), repairs ship as a normal release.
+3. **Merge to main** (in `core-kenzie-marketplace`) when Kelsey is satisfied with the pass-2 outcome — installers pull main, so this is the real ship.
+4. **Build the intelligence-briefing eval pack** (golden set + rubric) — now unblocked; grade behavior (health line always present, degraded ≠ quiet, no padding), never recommendation correctness.
+5. **Kelsey: strategist STOP package** — `dev/convergence/review-queue/strategist-rubric-anchors.md`, plus two eval-pack follow-ups (`single_stage_advance` must accept 0.4.1's honest statuses; pin `adv-preference-over-evidence`'s end-state).
+6. **goal-setting: first golden-set run.** Nothing gates it.
 
 ## Open questions / decisions pending
 
-- **Nothing is open on the intelligence-briefing spec.** All four decisions locked by Kelsey 2026-07-12: **version `1.0.0`**; **`required_frequency_days` default 7** (1–3 offered at setup for fast cells); **reckoning interval 30 days**; **zone → STEEP table approved as drafted**.
-- **The no-subagent lock's scope** (recorded, not changed): it binds *collection*, and its stated rationale is web access. It says nothing about *analysis*. The v1 spec still uses no subagents anywhere — re-derivation from captured evidence made the verifier subagent unnecessary — but a future maintainer should know the lock reads narrower than it has been read.
+- **Pass-2 verdict** — everything intelligence-briefing now waits on it (merge to main, any v1.0.1 repairs).
+- **Finding 8 (relevance-context staleness) is deliberately open** — not in the build spec, disclosed as unaddressed in the pass-2 prompt. If pass 2 re-confirms it against v1, the fix shape from pass-1 triage stands: record-don't-restrict (a `Context confirmed:` stamp + an age line in the brief past a threshold).
+- **Build-report watch list** (judgment calls that might prove wrong in use): proposals living in `drivers.json`; export-time-only STEEP with null stored fields; the run-record `reckoning: true` flag; active-only export. See BUILD-REPORT §2.
 - Strategist rubric anchors + golden scenario changes: Kelsey-gated, package in the review queue.
 - **Strategist pass-3: SKIPPED** (Kelsey, 2026-07-12). Rationale and reopening tripwire in git history (`66fd768`).
 
 ## Session knowledge worth keeping
 
-- **The June 7 brief is the most important artifact in this workstream and it was nearly missed.** Design was proceeding on theory until Kelsey pointed at `~/Projects/_shared/Core Intelligence/briefs/2026-06-07.html`. **Never design a rebuild without reading the thing's actual output.** The whole "stop discarding what you already produce" reframe came from that one file.
-- **`Held beliefs: [empty]` in the one real deployment** — the single config field that would have enabled the disconfirming slot, left blank *by the person who built the plugin, in his own deployment*. That is the strongest available evidence that **config-as-form does not get filled in**, and it is why v1 deepens requirements through the review conversation rather than an intake template.
-- **A driver is a force, not a decision.** The setup input is a *standing mandate* ("I am tracking what is impacting compliance for our market and clients, and how that might drive implementation approaches") — no options, no closing date. Deriving Priority-Intelligence-Requirement-style *decision questions* from it is wrong and was corrected mid-session. Foresight had this right: *"'Automation Pressure' is a driver; 'Jobs Disappear' is an outcome."*
-- **Spec defect found by auditing against a Fable-5 whole-job rubric, worth repeating on future build specs:** the spec told the *skills* "never shell," and separately told the *builder* to run `claude plugin validate`. A careful agent would have read the first rule as binding on itself and refused to validate its own work. **Always disambiguate runtime rules from build rules in a one-shot spec.** The same audit surfaced four missing whole-job fields (tool access, review standard, proof trail, human gate) — all now in THE HANDOFF section.
-- **Export drivers, not hits.** Foresight's scan hit is a 21-field *human judgment form* with a two-minute entry rule; an observation is a *machine capture*. Forcing a hit-level match would require fabricating the 0–5 ratings and composite score that were deliberately rejected. The *driver* schemas already nearly match, which is why v1 adopts foresight's `direction` / `certainty` / `time_horizon` vocabulary verbatim.
-- **`dev/rebuild/` is NOT gitignored** (unlike `dev/blind-reviews/` and `dev/convergence/`). The build spec and build report are repo history on purpose — they are build artifacts, not candid defect lists.
-- **The clean-room packet for pass 2** must be re-rsynced from the *rebuilt* plugin: `~/Projects/_scratch/kenzie-blind-reviews/intelligence-briefing/`. Do not create a parallel staging dir.
-- Prior sessions' knowledge (worktree path guard vs. the one-inbox rule, Codex's heading-offset citation quirk, eval dispatch pattern, drift-lint usage, canon location) is unchanged — see `969bed5` and `66fd768` in git history.
+- **The one-shot build held, but the post-build sweep still earned its keep:** four real gaps survived a spec-faithful build, all in the family pass-1 taught (config read by no step; schema field written by nobody). **On any future one-shot build, run that family sweep before tagging** — it found what the ten-point checklist could not.
+- **The worktree path guard blocks Write/Edit outside this repo, including the scratch staging dir.** The ONE INBOX rule still governs; place scratch files via bash (`cat > path <<'EOF'`) — that's how PASS-2-PROMPT.md landed. (Known tension, previously recorded at `969bed5`.)
+- **The pass-2 appendix is Codex's RAW verdict only** — never the triage note, which carries internal vocabulary and Kelsey's design decisions the reviewer must not see.
+- **Spec-defect patterns worth repeating on future build specs** (all hit this build, all had conservative completions): a record consumed by three sections but defined by none (proposals); a schema example contradicting a lifecycle rule (STEEP populated vs export-time-only); a trigger with no persistence (the reckoning's "30 days since last"); "empty forms" colliding with "setup seeds content." Full list: BUILD-REPORT §3.
+- **The June 7 brief remains the most important artifact in this workstream** — the rebuild exists because the machine wrote the intelligence into HTML for the human and kept a shopping list for itself. Never design a rebuild without reading the thing's actual output.
+- Prior sessions' knowledge (worktree path guard vs. one-inbox, Codex's heading-offset citation quirk, eval dispatch pattern, drift-lint usage, canon location) is unchanged — see `969bed5` and `66fd768` in git history.
 
 ## How to resume
 
 1. Read `AGENTS.md` (orientation), then this file.
-2. **If the next action is the build:** you are at STOP A. Clear context, switch to Fable 5, set effort, and paste the opening turn above. Do not start designing again — the spec is closed.
-3. **If the build has run:** read `dev/rebuild/BUILD-REPORT.md` before anything else, then verify against the review standard in the spec's THE HANDOFF section.
-4. Grounding docs, in order of authority: `dev/rebuild/intelligence-briefing-v1-build-spec.md` (the build contract), `dev/blind-reviews/intelligence-briefing-pass1-2026-07.md` (why the rebuild exists; nine design decisions), `intelligence-briefing/AGENTS.md` (locks).
+2. **If the pass-2 verdict is in hand:** run the consumption pipeline (protocol §"Consuming the verdict"); the triage note files to the core checkout by absolute path.
+3. **If not:** nothing on intelligence-briefing is actionable except the eval pack (next step 4); the other plugins' queues stand.
+4. Grounding docs, in order of authority: `dev/rebuild/intelligence-briefing-v1-build-spec.md` (the build contract), `dev/rebuild/BUILD-REPORT.md` (what was actually built and every judgment call), `dev/blind-reviews/intelligence-briefing-pass1-2026-07.md` (why the rebuild exists), `intelligence-briefing/AGENTS.md` (locks).
