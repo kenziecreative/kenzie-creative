@@ -41,7 +41,8 @@ This appendix defines the core objects in the playbook and how they relate. It e
   is pursued — checked at the monthly review), capacity_commitment, dependencies, non_goals,
   legitimate_revision_conditions }
 - `revision_history`: append-only array of { date, field, original_value,
-  actual_at_change, new_value, reason, classification: goal_wrong | execution_wrong } —
+  actual_at_change, new_value, reason, classification: the differential call that justified
+  it (see MonthlyReview — usually goal_wrong or metric_wrong) } —
   a revision **never** overwrites the original commitment; it records it
 - **Constraint:** max 3 Objectives in `active` status at any time across all anchor areas; one Objective per active anchor area.
 - **Closeout rule:** a quarter does not replan until every Objective whose period ended has a disposition + lessons recorded in `goals/history.md`.
@@ -65,6 +66,11 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `objective_id`: foreign key to Objective (may also link to specific KRs)
 - `trigger_type`: time | location | habit_stack
 - `trigger_detail`: e.g., "Mondays 9-11am" or "after morning coffee"
+- `hypothesis`: the causal bet — how this activity moves the KR
+- `expected_signal` + `lag`: what moves first, and how long after execution
+- `min_test_duration`: weeks of honest execution before results are judged
+- `dose`: the committed how-much/how-often
+- `decision_rule`: the keep / revise / kill condition, set at design time
 - `four_laws`: { obvious, attractive, easy, satisfying } — short string per law
 - `version`: integer — increments on revision (Version 3 works)
 - `status`: active | paused | retired | replaced — `paused` is the Restart Protocol's state (systems waiting to be reintroduced one at a time)
@@ -117,7 +123,7 @@ This appendix defines the core objects in the playbook and how they relate. It e
 
 **MonthlyReview**
 - `date`
-- `per_objective_assessment`: array of { objective_id, on_track, classification: goal_wrong | execution_wrong | both, change_made }
+- `per_objective_assessment`: array of { objective_id, on_track, classification: insufficient_dose | insufficient_time | mechanism_wrong | metric_wrong | goal_wrong | external | unknown, change_made } — the 7-way differential, worked in order (dose → time → mechanism → metric → goal → external → unknown)
 
 **QuarterlyReview**
 - `date`

@@ -49,6 +49,27 @@
       "id": "hook_user_narration",
       "pattern": "STATE\\.md may be stale",
       "reason": "hook message narrated plumbing at the user's register — re-addressed to the agent in 0.2.0 (invariant 3)"
+    },
+    {
+      "id": "old_pulse_diagnosis",
+      "pattern": "didn't see progress, the system is wrong",
+      "reason": "the F1 doctrine contradiction — reconciled in 0.2.1 to the skills' logic (executed + not progressing → goal/KR misfit)"
+    },
+    {
+      "id": "two_failure_modes",
+      "pattern": "The two failure modes",
+      "reason": "binary monthly diagnosis — superseded in 0.2.1 by the 7-way differential (Decision F2)"
+    },
+    {
+      "id": "binary_classification_enum",
+      "pattern": "goal_wrong \\| execution_wrong \\| both",
+      "reason": "binary MonthlyReview classification — superseded in 0.2.1 by the differential enum"
+    },
+    {
+      "id": "binary_monthly_question",
+      "pattern": "is the goal wrong,? or (is )?the execution wrong",
+      "flags": "i",
+      "reason": "binary monthly question — superseded in 0.2.1 by 'which of the seven ways a goal stalls'"
     }
   ],
   "requiredSections": [
@@ -146,6 +167,23 @@
       "pattern": "revised \\[",
       "files": [
         "skills/goal-setting-review/SKILL.md"
+      ]
+    },
+    {
+      "id": "differential_enum",
+      "pattern": "insufficient_dose \\| insufficient_time \\| mechanism_wrong \\| metric_wrong \\| goal_wrong \\| external \\| unknown",
+      "files": [
+        "reference/schemas.md",
+        "reference/playbook.md"
+      ]
+    },
+    {
+      "id": "experiment_terms",
+      "pattern": "decision[_ ]rule",
+      "files": [
+        "reference/schemas.md",
+        "reference/playbook.md",
+        "reference/stages/05-systems.md"
       ]
     }
   ]

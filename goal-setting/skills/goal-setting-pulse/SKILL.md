@@ -94,6 +94,9 @@ intelligent adaptation, not a guilt ritual — you're asking "is the design work
      untangles it.
    - **Executed + progressing** → working. Say so plainly and stop.
 
+   The monthly review runs the full differential (dose, time, mechanism, metric, goal,
+   external, unknown); the pulse only points.
+
 4. **Append the entry** to `goals/journal.md` under a weekly section (newest at top), one
    line per Objective:
 

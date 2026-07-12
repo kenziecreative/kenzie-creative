@@ -3,6 +3,29 @@
 All notable changes to the Goal Setting plugin. Per-plugin semver; tags are plugin-scoped
 (`goal-setting-vX.Y.Z`).
 
+## 0.2.1 — 2026-07-12
+
+The F1/F2 playbook release — the one STOP item from 0.2.0 that awaited Kelsey's review,
+approved as drafted and shipped in a single playbook touch. Method content;
+SHIPPED-UNTESTED.
+
+- **F1 — the reconciled diagnosis** (fixes the doctrine contradiction blind F5b found):
+  the weekly-pulse line now reads executed + not progressing → the goal or its KR is the
+  likely misfit; didn't execute → the system's design is wrong. Playbook and skills now
+  agree.
+- **F2 — systems as experiments:** every System states its terms at design time — causal
+  hypothesis, expected signal + lag, minimum test duration, dose, decision rule (playbook
+  Stage 5 "A system is an experiment, not a ritual"; stage file; schema in both
+  schemas.md and the playbook appendix). The monthly review's binary classification is
+  replaced by **the differential — seven ways a goal stalls** (insufficient dose →
+  insufficient time → mechanism wrong → metric wrong → goal wrong → external → unknown),
+  worked in order against the recorded experiment terms; revision-record classifications
+  now carry the differential call. The pulse keeps its five-minute three-way surface and
+  points at the monthly.
+- Mechanical consistency on the same surfaces: the monthly question line and one-page
+  summary updated from the binary to the differential; the monthly command wrapper
+  likewise; four retired binary phrasings added to the drift lint in the same commit.
+
 ## 0.2.0 — 2026-07-12
 
 The convergence release: the Ongoing Arc gets the operating machinery the 2026-07 blind

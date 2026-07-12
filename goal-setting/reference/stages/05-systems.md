@@ -29,14 +29,19 @@ Apply all four to every system:
 3. **Make it Easy.** Remove friction — pre-written templates, a one-page dashboard instead of a 47-tab spreadsheet, a standing meeting doc.
 4. **Make it Satisfying.** Build in immediate feedback — a habit checklist, a "done" list, reporting completed execution to one accountability partner.
 
-**The accountability nuance — get this right.** *Don't* broadcast goals to a social circle for encouragement *before* executing (the validation fires the reward system prematurely and reduces drive). *Do* report completed execution to one trusted partner *after* the work is done (that's satisfaction, not premature reward). Marcus texting his coach "5/5 this week" works because it celebrates execution, not intention.
+**The accountability nuance — get this right.** *Don't* broadcast goals to a social circle for encouragement *before* executing (the validation lands like an accomplishment before anything has been done, and takes the edge off the drive). *Do* report completed execution to one trusted partner *after* the work is done (that's satisfaction, not premature reward). Marcus texting his coach "5/5 this week" works because it celebrates execution, not intention.
 
 **Tactical tool:** when actually doing the work, physically narrow the visual field — close tabs, turn the monitor from the window, single-task. Contracting the visual aperture increases clarity of pursuit.
+
+## A system is an experiment, not a ritual
+
+A trigger makes a system run; it doesn't make it *work*. Each system states its experiment terms at design time (see `System` in [schemas.md](../schemas.md)): the **causal hypothesis** (how this activity moves this KR — said as a mechanism, not a vibe), the **expected signal and its lag**, the **minimum test duration**, the **dose**, and the **decision rule** (what result by when means keep, revise, or kill — decided now, while the user is calm). A system without a decision rule is a ritual, not an experiment. These terms are what the monthly review's differential reads.
 
 ## Constraint enforcement (HARD)
 
 - **Every System must have a trigger** — `trigger_type` one of `time`, `location`, or `habit_stack` (per [schemas.md](../schemas.md)) — with a concrete `trigger_detail`. **Reject** any system without one as "a hope, not a system."
 - **One System per active anchor area at initial setup.** You cannot design six systems at once and probably can't sustain three. Start with one per active anchor; get it working consistently for a month before adding a second. **Refuse** to register multiple systems per anchor at setup.
+- **Every System states its experiment terms.** Hypothesis, expected signal + lag, minimum test duration, dose, decision rule. Gaps are captured as gaps and named (like the goal contract) — but a missing *decision rule* gets one push, because it's the term that stops the week-3 panic and the month-6 zombie system alike.
 
 ## Posture notes
 
@@ -45,7 +50,7 @@ Apply all four to every system:
 
 ## Deliverable
 
-One weekly System per active anchor area, designed against all four laws, each with an explicit trigger type and detail, versioned (expect revision). Write to `goals/active.md` under the matching Objective. These systems are the inputs to Stage 6.
+One weekly System per active anchor area, designed against all four laws, each with an explicit trigger type and detail plus its experiment terms (hypothesis, signal + lag, minimum duration, dose, decision rule), versioned (expect revision). Write to `goals/active.md` under the matching Objective. These systems are the inputs to Stage 6.
 
 ## Hand off
 
