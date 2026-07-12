@@ -109,7 +109,12 @@ own failure.
 2. Read `strategy/STATE.md`, `strategy/brief.md`, and the project config (`./CLAUDE.md`
    or `strategy/strategist-config.md`) for the problem statement, `depth`, and
    `pressure_test` setting.
-3. If the problem statement is still `[FILL]` and this is the **Define** stage, ask for
+3. **File primacy.** `strategy/STATE.md` and `strategy/brief.md` are the source of truth
+   for where the loop stands and what earlier stages produced. If conversation memory or
+   a compaction summary disagrees with the files, the files win — silently. Something
+   that feels established but isn't in the files is a hypothesis to re-verify, not a fact
+   to build on.
+4. If the problem statement is still `[FILL]` and this is the **Define** stage, ask for
    it now and write it into STATE.md and brief.md before continuing. For any other stage,
    require that Define is complete first (see Step 1 ordering check).
 
@@ -227,6 +232,18 @@ Update the Working Dynamic: if you learned something about how the user takes pu
 (welcomed it / went defensive / wanted more directness), refresh `## Working Dynamic` in
 STATE.md so the next stage calibrates better.
 
+**Done-bar check.** Each stage README carries a "The stage is done when" block — that
+block is the stage's completion contract, and the engine reads it as a checklist before
+advancing. Read it now (`${CLAUDE_PLUGIN_ROOT}/reference/<dir>/README.md`) and check the
+stage's actual output against each bar. A filled-in framework is not automatically a
+finished stage: Analyse's bar requires every Frame dimension interrogated, Synthesise's
+requires the commitment gate passed, Story's requires structure then shape, Move's
+requires the execution backbone. If a bar is unmet, say which one and what would meet it,
+then keep working — or, if the user wants to advance anyway, respect the call and record
+the gap: note the unmet bar in the stage's `brief.md` section and in the Stage Record
+notes, so the state file stops certifying work the stage's own contract says isn't done.
+Never block; always record.
+
 Then advance:
 
 1. In `strategy/STATE.md`: set this stage's row to `complete` with the framework(s)
@@ -287,6 +304,8 @@ Then render the transition:
 | Blocking legitimate iteration or look-ahead | Step 1 is advisory — note the ordering, respect the user's choice. |
 | Re-asking for inputs earlier stages already captured | Step 0/3 read `brief.md` first and reuse known inputs. |
 | Running stages back-to-back without a checkpoint | Step 6 hands off with a transition; the user drives the next stage. |
+| Advancing on a shallow single-framework pass that fails the stage's own done-bar | Step 5 done-bar check reads the stage README's "The stage is done when" block as the completion contract before advancing. |
+| Building on conversation memory that contradicts the files | Step 0 file primacy: STATE.md and brief.md win over chat memory and compaction summaries, silently. |
 | Leaving the brief as disconnected fragments | Step 4 keeps `brief.md` readable as one continuous argument. |
 | The stage flowed too smoothly — every answer accepted as-is | Step 5 Self-Audit (friction check) catches the soft-but-unchallenged stage and forces one genuine challenge before closing. |
 | Writing down a non-answer ("audience is everyone") to keep moving | Step 3 rejects generic/evasive answers and asks for the specific version. |

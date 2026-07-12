@@ -9,6 +9,10 @@ model: sonnet
 
 Show where the strategy stands. Read-only — this skill writes nothing.
 
+**File primacy.** `strategy/STATE.md` and `strategy/brief.md` are the source of truth. If
+conversation memory or a compaction summary disagrees with the files, the files win —
+report what the files say, not what the conversation remembers.
+
 ## Current State
 
 !`cat strategy/STATE.md 2>/dev/null || echo "No strategy/STATE.md found — run /strategist:init first."`
@@ -66,6 +70,8 @@ Infrastructure: N/4 checks passed
 1. Report exactly what STATE.md and brief.md say. Don't editorialize on quality.
 2. If STATE.md and brief.md disagree (a stage complete in one but empty in the other),
    surface the discrepancy plainly.
-3. Show open pressure-test findings prominently — an unaddressed load-bearing finding is
-   a blocker, not a footnote.
+3. Show open pressure-test findings prominently — an unresolved load-bearing finding
+   deserves the top of the report, not a footnote. (Nothing in the loop blocks on it —
+   don't use gate language for a gate that doesn't exist; just make sure it can't be
+   missed.)
 4. This skill is read-only. It does not write or modify any file.
