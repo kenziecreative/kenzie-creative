@@ -3,6 +3,49 @@
 All notable changes to the Strategist plugin. Per-plugin semver; tags are plugin-scoped
 (`strategist-vX.Y.Z`).
 
+## 0.4.1 — 2026-07-12
+
+The **pass-2 hardening release** — same-day repairs for the six PARTIAL verdicts from
+the disclosed Codex re-attack on 0.4.0 (triage record:
+`dev/blind-reviews/strategist-pass2-2026-07.md`, owner's machine). The through-line
+fix: the state model stops conflating *"the user chose to proceed"* with *"the work
+satisfies its contract."* Advisory design untouched — nothing blocks; everything
+records, honestly.
+
+- **Two-axis claim marking (F1).** Ownership is origin (user / agent / external) ×
+  standing (first-hand / unverified / estimate). User-relayed ≠ user-owned: a
+  benchmark the user quotes is external + unverified, whatever mouth it arrived
+  through; ambiguity degrades, never flatters. Both axes survive into "What this
+  rests on."
+- **The commitment gate stops keeping secrets (F2).** The critic now receives the full
+  alternative set, the evaluation basis, and why each option provisionally lost — a
+  rigged field is now its to name, not just the winning argument. `Pressure-tested`
+  vocabulary becomes `clear / open (n) / declined`; tested-with-a-standing-objection
+  is not clear, and every unresolved load-bearing finding travels — substance and
+  disposition — into DECISION.md and the reader brief (the one deliberate exception
+  to the no-process-residue rule: a standing objection is a limitation the reader is
+  owed). The Synthesise README's stale "offered" wiring corrected to the auto-run.
+- **The Insight boundary goes blanket (F3).** Every Insight form is current-state-only
+  at Insight, entry section or not; From:To, Horizon, and Chevron join the five 0.4.0
+  entries with their own Stage Boundary sections (the To column, forward horizons,
+  and phased routes are decisions, not observations).
+- **Staleness is canonical (F4).** Stale stages leave `completed_stages` for a new
+  `stale_stages` frontmatter list; Position recomputes after invalidation, never
+  before; a stale marker clears top-down only — reconciling downstream while upstream
+  is still stale earns `complete (on stale inputs)`, not `complete`.
+- **Advance-past-a-done-bar reads what it is (F5).** Status
+  `incomplete (advanced by user)`, excluded from `completed_stages`; progress gains
+  the Notes column plus an unmet-done-bars line, and resume briefs it.
+- **Mid-stage work survives an unsaved stop (F6).** The engine refreshes In-Flight in
+  STATE.md after each substantive answer, so auto-compaction with no `/strategist:save`
+  no longer loses the half-finished stage; save remains the curated debrief.
+- **Instruments.** Drift lint gains six retired phrases and three new reader/writer
+  vocabulary contracts (it caught one regression during this very build); the eval
+  harness's `section_filled` gate is n/a on expected-no-advance runs (mid-stage ledger
+  writes are legitimate work product — iteration-1 proof case). Golden set re-run
+  green post-repair. Still pending Kelsey's review, unchanged: the rubric
+  Continuity/Register package and the golden-scenario end-state pin.
+
 ## 0.4.0 — 2026-07-12
 
 The **convergence release** — the strategist half of the backstage convergence plan
