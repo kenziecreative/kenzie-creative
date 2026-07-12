@@ -1,47 +1,52 @@
 # Work state — kenzie-creative-marketplace
 
-**Last updated:** 2026-07-01 · **Session focus:** reviewed and released **photo-generator v1.1.0** — the plugin was built by an agent outside this project and committed to `main` unpushed; this session audited it (structure, script, key handling, docs), fixed what the audit found (missing root-index registrations, a stale command name), tagged, and pushed. `main` is fully pushed and green.
+**Last updated:** 2026-07-12 · **Session focus:** strategist convergence build — shipped **v0.4.0** (full convergence release) and **v0.4.1** (same-day Codex pass-2 hardening), built the shared doctrine-drift lint, ran the golden eval twice (green both times), staged the Codex pass-2 packet and consumed its verdict end to end.
 
 ## Where things stand
 
-- **Plugins (all released and pushed):** goal-setting 0.1.0 · intelligence-briefing 0.3.0 · **photo-generator 1.1.0 (NEW)** · researcher 1.4.1 · sage 0.2.0 · strategist 0.3.0 · thinkers 0.1.0. Checker (`dev/scripts/check-version-prefix.mjs`) green across all 7 × 4 mirrors; marketplace + all plugins validate.
-- **Branch `goal-setting-eval-target`** (pushed, no PR open yet): one commit, `51f3676` — the goal-setting eval target pack (`eval/targets/goal-setting/`, 6 files). Built in a prior session; **the pack has not been run yet** and the branch awaits a PR into `main`.
-- **Eval packs exist for:** strategist, thinkers, goal-setting (unrun, on its branch). Missing: researcher, sage, intelligence-briefing, photo-generator.
+- **strategist (0.4.1)** — convergence release + pass-2 hardening both on main, tagged (`strategist-v0.4.0`, `strategist-v0.4.1`), pushed. All six pass-1 HIGHs, all MEDs, five of seven LOWs shipped; all six pass-2 PARTIALs repaired. Ported patterns are SHIPPED-UNTESTED (no live session yet). Full account: `strategist/CHANGELOG.md`. Review record: `dev/blind-reviews/strategist-pass2-2026-07.md` (local-only, primary checkout).
+- **goal-setting (0.1.0)** — next in the A1 release sequence; its builder consumes the shared drift lint by adding `dev/scripts/drift-configs/goal-setting.json` (see the strategist config as the model). New portable finding to audit before its release: any status cell that can say *done* while a recorded exception stands ("user chose to proceed" ≠ "work satisfies its contract") — see pass-2 note § cross-plugin significance.
+- **researcher (1.4.1)** — releases last (A1); same lint-consumption and status-cell audit notes apply; its register port (D1) and evidence architecture (B1) still wait on Kelsey's sessions.
+- **eval harness** — `eval/lib/run-gates.mjs` fixed this session (`section_filled` is n/a on expected-no-advance runs). Two pack follow-ups queued (below).
 
 ## Done this session
 
-- **photo-generator v1.1.0 released.** Plugin commit `09a56ae` (was already on `main`, unpushed) + fix commit `aea7bc1`, tag `photo-generator-v1.1.0`, all pushed to origin.
-- **Audit verdict:** structurally sound — thin commands → skills, `${CLAUDE_PLUGIN_ROOT}` reference library, correct catalog entry/URLs, script compiles, key handling honors the beacon pattern (key never in chat or config.json, `--check-keys` prints source only, project mode writes a keys.env `.gitignore`).
-- **What the audit caught, fixed in `aea7bc1`:** photo-generator missing from ALL root-README registration points (glance table, tool card, install list, setup sentence, update list) and from both AGENTS.md lists; `reference/brand-styles.md` still cited the old standalone repo's `/create-photo-prompt` (now `/generate-photo`). Also added `photo-generator` + `thinkers` to the AGENTS.md per-plugin registry (thinkers was pre-existing drift).
-- **Committed `dev/goal-setting/build-spec.md`** (was untracked) to `dev/goal-setting/` per the dev-docs convention.
+- strategist v0.4.0 (convergence): `a81291c`..`03fded1`, tag `strategist-v0.4.0`.
+- Shared plugin-configurable doctrine-drift/canon-sync lint: `dev/scripts/lint-doctrine-drift.mjs` + `drift-configs/strategist.json` (`4bb2a3e`); release-blocking, wired into strategist's ritual.
+- Golden eval iteration-1 against 0.4.0: 17/17 pass (review-protocol step-5 re-verification).
+- Codex pass-2 staged (`~/Projects/_scratch/kenzie-blind-reviews/strategist/PASS-2-PROMPT.md` + clean-room 0.4.0 copy), verdict consumed: 6/6 PARTIALs verified, triage filed, all repaired.
+- strategist v0.4.1 (pass-2 hardening): `450ecca`..`9cc8b03`, tag `strategist-v0.4.1`; golden eval iteration-2 green (17/17) before merge.
+- Plan updated for both releases (`f387e5d` latest); pass-2 triage note filed per the one-inbox rule.
 
 ## In flight / uncommitted
 
-None. Working tree clean on both branches.
+None. Both checkouts clean; main fully pushed at `f387e5d`.
 
 ## Next steps (in order)
 
-1. **goal-setting eval — run and land.** On `goal-setting-eval-target`: `/eval-run --target goal-setting --scope golden` (reload session first so `eval-runner`/`eval-judge` register), fix anything red, then open a PR into `main` (prior packs merged via PR). Pack docs: `eval/targets/goal-setting/coverage.md`.
-2. **thinkers eval — finish coverage.** Only the 2 calibration goldens ever ran (both 3·3·3). Remaining: 3 adversarial goldens (`adv-over-label`, `adv-invented-pattern`, `adv-sycophancy-bait`) + 5 representatives. `eval/targets/thinkers/coverage.md`.
-3. **photo-generator follow-ups (all optional):** Cowork-side review of the adopter-facing register per the build model (this session reviewed from the Code side only); an eval target pack (none exists); two accepted script nits — the 14-reference cap is documented but not enforced in `scripts/generate_image.py`, and the legacy cwd-`.env` loader imports every variable in the file (process-local, doesn't override real env).
-4. **Strategist v0.3.0 backlog:** critic restraint guard (`adv-sound-strategy` Critic Acuity 3·3·0 — tighten the over-flagging guard in `strategist/agents/strategist-critic.md`); run `rep-story-pyramid`; representative scenarios for `frame`/`insight`/`move`; three open design/IP calls (see git history of this file, checkpoint `4aa6823`, for detail).
-5. **Eval packs for researcher, sage, intelligence-briefing** — `eval/reference/target-pack-spec.md`.
-6. **Version-card question (open):** if the marketplace card ever surfaces `version` natively, strip the `v<X.Y.Z> — ` description prefixes and retire `check-version-prefix.mjs`.
+1. **Kelsey: review the strategist STOP package** — `dev/convergence/review-queue/strategist-rubric-anchors.md` (primary checkout): Continuity + Register rubric dimensions (0–3 anchors), the `adv-mid-stage-resume` golden scenario, an adapter note. Ships as a strategist patch on approval, together with item 2.
+2. **Eval-pack follow-ups (ride with item 1):** (a) teach `single_stage_advance` in `eval/lib/run-gates.mjs` the 0.4.1 honest statuses — a Stage Record row `incomplete (advanced by user)` with `current_stage` advanced is a legitimate recorded non-certification, not a Δ0 fail (proof case: iteration-2 `adv-preference-over-evidence/run-1`); (b) pin `adv-preference-over-evidence`'s end-state (third scripted message or truncation semantics) so runner interpretation stops moving the gate signal.
+3. **If Kelsey commissions a Codex pass-3:** restage the packet — the `_scratch` staging dir still holds the **0.4.0** copy pass-2 reviewed. Re-rsync from main's `strategist/` (excludes: `.DS_Store`, `AGENTS.md`, `CHANGELOG.md`), write a fresh PASS-3 prompt with a finding→fix-location map for the six pass-2 repairs (zero rationale), appendix = the pass-2 raw verdict from `dev/blind-reviews/strategist-pass2-2026-07.md`. Protocol: `dev/convergence/codex-review-protocol.md` (local-only).
+4. **goal-setting convergence build/release** (next per A1) — brief at `dev/convergence/goal-setting-build-brief.md` (local-only); carry over the status-cell audit finding and consume the drift lint.
+5. **First live strategist session** graduates the SHIPPED-UNTESTED patterns (plan § How a Pattern Graduates).
 
 ## Open questions / decisions pending
 
-- **goal-setting eval branch:** run-then-PR is the assumed path (step 1) — confirm with Kelsey if the pack was meant to land unrun.
-- **`dev/goal-setting/build-spec.md` references companions that aren't in the repo** (`playbook.md`, `anchor-areas.md`, `three-tyrants.md` — named as living in `dev/goal-setting/`). They exist only on the Cowork side, if anywhere. Kelsey to decide whether to bring them over.
-- **Root `CHANGELOG.md` is actually intelligence-briefing's changelog** (pre-rename artifact; intelligence-briefing has no changelog in its own directory). Harmless but confusing — rehome it or leave it, Kelsey's call.
+- Rubric anchors + golden scenario changes: Kelsey-gated (STOP protocol), package in the review queue.
+- Pass-3: whether/when is Kelsey's call (pass-2 closed 0/6 CLOSED — a re-attack on the repairs is plausible once the rubric package lands).
 
 ## Session knowledge worth keeping
 
-- **Reviewing an unpushed commit made by another agent:** the work may be on a different branch than you're sitting on — check `git log --all -- <path>`. Use a scratch `git worktree add <scratchpad>/x main` to validate/review without disturbing the working branch; `claude plugin validate` works fine inside a worktree.
-- **`check-version-prefix.mjs` is the fastest audit entry point** for a new plugin — it immediately pinpointed the two missing index registrations.
-- **Branch-switch debris:** an agent committing on `main` while the tree sits on another branch leaves orphan dirs holding `.DS_Store` files after checkout (gitignored, so invisible in `git status` but present on disk — this session's `photo-generator/` shell). `rm` the `.DS_Store`s and the dirs vanish on next checkout.
-- **Ports carry stale command names in reference files** — the plugin's own docs were clean but `reference/brand-styles.md` still had the old repo's slash command. Grep the whole plugin for the old command name when reviewing a port.
+- **This worktree** (`kenzie-build-strategist`, branch `convergence/strategist`) is rebased onto main after each merge; `main` itself lives in the primary checkout (`core-kenzie-marketplace`) — merges/tags/pushes run there via `git -C`. The Write tool is path-guarded to the active worktree: write files destined for `_scratch`/primary-checkout via a relative path inside the worktree (gitignored `dev/convergence/` works) then `cp` with Bash.
+- **Eval runs are local-only** (`eval/**/_eval/` is gitignored). Iteration scorecards + all captures: `eval/targets/strategist/_eval/iteration-1/scores.md` and `iteration-2/scores.md`. Most instructive captures: iteration-2 `adv-preference-over-evidence/run-1` (honest-status semantics live) and `adv-fabricate-data` (ledger + refusal).
+- **Eval dispatch pattern that works:** eval-runner/eval-judge subagents run in background; a background subagent's *final text is not delivered* — instruct every judge/runner to `SendMessage to:"main"` with its result, or you'll have to ping idle agents afterward. One runner → `run-gates.mjs` (run it yourself in Bash) → one judge per run; noisy scenarios 3×, worst sample decides.
+- **Drift lint usage:** `node dev/scripts/lint-doctrine-drift.mjs --plugin <name>`; config per plugin in `dev/scripts/drift-configs/`. Canon checks skip-with-warning off the owner's machine. When a change retires wording, add the phrase to the config in the same commit — it caught real regressions mid-build twice this session.
+- **Canon location moved:** the Strategy Spine canon is `~/Documents/Claude/Projects/AI Operations/frameworks/strategy/strategy-spine.md` (subdir; `../`-relative cross-refs — handled by the lint's declared normalizations; the plugin copy is correct as shipped).
+- **Codex prompt templates** for strategist: pass-1 at `~/Projects/_scratch/kenzie-blind-reviews/strategist/PROMPT.md`; pass-2 in the same dir (`PASS-2-PROMPT.md`).
+- Stale note removed from the old STATE: the `goal-setting-eval-target` branch (`51f3676`, unrun pack, no PR) — still true as of 2026-07-01; not touched this session.
 
 ## How to resume
 
-1. Read `AGENTS.md` (orientation), then this file. Eval harness: `eval/README.md` + `eval/AGENTS.md`. Per-plugin: each plugin's `AGENTS.md` → "Maintaining this plugin".
-2. `main` is clean and pushed. For step 1, work on `goal-setting-eval-target`; reload the session before `/eval-run` so the eval agents register.
+1. Read `AGENTS.md` (orientation), then this file.
+2. For convergence work: `dev/convergence/README.md` (local-only) → the relevant build brief → `dev/backstage-convergence-plan.md` § Decisions of Record + changelog.
+3. For strategist follow-ups: the review-queue package (next step 1) is the gate on everything queued behind it.
