@@ -47,7 +47,18 @@ it with you, and writes the result into the working document, `strategy/brief.md
 readable end to end, with the full record of how you got there. From the Story stage on,
 Strategist also produces `strategy/strategy-brief.md`: the clean, reader-facing strategy
 brief, structured around the strategy with no process residue, for an exec or a partner.
-`strategy/STATE.md` tracks where you are; the loop is resumable across sessions.
+`strategy/STATE.md` tracks where you are; the loop is resumable across sessions —
+`/strategist:save` when you stop (it works mid-stage), `/strategist:resume` when you're
+back, and the return picks up the thread, not just the position.
+
+Two more documents keep the loop honest. A short **engagement charter**
+(`strategy/CHARTER.md`), captured at setup, records the decision being made, who makes
+it, the stakes, and the boundaries — and the loop checks the strategy against it before
+you commit. The commitment gate at Synthesise makes sure the through-line stands against
+real alternatives, runs the critic automatically before the decision locks (never
+blocking — declining is your call, and it's noted), and writes a standing **decision
+record** (`strategy/DECISION.md`): what was decided, what lost and why, the trade-offs
+and risky assumptions, and what would reopen the question.
 
 Behind the loop is a **library of 70 frameworks**, one markdown entry each, organised by stage. You can also reach any framework directly with
 `/strategist:framework <name>`, inside a project or not.
@@ -59,6 +70,8 @@ Behind the loop is a **library of 70 frameworks**, one markdown entry each, orga
 - `/strategist:framework <name>` — apply or explain any single framework on its own.
 - `/strategist:pressure-test` — stress-test the current reasoning with the critic.
 - `/strategist:progress` — see where you are in the loop and what's next.
+- `/strategist:save` — wrap up a session (works mid-stage); `/strategist:resume` — pick
+  the thread back up in a new one.
 
 ## The Critic
 
@@ -71,13 +84,16 @@ or cost claim the assistant inferred rather than you establishing it) and an
 **agent-introduced keystone** (a framing the assistant added quietly becoming the spine).
 It reports findings and records them; acting on them is your call, made back in the
 relevant stage. If your thinking holds, it says so — it doesn't manufacture concerns.
+The Synthesise commitment gate also runs the critic once automatically before the
+decision locks; it never blocks, and if you wave it off, the brief simply says so.
 
 ## Getting Started
 
 1. Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then
    `/plugin install strategist@kenzie-creative`.
-2. In a fresh project directory, run `/strategist:init` and give it your problem in a
-   line.
+2. In a fresh project directory, run `/strategist:init` — give it your problem in a
+   line and the shape of the engagement (the decision, who makes it, the stakes) in a
+   few more.
 3. Run `/strategist:define` and work the loop from there. Run `/strategist:progress` any
    time to see where you stand.
 

@@ -3,6 +3,75 @@
 All notable changes to the Strategist plugin. Per-plugin semver; tags are plugin-scoped
 (`strategist-vX.Y.Z`).
 
+## 0.4.0 — 2026-07-12
+
+The **convergence release** — the strategist half of the backstage convergence plan
+(all six HIGH items, all MED items, and five of seven LOW items from the 2026-07-11
+re-audit). Every pattern ported from Brand Compass enters as **SHIPPED-UNTESTED**
+(the return: save/resume/Working Read/Backstage Tasks; the charter; the decision
+record; the option set; the provenance valve; the plan ledger); nothing graduates
+from a build session.
+
+- **Record, never restrict (invariant 11 — the HIGH cluster).** Nothing new blocks;
+  every consequential user call now leaves a trace. Claim ownership (user-owned /
+  agent-inferred / external-unverified) is marked in the working record and survives
+  into the reader brief — in prose plus a closing **"What this rests on"** section; no
+  citations, no research gate (the no-evidence-layer lock stands, decision E1). A
+  **declined pressure-test** is marked in STATE and said plainly in the reader brief. A
+  material upstream revision marks later completed stages **`stale (premise changed)`**;
+  progress surfaces it; running on a stale premise warns once and records the choice.
+  Advancing past an unmet done-bar is the user's call — noted in the record.
+- **The commitment gate earns the marketing copy (decisions C2 + E2).** At Synthesise,
+  before the commitment write: the through-line stands against **real alternatives**
+  (status quo / reversible test / preferred / materially different / ambitious, with the
+  honest-singleton valve); the **critic auto-runs** — non-blocking, decline recorded —
+  which is what makes "pressure-tests your reasoning before you commit" true as
+  written; the commitment is checked against the charter; a **Rumelt-kernel check**
+  records diagnosis / guiding policy / coherent actions / advantage mechanism /
+  exclusions as present-thin-absent (records, never blocks, decision E3); and a
+  standing **decision record** (`strategy/DECISION.md`) is written. The existing
+  descriptions are unchanged — items 2 + E2 earn them.
+- **Done-bars are the completion contract.** The engine reads each stage README's "the
+  stage is done when" block as its checklist before advancing. `progress` stops calling
+  an unresolved finding a "blocker" — no gate exists, and the vocabulary now says so.
+- **The return restores stance.** New `/strategist:save` (session debrief & state save,
+  works mid-stage) and `/strategist:resume` (re-adopts Working Dynamic + **Working
+  Read**, continues **In-Flight** mid-stage work without re-asking, executes
+  **Backstage Tasks** silently, additive-only schema migration, spoken briefing).
+  STATE gains Working Read / In-Flight / Backstage Tasks and a Stage Record Notes
+  column. Anti-contamination rule in the engine, progress, and resume: **files win
+  over chat memory and compaction summaries, silently.**
+- **Insight framework boundary (blind F3).** The five generative Insight entries (3x3,
+  Continuum, Capability Map, Gantt, One Pager) carry **Stage Boundary** rules —
+  current-state form at Insight; dispositions, targets, and forward plans belong at
+  Synthesise/Story/Move. Contradicting entry sentences fixed; the engine honors entry
+  boundaries. `strategy-spine.md` (canon copy) untouched.
+- **Engagement charter, wired (decision E3).** `/strategist:init` captures
+  `strategy/CHARTER.md` in one compact prompt (partial answers accepted): the decision,
+  decider, reader, stakes, deadline + required confidence, constraints + non-goals,
+  evidence + gaps. It's read — stage preconditions, the commitment gate, the Story
+  reader line — not filed (checklist row 12).
+- **Self-Audit friction check gains the provenance valve.** Naming the least-examined
+  load-bearing answer stays mandatory; manufacturing its defect is forbidden; "named,
+  graded sound" is a legitimate recorded outcome; challenges ground in the user's own
+  material.
+- **Analyse runs on a plan ledger** — per Frame dimension: question, evidence required,
+  disconfirming test, status, what-if-unobtainable. A skipped-because-obvious dimension
+  stops being possible silently. And the framework menu stays mandatory while **"no
+  framework — first-principles"** becomes an honest recorded outcome.
+- **Measurement + tooling.** New release-blocking doctrine-drift/canon-sync lint
+  (`dev/scripts/lint-doctrine-drift.mjs`, plugin-configurable; strategist config wires
+  the four canon pairs, retired phrases, referenced sections, and reader/writer
+  vocabulary contracts). Shared tooling: researcher and goal-setting add their own
+  configs.
+- **Pending Kelsey review (STOP items, drafted to the review queue, not shipped):** the
+  eval rubric's new Continuity and Register dimensions (0–3 anchors), the
+  `adv-mid-stage-resume` golden scenario, and the adapter note they require.
+- **Deferred:** eval-suite expansion from the ten Codex seeds (interlocks with the
+  pending rubric package — landing them together keeps coverage coherent); multi-
+  stakeholder modes, owner-acceptance, and the data-workbench remain deferred by
+  decision G1.
+
 ## 0.3.0 — 2026-06-27
 
 The **Strategy Spine** — Define → Frame → Analyse → Insight → Synthesise → Story → Move

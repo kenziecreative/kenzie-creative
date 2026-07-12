@@ -20,13 +20,16 @@ template.
 
 ## Structure
 
-- `commands/strategist/` — 11 thin command wrappers: `init`, the 7 stages (`define`,
+- `commands/strategist/` — 13 thin command wrappers: `init`, the 7 stages (`define`,
   `frame`, `analyse`, `insight`, `synthesise`, `story`, `move`), `framework`, `pressure-test`,
-  `progress`.
-- `skills/` — 5 skills: `strategist-init` (scaffold), `strategist-stage` (the generic
-  engine all 7 stage commands drive), `strategist-framework` (single-framework
-  apply/explain), `strategist-pressure-test` (dispatches the critic), `strategist-progress`
-  (read-only dashboard).
+  `progress`, `save`, `resume`.
+- `skills/` — 7 skills: `strategist-init` (scaffold: config, state, brief, charter),
+  `strategist-stage` (the generic engine all 7 stage commands drive),
+  `strategist-framework` (single-framework apply/explain), `strategist-pressure-test`
+  (dispatches the critic), `strategist-progress` (read-only dashboard),
+  `strategist-save` (session debrief & state save, works mid-stage),
+  `strategist-resume` (restores stance from files — the working resume; progress stays
+  the dashboard).
 - `agents/strategist-critic.md` — the reasoning-critic subagent (no web, no sources;
   tests logic, not evidence).
 - `reference/` — read-only library: 70 framework entries across 7 stage directories, plus
@@ -39,11 +42,30 @@ template.
 ## Key mechanics
 
 - **The loop is the spine.** `strategy/STATE.md` holds loop position (stage record,
-  completed/active/pending, open pressure-test findings); `strategy/brief.md` is the
+  completed/active/pending, open pressure-test findings, Working Dynamic, Working Read,
+  In-Flight, Backstage Tasks); `strategy/brief.md` is the
   evolving working record, one section per stage; `strategy/strategy-brief.md` is the clean
   reader-facing deliverable, spun out at Story and refreshed through Move. Sequential
   but resumable, and explicitly iterative — any stage can send the user back. The
   two-document write logic lives in `strategist-stage` Step 4 (Reader-Brief Style Rules).
+  Since 0.4.0 the engagement also carries `strategy/CHARTER.md` (captured at init, read
+  by stage preconditions and the commitment gate) and `strategy/DECISION.md` (written at
+  the Synthesise commitment gate).
+- **Record, never restrict (0.4.0).** Nothing in the loop blocks; every consequential
+  user call leaves a trace: claim ownership (user-owned / agent-inferred /
+  external-unverified) survives into the reader brief's "What this rests on" close, a
+  declined pressure-test is marked in STATE and said in the reader brief, a material
+  upstream revision marks later stages `stale (premise changed)`, unmet done-bars are
+  noted when the user advances anyway. Files win over chat memory, silently.
+- **The commitment gate (stage engine Step 4b).** At Synthesise, before the commitment
+  write: sibling directions with the honest-singleton valve; the critic auto-runs
+  (non-blocking, decline recorded — decision E2); charter check; Rumelt-kernel check in
+  recording form (E3); DECISION.md written.
+- **The return restores stance.** `strategist-save` captures position + debrief
+  (Working Dynamic / Working Read / Backstage Tasks / In-Flight, mid-stage);
+  `strategist-resume` re-adopts them, continues in-flight work without re-asking, and
+  runs additive-only schema migration. Both carry narration firewalls — the machinery
+  stays backstage.
 - **One engine, seven stages.** The 7 stage commands all invoke `strategist-stage` with a
   different stage; the skill reads the matching `reference/<stage>/` to drive the menu and
   application. Adding or renaming a stage = a command wrapper + a `reference/<stage>/`
@@ -94,7 +116,8 @@ template.
 
 - The Strategy Spine and its sibling frameworks live in `reference/frameworks/` as **copies
   of canonical source docs** that live at `~/Documents/Claude/Projects/AI Operations/frameworks/`
-  (the Strategy Spine itself is `strategy-spine.md`; it draws on `metaskills.md` and
+  (the Strategy Spine itself is now `strategy/strategy-spine.md` there; it draws on
+  `metaskills.md` and
   `learning-and-teaching.md`, with `creating-conditions.md` as the parent posture). That folder
   is the **source of truth**.
 - When the plugin is updated, **verify the shipped copies still match canon** — re-copy from
@@ -102,6 +125,15 @@ template.
   frameworks folder's own `AGENTS.md`: updates propagate from the canonical source into the
   copies here, never the other way around. Don't edit the substance of a shipped framework in
   `reference/frameworks/` directly; change it in canon and re-sync.
+- Since 0.4.0 this is machine-checked:
+  `node dev/scripts/lint-doctrine-drift.mjs --plugin strategist` byte-diffs the four
+  canon pairs (after declared path normalizations — canon's cross-refs are `../`-relative
+  since it moved into a subdir), plus stale retired phrases, referenced sections, and
+  reader/writer vocabulary contracts. **It blocks release**; the config is
+  `dev/scripts/drift-configs/strategist.json`. When a doctrine change retires wording,
+  add the retired phrase to the config in the same commit. (Canon checks skip with a
+  warning on machines without the canon folder — they must pass on the machine that has
+  it before release.)
 
 ## Maintaining this plugin
 
@@ -109,7 +141,9 @@ template.
   `plugin.json`, update the `v<X.Y.Z> — ` prefix in both descriptions (`plugin.json` + the
   catalog entry in `.claude-plugin/marketplace.json`), the README "Plugins at a glance" row,
   and the root `AGENTS.md` plugin list; add a `CHANGELOG.md` entry; then
-  `node dev/scripts/check-version-prefix.mjs` and `claude plugin validate ./strategist` +
+  `node dev/scripts/check-version-prefix.mjs`,
+  `node dev/scripts/lint-doctrine-drift.mjs --plugin strategist` (release-blocking),
+  and `claude plugin validate ./strategist` +
   `claude plugin validate .`; commit, tag **`strategist-v<X.Y.Z>`**, push.
 - **Authoring check (optional):** run plugin-dev's `skill-reviewer` over changed skills and
   `plugin-validator` over the plugin to catch frontmatter/description regressions.
