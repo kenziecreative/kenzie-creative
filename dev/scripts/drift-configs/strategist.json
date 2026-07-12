@@ -1,0 +1,120 @@
+{
+  "pluginRoot": "strategist",
+  "scanRoots": ["skills", "agents", "commands", "reference", "templates"],
+  "stalePhrases": [
+    {
+      "id": "blocker_vocab",
+      "pattern": "a blocker, not a footnote",
+      "flags": "i",
+      "reason": "gate vocabulary for a gate that doesn't exist — renamed in 0.4.0 (checklist row 2); nothing in the loop blocks"
+    },
+    {
+      "id": "quota_pushback",
+      "pattern": "push(?:ed)?\\s+back\\s+at\\s+least\\s+once",
+      "flags": "i",
+      "reason": "quota-phrased friction check — superseded in 0.4.0 by the name-and-grade valve ('named, graded sound' is a legitimate outcome)"
+    },
+    {
+      "id": "old_friction_challenge",
+      "pattern": "too comfortable and challenge it now",
+      "reason": "pre-valve friction-check wording (mandatory dissent without the provenance valve) — superseded in 0.4.0"
+    },
+    {
+      "id": "synthesise_posthoc_offer",
+      "pattern": "after \\*\\*Analyse\\*\\*, \\*\\*Synthesise\\*\\*|offers it after Analyse, Synthesise, and Move",
+      "reason": "post-hoc pressure-test offer at Synthesise — superseded in 0.4.0 by the commitment-gate auto-run (stage engine Step 4b, decision E2)"
+    }
+  ],
+  "canonRoot": "~/Documents/Claude/Projects/AI Operations/frameworks",
+  "canonNormalizations": [
+    {
+      "pattern": "\\(\\.\\./",
+      "replace": "(",
+      "flags": "g"
+    },
+    {
+      "pattern": "`\\.\\./",
+      "replace": "`",
+      "flags": "g"
+    }
+  ],
+  "canonPairs": [
+    { "copy": "reference/frameworks/strategy-spine.md", "canon": "strategy/strategy-spine.md" },
+    { "copy": "reference/frameworks/metaskills.md", "canon": "metaskills.md" },
+    { "copy": "reference/frameworks/learning-and-teaching.md", "canon": "learning-and-teaching.md" },
+    { "copy": "reference/frameworks/creating-conditions.md", "canon": "creating-conditions.md" }
+  ],
+  "requiredSections": [
+    {
+      "file": "skills/strategist-init/SKILL.md",
+      "markers": [
+        "## Working Dynamic",
+        "## Working Read",
+        "## In-Flight (mid-stage)",
+        "## Backstage Tasks",
+        "## Open Pressure-Test Findings"
+      ]
+    },
+    {
+      "file": "skills/strategist-stage/SKILL.md",
+      "markers": [
+        "## Step 4b:",
+        "What this rests on",
+        "Stage Boundary",
+        "The stage is done when"
+      ]
+    },
+    {
+      "file": "reference/insight/3x3-model.md",
+      "markers": ["## Stage Boundary (Insight)"]
+    },
+    {
+      "file": "reference/insight/continuum.md",
+      "markers": ["## Stage Boundary (Insight)"]
+    },
+    {
+      "file": "reference/insight/capability-map.md",
+      "markers": ["## Stage Boundary (Insight)"]
+    },
+    {
+      "file": "reference/insight/gantt.md",
+      "markers": ["## Stage Boundary (Insight)"]
+    },
+    {
+      "file": "reference/insight/one-pager.md",
+      "markers": ["## Stage Boundary (Insight)"]
+    }
+  ],
+  "contracts": [
+    {
+      "id": "stale_status_vocabulary",
+      "pattern": "stale \\(premise changed\\)",
+      "files": [
+        "skills/strategist-stage/SKILL.md",
+        "skills/strategist-progress/SKILL.md",
+        "skills/strategist-init/SKILL.md"
+      ],
+      "reason": "the downstream-staleness status is written by the stage engine, defined in the init template legend, and surfaced by progress"
+    },
+    {
+      "id": "declined_pressure_test_vocabulary",
+      "pattern": "declined",
+      "files": [
+        "skills/strategist-stage/SKILL.md",
+        "skills/strategist-progress/SKILL.md",
+        "skills/strategist-init/SKILL.md"
+      ],
+      "reason": "the declined pressure-test marking is written by the commitment gate, defined in the init template legend, and surfaced by progress"
+    },
+    {
+      "id": "charter_read_by_gate",
+      "pattern": "CHARTER\\.md",
+      "files": [
+        "skills/strategist-init/SKILL.md",
+        "skills/strategist-stage/SKILL.md",
+        "skills/strategist-resume/SKILL.md"
+      ],
+      "reason": "the charter captured at init must be read downstream (stage preconditions, commitment gate, resume) — a captured contract nothing reads is theater (checklist row 12)"
+    }
+  ]
+}
