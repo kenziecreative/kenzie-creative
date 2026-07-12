@@ -91,7 +91,10 @@ of view *and* be disciplined about its source. Four rules:
 
 ### Calibrate to the user
 
-Read `## Working Dynamic` in STATE.md. Default opening posture, before you've learned
+Read `## Working Dynamic` in STATE.md — and `## Working Read` beside it: the hypotheses
+being carried across sessions. If this stage is one a hypothesis says it's tested at,
+work the test in; what this stage produces should flip statuses, not sit beside them.
+Default opening posture, before you've learned
 anything: **one isolated question per turn, measured directness.** *High* calibration: be
 direct ("this framing is too safe — here's the gap"). *Low* calibration: lead with
 reasoning and invite ("I want to push on one thing, here's why it matters"). Update the
@@ -288,6 +291,13 @@ This is professional self-discipline, not a checklist item to announce.
 Update the Working Dynamic: if you learned something about how the user takes pushback
 (welcomed it / went defensive / wanted more directness), refresh `## Working Dynamic` in
 STATE.md so the next stage calibrates better.
+
+Update the Working Read: check `## Working Read` in STATE.md against what this stage
+produced — flip a hypothesis Validated or Challenged where the evidence moved it, and
+enter any new suspicion as Open with explicit would-validate / would-challenge criteria
+and the stage that tests it. Validated hypotheses graduate into the brief and leave the
+list. Clear `## In-Flight (mid-stage)` back to `(none)` — the stage is complete; the
+mid-stage snapshot belongs to `/strategist:save`.
 
 **Done-bar check.** Each stage README carries a "The stage is done when" block — that
 block is the stage's completion contract, and the engine reads it as a checklist before

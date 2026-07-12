@@ -37,7 +37,7 @@ BRIEF_MTIME="$(file_mtime "$BRIEF_FILE" 2>/dev/null || echo 0)"
 
 LAG=$((BRIEF_MTIME - STATE_MTIME))
 if [ "$LAG" -gt 300 ]; then
-  printf 'strategist: STATE.md may be stale — strategy/brief.md has newer activity (lag %ds). Update strategy/STATE.md before clearing context so the loop position is accurate on resume.\n' "$LAG" >&2
+  printf 'strategist: STATE.md may be stale — strategy/brief.md has newer activity (lag %ds). Run /strategist:save (or update strategy/STATE.md) before clearing context so the loop position and in-flight work survive the reset.\n' "$LAG" >&2
 fi
 
 exit 0

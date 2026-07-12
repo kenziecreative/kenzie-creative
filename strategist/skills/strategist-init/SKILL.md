@@ -102,6 +102,36 @@ answers. Update as you learn.
 - **Notes:** (none yet) — e.g. welcomes directness, goes defensive when pushed, prefers
   to reason it through, decisive vs. deliberative.
 
+## Working Read
+
+The advisor's developing hypotheses — the mid-thought a human strategist carries
+between sessions. Update statuses as evidence arrives; rewrite at stage transitions.
+Validated hypotheses graduate into the brief (and the decision record at Synthesise);
+Challenged ones get rewritten to what the evidence now suggests, or dropped with the
+challenge noted. A stale read misleads worse than none.
+
+- (none yet) — format: [Hypothesis] — **Status:** Open | Validated | Challenged — **Would validate:** [evidence] — **Would challenge:** [evidence] — **Tested at:** [stage]
+
+## In-Flight (mid-stage)
+
+Written at session save when a stage is underway; cleared when the stage completes.
+What a resumed session needs to continue mid-stage instead of restarting.
+
+- **Framework in play:** (none)
+- **Answered so far:** (none)
+- **Still open:** (none)
+- **Provisional conclusions:** (none)
+
+## Backstage Tasks
+
+The advisor's private prep list — things to do before the next session that the user
+never sees: re-read a section whose details will matter, prepare options so the user
+chooses instead of waiting, verify something asserted this session. Written at session
+save; executed silently and cleared at resume. Distinct from Next Action, which is
+user-facing.
+
+- [ ] (none yet)
+
 ## Open Pressure-Test Findings
 
 (none)
@@ -186,6 +216,8 @@ it with the full picture.
 ▶ NEXT: /strategist:define — frame the problem before solving it.
    Also: /strategist:framework <name> to apply any single framework on its own,
          /strategist:progress to see where you are at any time.
+         Sessions end and resume cleanly: /strategist:save when you stop,
+         /strategist:resume when you're back.
 ```
 
 ## Guardrails
