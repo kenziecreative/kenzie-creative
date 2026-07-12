@@ -61,6 +61,10 @@ Use the Continuum when the core strategic choices can be expressed as positionin
 
 Use **From:To** instead when the current and future states are complex enough to require descriptive paragraphs or diagrams rather than a single slider position. Use **Positioning** (the competitor map) when the comparison you need to make is against named competitors rather than along your own strategic dimensions.
 
+## Stage Boundary (Insight)
+
+The Target marker *is* the strategy — plotting it is a decision, not an observation. At Insight, run steps 1–3 only: choose the dimensions, name the poles, and plot the **Current** positions honestly. That diagnostic alone is real insight — it shows where you actually sit and which dimensions are genuinely in play. The Target markers, arrows, and annotations (steps 4–6) are Synthesise-onward work: return to this layout after the commitment gate to plot where the chosen strategy moves you, and present the finished set at Story.
+
 ## Things To Watch Out For
 
 - Poles that are good-versus-bad ("high quality" ↔ "low quality") create a Continuum that only states the obvious. Both poles must be legitimate strategic positions that a real competitor might intentionally occupy.

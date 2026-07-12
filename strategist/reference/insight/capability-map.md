@@ -71,7 +71,11 @@ The map makes the strategic gap unmistakable: Acme is strong at the content and 
 
 ## When To Use It
 
-Use a Capability Map when the strategy requires a capability assessment — when the question is not just "what will we do?" but "can we actually do it?" It is most useful in the Insight stage, after the strategic direction has been set and before the Move-stage execution plan is built.
+Use a Capability Map when the strategy requires a capability assessment — when the question is not just "what will we do?" but "can we actually do it?" The map has two readings that belong to different stages: the inventory-and-rate half is Insight work; the gap reading against a chosen direction comes after Synthesise commits, before the Move-stage execution plan is built.
+
+## Stage Boundary (Insight)
+
+At Insight, build the honest inventory: name the capability groups, list what exists, rate maturity against evidence. Patterns in the current state — a systemically weak group, a fragile single-person capability, an unexpected stronghold — are legitimate Insight findings. What the map *cannot* do yet is show gaps "relative to what the strategy requires," because no strategy has been chosen — that reading needs a committed direction and happens after Synthesise. If the map is being read against a direction nobody has committed to, the decision is running ahead of its gate.
 
 Use a **Heat Map** when you need to rate items across multiple attributes rather than on a single maturity dimension. Use a **From:To** to show the transition from current capability state to target state. Use a **3×3 Model** when the assessment combines two independent dimensions (e.g., market attractiveness and ability to win) rather than a single maturity axis.
 

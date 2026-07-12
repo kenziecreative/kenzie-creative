@@ -55,9 +55,13 @@ A reader who sees only this page knows the destination, what the organisation is
 
 ## When To Use It
 
-Use the One Pager at the end of the Define and Insight stages, once the strategy is sufficiently developed to summarise. It's the natural home for the synthesis slide that opens or closes a board or executive presentation.
+Use the One Pager once a strategy exists to summarise — it's the natural home for the synthesis slide that opens or closes a board or executive presentation, and the anchor or leave-behind of the Story-stage narrative.
 
-It is not a strategy-building tool — it is a communication tool. Build the strategy first using **Driver Tree**, **Chevron**, or **Gantt**, then distil it here. If the One Pager is filled in before the analysis is done, it usually over-promises on the pillar layer and under-specifies the enabler layer.
+It is not a strategy-building tool — it is a communication tool. Build the strategy first, then distil it here. If the One Pager is filled in before the strategy is committed, it usually over-promises on the pillar layer and under-specifies the enabler layer.
+
+## Stage Boundary (Insight)
+
+A One Pager of the *new* strategy cannot exist at Insight — there is no committed vision or pillar set to distil yet, and filling one in early quietly makes the decision ahead of its gate. The one legitimate Insight use is summarising an *existing* strategy (the incumbent plan, an acquirer's stated strategy, a competitor's) as current-state evidence. Distilling the new strategy onto a page is Story work, after Synthesise commits.
 
 ## Things To Watch Out For
 

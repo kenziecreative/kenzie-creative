@@ -156,7 +156,10 @@ forward to sketch a later stage. Check this stage's position against
 
 1. Read the framework's entry: `${CLAUDE_PLUGIN_ROOT}/reference/<dir>/<slug>.md`. Use its
    **How To Use It** as the procedure and its **Worked Example** as the model for the
-   level of concreteness expected.
+   level of concreteness expected. If the entry carries a **Stage Boundary** section
+   (several Insight forms do), honor it: apply the current-state form at this stage and
+   hold the generative half for its true stage — a decision that forms ahead of its gate
+   gets named as a hypothesis, not locked.
 2. Walk the user through applying it to *their* problem, **one isolated question per
    turn.** The most common pacing failure is not asking too many questions — it's burying
    the ask inside paragraphs of your own analysis so the user can't tell what you need.

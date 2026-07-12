@@ -18,13 +18,15 @@ The stage is done when:
 
 Insight holds 25 frameworks. The form is not decoration — the right form is what makes the pattern visible. Pick by the *shape* of the insight you are surfacing.
 
+**The boundary.** Insight is the last of the perceiving stages: it names what the analysis means, it does not choose what to do about it. A handful of forms here can quietly carry decision work if you let them — dispositions on a 3x3, a target position on a Continuum, a capability gap read against a not-yet-chosen direction, a Gantt or One Pager of the new plan. Each of those entries states its own **Stage Boundary**: at Insight, use the current-state form only; the generative half belongs at Synthesise, Story, or Move. If you find yourself plotting the *future* at Insight, the decision is being made ahead of its gate — name it and hold it for Synthesise.
+
 ### Position and comparison — where things sit relative to each other
 
 - [Matrix](matrix.md) — two dimensions, four quadrants; makes trade-offs and priorities visible at once.
 - [Positioning](positioning.md) — you and your competitors in the same space; shows where the market is crowded and where it's empty.
-- [3x3 Model](3x3-model.md) — a nine-box that ranks options on two dimensions, for tractable prioritisation.
+- [3x3 Model](3x3-model.md) — a nine-box that scores options on two dimensions; the Invest/Harvest/Exit calls it suggests lock at Synthesise.
 - [Heat Map](heat-map.md) — a colour-coded grid rating items low-to-high, so strength and weakness are instant.
-- [Continuum](continuum.md) — sliders per dimension showing where you sit today and where the strategy moves you.
+- [Continuum](continuum.md) — sliders per dimension showing where you sit today; the target markers are plotted after Synthesise commits.
 
 ### Composition and structure — how a whole is built from its parts
 
@@ -33,7 +35,7 @@ Insight holds 25 frameworks. The form is not decoration — the right form is wh
 - [Venn](venn.md) — where two to four groups are distinct and, crucially, where they overlap.
 - [Hub n' Spoke](hub-n-spoke.md) — one central idea and the components that express or feed it.
 - [Canvas](canvas.md) — all the building blocks of a model on one page, relationships visible at once.
-- [Capability Map](capability-map.md) — capabilities inventoried and rated, so gaps against the strategy show.
+- [Capability Map](capability-map.md) — capabilities inventoried and honestly rated; the gap reading against a chosen direction follows Synthesise.
 - [Segmentation](segmentation.md) — how a market or base divides into macro categories and micro segments.
 
 ### Flow, sequence, and time — how things move or unfold
@@ -42,7 +44,7 @@ Insight holds 25 frameworks. The form is not decoration — the right form is wh
 - [Touchpoint](touchpoint.md) — which channel the customer uses at each stage, exposing gaps and redundancy.
 - [Timeline](timeline.md) — events or milestones on a line, showing order and spacing.
 - [Chevron](chevron.md) — arrow blocks, one per phase, showing destination and route in one view.
-- [Gantt](gantt.md) — initiatives on a time axis, grouped by pillar.
+- [Gantt](gantt.md) — initiatives on a time axis, grouped by pillar; at Insight, the as-is plan only — the forward roadmap is Move work.
 - [Circular](circular.md) — a repeating cycle where the last step feeds the first.
 - [Horizon](horizon.md) — initiatives sorted into near, medium, and long-term horizons.
 - [From:To](from-to.md) — current state beside target state, making the gap concrete.
@@ -50,7 +52,7 @@ Insight holds 25 frameworks. The form is not decoration — the right form is wh
 ### A single finding, made to land — present one insight cleanly
 
 - [Graph](graph.md) — a chart paired with its headline takeaway and "so what" bullets.
-- [One Pager](one-pager.md) — a whole strategy distilled to vision, pillars, and enabling capabilities.
+- [One Pager](one-pager.md) — a whole strategy distilled to vision, pillars, and enabling capabilities; at Insight, only an *existing* strategy — the new one is distilled at Story.
 - [Tabular](tabular.md) — multiple insights in rows and categories, built to scan.
 - [Tri-Column](tri-column.md) — three parallel themes, each with evidence and an implication.
 - [Image Column](image-column.md) — three visual-led columns under one synthesising takeaway.

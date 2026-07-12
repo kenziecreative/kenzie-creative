@@ -31,7 +31,7 @@ The two-axis structure also does something important: it prevents the common fai
 3. **Score each item on both axes.** For each segment (or option), score it Low/Medium/High on Attractiveness and Low/Medium/High on Ability To Win. Document the evidence or logic behind each score — the scoring conversation is often where the most valuable strategic disagreements surface.
 4. **Plot each item in the grid.** Place each item in the cell that corresponds to its two scores.
 5. **Read the grid for strategy.** The top-right cell (High/High) = invest and grow. The bottom-left (Low/Low) = exit or harvest. The diagonal from bottom-right to top-left requires judgment: high attractiveness but low ability to win means a significant investment or a partnership may be needed to compete; high ability to win but low attractiveness means you're strong in a shrinking market.
-6. **Make the prioritisation explicit.** Use the grid to assign each segment a label (Invest, Selectively invest, Harvest, or Exit) and bring that categorisation forward into the Synthesise stage.
+6. **Carry the scored grid forward.** The grid — axes, band definitions, scores, and the evidence behind them — travels into Synthesise. That is where the Invest / Selectively invest / Harvest / Exit dispositions get made and locked, not here.
 
 ## Worked Example
 
@@ -67,6 +67,10 @@ The 3×3 converts five plausible strategic directions into a defensible prioriti
 Use a 3×3 Model when you have three or more options to evaluate — segments, product lines, geographies, or initiatives — and you need to prioritise them on two independent dimensions. It is most useful when a simple 2×2 is too coarse (too many options land in the same quadrant) and when a Heat Map across many attributes would be too complex to support clear prioritisation.
 
 Use a **Matrix** (2×2) when you have four discrete options and a binary choice on each axis is actually sufficient — the 2×2 is simpler and faster to read. Use a **Segmentation** map when the communication goal is showing segment sizes and insights rather than evaluating which segments to target. Use a **Heat Map** when the evaluation requires more than two dimensions and you can tolerate a more complex, multi-attribute view.
+
+## Stage Boundary (Insight)
+
+Insight perceives; Synthesise decides. At Insight this grid is an assessment: define the axes, score honestly, plot, and name what the positions mean — including the tensions (attractive segments you can't win, strongholds in shrinking markets). Assigning dispositions — Invest, Harvest, Exit — is a commitment about where resources go, and it belongs at Synthesise, behind the commitment gate. If disposition labels are forming during this stage, treat them as hypotheses the grid suggests, not calls that have been made.
 
 ## Things To Watch Out For
 

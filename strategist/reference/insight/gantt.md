@@ -62,6 +62,10 @@ Use the Gantt as the implementation slide in any strategy document. It always fo
 
 Use **Chevron** instead when you need to communicate the phases of a single workstream in depth, without the overhead of a full cross-pillar implementation view. Use **Horizon** when the timeframe is multi-year and the communication priority is strategic themes rather than specific initiative timing.
 
+## Stage Boundary (Insight)
+
+A forward Gantt is the implementation of a decided strategy — building one is Move work, presented through Story. At Insight, the only legitimate Gantt is the *as-is* view: mapping the current or inherited plan (what's already committed, what's running in parallel, where the load sits) as evidence about the present. That reading can produce genuine insight — an overloaded quarter, a dependency running backward. If bars for future initiatives are being drawn at Insight, a plan is being committed before the commitment gate — hold it for Synthesise and build the roadmap at Move.
+
 ## Things To Watch Out For
 
 - A Gantt in a strategy presentation should show quarters, not weeks. Week-level detail belongs in a project plan, not a strategy deck — it will overwhelm the audience and imply a false precision.
