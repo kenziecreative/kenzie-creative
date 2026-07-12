@@ -337,6 +337,18 @@ This is the practical test that separates real systems from wishes. A real syste
 
 If your system requires you to remember to do it, it's not a system. It's a hope. And hopes get displaced by whatever's urgent.
 
+### A system is an experiment, not a ritual
+
+A trigger makes a system run. It doesn't make it *work*. Every system you design is a bet — "if I do this weekly, that number moves" — and a bet you never score is just a ritual with a calendar block. So each system states its terms up front:
+
+- **The causal hypothesis.** Why does this activity move this KR? Say the mechanism out loud: "two hours of Monday outreach → ~10 touches → ~2 conversations → one qualified lead a week." If you can't say how it works, you can't tell later *what* failed.
+- **The expected signal and its lag.** What moves first, and how long after the work before you could honestly expect it? Outreach shows leads in weeks; brand content shows demand in months. A system judged before its lag has elapsed is being judged on noise.
+- **The minimum test duration.** How many weeks of honest execution before the experiment has been run at all? Before that point, "it's not working" is not a conclusion available to you.
+- **The dose.** How much, how often. Two hours weekly is a different experiment from thirty minutes weekly; if you ran half the dose, you ran a different experiment.
+- **The decision rule.** What result, by when, means keep — and what means revise or kill? Decide *now*, while you're calm. "If no qualified lead by week six at full dose, the mechanism is wrong and version 2 changes the channel, not the hours."
+
+This is what makes the weekly pulse and monthly review diagnostic instead of impressionistic: when a KR isn't moving, you check the experiment's terms before you blame the goal or yourself.
+
 ### The framework: the Four Laws of Behavior Change
 
 Adapted from James Clear's *Atomic Habits*, these four laws determine whether a habit sticks. Apply all four to every system you build.
@@ -511,7 +523,7 @@ The weekly pulse does three things:
 
 ### This is intelligent adaptation, not guilt-and-discipline accountability
 
-The pulse check isn't a judgment ritual. You're not asking "did I work hard enough?" You're asking "is the design working?" If you executed the system but didn't see progress, the system is wrong. If you didn't execute the system, the design is wrong. Either way, the data tells you what to change.
+The pulse check isn't a judgment ritual. You're not asking "did I work hard enough?" You're asking "is the design working?" If you executed the system and the Key Results still aren't moving, the effort isn't the problem — the goal, or the KR that measures it, is the likely misfit; flag it for the monthly review. If you didn't execute the system, the system's design is wrong — revise the trigger and the friction, don't blame willpower. Either way, the data tells you what to change.
 
 ### Deliverable
 
@@ -525,16 +537,23 @@ Once a month, one hour, deeper question.
 
 ### The question
 
-*Are we on track? And if not, is the goal wrong, or is the execution wrong?*
+*Are we on track? And if not — which of the seven ways a goal stalls is this?*
 
 This is the diagnostic move the pulse check can't make in five minutes. The pulse check catches problems; the monthly review classifies them.
 
-### The two failure modes
+### The differential — seven ways a goal stalls
 
-- **Execution is wrong.** You're not running the system consistently, or the system isn't designed well. Fix: revise the system using the Four Laws. Don't change the goal.
-- **Goal is wrong.** You're running the system consistently and still not seeing KR progress. Fix: revise the KR (or the Objective, if the misfit is deeper). Don't blame execution.
+"On track or not" is the easy half. The hard half is *why not* — and there are more answers than "bad goal or bad effort." Work the differential in order; each question only makes sense if the previous one passed:
 
-Most owners default to blaming execution when the goal is actually wrong. The monthly review is your chance to catch this.
+1. **Insufficient dose.** Did the system run at the committed dose? Half the hours is a different experiment. Fix the dose or admit the real capacity, before judging anything else.
+2. **Insufficient time.** Has the expected lag elapsed, and the minimum test duration been served? If not, the honest classification is *too early to call* — record it and resist redesigning.
+3. **Mechanism wrong.** Full dose, lag served, leading indicators dead — the causal hypothesis failed. The activity doesn't produce what you bet it would. Revise the system's *mechanism* (new channel, new approach), not just its schedule.
+4. **Metric wrong.** The work is producing real results you can see, but the KR isn't registering them — the KR measures adjacent activity, or the wrong proxy. Fix the measurement, not the work.
+5. **Goal wrong.** System running, mechanism producing, metric honest — and the Objective still doesn't move, or moving it no longer matters. The goal itself is the misfit. Revise the KR target or the Objective, with a revision record.
+6. **External shock.** Something outside the plan changed the game — a market shift, a lost anchor client, a supplier failure. Check the pre-mortem: did a mitigation trigger fire? This is what they were built for.
+7. **Unknown.** The record is too thin to classify (a month of `unknown` pulses is not a month of data). Say so. The action item is *instrumentation* — an honest read on the signal — not a redesign based on vibes.
+
+Most owners jump straight to "I didn't work hard enough" (execution) or, under pressure, quietly to #5 (lower the target). The differential exists to make them walk past dose, time, mechanism, and metric first. When the answer really is #5, revise the goal in the open, with the original preserved.
 
 ### Deliverable
 
@@ -716,6 +735,11 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `objective_id`: foreign key to Objective (may also link to specific KRs)
 - `trigger_type`: time | location | habit_stack
 - `trigger_detail`: e.g., "Mondays 9-11am" or "after morning coffee"
+- `hypothesis`: the causal bet — how this activity moves the KR
+- `expected_signal` + `lag`: what moves first, and how long after execution
+- `min_test_duration`: weeks of honest execution before results are judged
+- `dose`: the committed how-much/how-often
+- `decision_rule`: the keep / revise / kill condition, set at design time
 - `four_laws`: { obvious, attractive, easy, satisfying } — short string per law
 - `version`: integer — increments on revision (Version 3 works)
 - `status`: active | paused | retired | replaced — `paused` is the Restart Protocol's holding state
@@ -751,7 +775,7 @@ This appendix defines the core objects in the playbook and how they relate. It e
 
 **MonthlyReview**
 - `date`
-- `per_objective_assessment`: array of { objective_id, on_track, classification: goal_wrong | execution_wrong | both, change_made }
+- `per_objective_assessment`: array of { objective_id, on_track, classification: insufficient_dose | insufficient_time | mechanism_wrong | metric_wrong | goal_wrong | external | unknown, change_made } — the 7-way differential, worked in order
 
 **QuarterlyReview**
 - `date`
@@ -801,7 +825,7 @@ This object model is implementation-neutral. It can back a database, a Notion wo
 
 - **Daily** (60-90 sec): write the goal by hand, vary the location.
 - **Weekly** (5 min, Mondays): pulse check — *executed? progressing? what needs to change?*
-- **Monthly** (1 hr): KR review — *on track? goal wrong or execution wrong?*
+- **Monthly** (1 hr): KR review — *on track? if not, work the differential (dose → time → mechanism → metric → goal → external → unknown).*
 - **Quarterly** (half day to full day): re-score anchors + audit systems + plan next quarter + recurring pre-mortem.
 - **Annual** (1 day): vision check — *still the right game? still the right vision?* Loops back to Stage 1.
 

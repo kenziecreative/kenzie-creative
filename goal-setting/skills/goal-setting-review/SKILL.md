@@ -33,24 +33,36 @@ from the Setup Arc: push on soft answers, stay in the user's lane, enforce the t
 
 ## Monthly mode (~1 hour)
 
-The diagnostic the five-minute pulse can't make: *are we on track, and if not, is the goal
-wrong or the execution wrong?* The pulse catches problems; the monthly review classifies them.
+The diagnostic the five-minute pulse can't make: *are we on track — and if not, which of the
+seven ways a goal stalls is this?* The pulse catches problems; the monthly review classifies
+them.
 
 For **each active Objective:**
 
 1. Assess **on track / off track** against its KRs (current vs. target).
-2. Classify why:
-   - **Execution is wrong** — the system isn't being run consistently or isn't well designed.
-     Fix: revise the system using the Four Laws. *Don't change the goal.*
-   - **Goal is wrong** — the system is running consistently and the KR still isn't moving. Fix:
-     revise the KR (or the Objective, if the misfit is deeper). *Don't blame execution.*
+2. **Work the differential — seven ways a goal stalls, in order** (each question only makes
+   sense if the previous one passed; the system's recorded experiment terms — hypothesis,
+   lag, minimum duration, dose, decision rule — are what you're checking against):
+   1. **Insufficient dose** — did the system run at the committed dose? Half the hours is a
+      different experiment. Fix the dose or admit the real capacity first.
+   2. **Insufficient time** — has the expected lag elapsed and the minimum test duration
+      been served? If not: *too early to call*. Record it; resist redesigning.
+   3. **Mechanism wrong** — full dose, lag served, leading indicators dead: the causal
+      hypothesis failed. Revise the system's *mechanism*, not just its schedule.
+   4. **Metric wrong** — real results visible but the KR isn't registering them. Fix the
+      measurement, not the work.
+   5. **Goal wrong** — system running, mechanism producing, metric honest, Objective still
+      stuck (or no longer worth moving). Revise the KR or Objective — in the open, with a
+      revision record.
+   6. **External** — the game changed from outside. Check the pre-mortem: did a mitigation
+      trigger fire?
+   7. **Unknown** — the record is too thin to classify (a month of `unknown` pulses is not a
+      month of data). Say so; the action item is instrumentation, not redesign.
 
-   Most owners default to blaming execution when the goal is actually wrong. Push against that
-   default — if the user reports they executed and it's not moving, name that it points at the
-   goal. Where the week-by-week record shows `unknown`s, treat the diagnosis as thinner than
-   it looks and say so — a month of unknowns is not a month of yeses. Where it shows
-   `mixed`, untangle the split here: which KR moved, which system ran, and what that pair
-   actually says.
+   Most owners jump straight to "I didn't work hard enough" or, under pressure, quietly to
+   #5 (lower the target). Make them walk past dose, time, mechanism, and metric first —
+   with their own weekly record as the evidence. Where the record shows `mixed`, untangle
+   the split here: which KR moved, which system ran, and what that pair actually says.
 3. **Check the countermetric** (if the Objective's goal contract names one): did the thing
    that must not deteriorate hold? A KR on track at the countermetric's expense is a finding,
    not a win.
@@ -67,7 +79,9 @@ the change:
 
 ```
 - revised [YYYY-MM-DD]: <field> was <original target> (actual at change: <current value>) →
-  now <new target>. Reason: <the user's why>. Classification: <goal_wrong | execution_wrong>.
+  now <new target>. Reason: <the user's why>. Classification: <the differential call that
+  justified it — usually goal_wrong or metric_wrong; a revision claiming any other
+  classification deserves a second look>.
 ```
 
 The revised goal keeps its full record; a goal that gets easier quietly is exactly what this
@@ -174,8 +188,9 @@ outgrew years ago. That's the failure the annual check exists to prevent.
 3. Carry the chief-of-staff posture: push on soft assessments ("it's fine" without evidence),
    but the calls that are the user's — which anchor, what target, whether to keep a system,
    which disposition a closing goal gets — stay theirs.
-4. The monthly classification (goal-wrong vs. execution-wrong) is the load-bearing move; don't
-   let the user default to blaming execution when the data points at the goal.
+4. The monthly differential is the load-bearing move; don't let the user default to blaming
+   their own effort (or quietly lowering the target) when the record says dose, time,
+   mechanism, metric, goal, or the outside world.
 5. Append to `goals/journal.md`; update the matching `last run` line and Current Period in
    STATE.md so `/goal-setting:progress` stays accurate.
 6. The recurring pre-mortem is sharper than the launch one because it has real data — make it
