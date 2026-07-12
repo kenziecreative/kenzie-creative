@@ -27,3 +27,6 @@ Thumbs.db
 # eval/ run artifacts — captures + scorecards are regenerated, not committed.
 eval/**/_eval/
 __pycache__/
+
+# Blind-review working notes — candid defect lists of live products; local-only, never distributed
+dev/blind-reviews/
