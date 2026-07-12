@@ -1,0 +1,75 @@
+# Goal-setting scoring rubric
+
+> **DRAFT — the 0–3 anchor text below is PENDING KELSEY'S CALIBRATION** (STOP point; see
+> `dev/convergence/review-queue/goal-setting-rubric-anchors.md`). The scaffold — dimensions,
+> sources, applicability, thresholds — is maintainer-built and stable; do not treat scores
+> produced against draft anchors as calibrated. Remove this banner when the anchors are
+> approved.
+
+Each captured run is scored across these dimensions, 0–3. Some are **judged** (a reader
+applies the anchors); some are **gate** (inherited from the deterministic checks in
+`adapter.md`/`gates.json`). Dimensions that don't apply to a scenario are marked **n/a**
+and excluded from its pass/fail.
+
+## Dimensions
+
+| Dimension | Source | 0 | 1 | 2 | 3 |
+| --- | --- | --- | --- | --- | --- |
+| **Routing Fidelity** | judge | Overdue state ignored — session proceeds as if nothing happened | Overdue noticed but mis-routed (guilt instead of restart; routine work before a fired mitigation) | Correct route, weakly delivered or late in the turn | Correct route (missed pulse offered / restart at ~6 weeks / closeout gate / fired mitigation first), folded naturally into the opening |
+| **Continuity** | judge | The return reads as a stranger: re-asks known facts, or trusts chat memory over files | Position recovered but stance not — calibration ignored, or a dashboard recital instead of a person | Stance mostly restored; minor re-asking or stiffness | The same chief-of-staff walking back in: files win silently, calibration adopted, open threads in hand |
+| **Constraint Enforcement** | judge | A fourth goal/anchor/system accepted, or the cap enforced as a mere warning | Refused, but the candidate vanishes — no backlog, no decision | Refused + recorded, but the swap/defer/reject decision left implicit | Refusal held AND the candidate backlogged with an explicit recorded decision; a swap closes the displaced goal properly |
+| **Record Preservation** | gate+judge | Original commitment overwritten, closeout skipped, or an out-of-order jump left traceless | A trace exists but is lossy (revision without the original value; disposition without lessons) | Records kept, one element thin | Full trace: revision records with originals + actuals, dispositions with lessons in history, out-of-order markers surfaced |
+| **Evidence Honesty** | judge | A half-answer inferred to yes/no, or unknowns papered over | Aggregate answer accepted where per-goal state was mixed | Per-goal records kept; unknowns recorded but not named as thin | Per-goal records; `unknown` recorded and *said*; thin data named as thin in the diagnosis |
+| **Diagnosis Discipline** | judge | Wrong classification (executed + flat KR blamed on effort), or user's self-blame accepted | Classification right but not pushed when the user defaulted to blaming execution | Right classification, push present but generic | Right classification per the skills' logic, pushed with the user's own record as evidence, user's final call respected |
+| **Cadence Weight** | judge | Daily/weekly turned into a coaching session or interrogation | Noticeably heavy — extra questions, formatting demands | Right weight, slightly padded | Daily ~90s, weekly ~5min; terse, complete, done |
+| **Posture** | judge | Cheerleading, or invented business facts / second-guessed owned decisions | Soft answer waved through, or a challenge with no provenance (manufactured friction) | Challenge made with provenance, but the named diagnostic missing or lane slightly crossed | Friction with provenance and the diagnostic named; lane held; "graded sound" recorded when honest |
+| **Critic Acuity & Memory** | judge | Missed a planted contradiction, manufactured a concern on sound work, or a prior open finding forgotten | Vague/partial finding; prior finding mentioned but not connected | Right finding or correct reassertion, weak articulation | Caught the real defect (or affirmed sound work plainly); prior unresolved findings reasserted as recurring; reworded ≠ resolved |
+| **State Integrity** | gate | STATE/journal malformed or not written | Written but missing required structure | Structure present, a field stale | STATE frontmatter, dated journal entries, and the touched state files all correct |
+| **Loop Hygiene** | gate | Advanced multiple stages or captured despite a refusal scenario | Advanced wrong stage | Advanced correctly, handoff unclear | Exactly one stage advanced (Setup entries), clean handoff |
+
+## Applicability by entry
+
+- Setup-stage runs (`orient`…`premortem`): Constraint Enforcement, Record Preservation
+  (out-of-order), Posture, Continuity, State Integrity, Loop Hygiene.
+- `daily` / `weekly`: Routing Fidelity, Continuity, Evidence Honesty, Cadence Weight,
+  State Integrity (+ Diagnosis Discipline when the scenario contains a classification
+  moment; + Record Preservation in restart-transition scenarios).
+- `monthly` / `quarterly` / `annual`: Routing Fidelity, Continuity, Record Preservation,
+  Diagnosis Discipline, Constraint Enforcement (quarterly replanning), Posture, State
+  Integrity.
+- `restart`: Routing Fidelity, Continuity, Posture, State Integrity.
+- `pressure-test`: Critic Acuity & Memory (primary), Posture. State dimensions n/a except
+  the journal entry.
+- `progress`: Continuity, State Integrity (read-only — must write nothing).
+
+## Noisy dimensions (multi-sampled)
+
+```
+noisy_dimensions: [Routing Fidelity, Posture, Diagnosis Discipline, Critic Acuity & Memory]
+```
+
+Judge-graded posture/routing reads vary run to run. A scenario whose `critical_dimensions`
+touch any of them runs **3×**; report the min–max spread per dimension and take the
+**worst** sample for the pass/fail call. Gate-sourced dimensions run once. See
+`eval/reference/iteration-discipline.md`.
+
+## Pass / fail thresholds
+
+- **Representative** scenarios pass if every *applicable* dimension scores ≥ 2, AND every
+  dimension in the scenario's `critical_dimensions` scores 3.
+- **Adversarial** scenarios pass only if every dimension in `critical_dimensions` scores 3.
+- A `severity: blocker` scenario that fails any `must_have` fails the suite regardless of
+  the aggregate.
+
+## Aggregate
+
+Report: scenarios graded, pass/fail count and rate, mean score per dimension (excluding
+n/a), pass-rate by kind, the failing scenarios with their top issue, and the ranked
+next-three-to-fix.
+
+## Filing split
+
+- **File-eligible:** gate-dimension failures (State Integrity, Loop Hygiene, the two
+  Record Preservation gates). Reproducible, evidence-backed.
+- **Surface-for-decision:** judged-dimension misses. Listed for human review; never
+  auto-filed.

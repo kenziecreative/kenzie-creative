@@ -367,7 +367,7 @@ Adapted from James Clear's *Atomic Habits*, these four laws determine whether a 
 
 ### The tactical tool: narrow your visual focus
 
-When you're actually doing the work, physically narrow your visual field. Close extra browser tabs. Turn your monitor to face away from the window. Use a single-tasking app. The research shows that contracting your visual aperture increases clarity of pursuit and removes distractors. It's a small thing that compounds.
+When you're actually doing the work, physically narrow your visual field. Close extra browser tabs. Turn your monitor to face away from the window. Use a single-tasking app. Narrowing your literal field of view narrows your attention with it. It's a small thing that compounds.
 
 ### The accountability nuance — get this right
 
@@ -693,7 +693,14 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `id`, `title`, `description`
 - `anchor_area_id`: foreign key to AnchorArea
 - `period_start`, `period_end`
-- `status`: planning | active | achieved | abandoned | revised
+- `status`: planning | active | achieved | missed | abandoned | superseded — the closed
+  statuses are dispositions, set at the quarterly closeout; every Objective that leaves
+  `active` gets one, plus `lessons`
+- `goal_contract`: owner, baseline + evidence source, target + deadline, leading/lagging
+  indicators, measurement delay, countermetric (what must not deteriorate), capacity
+  commitment, dependencies, non-goals, legitimate-revision conditions
+- `revision_history`: append-only records of { date, field, original value, actual at
+  change, new value, reason } — a revision never overwrites the original commitment
 - **Constraint:** max 3 Objectives in `active` status at any time across all anchor areas.
 
 **KeyResult**
@@ -701,7 +708,8 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `objective_id`: foreign key to Objective
 - `metric_name`: e.g., "qualified leads"
 - `baseline_value`, `target_value`, `current_value`
-- `status`: on_track | off_track | achieved | revised
+- `status`: on_track | off_track | achieved | revised (revisions append to the Objective's
+  `revision_history`)
 
 **System**
 - `id`, `description`
@@ -719,7 +727,10 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `impact`: low | medium | high
 - `trigger_condition`: the "if X" clause
 - `action`: the "then Y" clause
-- `status`: untriggered | triggered_active | resolved
+- `monitored_signal`, `threshold`, `check_frequency` (weekly | monthly | quarterly),
+  `owner`, `deadline` — what's watched, what counts as fired, and which cadence sweeps it
+- `status`: untriggered | triggered_active | resolved (resolution requires
+  `response_evidence`)
 - `source`: launch_premortem | recurring_premortem
 
 ### Cadence entries
@@ -729,9 +740,11 @@ This appendix defines the core objects in the playbook and how they relate. It e
 
 **WeeklyPulseEntry**
 - `date`
-- `system_executed`: bool
-- `kr_progressing`: bool (null if `system_executed` is false)
-- `what_needs_to_change`: text (only if either bool is false)
+- `per_objective`: array of { objective_id, system_executed: yes | no | unknown,
+  kr_progressing: yes | no | unknown | n/a } — one record per active Objective; a
+  half-answer is recorded as `unknown`, never inferred
+- `mitigations_checked`: none_fired | fired mitigation IDs
+- `what_needs_to_change`: text (only if anything is no or unknown)
 
 **MonthlyReview**
 - `date`
@@ -739,6 +752,7 @@ This appendix defines the core objects in the playbook and how they relate. It e
 
 **QuarterlyReview**
 - `date`
+- `closeouts`: array of { objective_id, disposition: achieved | missed | abandoned | superseded, final_actuals, lessons } — required for every ending Objective before new ones are set
 - `updated_scorecard`: snapshot of AnchorArea scores
 - `system_changes`: array of { system_id, action: keep | revise | retire }
 - `next_quarter_objectives`: array of new Objective IDs

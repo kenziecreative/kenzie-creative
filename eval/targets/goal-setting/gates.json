@@ -1,0 +1,67 @@
+{
+  "target": "goal-setting",
+  "rubric_version": "0.1.0-draft",
+  "gates": [
+    {
+      "name": "state_frontmatter",
+      "type": "frontmatter_keys",
+      "file": "goals/STATE.md",
+      "keys": ["mode", "setup_status", "current_stage"],
+      "feeds": "State Integrity"
+    },
+    {
+      "name": "restart_phase_recorded",
+      "type": "file_contains",
+      "file": "goals/STATE.md",
+      "pattern": "restart_phase:",
+      "feeds": "State Integrity"
+    },
+    {
+      "name": "journal_dated_entry",
+      "type": "file_contains",
+      "file": "goals/journal.md",
+      "pattern": "^- \\*\\*\\[\\d{4}-\\d{2}-\\d{2}\\]",
+      "feeds": "State Integrity",
+      "na_for_entries": ["progress"]
+    },
+    {
+      "name": "revision_preserves_original",
+      "type": "file_contains",
+      "file": "goals/active.md",
+      "pattern": "revised \\[\\d{4}-\\d{2}-\\d{2}\\]:.*was",
+      "feeds": "Record Preservation",
+      "na_for_entries": ["orient", "horizons", "anchors", "goals", "systems", "premortem", "daily", "weekly", "quarterly", "annual", "restart", "pressure-test", "progress"]
+    },
+    {
+      "name": "closeout_recorded",
+      "type": "file_contains",
+      "file": "goals/history.md",
+      "pattern": "[Dd]isposition",
+      "feeds": "Record Preservation",
+      "na_for_entries": ["orient", "horizons", "anchors", "goals", "systems", "premortem", "daily", "weekly", "monthly", "annual", "restart", "pressure-test", "progress"]
+    },
+    {
+      "name": "single_stage_advance",
+      "type": "completed_stages_delta",
+      "file": "goals/STATE.md",
+      "delta": 1,
+      "feeds": "Loop Hygiene",
+      "na_for_entries": ["daily", "weekly", "monthly", "quarterly", "annual", "restart", "pressure-test", "progress"]
+    }
+  ],
+  "content_lint": [
+    {
+      "name": "state_no_placeholders",
+      "file": "goals/STATE.md",
+      "forbid": "\\[(TODO|TBD|placeholder)\\b",
+      "feeds": "State Integrity"
+    },
+    {
+      "name": "active_no_placeholders",
+      "file": "goals/active.md",
+      "forbid": "\\[(TODO|TBD|placeholder|FILL)\\b",
+      "feeds": "State Integrity",
+      "optional_file": true
+    }
+  ]
+}
