@@ -1,6 +1,6 @@
 {
   "target": "goal-setting",
-  "rubric_version": "0.1.0-draft",
+  "rubric_version": "1.0.0",
   "gates": [
     {
       "name": "state_frontmatter",

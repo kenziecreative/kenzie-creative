@@ -1,10 +1,10 @@
 # Goal-setting scoring rubric
 
-> **DRAFT — the 0–3 anchor text below is PENDING KELSEY'S CALIBRATION** (STOP point; see
-> `dev/convergence/review-queue/goal-setting-rubric-anchors.md`). The scaffold — dimensions,
-> sources, applicability, thresholds — is maintainer-built and stable; do not treat scores
-> produced against draft anchors as calibrated. Remove this banner when the anchors are
-> approved.
+*Anchors calibrated by Kelsey 2026-07-12 — approved as drafted, all five calibration
+questions resolved per the recommendations (buried routing caps at 2; the "both" hedge
+fails against a clear record; cadence weight is a register read with turn count as
+evidence; swap closure is unconditional, including mid-Setup; thresholds as inherited).
+Record: `dev/convergence/review-queue/goal-setting-rubric-anchors.md`.*
 
 Each captured run is scored across these dimensions, 0–3. Some are **judged** (a reader
 applies the anchors); some are **gate** (inherited from the deterministic checks in
