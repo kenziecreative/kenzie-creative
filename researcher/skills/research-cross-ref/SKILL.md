@@ -25,6 +25,10 @@ Analyze all processed source notes for cross-cutting patterns.
    - List the processed sources that trace to it
    - Note that this cluster counts as ONE data point for pattern strength assessment, not independent corroboration
    - Apply Echo level from pattern-recognition-guide.md to any pattern that relies solely on sources within the same cluster
+
+   **Independence defaults to unknown.** A source whose note records "Origin unclear" never supplies independent corroboration — its independence is unknown, not assumed. A pattern whose strength depends on unclear-origin sources is capped at Echo level until their origins are established.
+
+   **Shared-wording / shared-figure heuristics (Echo triggers).** The origin_chain field only catches shared origins the processing agent could see. Also compare the sources themselves: when two or more sources — especially unclear-origin ones — share distinctive phrasing (near-identical sentences), the same uncommon figure with identical rounding and framing, or the same quote without attribution, treat them as a **suspected shared-origin cluster**: apply Echo level, list them under Shared-Origin Clusters marked `suspected (heuristic: shared wording/figures)` with the matching passage quoted, and add an item to `research/reference/backstage-tasks.md` to try to locate the common origin. Three differently-bylined articles repeating one hidden press release are one data point, whether or not any of them admits it.
 7. **Calculate saturation signals (XREF-02).** For each phase question (from research-plan.md):
    - Count how many sources address it
    - For each source's findings on that question, classify as "new" (adds information not present in previously processed sources) or "confirmatory" (repeats or confirms existing findings)
@@ -36,7 +40,8 @@ Analyze all processed source notes for cross-cutting patterns.
    - **Aggregate saturation advisory:** when **≥75%** of findings *across all questions for the current phase* are confirmatory — display: "Evidence is converging — additional sources are unlikely to shift the picture. Consider moving to synthesis for saturated questions."
 
    **Fire frequency:** these advisories regenerate on every cross-ref run. They are NOT sticky — if a question is still saturated on the next run, the advisory fires again. Do not suppress a repeated advisory; the user needs the current state each run.
-8. **Identify cross-cutting patterns** (convergence, gap clusters, temporal trends, source-type skew, outliers). When assessing pattern strength, apply shared-origin cluster adjustments: sources in the same cluster count as one data point.
+8. **Identify cross-cutting patterns** (convergence, gap clusters, temporal trends, source-type skew, outliers). When assessing pattern strength, apply shared-origin cluster adjustments: sources in the same cluster — confirmed or suspected — count as one data point, and unclear-origin sources add no corroboration credit.
+8a. **Read the exclusion ledger.** Read `research/discovery/exclusions.md` (if it exists). Report the count in the dashboard. When a convergence pattern exists on a question where an excluded candidate's title or snippet suggested a dissenting view, note it beside the pattern: "Convergence on [question] should be read alongside the exclusion ledger: [candidate] (excluded: [reason]) appeared to carry an opposing view." Report neutrally — the exclusion is the user's call; its visibility is this skill's job.
 9. **Regenerate `research/cross-reference.md`** using the template structure (Dashboard -> Contradictions -> Saturation Summary -> Shared-Origin Clusters -> pattern types). Carry forward existing contradiction resolutions if the contradiction still exists. Drop resolutions for contradictions that no longer exist in the data. Update the dashboard counts.
 10. **Update `research/STATE.md`** — set last cross-reference date to today and reset "Sources since last cross-reference" to 0. **After the edit, re-read STATE.md and confirm `Last cross-reference` is today's date and `Sources since last cross-reference` is 0.** If either field does not match, do not report cross-ref as complete — surface the write failure with the expected vs. actual values and stop. The next `/research:process-source` call will trust this counter to decide whether to block on the checkpoint; silent drift here produces either a premature or a skipped checkpoint.
 
@@ -45,7 +50,7 @@ Analyze all processed source notes for cross-cutting patterns.
 1. Report patterns only when two or more independent sources support them. A pattern from one source is a claim, not a pattern.
 2. When sources contradict each other, present both sides with source citations. Do not resolve the contradiction by picking the more recent or more authoritative source.
 3. Do not force thematic connections. If sources cover different aspects of the topic without overlapping, say "no cross-cutting patterns found for [theme]" rather than inventing a connection.
-4. Weight patterns by source independence. Three blog posts citing the same original study are one data point, not convergence.
+4. Weight patterns by source independence. Three blog posts citing the same original study are one data point, not convergence. Independence is never assumed: origin_chain establishes it only when it affirmatively identifies distinct origins. "Origin unclear" means independence unknown — no corroboration credit, and shared-wording/shared-figure matches trigger a suspected cluster at Echo level.
 5. Date-stamp patterns. A pattern supported by sources from 2019 and contradicted by a 2024 source is a temporal shift, not a contradiction.
 6. When logging contradictions, present both sides with specific source citations. Include Claude's suggested resolution with explicit reasoning (recency, methodology, credibility tier), but mark it as a suggestion — the user must confirm resolution before synthesis can proceed on affected questions. **Confirmation format:** a valid confirmation is either `confirm: <side-A | side-B | both | neither>` (accepting or overriding the suggestion with a specific side) or `resolve: <free-text>` (providing a custom resolution that gets recorded verbatim in the Contradictions section with `user_override=true`). Any other response — including implicit agreement by moving forward, lukewarm affirmatives like "sure" without a side specified, or deferrals — is treated as still-unresolved; re-surface the contradiction and re-ask. Do not infer user agreement from silence or from the user starting the next command.
 7. Shared-origin clusters collapse to one data point for pattern strength. Three blog posts citing the same study are Echo level, not Convergence. This applies retroactively to all existing patterns when shared-origin clusters are detected.
@@ -62,6 +67,8 @@ Analyze all processed source notes for cross-cutting patterns.
 | Overlooking absence patterns — gaps visible only when comparing across sources | Look for questions that multiple sources reference but none answer with evidence. These are significant gaps, not irrelevant omissions. |
 | Echo-chamber patterns — multiple sources tracing to the same original | Trace claims to their origin. If three articles cite the same study, that is one source, not convergence. |
 | Treating shared-origin sources as independent corroboration | Check origin chain fields. If two sources cite the same study, they are one data point. Label as Echo in pattern strength. |
+| Assuming independence because no shared origin was recorded | "Origin unclear" is not "independent." Apply the shared-wording/shared-figure heuristics — near-identical phrasing, the same uncommon figure with identical rounding, the same unattributed quote — and demote matches to a suspected cluster at Echo level. False convergence from a hidden common origin is exactly what this step exists to catch. |
+| Reporting convergence while dissenting candidates sit in the exclusion ledger | Read exclusions.md every run. Convergence built on a curated evidence base is reported WITH the curation visible — note excluded candidates that appeared to dissent, neutrally, beside the pattern. |
 | Resolving contradictions without user confirmation | Log contradictions with a suggested resolution, but mark as "unresolved" until the user explicitly confirms. Synthesis is blocked on unresolved core contradictions. |
 | Reporting raw saturation % without actionable guidance | Every saturation signal must include direction: "saturated — consider synthesis" or "under-covered — prioritize discovery here." A number alone is not useful. |
 | Dropping previous contradiction resolutions on regeneration | Before regenerating, read existing cross-reference.md and extract resolved contradictions. Carry them forward if the contradiction still exists in re-analyzed data. |
@@ -74,7 +81,10 @@ Analyze all processed source notes for cross-cutting patterns.
 |--------|-------|
 | Contradictions (unresolved) | N |
 | Contradictions (total) | N |
-| Shared-origin clusters | N |
+| Shared-origin clusters (confirmed) | N |
+| Shared-origin clusters (suspected — wording/figure heuristics) | N |
+| Independence-unknown sources | N |
+| Excluded candidates (user-declined, see exclusions.md) | N |
 | Saturation advisory | triggered / not triggered |
 | Patterns identified | N |
 

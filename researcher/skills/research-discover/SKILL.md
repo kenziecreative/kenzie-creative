@@ -338,7 +338,22 @@ Valid responses:
   - `no` or `review first`   — stop and let me read the candidates file before deciding
 ```
 
-Parse the user's response against that list. If the response is ambiguous (mixed signals, unclear rank references, or something outside the list — e.g., "yeah but only the good ones"), re-ask with the same valid-response list and wait for an unambiguous choice. Do not guess. Once the user gives an unambiguous choice, begin processing sources sequentially using `/research:process-source` for each URL — **in the main conversation, as the main agent**. Track the count — after processing 5-8 sources, pause and present the cross-reference checkpoint:
+Parse the user's response against that list. If the response is ambiguous (mixed signals, unclear rank references, or something outside the list — e.g., "yeah but only the good ones"), re-ask with the same valid-response list and wait for an unambiguous choice. Do not guess.
+
+**Record exclusions before processing.** For every candidate the user explicitly declined — a `skip N` list, a named rejection ("not the vendor whitepaper"), or a mid-batch "skip this one" — append a row to `research/discovery/exclusions.md`. Create the file with this header if it does not exist:
+
+```markdown
+# Source Exclusion Ledger
+
+Candidates the user explicitly declined during discovery or processing, with reasons. Read by /research:check-gaps and /research:cross-ref — an excluded source is never processed, but the exclusion stays visible to gap analysis and pattern assessment. Record, never restrict.
+
+| Date | Phase | Candidate | URL | Disposition | Reason (verbatim) |
+|---|---|---|---|---|---|
+```
+
+Ask once, briefly: "Quick reason for the skips? One line is fine — it goes in the exclusion ledger so gap analysis can see what was left out and why." Accept one reason covering all skips or per-candidate reasons; if the user declines to give one, record `no reason given`. Never argue with an exclusion and never require a "good" reason — the user's sovereignty over source selection is absolute; the ledger records it, nothing restricts it. Two boundaries on scope: candidates merely not yet selected (`top 5` leaves the rest unprocessed) are NOT exclusions — they remain in the candidates file as unprocessed; and a `no`/`review first` response is a deferral, not an exclusion.
+
+Once the user gives an unambiguous choice, begin processing sources sequentially using `/research:process-source` for each URL — **in the main conversation, as the main agent**. Track the count — after processing 5-8 sources, pause and present the cross-reference checkpoint:
 
 **Do not delegate source processing to a subagent.** Do not spawn the Agent tool to "run the batch in parallel," "work through the queue," or "process sources while I handle something else." Each `process-source` call reads, extracts, writes a note, updates `research/sources/registry.md`, increments the cross-reference counter in `research/STATE.md`, and may surface a contradiction or access failure the user needs to see. All of that has to land in the main agent's context — not a subagent's window that returns a summary 15 minutes later — so that:
 
@@ -367,7 +382,7 @@ Want me to run cross-referencing now? ({M} candidates remaining after this.)
 
 If the user approves, run `/research:cross-ref`, then resume processing the remaining candidates with the same pause cadence.
 
-If the user wants to skip a source during processing, skip it and move to the next.
+If the user wants to skip a source during processing, skip it and move to the next — and append it to `research/discovery/exclusions.md` with a one-line reason (ask; record `no reason given` if declined). The skip is always honored; the record is never optional.
 
 If the user wants to review the full candidates file first or pick specific sources, respect that — show them the file path and let them direct which sources to process.
 
@@ -497,6 +512,7 @@ Key parameters:
 - Include `mailto=research-agent@example.com` in all OpenAlex requests (activates 10 req/s polite pool)
 - Extract per result: title, DOI, authors, citation count, open-access status (`is_oa`), OA URL (`open_access.oa_url`)
 - Status determination: `is_oa=true` → ACCESSIBLE, `is_oa=false` → DISCOVERED
+- **Citation floor is a per-run choice** (see academic.md Template A note): default `cited_by_count:>10` for established topics; for emerging topics (field or question younger than ~3 years, or fast-moving areas), drop the floor and filter by recency instead — print which floor was used in the channel status line
 
 Rate limit: 10 req/s with mailto, 1 req/s without.
 
@@ -540,6 +556,7 @@ Fallback chain (per regulatory.md):
 7. **When a channel fails, continue with remaining channels.** Never abort discovery due to a single channel failure. Log the failure, report it in the summary table, move on.
 8. **Label all degraded and fallback results inline.** Every result from a fallback method must be tagged with the actual method used: `[Firecrawl fallback]`, `[WebSearch fallback]`, `[via tvly fallback]`, etc.
 9. **Retrieval log write must never block discovery.** If `retrieval-log.json` cannot be read, parsed, or written, print a WARNING and proceed. The candidates file is the primary artifact — the retrieval log is supplementary infrastructure. Never abort discovery, never retry the write, never ask the user to fix the file before continuing.
+10. **Every explicit exclusion is ledgered; no exclusion is contested.** When the user declines a candidate, the decline stands — record it in `research/discovery/exclusions.md` with the reason (or `no reason given`) and move on. Do not lobby for a declined source, and do not silently drop the record because the reason seems thin. User curation of the evidence base is legitimate; invisible curation is the defect the ledger exists to prevent.
 
 ---
 

@@ -16,7 +16,8 @@ Assess research coverage against the research plan and identify what's missing.
    - The specific claims, data points, and arguments the source provides
 3. **Read `research/outputs/`** for any completed phase outputs.
 4. **Read `${CLAUDE_PLUGIN_ROOT}/reference/coverage-assessment-guide.md`** for match classification criteria (Direct/Adjacent/Contradicts/None), source independence rules, and coverage status definitions.
-5. **Determine source independence.** Group source notes by origin_chain. Sources sharing the same cited original collapse to one independent data point. Build an independence map: for each unique origin, list the source notes that trace to it.
+5. **Determine source independence.** Group source notes by origin_chain. Sources sharing the same cited original collapse to one independent data point. Build an independence map: for each unique origin, list the source notes that trace to it. **Sources whose note records "Origin unclear" have UNKNOWN independence — mark them `independence-unknown` in the map.** Unknown is not independent: an unclear-origin source still counts as a Direct source for coverage *existence*, but it never supplies corroboration credit — a question whose 2+-source status rests on independence-unknown sources is flagged "independence unverified" and treated as lopsided-risk, not confirmed convergence.
+5a. **Read the exclusion ledger and unprocessed candidates.** Read `research/discovery/exclusions.md` (if it exists) and the phase candidates files at `research/discovery/*-candidates.md`. For each phase question, note any excluded candidate whose title or snippet indicates it addressed the question — especially candidates that appeared to carry counter-evidence. These never restrict anything; they make the shape of the evidence universe visible.
 6. **For each phase in the research plan, for each question:**
    a. Classify each source note's relevance to this question as Direct, Adjacent, Contradicts, or None using the criteria from the coverage assessment guide.
    b. For Direct matches: count independent sources (using the independence map from step 5). Sources sharing the same origin count as one.
@@ -33,9 +34,11 @@ Assess research coverage against the research plan and identify what's missing.
    - **Total questions:** N
    - **Direct coverage:** N questions (N%)
    - **Lopsided (single independent source):** N questions
+   - **Independence unverified (coverage rests on unclear-origin sources):** N questions
    - **Adjacent-only matches:** N questions
    - **Evidence Against:** N questions (active counter-evidence, no Direct sources)
    - **Contradicts matches:** N total (across all questions)
+   - **Excluded candidates:** N (user-declined — see research/discovery/exclusions.md)
    ```
 
    **Per-question detail** (for each phase, for each question):
@@ -55,6 +58,9 @@ Assess research coverage against the research plan and identify what's missing.
 
    **Contradicts sources:** ← section only if Contradicts matches exist
    - [source-note-filename]: Contradicts [phase question] by [brief description of what it opposes]
+
+   **Excluded candidates:** ← section only if ledgered exclusions relate to this question
+   - [candidate title] — excluded [date]: [reason verbatim from the ledger]. [If the candidate's snippet suggested counter-evidence, say so plainly: "Appeared to carry an opposing view."]
    ```
 
 8. **Update `research/STATE.md`** — set last gap check date to today.
@@ -67,7 +73,8 @@ Assess research coverage against the research plan and identify what's missing.
 4. When a phase shows "partial" coverage, list exactly which questions are covered and which are open — do not summarize as a percentage.
 5. Flag questions that have sources but only from one side of a debate as "covered but unbalanced."
 6. A source classified as Adjacent for a question MUST NOT be counted toward that question's coverage status. Adjacent sources are research leads, not coverage.
-7. Independence is determined solely by the origin_chain field in source notes. Two sources that happen to reach similar conclusions independently are still two independent sources. Only sources explicitly tracing to the same original collapse.
+7. Independence is established by the origin_chain field only when it affirmatively identifies distinct origins. Sources explicitly tracing to the same original collapse to one data point. Sources whose origin chain reads "Origin unclear" have UNKNOWN independence — they count toward Direct coverage existence but never toward corroboration; never assume independence from the mere absence of a shared-origin record. Two sources with *clear, distinct* origins that happen to reach similar conclusions are still two independent sources.
+7a. Exclusions are reported neutrally, never contested — and never hidden. If a question's only potential counter-evidence sits in the exclusion ledger, the coverage report says so in the per-question detail. The user's curation is legitimate; invisible curation is the defect.
 8. Lopsided coverage flag triggers at exactly 1 independent Direct source — not 0 (that is Not Started) and not 2+ (that is adequate for non-Complete status).
 9. Full regeneration: gaps.md is rebuilt from scratch each run. Never append to or patch an existing gaps.md — stale entries from deleted or reprocessed sources would persist.
 10. Contradicts classification is not a subcategory of Adjacent. A source that actively opposes the research question's hypothesis is Contradicts — not Adjacent. Adjacent means "related but different topic." Contradicts means "same topic, opposing conclusion." Do not collapse the two. A question with 1 Direct and 1 Contradicts source is "Addressed but unbalanced" (the contradiction is surfaced, not hidden in Adjacent).
@@ -83,6 +90,8 @@ Assess research coverage against the research plan and identify what's missing.
 | Inflating coverage with Adjacent matches | Adjacent sources address related topics, not the specific question. A question about "AWS market share" with 3 sources about "cloud market size" has 0 Direct sources — coverage is Not Started, not Complete. |
 | Counting non-independent sources as separate evidence | Check origin_chain for each source. Three articles citing the same Gartner report are one independent data point, not three. Use the independence map. |
 | Missing lopsided coverage on central questions | After assigning coverage status, scan for any question with exactly 1 independent Direct source. Single-source coverage on a phase's central question is a gap worth flagging explicitly. |
+| Assuming independence when origin is unclear | "Origin unclear" in a note means independence UNKNOWN, not independent. Three unclear-origin articles may all trace to one hidden press release — count them for coverage existence, flag the question "independence unverified," and give no convergence credit until origins are established. |
+| Ignoring the exclusion ledger — reporting coverage as if the user's declined candidates never existed | Read `research/discovery/exclusions.md` every run. A question that reads as one-sided or thin while its counter-evidence sits declined in the ledger must say so — the coverage picture includes what was left out, not just what was let in. |
 | Collapsing Contradicts into Adjacent or None | Contradicts is a distinct fourth classification. A source that actively argues against the research question's hypothesis is Contradicts. It must appear in the "Contradicts sources" section of the per-question detail and trigger "Evidence Against" status when no Direct sources exist. Dropping it to Adjacent or None hides active counter-evidence from the user. |
 
 ## Output
