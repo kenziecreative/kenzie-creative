@@ -37,6 +37,11 @@ Findings. Read `strategy/brief.md` (the working document) to confirm which secti
 actually filled (a stage marked complete in STATE but still `_Not yet started._` in the
 brief is a discrepancy — report it).
 
+Two Stage Record markings belong in the report body, not buried in the table: any stage
+whose status is `stale (premise changed)` (an upstream revision moved the premise it was
+built on — name which stages need reconciling), and any `Pressure-tested` cell marked
+`declined` (the commitment was never stress-tested; the reader brief says so).
+
 Also check for the reader-facing brief at `strategy/strategy-brief.md` (path may be
 overridden as `reader_brief` in config). It's expected once the Story stage is complete.
 If Story is complete but the reader brief is missing, surface that as a non-blocking note
@@ -60,6 +65,7 @@ Infrastructure: N/4 checks passed
 **Loop position:** Define ▸ [Frame] ▸ Analyse ▸ Insight ▸ Synthesise ▸ Story ▸ Move
 **Open pressure-test findings:** [count, or "none"]
 [if any, list each with the stage it bears on]
+**Stale stages:** [any stage marked `stale (premise changed)`, with which upstream revision caused it — omit the line if none]
 
 **Documents:** working brief.md ✓ · reader brief strategy-brief.md [✓ / not yet (Story) / MISSING]
 **Next action:** <the Next Action line from STATE.md>

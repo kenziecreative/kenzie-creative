@@ -64,9 +64,12 @@ depth: adaptive          # adaptive | full | light
 ## Pressure-Test  (default: on at decision points)
 
 Whether the loop offers `/strategist:pressure-test` automatically. `decision-points`
-offers it after Analyse, Synthesise, and Move — the stages where flawed reasoning is most
-costly. Set `always` to offer it after every stage, or `manual` to only run it when
-you ask.
+offers it after Analyse and Move — the stages where flawed reasoning is most costly.
+Set `always` to offer it after every stage, or `manual` to only run it when you ask.
+
+Whatever you set here, the Synthesise commitment gate runs the critic once before the
+decision locks. It never blocks — declining is one word — but a declined check is noted
+in the strategy's record, so the final brief is honest about what was and wasn't tested.
 
 ```yaml
 pressure_test: decision-points   # decision-points | always | manual

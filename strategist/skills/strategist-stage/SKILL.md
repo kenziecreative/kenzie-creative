@@ -1,7 +1,7 @@
 ---
 name: strategist-stage
 description: This skill should be used when the user asks to run or advance a stage of the Strategy Spine — Define, Frame, Analyse, Insight, Synthesise, Story, or Move (e.g. "let's define the problem", "move to the analyse stage", "run synthesise"). Presents the stage's frameworks, applies the chosen one to the user's problem, and captures the result in the working brief.
-allowed-tools: Read, Write, Edit, Glob, Grep
+allowed-tools: Read, Write, Edit, Glob, Grep, Task
 model: opus
 ---
 
@@ -130,7 +130,13 @@ forward to sketch a later stage. Check this stage's position against
   work [this stage] anyway?" Respect their answer. Do not block.
 - **Returning to a completed stage** (iteration): this is expected. Read the existing
   section in `brief.md`, and treat this as a revision pass — preserve what still holds,
-  revise what changed.
+  revise what changed. If this stage is marked `stale (premise changed)` in the Stage
+  Record, this pass is the reconciliation — clear the marker once the revised result is
+  confirmed. (Marking *later* stages stale after a revision happens in Step 5.)
+- **Running a stage while an earlier stage is stale:** warn once — "[Earlier stage]
+  changed after this was built; what we produce here may rest on a premise that moved.
+  Reconcile that first, or proceed?" Respect the answer; if they proceed, note it in the
+  stage's `brief.md` section. Never block.
 
 ## Step 2: Present the stage and its framework menu
 
@@ -181,6 +187,13 @@ and a one-line takeaway — the "so what" this stage produced. Process belongs h
 frameworks, dead-ends, reframes, reconciliation notes. Keep it readable top to bottom, but
 it's a record of how the strategy was built, not a reader-facing deliverable.
 
+Mark claim ownership as you write. Every substantive claim in the record is one of three
+things: **user-owned** (the user stated it — their numbers, their constraints, their
+facts), **agent-inferred** (your reasoning, estimate, or reading of a pattern — flagged
+as such), or **external-unverified** (from outside material the loop didn't verify). The
+conversation already polices this line (conviction-source rule); the written record must
+not erase it.
+
 **Write the reader brief (Story stage onward).** The strategy ships as two documents: the
 working `brief.md` above, and a clean, reader-facing **strategy brief** at
 `strategy/strategy-brief.md` (path configurable as `reader_brief`). Generate it when this
@@ -206,6 +219,47 @@ loop, and follows the Reader-Brief Style Rules below. Do not put process residue
   unchanged in any strategy deck, it's a platitude — cut or sharpen it.
 - **Plain language, oriented to the stated audience.** Explain any architecture concretely
   (the actual mechanism), not as an abstract diagram of internal vocabulary.
+- **Claim ownership survives.** A skeptical reader must be able to tell user-supplied
+  fact from inference from unverified outside figure — in prose, not citations: state
+  the user's facts plainly, word inferences as the reasoned judgments they are ("we
+  estimate…", "the pattern in the numbers suggests…"), and name an external figure the
+  work couldn't verify as exactly that. This is ownership, not sourcing — still no
+  "Sources:" lists, no research apparatus.
+- **Close with "What this rests on."** A short standing section at the end of the brief,
+  in reader language: which load-bearing inputs are the user's stated facts, which key
+  judgments are inferences or estimates made in the work, any external figure carried
+  unverified, whether the reasoning was pressure-tested (a declined pressure-test is
+  said plainly — "the commitment was not pressure-tested; that review was declined"),
+  and any conclusion resting on a stage whose premise later changed. Honest limitations
+  are what make the brief defensible instead of merely confident.
+
+## Step 4b: The commitment gate runs the critic (Synthesise only)
+
+Synthesise ends at the commitment gate — the one point in the loop where the decision
+locks. Before the commitment is written into the brief, the reasoning gets attacked
+once, automatically, whatever the `pressure_test` config says. This is the loop's one
+standing check, and it's why the product can say it pressure-tests reasoning *before*
+you commit.
+
+1. Say it in one natural line — "Before this locks, I want the reasoning attacked once;
+   give me a moment" — not as a named protocol.
+2. Dispatch the `strategist-critic` agent (Task tool) exactly as
+   `strategist-pressure-test` Step 2 does: the problem statement, the drafted
+   through-line and commitment plus the brief context they rest on, and the standard
+   finding format.
+3. Present the findings per the pressure-test skill's Step 3 — direct, ordered by
+   severity, honest when the reasoning holds. Record open findings in
+   `## Open Pressure-Test Findings` in STATE.md and mark Synthesise's `Pressure-tested`
+   cell `✓`.
+4. **Non-blocking.** The findings inform the commitment; the user decides what to
+   address now, what to carry as an open finding, and whether to commit anyway. Never
+   hold the gate hostage to a clean report.
+5. **A decline is respected — and recorded.** If the user waves the check off, that's
+   their call and you don't argue past one clear statement of what the check is for. But
+   the record is not optional: mark the `Pressure-tested` cell `declined`, note
+   "Pressure-test: declined at the commitment gate" in the Synthesise section of
+   `brief.md`, and carry it into the reader brief's "What this rests on" section. The
+   reader of an untested strategy gets to know it's untested.
 
 ## Step 5: Pushback Audit, then update STATE and advance
 
@@ -240,9 +294,9 @@ finished stage: Analyse's bar requires every Frame dimension interrogated, Synth
 requires the commitment gate passed, Story's requires structure then shape, Move's
 requires the execution backbone. If a bar is unmet, say which one and what would meet it,
 then keep working — or, if the user wants to advance anyway, respect the call and record
-the gap: note the unmet bar in the stage's `brief.md` section and in the Stage Record
-notes, so the state file stops certifying work the stage's own contract says isn't done.
-Never block; always record.
+the gap: note the unmet bar in the stage's `brief.md` section and in the stage's Stage
+Record `Notes` cell, so the state file stops certifying work the stage's own contract
+says isn't done. Never block; always record.
 
 Then advance:
 
@@ -253,15 +307,25 @@ Then advance:
 3. Set **Next Action** to the next stage's command (or, if Move just completed, to
    "Loop complete — run `/strategist:pressure-test` for a final review, or iterate any
    stage").
+4. **Downstream staleness (revision passes only).** If this run revised a completed
+   stage while later stages were already complete, ask the one question that matters:
+   did the revision change the premise the later work was built on? If yes, mark each
+   later completed stage `stale (premise changed)` in its Stage Record status cell and
+   fold the reconciliation into Next Action ("reconcile [stages] — the premise moved at
+   [this stage]"). The user may still work anywhere; the state file just stops
+   certifying mutually incompatible work. A stale stage clears when it's revised and
+   re-confirmed (Step 1).
 
 ## Step 6: Offer pressure-test, then transition
 
 Based on the `pressure_test` config setting:
 
-- `decision-points` (default): after **Analyse**, **Synthesise** (the commitment gate), and **Move**, offer
-  `/strategist:pressure-test` before moving on.
+- `decision-points` (default): after **Analyse** and **Move**, offer
+  `/strategist:pressure-test` before moving on. (Synthesise needs no offer — the
+  commitment gate runs the critic itself, Step 4b.)
 - `always`: offer it after every stage.
-- `manual`: don't offer; the user runs it when they want.
+- `manual`: don't offer after stages; the user runs it when they want. The Step 4b
+  commitment-gate run still happens — declining it is one word, and gets recorded.
 
 Then render the transition:
 
@@ -306,6 +370,10 @@ Then render the transition:
 | Running stages back-to-back without a checkpoint | Step 6 hands off with a transition; the user drives the next stage. |
 | Advancing on a shallow single-framework pass that fails the stage's own done-bar | Step 5 done-bar check reads the stage README's "The stage is done when" block as the completion contract before advancing. |
 | Building on conversation memory that contradicts the files | Step 0 file primacy: STATE.md and brief.md win over chat memory and compaction summaries, silently. |
+| Revising an upstream stage and leaving downstream work certified | Step 5.4 marks later completed stages `stale (premise changed)`; Step 1 warns when working on or past a stale premise. |
+| The reader brief erasing who owns a claim | Step 4 claim-ownership marking; Reader-Brief Style Rules carry ownership in prose plus the "What this rests on" close. |
+| A declined pressure-test leaving no trace — untested reads as tested | Step 4b.5: the decline is respected once stated, and recorded in STATE, brief.md, and the reader brief's limitations. |
+| Treating the commitment-gate critic as a blocker | Step 4b.4: findings inform, the user decides; nothing in the loop blocks. |
 | Leaving the brief as disconnected fragments | Step 4 keeps `brief.md` readable as one continuous argument. |
 | The stage flowed too smoothly — every answer accepted as-is | Step 5 Self-Audit (friction check) catches the soft-but-unchallenged stage and forces one genuine challenge before closing. |
 | Writing down a non-answer ("audience is everyone") to keep moving | Step 3 rejects generic/evasive answers and asks for the specific version. |

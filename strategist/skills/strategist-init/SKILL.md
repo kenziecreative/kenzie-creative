@@ -77,15 +77,19 @@ updated: <current UTC timestamp, ISO 8601>
 
 ## Stage Record
 
-| # | Stage | Status | Framework(s) applied | Pressure-tested |
-|---|-------|--------|----------------------|-----------------|
-| 1 | Define     | active  | — | — |
-| 2 | Frame      | pending | — | — |
-| 3 | Analyse    | pending | — | — |
-| 4 | Insight    | pending | — | — |
-| 5 | Synthesise | pending | — | — |
-| 6 | Story      | pending | — | — |
-| 7 | Move       | pending | — | — |
+Status: `pending | active | complete | stale (premise changed)` — stale means an earlier
+stage was materially revised after this one was built; reconcile by re-running it.
+Pressure-tested: `— | ✓ | declined` — declined is a legitimate call, and it's recorded.
+
+| # | Stage | Status | Framework(s) applied | Pressure-tested | Notes |
+|---|-------|--------|----------------------|-----------------|-------|
+| 1 | Define     | active  | — | — | — |
+| 2 | Frame      | pending | — | — | — |
+| 3 | Analyse    | pending | — | — | — |
+| 4 | Insight    | pending | — | — | — |
+| 5 | Synthesise | pending | — | — | — |
+| 6 | Story      | pending | — | — | — |
+| 7 | Move       | pending | — | — | — |
 
 ## Working Dynamic
 

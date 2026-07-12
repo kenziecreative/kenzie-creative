@@ -12,6 +12,10 @@ the material, dispatches the `strategist-critic` agent to attack it, and records
 findings for the user to address back in the relevant stage. It does not rewrite the
 strategy.
 
+(The Synthesise commitment gate runs this same critic automatically before the decision
+locks — `strategist-stage` Step 4b. This skill is the on-demand pass: any stage, any
+time, and the deeper cross-stage review after Move.)
+
 ## Current State
 
 !`cat strategy/STATE.md 2>/dev/null || echo "No strategy/STATE.md — pressure-test runs against an active strategy; run /strategist:init first."`
