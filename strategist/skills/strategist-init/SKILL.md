@@ -9,9 +9,10 @@ model: opus
 
 You are scaffolding a new strategy project. This skill creates the working
 infrastructure: the deployment config (`CLAUDE.md`), the loop state (`strategy/STATE.md`),
-and the working strategy document (`strategy/brief.md`). The clean reader-facing brief
-(`strategy/strategy-brief.md`) is produced later, at the Story stage — init does not create
-it. This skill does **not** start the loop — that's `/strategist:define`.
+the working strategy document (`strategy/brief.md`), and the engagement charter
+(`strategy/CHARTER.md`). The clean reader-facing brief (`strategy/strategy-brief.md`) is
+produced later, at the Story stage — init does not create it. This skill does **not**
+start the loop — that's `/strategist:define`.
 
 In Cowork, create folders and files with the Write tool only. Do not use shell
 (`mkdir`, `cp`, `touch`) — it triggers permission prompts. Writing a file into a path
@@ -36,6 +37,29 @@ Check whether `strategy/STATE.md` already exists (Glob or Read).
 3. If the problem is genuinely empty after one re-ask, write `[FILL]` and note that
    `/strategist:define` will require it before proceeding.
 
+## Step 1b: Capture the engagement charter
+
+A strategy engagement is more than a problem statement — it's a decision, with a
+decider, stakes, and boundaries. Capture the charter now, in **one compact prompt** the
+user can answer in a few lines (don't interrogate field by field):
+
+"Before we start, the shape of the engagement — answer what you can, rough is fine:
+**What decision will this strategy make, and who makes it?** **Who reads the final
+brief?** **What's at stake if it goes wrong — and is there a deadline?** **Any hard
+constraints or explicit non-goals?** **What evidence do you already have, and what's
+missing?**"
+
+Rules:
+
+- Accept partial answers. Any field the user doesn't state gets
+  `not stated — revisit at Define`, and Define picks it up. Ask **one** follow-up only
+  if the decision itself or the decider is missing — those two carry the rest.
+- The charter is captured so it gets *read*, not filed: every stage's preconditions
+  read it, the Synthesise commitment gate checks the committed direction against it,
+  and the reader line steers the Story-stage brief. Don't say this mechanically to the
+  user; one plain line ("I'll hold the strategy to this") is enough.
+- Convert relative dates ("end of Q3") to absolute before writing.
+
 ## Step 2: Write the deployment config
 
 Write a filled copy of the template to `./CLAUDE.md` in the project root:
@@ -51,7 +75,26 @@ read it from there.
 
 ## Step 3: Scaffold the working directory
 
-Write these two files (creating `strategy/` in the process):
+Write these three files (creating `strategy/` in the process):
+
+**`strategy/CHARTER.md`** — from the Step 1b answers, using this structure (fields the
+user didn't state get `not stated — revisit at Define`):
+
+```markdown
+# Engagement Charter
+
+*Captured at init; sharpened at Define. Read by every stage's preconditions, checked at
+the Synthesise commitment gate; the reader line steers the Story-stage brief.*
+
+- **Decision to be made:** <what this strategy will decide>
+- **Decider:** <who makes the call> — **Other stakeholders:** <who else is affected>
+- **Reader of the final brief:** <who the strategy brief is written for>
+- **Stakes:** <what happens if this goes wrong or goes undecided>
+- **Deadline:** <absolute date, if any> — **Required confidence:** <directional | solid | bet-the-company>
+- **Constraints:** <hard limits> — **Non-goals:** <explicitly out of scope>
+- **Evidence available:** <what exists> — **Known gaps:** <what's missing>
+- **Engagement type:** <new strategy | repositioning | investment call | response to a competitor move | other>
+```
 
 **`strategy/STATE.md`** — use this exact structure:
 
@@ -199,6 +242,7 @@ Present a short confirmation:
 Strategy project initialized.
 
   Problem:   <problem statement>
+  Charter:   strategy/CHARTER.md — <decision to be made, one line>
   State:     strategy/STATE.md
   Brief:     strategy/brief.md
   Config:    CLAUDE.md
@@ -236,4 +280,6 @@ it with the full picture.
 | Clobbering an in-progress strategy | Step 0 guard checks `strategy/STATE.md` first and refuses if present. |
 | Overwriting an unrelated `CLAUDE.md` | Step 2 detects a non-Strategist config and writes to `strategy/strategist-config.md` instead. |
 | Starting the Define analysis inside init | Init is scaffolding only. The first thinking happens in `/strategist:define`. |
+| Interrogating the charter field by field | Step 1b: one compact prompt, partial answers accepted, `not stated — revisit at Define` for the rest. |
+| Capturing a charter nothing reads | The charter is wired: stage preconditions read it, the commitment gate checks against it, the reader line steers the Story brief. |
 | Shell prompts derailing Cowork setup | Create everything with Write; never `mkdir`/`cp`/`touch`. |

@@ -45,7 +45,10 @@ The loop maintains **two documents**:
   process residue — this is what you hand to an exec or a partner.
 
 `strategy/STATE.md` tracks where you are and what's next; the loop is resumable across
-sessions.
+sessions (`/strategist:save` when you stop, `/strategist:resume` when you're back).
+`strategy/CHARTER.md` — captured at setup — holds the shape of the engagement: the
+decision to be made, who decides, stakes, constraints, non-goals. The stages read it,
+and the commitment gate checks the strategy against it.
 
 ---
 

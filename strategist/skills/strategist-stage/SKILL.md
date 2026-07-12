@@ -112,12 +112,17 @@ own failure.
 2. Read `strategy/STATE.md`, `strategy/brief.md`, and the project config (`./CLAUDE.md`
    or `strategy/strategist-config.md`) for the problem statement, `depth`, and
    `pressure_test` setting.
-3. **File primacy.** `strategy/STATE.md` and `strategy/brief.md` are the source of truth
+3. Read `strategy/CHARTER.md` if it exists — the decision being made, who decides, the
+   stakes, the constraints and non-goals, the required confidence. Stage work that
+   drifts against a charter line gets that named, like any preference-over-evidence
+   divergence. (Projects initialized before the charter existed proceed without one;
+   its absence is recorded at the Synthesise commitment gate.)
+4. **File primacy.** `strategy/STATE.md` and `strategy/brief.md` are the source of truth
    for where the loop stands and what earlier stages produced. If conversation memory or
    a compaction summary disagrees with the files, the files win — silently. Something
    that feels established but isn't in the files is a hypothesis to re-verify, not a fact
    to build on.
-4. If the problem statement is still `[FILL]` and this is the **Define** stage, ask for
+5. If the problem statement is still `[FILL]` and this is the **Define** stage, ask for
    it now and write it into STATE.md and brief.md before continuing. For any other stage,
    require that Define is complete first (see Step 1 ordering check).
 
@@ -223,8 +228,9 @@ loop, and follows the Reader-Brief Style Rules below. Do not put process residue
 - **Falsifiability bar.** Every substantive claim must be one a competent reader could
   disagree with, and must name what it costs or rules out. If a sentence could appear
   unchanged in any strategy deck, it's a platitude — cut or sharpen it.
-- **Plain language, oriented to the stated audience.** Explain any architecture concretely
-  (the actual mechanism), not as an abstract diagram of internal vocabulary.
+- **Plain language, oriented to the stated audience** — the charter's "reader of the
+  final brief" line, when set. Explain any architecture concretely (the actual
+  mechanism), not as an abstract diagram of internal vocabulary.
 - **Claim ownership survives.** A skeptical reader must be able to tell user-supplied
   fact from inference from unverified outside figure — in prose, not citations: state
   the user's facts plainly, word inferences as the reasoned judgments they are ("we
@@ -257,10 +263,16 @@ you commit.
    severity, honest when the reasoning holds. Record open findings in
    `## Open Pressure-Test Findings` in STATE.md and mark Synthesise's `Pressure-tested`
    cell `✓`.
-4. **Non-blocking.** The findings inform the commitment; the user decides what to
+4. **Check the commitment against the charter** (`strategy/CHARTER.md`): is this the
+   decision the engagement set out to make, does it respect the stated constraints and
+   non-goals, and does the deliberation match the required confidence? A divergence is
+   not a block — the problem may have legitimately moved — but it's named to the user
+   and recorded in the Synthesise section (update the charter if they confirm the
+   change). If no charter exists (an older project), record that in the same place.
+5. **Non-blocking.** The findings inform the commitment; the user decides what to
    address now, what to carry as an open finding, and whether to commit anyway. Never
    hold the gate hostage to a clean report.
-5. **A decline is respected — and recorded.** If the user waves the check off, that's
+6. **A decline is respected — and recorded.** If the user waves the check off, that's
    their call and you don't argue past one clear statement of what the check is for. But
    the record is not optional: mark the `Pressure-tested` cell `declined`, note
    "Pressure-test: declined at the commitment gate" in the Synthesise section of
@@ -272,11 +284,16 @@ you commit.
 **Self-Audit (run this silently before writing anything).** Two parts, one for each half
 of the posture:
 
-*Friction check.* Did I push back at least once this stage — challenge a too-safe framing,
-reject a non-answer, name a preference-over-evidence choice? If the stage flowed entirely
-smoothly, that's a warning sign, not a success: find the one answer that was too safe, too
-generic, or too comfortable and challenge it now, before closing. One genuine pushback per
-stage is the floor; the bar is higher at Analyse, Synthesise, and Move.
+*Friction check.* Did the stage's weakest point get a genuine look? If real pushback
+happened during the stage, this check is already satisfied. If the stage flowed entirely
+smoothly, that's a warning sign, not a success — so before closing, **name** the one
+answer that was most load-bearing and least examined (naming it is mandatory), then
+**grade** it honestly. If it really is too safe, too generic, or doesn't follow from an
+earlier stage, challenge it now — grounded in the user's own material (their problem,
+their data, an earlier stage), never in a manufactured concern. If it holds under a real
+look, "named, graded sound" is a legitimate outcome: record it in the stage's `brief.md`
+section and move on. A fabricated defect erodes exactly the trust the friction exists to
+protect. The bar is higher at Analyse, Synthesise, and Move.
 
 *Lane & fabrication check.* Did I assert any feasibility, timing, cost, or third-party fact
 as established when it was actually my own inference? Did a frame or fork *I* introduced
@@ -385,10 +402,11 @@ Then render the transition:
 | Building on conversation memory that contradicts the files | Step 0 file primacy: STATE.md and brief.md win over chat memory and compaction summaries, silently. |
 | Revising an upstream stage and leaving downstream work certified | Step 5.4 marks later completed stages `stale (premise changed)`; Step 1 warns when working on or past a stale premise. |
 | The reader brief erasing who owns a claim | Step 4 claim-ownership marking; Reader-Brief Style Rules carry ownership in prose plus the "What this rests on" close. |
-| A declined pressure-test leaving no trace — untested reads as tested | Step 4b.5: the decline is respected once stated, and recorded in STATE, brief.md, and the reader brief's limitations. |
-| Treating the commitment-gate critic as a blocker | Step 4b.4: findings inform, the user decides; nothing in the loop blocks. |
+| A declined pressure-test leaving no trace — untested reads as tested | Step 4b.6: the decline is respected once stated, and recorded in STATE, brief.md, and the reader brief's limitations. |
+| Treating the commitment-gate critic as a blocker | Step 4b.5: findings inform, the user decides; nothing in the loop blocks. |
 | Leaving the brief as disconnected fragments | Step 4 keeps `brief.md` readable as one continuous argument. |
-| The stage flowed too smoothly — every answer accepted as-is | Step 5 Self-Audit (friction check) catches the soft-but-unchallenged stage and forces one genuine challenge before closing. |
+| The stage flowed too smoothly — every answer accepted as-is | Step 5 Self-Audit (friction check): name the least-examined load-bearing answer and grade it before closing. |
+| Manufacturing a concern to satisfy the friction ritual | Step 5 friction check valve: challenges ground in the user's material; "named, graded sound" is a legitimate recorded outcome. |
 | Writing down a non-answer ("audience is everyone") to keep moving | Step 3 rejects generic/evasive answers and asks for the specific version. |
 | Logging a preference-over-evidence choice without naming the cost | Posture (friction half): name the divergence from earlier stages and the tradeoff. |
 | Pushing the same way on everyone | Calibrate to `## Working Dynamic`; update it after the first exchange. |
