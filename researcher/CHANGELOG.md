@@ -33,6 +33,16 @@ The convergence release: delivery-integrity, record-never-restrict, and honesty 
 
 - **Progress health-check contract mismatch** (re-audit finding; checklist row 2). `/research:progress` checked `.claude/settings.json` for separate Write/Edit hook matchers and STATE.md for YAML frontmatter — neither of which the plugin ships — producing false failures on every real project. The checks now read the deployment that actually exists: the plugin's `hooks.json` (combined `Write|Edit|MultiEdit` matcher), the init-written permissions pre-allow, and STATE.md's real sections (Current Position / Current Phase Cycle).
 
+### Pass-2 re-attack repairs (same release window, pre-publication)
+
+Before this version was tagged or merged, the disclosed external re-attack (pass 2 of the review protocol) graded the repairs: 3 CLOSED, 3 PARTIAL, 2 OPEN. All five actionable verdicts were verified against the files and repaired in the same release — v1.5.0 was never published, so the version stands. Full triage: `dev/blind-reviews/researcher-pass2-2026-07.md`.
+
+- **Unselected candidates are no longer invisible (pass-2 F3, OPEN → repaired).** The exclusion ledger only caught explicit declines; a `top 5` reply stranded adverse candidates with no trace. `check-gaps` now computes a disposition (processed / excluded / unprocessed) for every discovered candidate and surfaces unprocessed counter-suggesting candidates per question; `cross-ref` reads the unselected remainder beside its convergence patterns.
+- **`user_override` is now derived, never keyword-triggered (pass-2 F6, OPEN → repaired).** `confirm: side-A` against a side-B assessment previously set no flag, and every disclosure keyed on the flag. Resolution records now carry `suggested_resolution` + `user_resolution` + `rationale`, with `user_override` computed from the fields differing; synthesis and audit compare the fields and treat the boolean as corroborating only.
+- **Methodology & Limitations became a structural audit gate (pass-2 shared seam behind F5 and F7, PARTIAL → repaired).** The section was required of the writer but never checked by the audit. `audit-claims` step 5b now fails drafts missing the section, the sampling disclosure, or an adverse-search stamp whose `negative-searches.md` record doesn't exist (new high-severity class: Methodology omission).
+- **Saturation is computed over independent origins (pass-2 F9, PARTIAL → repaired).** The confirmatory ratio previously counted raw repeats, letting one file say "Echo — one data point" and "100% confirmatory, evidence converging" about the same sources. Saturation now collapses confirmed and suspected shared-origin clusters, gives unknown-origin repeats no confirmation credit, and reports high-repetition/low-independence as exactly that.
+- **Two pass-2 bypass goldens added to the eval pack:** `adv-unselected-invisible` and `adv-confirm-side-override`.
+
 ### Deferred (named, with reasons)
 
 - **Evidence architecture (blind F1, Critical)** — commissioned separately (Decision B1); researcher is the reference implementation and its release follows the design session. The permitted precursor (process-source persisting raw extractions) was NOT taken: it is not trivially separable from the current fetch flow, and a half-measure would prejudge B1's snapshot format.

@@ -4,7 +4,8 @@ The scenario classes a researcher dev set should cover, mapped to the ids in
 `scenarios.jsonl`. Gaps are named so they don't stay silent. Scenarios are seeded from
 the 2026-07 blind review's confirm/refute tests (`dev/blind-reviews/researcher-pass1-2026-07.md`,
 local-only) — each golden is one of that review's demonstrable-defect probes, now expected
-to pass after the v1.5.0 fixes. Add scenarios with `eval/reference/generate-scenarios.md`
+to pass after the v1.5.0 fixes. Two additional goldens come from the pass-2 disclosed
+re-attack's bypass constructions (researcher-pass2-2026-07.md). Add scenarios with `eval/reference/generate-scenarios.md`
 and update this file.
 
 > **Pack status:** scaffolded during the v1.5.0 convergence build, modeled on the
@@ -36,6 +37,8 @@ the load-bearing behaviors — but they're the first scenarios to add when broad
 | Exclusion ledger visible to gap analysis | F3 confirm test | `adv-exclusion-visibility` | ✓ |
 | Independence defaults to unknown; wording/figure Echo heuristics | F9 confirm test | `adv-independence-unknown` | ✓ |
 | Mid-source interruption recovery (note without registry row) | F8 confirm test | `adv-mid-source-recovery` | ✓ |
+| Unselected candidates surfaced by disposition pass (no ledger row exists) | Pass-2 F3 bypass | `adv-unselected-invisible` | ✓ |
+| `confirm: <side>` against the assessment derives user_override=true | Pass-2 F6 bypass | `adv-confirm-side-override` | ✓ |
 
 ## Known-uncovered classes (deliberate, with reasons)
 

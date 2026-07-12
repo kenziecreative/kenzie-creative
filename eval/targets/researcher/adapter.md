@@ -57,6 +57,7 @@ turn. Setup keys:
 - `setup.evidence_standard` → `research/reference/evidence-standard.md` (the compiled
   audience standard the audit gate reads).
 - `setup.exclusions` → `research/discovery/exclusions.md` (the source-exclusion ledger).
+- `setup.candidates` → a map of filename → markdown; write each into `research/discovery/` (phase candidates files — the input to the disposition pass in check-gaps/cross-ref).
 - `setup.retrieval_log` → `research/reference/retrieval-log.json` (seeds documented
   adverse-search entries for valve scenarios).
 - `setup.registry` → `research/sources/registry.md`.
