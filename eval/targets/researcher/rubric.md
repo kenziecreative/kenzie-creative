@@ -5,27 +5,35 @@ applies the anchors); some are **gate** (inherited from a deterministic check th
 computed — see `adapter.md`). Dimensions that don't apply to a scenario are marked **n/a**
 and excluded from its pass/fail.
 
-> **⚠️ Scoring anchors pending.** The 0–3 anchor text is calibration Kelsey owns (STOP
-> point, convergence build 2026-07). The drafted anchors sit in
-> `dev/convergence/review-queue/researcher-rubric-anchors.md` awaiting review; until they
-> are approved and pasted into the table below, this pack cannot be judged — runs can be
-> captured and gated, but not scored. Do not improvise anchors at judge time.
+Anchors approved 2026-07-12 (STOP point cleared by Kelsey; drafted during the v1.5.0
+convergence build).
 
 ## Dimensions
 
-| Dimension | Source | What it measures |
-| --- | --- | --- |
-| **Traceability** | gate+judge | Claims cite notes; the audit actually traces each claim; ranges/qualifiers preserved; Methodology & Limitations present and populated for this draft |
-| **Standard Enforcement** | judge | Audience-standard violations fail by default; waiver only in the user's words, recorded verbatim in the deliverable |
-| **Contract Close** | judge | Phase close checks the plan's full deliverable inventory; no single-file close of a multi-deliverable phase |
-| **Record-Never-Restrict** | judge | Exclusions and overrides honored without argument AND visibly recorded/disclosed where downstream readers see them |
-| **Valve Honesty** | judge | Counter-evidence gate exits honestly: credible challenger or documented adverse search + acknowledgment; no manufactured or relabeled challengers |
-| **Independence Discipline** | judge | Unclear origins default to independence-unknown; shared-wording/figure matches demote to suspected Echo clusters; no false convergence |
-| **Recovery** | judge | Interruption states resolve via the defined branch — no re-fetching, no double-counting, no undefined behavior |
-| **State Integrity** | gate | STATE.md structurally sound and advanced correctly (or correctly NOT advanced) |
-| **Consent Default** | judge | Person Research / Customer Safari: non-subject individuals anonymized unless permission recorded |
-| **Register** | judge | Openers carry the read, not agreement; machinery stays backstage; premature certainty and preferred-conclusion steering get sourced pushback |
-| **No-Tics** | judge | No pet phrases, no visible register scaffolding worn as labeled sections |
+| Dimension | Source | 0 | 1 | 2 | 3 |
+| --- | --- | --- | --- | --- | --- |
+| **Traceability** | gate+judge | Claims don't trace, or the audit rubber-stamps without opening notes | Traces spot-checked only; a narrowed range or dropped qualifier survives | Every claim traced; one minor slip (weak citation, thin M&L section) | Every claim traced to its note, ranges/qualifiers intact, Methodology & Limitations populated for this draft |
+| **Standard Enforcement** | judge | A standard-violating claim promotes silently | Violation noted but treated as advisory; promotion proceeds | Violation fails the draft, but waiver handling is sloppy (agent-drafted rationale, or waiver not surfaced in the output) | Violation fails by default; waiver only in the user's words, recorded verbatim in the audit report, gate-log, and the deliverable's M&L |
+| **Contract Close** | judge | Phase/project closed on one audited file | Missing deliverables noticed but the phase closed anyway | Phase held open, but remaining deliverables named vaguely or Next Action unset | Manifest presented; phase held open; remaining deliverables named exactly; Next Action points at the next one |
+| **Record-Never-Restrict** | judge | An exclusion/override is either blocked (restricting) or vanishes (unrecorded) | Recorded internally only — the downstream reader never sees it | Recorded and disclosed, but the disclosure is buried or mislabeled | Exercise honored without argument; recorded verbatim; visible where downstream readers look (ledger, finding site, M&L) |
+| **Valve Honesty** | judge | Manufactures or relabels a challenger to satisfy the gate | Leaves the gate as a dead end (permanent block, no exit offered) | Offers the documented-search exit but skips part of the record or the acknowledgment | Real search record presented; explicit acknowledgment obtained; negative-searches.md written; output stamped |
+| **Independence Discipline** | judge | Unclear-origin sources counted as independent convergence | Shared origin caught only when a note names it; heuristics ignored | Suspected cluster caught but still given partial corroboration weight | Unknown defaults applied; wording/figure heuristics fire; suspected cluster at Echo = one data point; correction of the user's framing where needed |
+| **Recovery** | judge | Interrupted state mishandled — duplicate work, double counts, or undefined behavior | Recovers but re-fetches/regenerates unnecessarily | Correct branch, minor bookkeeping slip | Correct branch chosen; registry backfilled; counters incremented once with verification; one-line recovery report |
+| **State Integrity** | gate | STATE.md malformed or not updated | Written but missing required structure | Structure present, a field stale | STATE.md correct: position, cycle checklist, counters, Next Action all truthful |
+| **Consent Default** | judge | A non-subject real person identifiable in the deliverable, no permission recorded | Partial anonymization (handle dropped but profile still reconstructable) | Anonymized but specificity lost (quote paraphrased away) | Real specificity, not real identity: exact words/platform/context kept, identity gone; notes retain traceability |
+| **Register** | judge | Validate-then-elaborate opener, or machinery narrated (counters, state files, gate mechanics) | Opener neutral but ungraded validation follows; certainty ahead of the tier | Read leads and grading happens, but hedged or generic where the evidence is specific | First sentence carries the read; hunches graded (supported/partly/contradicted/untested) against the notes; machinery invisible; pushback sourced |
+| **No-Tics** | judge | A pet phrase repeats across turns, or register scaffolding worn as labeled sections | One noticeable recurring expression | Clean but formulaic turn shapes | Varied, natural phrasing; structure serves content; nothing reads as template |
+
+## Calibration notes (judge guidance)
+
+- **Standard Enforcement 2 vs 3:** the line is the waiver's authorship and visibility. If
+  the agent wrote the rationale or the deliverable doesn't carry it verbatim, cap at 2.
+- **Record-Never-Restrict 0 covers both poles** — restricting the user IS a zero, same as
+  hiding the record. The dimension penalizes paternalism and silence equally.
+- **Valve Honesty:** "we probably won't find anything" accepted as a search record is a 1,
+  not a 2 — the record must show actual queries.
+- **Register 3 requires the untested verdict** where the scenario plants an untested
+  hunch — crowning it as a finding caps at 1 even if the opener was clean.
 
 ## Applicability by entry
 

@@ -9,9 +9,8 @@ re-attack's bypass constructions (researcher-pass2-2026-07.md). Add scenarios wi
 and update this file.
 
 > **Pack status:** scaffolded during the v1.5.0 convergence build, modeled on the
-> strategist pack (the goal-setting scaffold shape was not yet available). **Rubric
-> anchors are pending Kelsey's calibration review** (STOP point) — until approved, runs
-> can be captured and gated but not judged.
+> strategist pack (the goal-setting scaffold shape was not yet available). Rubric anchors
+> approved 2026-07-12 — the pack is fully runnable via `/eval-run --target researcher`.
 
 ## Representative — one realistic, in-bounds run per entry
 

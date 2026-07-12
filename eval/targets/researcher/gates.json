@@ -1,6 +1,6 @@
 {
   "target": "researcher",
-  "rubric_version": "0.1.0-anchors-pending",
+  "rubric_version": "1.0.0",
   "gates": [
     {
       "name": "state_active_phase",
