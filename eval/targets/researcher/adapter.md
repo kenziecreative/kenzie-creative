@@ -67,6 +67,11 @@ turn. Setup keys:
   from the init template), `research/reference/canonical-figures.json` (`{"figures": {}}`
   unless seeded), and `research/reference/claim-graph.json` (`{"claims": []}`) so gates
   and audits have their infrastructure.
+- Always scaffold `research/reference/source-standards.md` and
+  `research/reference/writing-standards.md` from the init templates. `audit-claims` and
+  `summarize-section` read these unconditionally at step 2–3; in iteration-1 they were
+  absent and four runners invented four different recoveries. That is variance the
+  harness injects, not behavior under test — scaffold them so the skill's read succeeds.
 
 **Path convention (gates depend on it):** scenarios that seed or produce a draft use the
 fixed name `research/drafts/04-test-section.md`; its promoted form is
