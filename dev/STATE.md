@@ -5,7 +5,7 @@
 ## Where things stand
 
 - **strategist (0.4.1)** — convergence release + pass-2 hardening both on main, tagged (`strategist-v0.4.0`, `strategist-v0.4.1`), pushed. All six pass-1 HIGHs, all MEDs, five of seven LOWs shipped; all six pass-2 PARTIALs repaired. Ported patterns are SHIPPED-UNTESTED (no live session yet). Full account: `strategist/CHANGELOG.md`. Review record: `dev/blind-reviews/strategist-pass2-2026-07.md` (local-only, primary checkout).
-- **goal-setting (0.1.0)** — next in the A1 release sequence; its builder consumes the shared drift lint by adding `dev/scripts/drift-configs/goal-setting.json` (see the strategist config as the model). New portable finding to audit before its release: any status cell that can say *done* while a recorded exception stands ("user chose to proceed" ≠ "work satisfies its contract") — see pass-2 note § cross-plugin significance.
+- **goal-setting (0.2.0)** — SHIPPED 2026-07-12: convergence release merged to main, tagged `goal-setting-v0.2.0` (waves 1-3 + pass-2 repairs + drift-lint config, all in one unpublished-then-released version). Pass-2 triage: `dev/blind-reviews/goal-setting-pass2-2026-07.md`. The status-cell audit finding is honored: exception-carrying cells encode the exception (`complete (out of order — X pending)`, `setup completed with gaps: … — user's call`, pressure-test declines recorded, mitigation `unchecked` ≠ clear). Open on Kelsey: two review-queue drafts (playbook F1/F2 wording; golden-set rubric anchors — the eval pack doesn't run until anchors are calibrated).
 - **researcher (1.4.1)** — releases last (A1); same lint-consumption and status-cell audit notes apply; its register port (D1) and evidence architecture (B1) still wait on Kelsey's sessions.
 - **eval harness** — `eval/lib/run-gates.mjs` fixed this session (`section_filled` is n/a on expected-no-advance runs). Two pack follow-ups queued (below).
 
@@ -26,7 +26,7 @@ None. Both checkouts clean; main fully pushed at `f387e5d`.
 
 1. **Kelsey: review the strategist STOP package** — `dev/convergence/review-queue/strategist-rubric-anchors.md` (primary checkout): Continuity + Register rubric dimensions (0–3 anchors), the `adv-mid-stage-resume` golden scenario, an adapter note. Ships as a strategist patch on approval, together with item 2.
 2. **Eval-pack follow-ups (ride with item 1):** (a) teach `single_stage_advance` in `eval/lib/run-gates.mjs` the 0.4.1 honest statuses — a Stage Record row `incomplete (advanced by user)` with `current_stage` advanced is a legitimate recorded non-certification, not a Δ0 fail (proof case: iteration-2 `adv-preference-over-evidence/run-1`); (b) pin `adv-preference-over-evidence`'s end-state (third scripted message or truncation semantics) so runner interpretation stops moving the gate signal.
-3. **goal-setting convergence build/release** (next per A1) — brief at `dev/convergence/goal-setting-build-brief.md` (local-only); carry over the status-cell audit finding and consume the drift lint.
+3. ~~goal-setting convergence build/release~~ DONE 2026-07-12 (merged, tagged `goal-setting-v0.2.0`; drift lint consumed; pass-2 consumed). Remaining goal-setting items ride on Kelsey's review of the two queue drafts, then rubric calibration → first golden-set run.
 4. **First live strategist session** graduates the SHIPPED-UNTESTED patterns (plan § How a Pattern Graduates).
 
 ## Open questions / decisions pending
