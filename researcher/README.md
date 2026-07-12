@@ -6,7 +6,7 @@ Part of the Kenzie Creative marketplace. A standalone research system — self-c
 
 Researcher turns Claude Code into a rigorous research partner. You pick a topic, it builds a phased research plan grounded in preliminary web research, and then you work through it together: collecting sources, finding patterns, identifying gaps, synthesizing findings, and fact-checking every claim before it reaches a final output.
 
-The result isn't a summary of what an AI "knows" about your topic. It's a sourced, audited research output where every claim traces back to specific evidence.
+The result isn't a summary of what an AI "knows" about your topic. It's a sourced, audited research output where every claim is audited back to its source note — and every note to a declared source.
 
 [Why I Built This](#why-i-built-this) · [Who This Is For](#who-this-is-for) · [How It Works](#how-it-works) · [Commands](#commands) · [Research Types](#research-types) · [Getting Started](#getting-started) · [Integrity Features](#integrity-features)
 
@@ -39,6 +39,18 @@ Anyone who needs research they can actually defend.
 - **Anyone doing due diligence** on a company, a person, a nonprofit, or an opportunity where getting it wrong has consequences
 
 You don't need to be technical. You need [Claude Code](https://docs.anthropic.com/en/docs/claude-code) or Claude Cowork, and a topic worth investigating.
+
+---
+
+## v1.5 Highlights
+
+- **Your evidence standard is now enforced, not just recorded.** The audience answer you give at init is compiled into `research/reference/evidence-standard.md`, and `/research:audit-claims` fails any claim that violates it — promotable only under a named waiver whose rationale appears verbatim in the output's Methodology & Limitations.
+- **Phases close against the whole contract.** A phase that promises three deliverables needs all three audited before it's marked complete — one audited executive summary no longer closes a synthesis phase.
+- **Source exclusions leave a trace.** Candidates you decline during discovery are recorded (with your reason) in an exclusion ledger that gap analysis and cross-referencing read — your curation is always honored, and always visible.
+- **The counter-evidence gate has an honest exit.** When genuine search finds no opposition, a documented negative search plus your acknowledgment satisfies the gate and stamps the output — "named, searched, none found" is a recorded outcome, not a dead end.
+- **Independence defaults to unknown.** Sources with unclear origins no longer count as independent corroboration, and shared-wording/shared-figure heuristics catch hidden common origins.
+- **Every draft ends with Methodology & Limitations** — sampling disclosure, single-source findings, commissioner overrides (visibly labeled), counter-evidence status, and any waivers.
+- **Real people are protected by default** in Person Research and Customer Safari: real specificity, not real identity — anyone other than the commissioned subject is anonymized unless permission is on record.
 
 ---
 
@@ -117,7 +129,7 @@ Each type has its own phase structure, finding tags, source credibility hierarch
 
 ## This Is Not a Summarizer
 
-Researcher doesn't ask Claude what it "knows" and hand you a summary. It sends Claude to find sources, process them into structured evidence, cross-reference across them, identify what's missing, and then synthesize from that evidence base. Every claim is auditable back to a specific source.
+Researcher doesn't ask Claude what it "knows" and hand you a summary. It sends Claude to find sources, process them into structured evidence, cross-reference across them, identify what's missing, and then synthesize from that evidence base. Every claim is auditable back to its source note, and every note declares the source it came from.
 
 If a draft says a market is growing at 15% CAGR, that number exists in a source note, with a credibility rating, from a specific document. If the number drifted from 12-18% in the source to "approximately 15%" in the draft, the integrity agent catches it. If a qualifier got dropped ("in North America" became just "globally") the audit flags it.
 
@@ -235,9 +247,13 @@ All CLI and HTTP API calls are made via Bash in the terminal. You can see exactl
 
 **Source staleness warnings.** Each research type has its own staleness threshold (1 year for competitive analysis, up to 5 for curriculum research). When a source exceeds the threshold, you see a warning during synthesis with the source name, data year, and how far over the threshold it is.
 
-**Counter-evidence requirement.** For PRD Validation and Exploratory Thesis research types, the system blocks synthesis until at least one credible source challenges the central claim. If nobody disagrees with your thesis, that's a finding worth noting. But you have to look first.
+**Counter-evidence requirement.** For PRD Validation and Exploratory Thesis research types, the system blocks synthesis until at least one credible source challenges the central claim — or until a documented adverse search comes back empty and you acknowledge it, which stamps the output "no credible counter-evidence found after documented search." If nobody disagrees with your thesis, that's a recorded finding. But you have to look first.
 
-**Independence-aware gap analysis.** Coverage isn't measured by source count. The system classifies each source's relevance as Direct, Adjacent, or Contradicts. Three blog posts citing the same study count as one data point. Only independent Direct sources move the coverage needle.
+**Audience evidence standard, enforced.** The evidence standard set by your audience answer at init is compiled into enforceable rules the audit gate reads. A due-diligence project that declared "single-source financial claims are unacceptable" cannot promote one — unless you grant a named waiver, and the waiver appears in the deliverable's limitations.
+
+**Source exclusion ledger.** Candidates you decline are recorded with your reason and stay visible to gap analysis and cross-referencing. Nothing restricts your source selection; nothing hides it either.
+
+**Independence-aware gap analysis.** Coverage isn't measured by source count. The system classifies each source's relevance as Direct, Adjacent, or Contradicts. Three blog posts citing the same study count as one data point — and sources whose origin can't be established count as independence-unknown, never as corroboration. Only independent Direct sources move the coverage needle.
 
 **Gate to outputs.** Nothing reaches the final output directory without passing `/research:audit-claims` — this is enforced by structural workflow rules; a hard hook backstop is added in v1.4.
 

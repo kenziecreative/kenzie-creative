@@ -15,7 +15,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 | Goal Setting | 0.2.1 | Set business goals that survive contact with reality — and actually operate against them, not abandon them by February | [guide](./goal-setting/README.md) |
 | Intelligence Briefing | 0.3.0 | Know what actually moved in your world today, without wading through the whole news cycle | [guide](./intelligence-briefing/README.md) |
 | Photo Generator | 1.2.0 | Get a professional-grade photo from a plain-language description, without knowing what a key light or an 85mm prime is | [guide](./photo-generator/README.md) |
-| Researcher | 1.4.1 | Research you can stand behind, with every claim traced back to a real source | [guide](./researcher/README.md) |
+| Researcher | 1.5.0 | Research you can stand behind — every claim audited back to its source note, and every note to a declared source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Always know where a decision landed and who owes what, across a whole week of meetings | [guide](./sage/README.md) |
 | Strategist | 0.4.1 | Think a hard problem all the way through, and come out with a strategy you can defend | [guide](./strategist/README.md) |
 | Thinkers | 0.1.0 | Make sense of a confusing situation — what's really going on, where your own thinking might be off, and what to do | [guide](./thinkers/README.md) |
@@ -44,7 +44,7 @@ Each version mirrors that plugin's `plugin.json`, which is the source of truth f
 
 ### Researcher
 
-**Get research you can actually stand behind, instead of a confident summary that might be invented.** Pick a topic, get a phased plan grounded in preliminary research, then work through it together — collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Every claim traces back to a specific source. Not a summarizer; a research partner.
+**Get research you can actually stand behind, instead of a confident summary that might be invented.** Pick a topic, get a phased plan grounded in preliminary research, then work through it together — collecting sources, finding patterns, mapping gaps, synthesizing findings, and auditing every claim before it reaches output. Every claim is audited back to its source note, and every note to a declared source. Not a summarizer; a research partner.
 
 → **[Read the Researcher guide](./researcher/README.md)** for setup, research types, and the integrity model.
 
