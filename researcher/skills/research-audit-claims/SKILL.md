@@ -355,6 +355,22 @@ Only after the user is done reacting to the debrief, render the transition promp
 | Skipping drift detection when claim-graph.json exists — missing drift warnings because graph parse is slow or unexpected | Always attempt drift detection when claim-graph.json exists and parses. A drift_warning in the claim graph means a canonical figure changed after a claim was written — surfacing it is the point. Only skip if the file is absent or unparseable. |
 
 ## Output
+
+**Register (read `${CLAUDE_PLUGIN_ROOT}/reference/posture-register.md` — this is rule 7 applied to this skill, and it governs the FAIL turn as much as the PASS turn).** The audit's *findings* are the product; the audit's *plumbing* is not. Say the verdict, the findings, what changed in the draft, and what the user has to decide. Say nothing about the pipeline that got you there.
+
+Backstage, always — never spoken:
+- **Write verification.** You re-read every file you wrote; that is mandatory and silent. Never say "verified," "confirmed on disk," "all three writes re-read," or "(verified after write)."
+- **Internal step names and numbers.** No "step 4b," no "the M&L structural check," no "the FAIL sequence."
+- **Gate activation state.** Not "the standard gate is inactive for this project." Say the substance: "there's no audience evidence standard recorded for this project, so nothing here was checked against one."
+- **The mechanical/judgment taxonomy.** That split is how you decide what to fix; it is not vocabulary the user was taught. Say what you fixed and what needs their call, not which internal bucket each fell into.
+- **Bookkeeping status.** Not "STATE.md is untouched," not "claim graph updated at `research/reference/claim-graph.json`," not the raw counter block.
+- **Gate-log mechanics.** When you record a waiver, tell the user it is on the record *in the deliverable* — the Methodology & Limitations section, where the reader of the output will see it. Do not narrate the gate-log row or explain that `waived` is not `pass`.
+
+Onstage, always: the product vocabulary the user was taught — the audit, the findings and their severity, confidence tiers, the draft, the deliverable, the Methodology & Limitations section, and what happens next.
+
+- Not: "Step 4b — the waiver is recorded. Your rationale is now in three places: the draft M&L, the audit report's Waivers section, and the gate log (`research/audits/gate-log.md`) as a `waived` row (not `pass` — a waiver authorizes no promotion by itself). All three writes are confirmed on disk. STATE.md is unchanged."
+- Say: "Recorded — your rationale goes into the deliverable's methodology section verbatim, so anyone reading the output sees the call you made and why. It clears Finding 1 only; Finding 2 is still open, so the draft can't move yet. Re-run the audit when you've settled it."
+
 Scorecard summary and pass/fail status.
 
 **If failed:** Execute the full 4-step fail sequence (classify → apply mechanical fixes → list changes and remaining issues → tell user to re-run). Do NOT render a transition prompt — a failed audit is a loop, not a transition. Do NOT stop after listing issues — if any fix is mechanical, apply it before responding to the user.

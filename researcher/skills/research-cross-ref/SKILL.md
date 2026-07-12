@@ -80,6 +80,11 @@ Analyze all processed source notes for cross-cutting patterns.
 
 ## Output
 
+**Register (read `${CLAUDE_PLUGIN_ROOT}/reference/posture-register.md` — this is rule 7 applied to this skill).** Open with what the evidence shows, not with what you ran. The writes are silent: never say `cross-reference.md` was regenerated, never report the counter reset or the last-cross-reference date, never say a write was verified or re-read, and never name the backstage-task file when you log a follow-up. Those are mandatory and invisible. A follow-up you've queued is said plainly — "I'll chase down where that figure actually comes from" — not as a filing action.
+
+- Not: "`research/cross-reference.md` regenerated; `research/STATE.md` updated — Last cross-reference: 2026-07-12, Sources since last cross-reference: 0 (verified after write). I've added a backstage task to locate the common origin (`research/reference/backstage-tasks.md`)."
+- Say: "Those three sources agree, but they don't corroborate each other — same figure, same rounding, same phrasing. That reads as one origin echoed three times, so it's one data point, not three. I'll go find where the number actually came from."
+
 ### Cross-Reference: Phase [N]
 
 | Signal | Count |

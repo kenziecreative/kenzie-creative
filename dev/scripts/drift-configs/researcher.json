@@ -173,9 +173,12 @@
       "pattern": "posture-register\\.md",
       "files": [
         "skills/research-init/SKILL.md",
-        "skills/research-audit-claims/SKILL.md"
+        "skills/research-audit-claims/SKILL.md",
+        "skills/research-cross-ref/SKILL.md",
+        "skills/research-check-gaps/SKILL.md",
+        "skills/research-process-source/SKILL.md"
       ],
-      "reason": "D1 register port: the doctrine ships as a reference file, init's CLAUDE.md template points at it (pointer only — no doctrine text copied, so the two cannot drift), and the phase-debrief register self-check names it. Break any leg and the doctrine is dead text nothing reads."
+      "reason": "D1 register port: the doctrine ships as a reference file, init's CLAUDE.md template points at it, and EVERY skill that composes a user-facing turn points at it from its Output section. Iteration-3 proved why: when the doctrine was reachable only from audit-claims' phase debrief — which runs solely on the PASS branch — Register scored 0 in 15 of 23 runs. A doctrine one skill reads is a doctrine the other skills violate."
     },
     {
       "id": "independence_unknown_vocabulary",

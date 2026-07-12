@@ -72,6 +72,25 @@ turn. Setup keys:
   `summarize-section` read these unconditionally at step 2–3; in iteration-1 they were
   absent and four runners invented four different recoveries. That is variance the
   harness injects, not behavior under test — scaffold them so the skill's read succeeds.
+- Always scaffold `research/sources/registry.md` (header row only, from the init template)
+  unless `setup.registry` seeds it. `check-gaps` step 5a reads it unconditionally to compute
+  candidate dispositions.
+- **Always scaffold the project `CLAUDE.md` with its `## Working Posture` section** — the
+  pointer `/research:init` writes:
+
+  ```markdown
+  ## Working Posture
+
+  Conversational posture and response register are governed by the plugin's posture doctrine — read `${CLAUDE_PLUGIN_ROOT}/reference/posture-register.md` at session start and hold it for every turn. It governs the conversation the way the audit gate governs the outputs: the evidence machinery can hold perfectly while the conversation quietly fails.
+  ```
+
+  **The runner must read `posture-register.md` at session start and hold it for every turn,
+  exactly as a real deployment would.** This is not optional scaffolding: in real use the
+  CLAUDE.md pointer is how the posture doctrine reaches *every* skill on *every* path.
+  Iteration-3 omitted this file, so the doctrine was reachable only from `audit-claims`'
+  phase debrief — which runs only on the PASS branch — and the eval measured a plugin whose
+  register doctrine was, on most paths, simply absent. Register scores from any run without
+  this file are not measurements of the plugin; they are measurements of the harness.
 
 **Path convention (gates depend on it):** scenarios that seed or produce a draft use the
 fixed name `research/drafts/04-test-section.md`; its promoted form is

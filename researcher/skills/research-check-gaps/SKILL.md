@@ -18,7 +18,7 @@ Assess research coverage against the research plan and identify what's missing.
 4. **Read `${CLAUDE_PLUGIN_ROOT}/reference/coverage-assessment-guide.md`** for match classification criteria (Direct/Adjacent/Contradicts/None), source independence rules, and coverage status definitions.
 5. **Determine source independence.** Group source notes by origin_chain. Sources sharing the same cited original collapse to one independent data point. Build an independence map: for each unique origin, list the source notes that trace to it. **Sources whose note records "Origin unclear" have UNKNOWN independence — mark them `independence-unknown` in the map.** Unknown is not independent: an unclear-origin source still counts as a Direct source for coverage *existence*, but it never supplies corroboration credit — a question whose 2+-source status rests on independence-unknown sources is flagged "independence unverified" and treated as lopsided-risk, not confirmed convergence.
 5a. **Compute a disposition for every discovered candidate.** Read the phase candidates files at `research/discovery/*-candidates.md`, `research/discovery/exclusions.md` (if it exists), and `research/sources/registry.md`. Every candidate ever surfaced by discovery has exactly one disposition:
-   - **processed** — a registry row exists for its URL;
+   - **processed** — a registry row corresponds to it. Match on URL when the registry carries one; the registry's columns are source name and note filename, so **fall back to matching the candidate's title against the registry's source name and its note file**. Do not treat "no URL column, therefore no match" as unprocessed — that would silently invent a stranded candidate out of a source that was in fact processed. If a candidate cannot be confidently matched either way, say so explicitly rather than guessing a disposition.
    - **excluded** — a row exists in the exclusion ledger;
    - **unprocessed** — neither. Candidates the user simply never selected (`top 5` leftovers, deferred batches) land here.
 
@@ -106,6 +106,11 @@ Assess research coverage against the research plan and identify what's missing.
 
 ## Output
 
+**Register (read `${CLAUDE_PLUGIN_ROOT}/reference/posture-register.md` — this is rule 7 applied to this skill).** Open with the coverage read, not with what you did. The file writes are silent: never say you read the plan, the notes, the ledger, or the guide; never say `gaps.md` was regenerated; never say STATE.md's gap-check date was set; never name the disposition pass. Those things are mandatory and invisible. The user gets the finding — where coverage is thin, what's one-sided, which discovered source never got processed — and nothing about the pipeline that produced it.
+
+- Not: "Gap check complete. I read the research plan, both source notes, and the exclusion ledger, computed dispositions for every candidate, and regenerated `research/gaps.md` from scratch."
+- Say: "Everything you have on SecureStack's security comes from SecureStack. The one independent look — the pentest — is the source you declined, so the coverage picture is vendor-only by construction."
+
 Dashboard summary showing coverage status per phase. Per-question detail with independent source counts, Direct/Adjacent classification, and lopsided flags.
 
 **Strength vocabulary (definition site — referenced by `/research:phase-insight`):**
@@ -135,7 +140,7 @@ If gaps exist (Not Started, Lopsided, or Evidence Against questions):
 
 ───────────────────────────────────────────────────────────
 
-**▶ NEXT:** `/research:discover` — [N] questions have no Direct coverage — find sources to fill them.
+**▶ NEXT:** `/research:discover` — [state the gap truthfully, in the shape it actually has: "[N] questions have no Direct coverage" when that is what you found; "[N] questions rest on a single independent source" for lopsided coverage; "[N] questions are covered only by sources sharing one origin" for a shared-origin cluster. Do not emit the no-Direct-coverage wording for a lopsided gap — it contradicts the report you just gave.] — find sources to fill them.
 
 **Also available:**
 - `/research:phase-insight` — Review which questions are thin vs. strong before deciding.
