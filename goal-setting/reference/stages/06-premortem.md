@@ -8,7 +8,7 @@ Goals are set, systems designed. Before launch, do one more thing: assume the wh
 
 ## Why it works
 
-This is the highest-evidence intervention in the playbook. Foreshadowing failure nearly doubles the probability of achieving a goal versus focusing only on success (Balcetis lab, via Huberman). Visualizing success gives a short dopamine spike that fades — the brain treats it like you've already won. Visualizing failure releases dopamine, epinephrine, and acetylcholine together, heightening alertness and building problem-solving pathways *before* the problem arrives. This isn't pessimism; it's preparation. (The protocol is an adaptation of the underlying research, not a replication of one experiment.)
+Foreshadowing failure has research behind it — work associated with the Balcetis lab found that people who visualized the obstacles to a goal substantially outperformed those who visualized only success. The working explanation is practical, not mystical: rehearsing success feels like winning and blunts urgency, while rehearsing failure sharpens attention and produces responses you've already thought through *before* the problem arrives. This isn't pessimism; it's preparation. (The protocol is an adaptation of the underlying research, not a replication of one experiment.)
 
 ## Framework: the Pre-mortem protocol
 
@@ -17,7 +17,7 @@ This is the highest-evidence intervention in the playbook. Foreshadowing failure
 3. **Brainstorm internal causes.** What inside the business — execution gaps, team issues, resource/capacity limits, capability gaps?
 4. **Surface hidden assumptions.** What is the user assuming will be true that might not be? Assumptions you can't articulate are the ones that kill you.
 5. **Prioritize by likelihood × impact.** Rate each failure low/medium/high on each. Focus on anything high in either dimension.
-6. **Build mitigations with explicit triggers.** For each high-priority risk, define a mitigation as *"If X happens, then Y."* A mitigation without a trigger is a hope; a mitigation with a trigger is a system.
+6. **Build mitigations with explicit triggers.** For each high-priority risk, define a mitigation as *"If X happens, then Y."* A mitigation without a trigger is a hope; a mitigation with a trigger is a system. And a trigger nothing watches is still a hope — so each mitigation also names its **monitored signal** (the observable that tells you X happened), the **threshold** that counts as fired, and a **check frequency** (weekly or monthly — which cadence sweeps it). See `Mitigation` in `../schemas.md`.
 
 ## Diagnostic
 
@@ -34,8 +34,10 @@ Re-examine the Stage 4 KRs in light of the surfaced risks. If a target now looks
 
 ## Deliverable
 
-Revised KRs if the pre-mortem surfaced unrealistic targets, plus a list of named mitigation triggers ("if X, then Y") for each high-priority risk, each tagged `source: launch_premortem`. Write to `goals/active.md` under the relevant Objectives. These mitigations stay with the user into the Ongoing Arc and are revisited at every quarterly review.
+Revised KRs if the pre-mortem surfaced unrealistic targets, plus a list of named mitigation triggers ("if X, then Y") for each high-priority risk — each with its monitored signal, threshold, and check frequency, tagged `source: launch_premortem`. Write to `goals/active.md` under the relevant Objectives. These mitigations are *operated*, not just recorded: the weekly pulse sweeps the weekly-frequency triggers, the monthly review sweeps them all, and a fired trigger surfaces at the next session rather than waiting for the quarter.
 
 ## Hand off — Setup Arc complete
+
+Before switching modes, the engine designs the **cadence triggers** with the user (see the setup-stage skill, Step 6) — the method's own trigger test, applied to the method itself.
 
 > Setup is complete. The plugin switches to **Ongoing mode**. Start the daily writing tomorrow (`/goal-setting:daily`) and the weekly pulse on Monday (`/goal-setting:pulse`). Run `/goal-setting:pressure-test` any time to stress-test the whole setup, or `/goal-setting:progress` to see where you stand.

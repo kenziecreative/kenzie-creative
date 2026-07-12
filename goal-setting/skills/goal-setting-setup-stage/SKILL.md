@@ -20,7 +20,7 @@ The six Setup stages, in order, with their reference file under
 | orient    | `01-orient.md`    | Establish direction; pass three tests; calibrate difficulty | One-sentence Direction | `goals/vision.md` |
 | horizons  | `02-horizons.md`  | Set time frames; calibrate to industry; capture vision | HorizonSet + Horizon 3 vision | `goals/vision.md` |
 | anchors   | `03-anchors.md`   | Score the seven; select 1–3 | Scored scorecard + active anchors | `goals/scorecard.md` |
-| goals     | `04-goals.md`     | Construct Objectives + KRs | One Objective per active anchor + 2–4 KRs | `goals/active.md` |
+| goals     | `04-goals.md`     | Construct Objectives + KRs | One Objective per active anchor + 2–4 KRs + goal contract | `goals/active.md` |
 | systems   | `05-systems.md`   | Design weekly systems against the Four Laws | One System per Objective | `goals/active.md` |
 | premortem | `06-premortem.md` | Stress-test before launch | Revised KRs + mitigation triggers | `goals/active.md` |
 
@@ -79,10 +79,12 @@ the first challenge — not after several stages.
 ## Step 0: Preconditions
 
 1. If `goals/STATE.md` does not exist, stop and tell the user to run `/goal-setting:init`.
-2. Read `goals/STATE.md`, the relevant state file(s) for this stage and the ones before it
+2. Apply the return protocol in `${CLAUDE_PLUGIN_ROOT}/reference/heartbeat.md` — trust
+   order, stance restoration, additive migration, overdue routing. It runs silently.
+3. Read `goals/STATE.md`, the relevant state file(s) for this stage and the ones before it
    (so you reuse what's known), and the project config (`./CLAUDE.md` or
    `goals/goal-setting-config.md`).
-3. If the Direction is still `[FILL]` and this is the **orient** stage, that's expected — this
+4. If the Direction is still `[FILL]` and this is the **orient** stage, that's expected — this
    stage produces it. For any later stage, require that Orient is complete first (see Step 1).
 
 ## Step 1: Ordering check (advisory, not a hard gate)
@@ -92,7 +94,8 @@ The Setup Arc runs in order, but it iterates. Check this stage against `complete
 - **In order** (all prior stages complete): proceed.
 - **Jumping ahead** (a prior stage unstarted): note it once — "You haven't run [earlier
   stage] yet; [this stage] builds on it. Want to go there first, or work [this stage] anyway?"
-  Respect their answer. Do not block.
+  Respect their answer. Do not block — but if they work this stage anyway, the completion is
+  recorded as out of order (Step 6), so the gap stays visible instead of vanishing.
 - **Returning to a completed stage** (iteration): expected, especially from the annual vision
   check. Read the existing content and treat this as a revision pass — preserve what holds,
   revise what changed. Do not rebuild from scratch.
@@ -127,8 +130,15 @@ user to resolve it before you capture anything.
   refuse and require them to deactivate one first. (One active anchor is often right.)
 - **goals:** Max **three** active Objectives total. **One** Objective per active Anchor Area.
   Every Objective must carry an `anchor_area_id` pointing to an *active* anchor. Refuse a
-  fourth Objective, a second Objective in the same anchor (unless the first is archived), and
-  any orphaned Objective.
+  fourth Objective, a second Objective in the same anchor (unless the first is closed), and
+  any orphaned Objective. **Record the refused, never just refuse:** a fourth-goal candidate
+  goes into `## Candidate Backlog` in `goals/STATE.md` with the date, and you show the
+  conflict plainly — "a fourth means one of these three goes; which?" The user's recorded
+  options are **swap** (close the displaced Objective with a full disposition in
+  `goals/history.md` — see the quarterly closeout — *before* the candidate activates),
+  **defer** (it waits in the backlog for the next quarterly replanning), or **reject**. The
+  refusal semantics never weaken; what changes is that the candidate and the decision leave
+  a trace.
 - **systems:** Every System must have a real trigger — `trigger_type` one of `time`,
   `location`, or `habit_stack` (per `reference/schemas.md`) — with a concrete `trigger_detail`.
   Refuse trigger-less systems as "a hope, not a system." **One**
@@ -161,22 +171,43 @@ the structures in `${CLAUDE_PLUGIN_ROOT}/reference/schemas.md`:
 
 **Self-Audit (run silently before writing STATE).** Two parts:
 
-*Friction check.* Did I push back at least once — reject a non-answer, challenge a wish dressed
-as a goal, refuse a trigger-less system? If the stage flowed entirely smoothly, that's a
-warning sign: find the one answer that was too soft and challenge it before closing.
+*Friction check — evidence first, not quota first.* Name the user's relatively weakest answer
+this stage; every stage has one. Challenging it requires provenance in the user's own
+material — something they said, an earlier stage it contradicts, a named diagnostic it fails.
+If it has that and you let it pass unexamined, raise it now, before closing. If the honest
+audit finds even the weakest answer holds, do **not** manufacture a concern to prove you
+pushed — a manufactured challenge teaches the user to discount the real ones. "Named the
+relatively weakest answer, graded it sound" is a legitimate recorded outcome; note it in the
+stage's journal line. The question is never "did I push back enough times" — it's "did the
+weakest answer get examined."
 
 *Lane & fabrication check.* Did I assert a business fact the user never gave? Did I second-guess
 a decision that's theirs (which anchor, what target)? Did a frame I introduced become
 load-bearing without the user adopting it? If any, fix it before writing.
 
-Update the Working Dynamic if you learned how the user takes pushback.
+Update the Working Dynamic if you learned how the user takes pushback; add a Coaching Memory
+line only if something durable surfaced (a pattern, a rejected decision and its why — not a
+one-off).
 
 Then advance `goals/STATE.md`:
 
-1. Set this stage's row to `complete` with its deliverable noted; add it to `completed_stages`;
-   set the next stage `active` and `current_stage`; refresh `updated`.
-2. If **premortem** just completed: set `mode: ongoing`, `setup_status: complete`, fill
-   `Last setup completed`, and set the Cadence Calendar `Next due` to the daily ritual.
+1. Set this stage's row to `complete` with its deliverable noted — or, if a prior stage is
+   still unstarted, `complete (out of order — <missing stage> pending)`, so the gap stays
+   visible in `/goal-setting:progress`. When the missing stage later completes, revisit the
+   out-of-order stage as a revision pass (its inputs just changed) and clear the marker.
+   Add it to `completed_stages`; set the next stage `active` and `current_stage`; refresh
+   `updated`.
+2. If **premortem** just completed: before switching modes, **design the cadence triggers
+   with the user.** The method's own trigger test applies to the method itself — "every
+   Monday" is a cadence label, not a system. For each of daily, weekly, monthly, and
+   quarterly, ask what will actually fire it: a time trigger (a recurring calendar block
+   that exists, not one they intend to create), a location trigger, or a habit-stack trigger
+   ("with the first coffee, at the kitchen counter"). "I'll remember" is a hope, not a
+   trigger — push back once, then record what the user commits to. A CLI can't fire a
+   calendar, but it can refuse to pretend the user's memory is a trigger. Write each into
+   the Cadence Calendar's `trigger:` lines. Then set `mode: ongoing`,
+   `setup_status: complete`, fill `Last setup completed`, and set the Cadence Calendar
+   `Next due` to the daily ritual.
 
 ## Step 7: Hand off
 
@@ -215,7 +246,10 @@ Setup-complete handoff into Ongoing mode.
 | Diluting into a cheerleader | Posture: rigorous chief-of-staff; the friction half is mandatory. |
 | Inventing a business fact to sound decisive | Posture (lane half) + Step 6 lane & fabrication check. |
 | Second-guessing the user's target or anchor choice | Posture (lane half): form is your lane, the user's numbers and priorities are theirs. |
-| The stage flowed too smoothly — every answer accepted | Step 6 Self-Audit (friction check) forces one genuine challenge before closing. |
+| The stage flowed too smoothly — every answer accepted | Step 6 Self-Audit (friction check) examines the weakest answer before closing — challenge with provenance, or record it graded sound. |
+| Manufacturing a concern to satisfy the friction check | The valve: a challenge needs provenance in the user's material; "named, graded sound" is a legitimate outcome. |
+| A refused fourth goal vanishes without a trace | Step 4 (goals): the candidate lands in the Candidate Backlog with an explicit swap/defer/reject decision. |
+| Setup ends with cadences that rely on memory | Step 6 premortem close designs a real trigger per cadence — time, location, or habit-stack. |
 | Running stages back-to-back without a checkpoint | Step 7 hands off; the user drives the next stage. |
 | Burying the ask inside paragraphs of analysis | Step 3: one isolated question per turn, stated plainly on its own line. |
 | Rebuilding a completed stage from scratch on revisit | Step 1 returning-to-a-stage is a revision pass; preserve what holds. |

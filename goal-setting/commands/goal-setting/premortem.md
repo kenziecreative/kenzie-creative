@@ -12,5 +12,6 @@ assumptions, likelihood×impact triage, mitigations), revises any KRs the exerci
 unrealistic, and writes the mitigations to `goals/active.md`.
 
 **Hard constraint:** every mitigation needs both an "if X" trigger condition and a "then Y"
-action — the skill rejects incomplete mitigations. Completing this stage closes the Setup Arc
-and switches the deployment to Ongoing mode.
+action — plus the signal that's watched and how often — the skill rejects incomplete
+mitigations. Completing this stage designs the cadence triggers with the user, closes the
+Setup Arc, and switches the deployment to Ongoing mode.

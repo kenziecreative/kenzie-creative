@@ -20,7 +20,10 @@ system: it exists so a lapse interrupts the practice rather than ending it.
 ## Step 0: Preconditions
 
 1. If `goals/STATE.md` does not exist, tell the user to run `/goal-setting:init` and stop.
-2. Read `goals/scorecard.md` and `goals/active.md` (current anchors and systems).
+2. Apply the return protocol in `${CLAUDE_PLUGIN_ROOT}/reference/heartbeat.md` — trust order
+   and stance restoration matter most here: the user is arriving after a lapse, and the
+   Coaching Memory may already know what tends to knock them off. Silently.
+3. Read `goals/scorecard.md` and `goals/active.md` (current anchors and systems).
 
 ## The five steps
 
@@ -51,17 +54,25 @@ monthly comes first, then the next quarterly.
 
 ## Capture
 
-- Set `mode: restart` in `goals/STATE.md` (it returns to `ongoing` once the chosen system has
-  held for two weeks — note that transition condition). Update the relevant flags and the
+- Set `mode: restart` and `restart_phase: stabilizing` in `goals/STATE.md`. The restart is a
+  state machine with an executable exit, and **the weekly pulse is its evaluator** (see the
+  pulse skill's "Restart hold"): stabilizing (one system, two consecutive clean weekly
+  pulses) → reintroducing (paused systems return one at a time, two clean weeks each) →
+  ongoing (`mode: ongoing`, `restart_phase: none`). Record the chosen system and the hold
+  criterion in the Active Flags so the pulse can evaluate it without re-deriving. Update the
   `Next due` line (the daily ritual tomorrow).
+- Record the restart's cause — if the user volunteered one — as a Coaching Memory line
+  (pattern, not blame). The deliberate diagnosis waits for the first clean week; don't force
+  it now.
 - Append a restart entry to `goals/journal.md` (newest at top):
-  `- **[YYYY-MM-DD] restart** — re-scored; restarting with system: <name> (others paused); daily resumes tomorrow; quarterly deferred: <yes/no>.`
+  `- **[YYYY-MM-DD] restart** — re-scored; restarting with system: <name> (others paused); hold: 2 clean weekly pulses; daily resumes tomorrow; quarterly deferred: <yes/no>.`
 
 ## Hand off
 
 ```
 ✓ Restart logged. You're back on with ONE system: <name>. The rest are paused — they come
-  back one at a time once this holds.
+  back one at a time, each after two clean weekly pulses. The pulse tracks that; you don't
+  have to.
 
 ▶ Tomorrow: /goal-setting:daily (new spot). Monday: /goal-setting:pulse.
   /goal-setting:progress any time.
@@ -77,3 +88,6 @@ monthly comes first, then the next quarterly.
 4. Keep the anchor re-score within the max-three active cap.
 5. Append to the journal; update STATE flags and `Next due` so `/goal-setting:progress` is
    accurate.
+6. The restart has an exit and the pulse owns it — set `restart_phase: stabilizing` and the
+   hold criterion so the exit can actually fire. A user who follows the protocol perfectly
+   must not stall in restart mode.

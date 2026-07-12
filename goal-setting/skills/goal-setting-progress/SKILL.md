@@ -22,17 +22,21 @@ Collect results into a failures list (empty = all pass):
 2. **STATE structurally sound** — STATE.md has the YAML frontmatter keys `mode`, `setup_status`,
    `current_stage`.
 3. **State files present** — `goals/vision.md`, `goals/active.md`, `goals/scorecard.md`,
-   `goals/journal.md` all exist.
+   `goals/journal.md` all exist (`goals/history.md` too on deployments scaffolded at v0.2.0+;
+   its absence on an older deployment is a note, not a failure — the next writing skill adds
+   it).
 4. **Reference reachable** — Glob `${CLAUDE_PLUGIN_ROOT}/reference/` and confirm `playbook.md`,
    the `stages/` directory, and the `anchor-areas/` directory are present.
 
 ## Step 2: Read state
 
-Read `goals/STATE.md` (mode, loop position, Setup Stage Record, cadence calendar, flags),
-`goals/scorecard.md` (active anchors + current scores), `goals/active.md` (Objectives, KR
-status, Systems, outstanding Mitigations), and the latest entries in `goals/journal.md` (most
-recent cadence runs). If STATE says a stage is complete but the state file still shows its
-placeholder, surface that discrepancy.
+Read `goals/STATE.md` (mode, loop position, Setup Stage Record, cadence calendar + triggers,
+flags, Candidate Backlog), `goals/scorecard.md` (active anchors + current scores),
+`goals/active.md` (Objectives, KR status, Systems, Mitigations and their statuses), and the
+latest entries in `goals/journal.md` (most recent cadence runs). If STATE says a stage is
+complete but the state file still shows its placeholder, surface that discrepancy. Compute
+overdue cadences from the last-run dates and today's date — arithmetic, not the `Next due`
+line.
 
 ## Output
 
@@ -43,8 +47,10 @@ Infrastructure: N/4 checks passed
 
 ### Goal Setting — <Direction, trimmed>
 
-**Period:** <Quarter Year>   ·   **Mode:** <setup | ongoing | restart>
+**Period:** <Quarter Year>   ·   **Mode:** <setup | ongoing | restart (phase: stabilizing/reintroducing — held N of 2 clean weeks)>
 **Loop position:** <Setup: Stage X (name)>  OR  <Ongoing>
+[⚠ lines, only when live: fired mitigation awaiting response · quarter ended, closeout open ·
+ cadence overdue by N days/weeks · stage completed out of order (dependency still pending)]
 
 **Active Anchor Areas:** <name (score), name (score), …>   (max 3)
 
@@ -55,7 +61,9 @@ Infrastructure: N/4 checks passed
 [one row per active Objective; "none yet" if pre–Stage 4]
 
 **Active Systems:** <system (trigger), …  — or "none yet">  [note any paused]
-**Outstanding mitigations:** <count, or "none">
+**Mitigations:** <N untriggered · N fired awaiting response · N resolved — or "none">
+**Candidate backlog:** <N pending — reviewed at the quarterly · or omit if empty>
+**Closed goals:** <N in history (A achieved · M missed · …) — or omit if none>
 
 **Cadence calendar:**
 - Daily: <last run / —>   ·   Weekly: <last run / —>

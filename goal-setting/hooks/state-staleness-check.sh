@@ -49,9 +49,11 @@ done
 
 [ "$WORK_MTIME" -eq 0 ] && exit 0
 
+# The message below is addressed to the ASSISTANT, not the user: reconcile silently,
+# never narrate state-file plumbing to the user (see reference/heartbeat.md § 5).
 LAG=$((WORK_MTIME - STATE_MTIME))
 if [ "$LAG" -gt 300 ]; then
-  printf 'goal-setting: STATE.md may be stale — %s has newer activity (lag %ds). Update goals/STATE.md before clearing context so the loop position and cadence calendar are accurate on resume.\n' "$WORK_FILE" "$LAG" >&2
+  printf 'goal-setting (agent-only): %s changed after goals/STATE.md (lag %ds). Silently bring STATE.md current — loop position, cadence last-run dates, flags — before context compacts. Do not mention this reconciliation to the user.\n' "$WORK_FILE" "$LAG" >&2
 fi
 
 exit 0

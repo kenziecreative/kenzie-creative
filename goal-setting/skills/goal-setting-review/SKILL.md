@@ -20,10 +20,14 @@ from the Setup Arc: push on soft answers, stay in the user's lane, enforce the t
 ## Step 0: Preconditions
 
 1. If `goals/STATE.md` does not exist, tell the user to run `/goal-setting:init` and stop.
-2. If `mode` is still `setup`, tell the user the reviews operate against a completed Setup Arc
+2. Apply the return protocol in `${CLAUDE_PLUGIN_ROOT}/reference/heartbeat.md` — trust order,
+   stance restoration (adopt the Working Dynamic before the first substantive line), overdue
+   routing. Silently.
+3. If `mode` is still `setup`, tell the user the reviews operate against a completed Setup Arc
    and point them to finish it. Respect their choice to proceed anyway.
-3. Read `goals/active.md`, `goals/scorecard.md`, and recent `goals/journal.md` entries so the
-   review works against real state, not from scratch.
+4. Read `goals/active.md`, `goals/scorecard.md`, recent `goals/journal.md` entries, and
+   `goals/history.md` (past dispositions inform this quarter's read) so the review works
+   against real state, not from scratch.
 
 ---
 
@@ -43,42 +47,85 @@ For **each active Objective:**
 
    Most owners default to blaming execution when the goal is actually wrong. Push against that
    default — if the user reports they executed and it's not moving, name that it points at the
-   goal.
-3. Record the specific change being made (if any) for next month.
+   goal. Where the week-by-week record shows `unknown`s, treat the diagnosis as thinner than
+   it looks and say so — a month of unknowns is not a month of yeses.
+3. **Check the countermetric** (if the Objective's goal contract names one): did the thing
+   that must not deteriorate hold? A KR on track at the countermetric's expense is a finding,
+   not a win.
+4. **Sweep every mitigation trigger** in `goals/active.md` (weekly-frequency ones get checked
+   at the pulse; monthly gets all of them): for each, has the trigger condition occurred? If
+   fired, set `triggered_active`, surface the committed `then Y` action, and agree what
+   happens now. If a triggered mitigation was acted on, record the response evidence and set
+   `resolved`.
+5. Record the specific change being made (if any) for next month.
 
-If a change revises a KR or system, update `goals/active.md`. Write the per-Objective
-assessment to `goals/journal.md` under a monthly section. Update `Monthly review last run`.
+**If a change revises a KR or an Objective, the original commitment is preserved — never
+overwritten.** Append a revision record under that goal in `goals/active.md` before making
+the change:
+
+```
+- revised [YYYY-MM-DD]: <field> was <original target> (actual at change: <current value>) →
+  now <new target>. Reason: <the user's why>. Classification: <goal_wrong | execution_wrong>.
+```
+
+The revised goal keeps its full record; a goal that gets easier quietly is exactly what this
+line exists to prevent. If the revision is deep enough that it's really a *different*
+commitment (new Objective in the same anchor), that's a closeout + replacement: the old
+Objective gets a disposition in `goals/history.md` (status `superseded`), and the new one
+starts clean.
+
+Write the per-Objective assessment to `goals/journal.md` under a monthly section. Update
+`Monthly review last run`.
 
 ---
 
 ## Quarterly mode (half day to full day)
 
-Four things in sequence. This is where replanning happens, so the three-goal rule is back in
-force.
+Five things in sequence. This is where replanning happens, so the three-goal rule is back in
+force — and **nothing gets planned until the outgoing quarter is closed.**
 
-1. **Re-run the Anchor Areas Scorecard.** Fresh diagnostic, not a reaffirmation — has anything
+1. **Close out the outgoing quarter (THE GATE — replanning does not open until this is
+   done).** For each Objective whose period is ending, force a disposition:
+   - **achieved** — the KRs got there. Record final actuals.
+   - **missed** — worked honestly, didn't get there. Record final actuals vs. targets.
+   - **abandoned** — deliberately dropped mid-quarter or now. Record why.
+   - **superseded** — replaced by a successor Objective (carrying forward is a *new*
+     commitment next quarter, linked to this record — not the same goal silently rolling).
+
+   For each: capture **lessons** (one to three lines — what the quarter taught about the
+   goal, the system, or the estimate), set the Objective's `status` accordingly, and move
+   its full record — original commitment, every revision record, final actuals, disposition,
+   lessons — from `goals/active.md` to `goals/history.md`. This is what makes room under the
+   three-goal cap without inventing an archival step under pressure; a quarter that ends
+   with three actives and no dispositions is the forbidden-fourth trap. The disposition
+   calls are the user's; requiring *a* disposition is yours.
+2. **Re-run the Anchor Areas Scorecard.** Fresh diagnostic, not a reaffirmation — has anything
    moved? Did the focused area improve? New vulnerabilities? Score all seven honestly (use the
    chapters in `${CLAUDE_PLUGIN_ROOT}/reference/anchor-areas/` and the signals of strength as
    the check). Append a dated snapshot row to the Score History in `goals/scorecard.md`.
-2. **Audit each system: keep / revise / retire.** For each active system ask: is this still
+3. **Audit each system: keep / revise / retire.** For each active system ask: is this still
    moving the KRs, or has it decayed into ceremony (doing the meeting, not gaining the
    insight)? Update `goals/active.md` accordingly.
-3. **Plan next quarter's Objectives + KRs.** Set the new Objective and KRs for the next 90 days.
-   **Enforce the same hard constraints as Stage 4** (see
+4. **Plan next quarter's Objectives + KRs.** Review the Candidate Backlog in `goals/STATE.md`
+   first — deferred candidates compete for the open slots on equal footing, and each gets its
+   decision recorded (swapped in / deferred again / rejected). Set the new Objectives and KRs
+   for the next 90 days. **Enforce the same hard constraints as Stage 4** (see
    `${CLAUDE_PLUGIN_ROOT}/reference/stages/04-goals.md`): max three active Objectives, one per
    active anchor area, every Objective tagged to an active anchor, KRs measurable with baseline
-   and target. Refuse a fourth Objective or an orphaned one. Each Objective must still pass the
-   Stage 1 three tests.
-4. **Run the recurring pre-mortem.** Different from the launch version — the user now has real
+   and target, each with its goal contract. Refuse a fourth Objective or an orphaned one. Each
+   Objective must still pass the Stage 1 three tests.
+5. **Run the recurring pre-mortem.** Different from the launch version — the user now has real
    data. Pull the protocol from `${CLAUDE_PLUGIN_ROOT}/reference/stages/06-premortem.md` and ask:
    which original mitigation triggers fired, and did they work? What unexpected risks surfaced?
    What's most likely to kill the *next* quarter, given what's now known? Produce a revised
-   mitigation list (each with `if X` + `then Y`, tagged `source: recurring_premortem`). Refuse
-   incomplete mitigations. Update `goals/active.md`.
+   mitigation list (each with `if X` + `then Y` plus its monitored signal and check frequency,
+   tagged `source: recurring_premortem`). Refuse incomplete mitigations. Update
+   `goals/active.md`.
 
-Write the full quarterly entry to `goals/journal.md` (updated scorecard snapshot, system
-keep/revise/retire decisions, next-quarter Objectives, revised mitigations). Update the
-`Quarterly review last run` and the Current Period (advance the quarter) in `goals/STATE.md`.
+Write the full quarterly entry to `goals/journal.md` (dispositions with lessons, updated
+scorecard snapshot, system keep/revise/retire decisions, backlog decisions, next-quarter
+Objectives, revised mitigations). Update the `Quarterly review last run` and the Current
+Period (advance the quarter) in `goals/STATE.md`.
 
 ---
 
@@ -111,12 +158,18 @@ outgrew years ago. That's the failure the annual check exists to prevent.
 
 1. **Replanning re-invokes the three-goal rule.** Quarterly Objective-setting enforces max
    three / one-per-anchor / no-orphans as refusals, exactly like Stage 4.
-2. Carry the chief-of-staff posture: push on soft assessments ("it's fine" without evidence),
-   but the calls that are the user's — which anchor, what target, whether to keep a system —
-   stay theirs.
-3. The monthly classification (goal-wrong vs. execution-wrong) is the load-bearing move; don't
+   And **closeout precedes replanning** — no new Objective activates while an outgoing one
+   has no disposition.
+2. **Originals are never overwritten.** Every KR/Objective revision appends a revision record
+   preserving the original target and the actual at the time of change; closed goals keep
+   their full record in `goals/history.md`. A commitment can end honestly; it cannot
+   disappear.
+3. Carry the chief-of-staff posture: push on soft assessments ("it's fine" without evidence),
+   but the calls that are the user's — which anchor, what target, whether to keep a system,
+   which disposition a closing goal gets — stay theirs.
+4. The monthly classification (goal-wrong vs. execution-wrong) is the load-bearing move; don't
    let the user default to blaming execution when the data points at the goal.
-4. Append to `goals/journal.md`; update the matching `last run` line and Current Period in
+5. Append to `goals/journal.md`; update the matching `last run` line and Current Period in
    STATE.md so `/goal-setting:progress` stays accurate.
-5. The recurring pre-mortem is sharper than the launch one because it has real data — make it
+6. The recurring pre-mortem is sharper than the launch one because it has real data — make it
    specific to what actually broke this quarter, not theoretical.

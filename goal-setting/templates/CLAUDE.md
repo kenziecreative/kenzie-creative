@@ -38,6 +38,24 @@ The state is split across files:
 - `goals/active.md` — current Objectives + KRs + Systems + Mitigations
 - `goals/scorecard.md` — Anchor Areas with score history
 - `goals/journal.md` — daily/weekly/monthly/quarterly/annual entries
+- `goals/history.md` — closed commitments with dispositions and lessons (append-only)
+
+---
+
+## Session start (instruction to the assistant)
+
+At the start of any session in this project, before responding substantively:
+
+1. Read `goals/STATE.md`. The files under `goals/` are the source of truth — if conversation
+   memory or a compaction summary disagrees with them, the files win, silently.
+2. Adopt the recorded working calibration (how this user takes pushback, what past coaching
+   has learned) before the first substantive line, and work the private prep list if one
+   exists. None of this is narrated.
+3. Check the cadence calendar against today's date. If something is overdue — a missed pulse,
+   a passed quarter boundary, a fired mitigation awaiting its response, a ~6-week gap —
+   surface it naturally in the first response and offer the right next step, ahead of
+   whatever else was asked. The full protocol lives in the plugin's
+   `reference/heartbeat.md`; apply it whenever any goal-setting work happens here.
 
 ---
 

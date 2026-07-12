@@ -9,9 +9,9 @@ model: opus
 # /goal-setting:init — Initialize a Goal Setting Deployment
 
 You are scaffolding a new goal-setting deployment. This skill creates the working
-infrastructure: the deployment config (`CLAUDE.md`) and the five state files under `goals/`
-(`STATE.md`, `vision.md`, `active.md`, `scorecard.md`, `journal.md`). It does **not** start
-the method — that's `/goal-setting:orient` (Setup Stage 1).
+infrastructure: the deployment config (`CLAUDE.md`) and the six state files under `goals/`
+(`STATE.md`, `vision.md`, `active.md`, `scorecard.md`, `journal.md`, `history.md`). It does
+**not** start the method — that's `/goal-setting:orient` (Setup Stage 1).
 
 In Cowork, create folders and files with the Write tool only. Do not use shell (`mkdir`,
 `cp`, `touch`) — it triggers permission prompts. Writing a file into a path creates the
@@ -51,7 +51,7 @@ directory is used for something else), do not overwrite it — instead write the
 ## Step 3: Scaffold the state directory
 
 Resolve today's date (absolute, `YYYY-MM-DD`) and the current quarter (`Q1`–`Q4` by calendar
-month) before writing. Write these five files (creating `goals/` in the process).
+month) before writing. Write these six files (creating `goals/` in the process).
 
 **`goals/STATE.md`** — use this exact structure:
 
@@ -64,6 +64,7 @@ completed_stages: []
 period_quarter: <e.g. Q2 2026>
 period_year: <e.g. 2026>
 pushback_calibration: unknown
+restart_phase: none
 restart_quarterly_deferred: false
 updated: <current UTC timestamp, ISO 8601>
 ---
@@ -96,13 +97,14 @@ updated: <current UTC timestamp, ISO 8601>
 
 ## Cadence Calendar
 
-(populated once the Ongoing Arc begins)
+(last-run dates maintained by the skills; the triggers are designed with the user at the end
+of Setup — a cadence without a trigger is a hope, and that applies to the method itself)
 
-- Daily last run: —
-- Weekly pulse last run: —
-- Monthly review last run: —
-- Quarterly review last run: —
-- Annual vision check last run: —
+- Daily last run: — · trigger: (designed at Setup close)
+- Weekly pulse last run: — · trigger: —
+- Monthly review last run: — · trigger: —
+- Quarterly review last run: — · trigger: —
+- Annual vision check last run: — · trigger: —
 - Next due: complete Setup Arc (`/goal-setting:orient`)
 
 ## Working Dynamic
@@ -115,8 +117,35 @@ answers. Update as you learn.
   exchange.
 - **Notes:** (none yet)
 
+## Coaching Memory
+
+Private notebook — durable observations that make the coaching better across months:
+recurring avoidance patterns, the challenge form that lands, what caused past restarts,
+decisions the user rejected and why. Written sparingly, at cadence closes, when something
+durable was learned. Calibration, never ammunition — nothing here is quoted back as an
+accusation or surfaced as a list.
+
+- (none yet)
+
+## Backstage Tasks
+
+Private prep queue for the next session, distinct from the user-facing Next Action (e.g.
+"re-check whether the margin-floor mitigation is still cold at the next pulse"). Executed
+silently at session start; completed items removed. The user never sees this list.
+
+- (none yet)
+
+## Candidate Backlog
+
+Goals proposed while three were already active — recorded, not adopted. Reviewed at every
+quarterly replanning. Each entry: date, the candidate, the decision (pending | swapped in |
+deferred | rejected), and for a swap, which Objective was closed to make room.
+
+- (none yet)
+
 ## Active Flags
 
+- restart_phase: none _(none | stabilizing | reintroducing — set by the Restart Protocol)_
 - restart_quarterly_deferred: false
 
 ## Next Action
@@ -175,9 +204,23 @@ _None selected yet (max 3)._
 # Journal
 
 > *Append-only log of cadence entries, reverse chronological (newest at top). Each entry
-> tagged by cadence: daily, weekly, monthly, quarterly, annual, restart.*
+> tagged by cadence: daily, weekly, monthly, quarterly, annual, restart, pressure-test.*
 
 _No entries yet. The daily ritual and weekly pulse begin once Setup is complete._
+```
+
+**`goals/history.md`**:
+
+```markdown
+# Goal History
+
+> *Closed commitments, immutable. Every Objective that leaves active status lands here with
+> its original commitment, the final actuals, a disposition (achieved | missed | abandoned |
+> superseded), and the lessons. Append-only — nothing here is ever rewritten. Revision
+> records for still-active goals live with the goal in `active.md`; this file holds what's
+> closed.*
+
+_No closed goals yet._
 ```
 
 ## Step 4: (Claude Code only) Pre-allow tools
