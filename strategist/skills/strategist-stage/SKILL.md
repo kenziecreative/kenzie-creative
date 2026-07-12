@@ -159,6 +159,12 @@ forward to sketch a later stage. Check this stage's position against
 4. Ask the user which framework they want to apply (accept their pick, or your
    recommendation if they defer). For a `light` depth setting, default to your single
    top recommendation and just confirm.
+5. **The menu is mandatory; a framework isn't.** If nothing in the library genuinely
+   fits — the evidence is too immature, the decision too simple for the apparatus (a
+   framework would be theater), or the problem calls for first-principles reasoning —
+   say so and work the stage directly. Record "no framework — first-principles" with
+   the reason in the stage's `brief.md` section and its Stage Record row. An honest
+   no-framework stage beats a forced template; the stage's done-bar still applies.
 
 ## Step 3: Apply the chosen framework
 
@@ -182,6 +188,16 @@ forward to sketch a later stage. Check this stage's position against
    situation — concrete, specific, theirs. This is the deliverable of the stage.
 4. If multiple frameworks genuinely apply (common in Analyse and Insight), you may apply
    more than one; record each.
+
+**Analyse runs on a ledger.** At the start of the Analyse stage, before any framework
+work, build a small plan from Frame's dimensions into the Analyse section of
+`brief.md` — one row per dimension: the question being asked of it, the evidence
+required, the disconfirming test (what would prove the hoped-for answer wrong), status
+(`open | answered | unobtainable`), and what happens if the evidence can't be had — a
+flagged estimate the user owns, a narrowed claim, or a recorded gap, never an invented
+fact. Work the dimensions through the ledger; the Step 5 done-bar check reads it. An
+`unobtainable` with a stated fallback is an honest outcome; a dimension quietly skipped
+because it looked obvious is not.
 
 ## Step 4: Reflect back, confirm, and capture into the brief
 
@@ -245,13 +261,24 @@ loop, and follows the Reader-Brief Style Rules below. Do not put process residue
   and any conclusion resting on a stage whose premise later changed. Honest limitations
   are what make the brief defensible instead of merely confident.
 
-## Step 4b: The commitment gate runs the critic (Synthesise only)
+## Step 4b: The commitment gate (Synthesise only)
 
 Synthesise ends at the commitment gate — the one point in the loop where the decision
-locks. Before the commitment is written into the brief, the reasoning gets attacked
-once, automatically, whatever the `pressure_test` config says. This is the loop's one
-standing check, and it's why the product can say it pressure-tests reasoning *before*
-you commit.
+locks. Three disciplines run here, in order, before the commitment is written into the
+brief. None of them blocks; all of them record.
+
+**Real alternatives first.** Never evaluate a single candidate direction. If the work
+has produced only one, generate the sibling set from the insights before the gate: the
+status quo, a reversible test, the user's preferred path, one materially different
+path, one ambitious path — each a genuine option with its own logic, never a strawman
+propped up to lose. The user chooses; you never force the choice. *Honest-singleton
+valve:* if the problem genuinely admits only one credible direction, say so and record
+why, rather than manufacturing siblings — fake alternatives are theater, and theater
+erodes the gate.
+
+**The reasoning gets attacked once, automatically** — whatever the `pressure_test`
+config says. This is the loop's one standing check, and it's why the product can say
+it pressure-tests reasoning *before* you commit.
 
 1. Say it in one natural line — "Before this locks, I want the reasoning attacked once;
    give me a moment" — not as a named protocol.
@@ -263,21 +290,38 @@ you commit.
    severity, honest when the reasoning holds. Record open findings in
    `## Open Pressure-Test Findings` in STATE.md and mark Synthesise's `Pressure-tested`
    cell `✓`.
-4. **Check the commitment against the charter** (`strategy/CHARTER.md`): is this the
-   decision the engagement set out to make, does it respect the stated constraints and
-   non-goals, and does the deliberation match the required confidence? A divergence is
-   not a block — the problem may have legitimately moved — but it's named to the user
-   and recorded in the Synthesise section (update the charter if they confirm the
-   change). If no charter exists (an older project), record that in the same place.
-5. **Non-blocking.** The findings inform the commitment; the user decides what to
+4. **Non-blocking.** The findings inform the commitment; the user decides what to
    address now, what to carry as an open finding, and whether to commit anyway. Never
    hold the gate hostage to a clean report.
-6. **A decline is respected — and recorded.** If the user waves the check off, that's
+5. **A decline is respected — and recorded.** If the user waves the check off, that's
    their call and you don't argue past one clear statement of what the check is for. But
    the record is not optional: mark the `Pressure-tested` cell `declined`, note
    "Pressure-test: declined at the commitment gate" in the Synthesise section of
    `brief.md`, and carry it into the reader brief's "What this rests on" section. The
    reader of an untested strategy gets to know it's untested.
+
+**The commitment is checked and recorded.** As the commitment is written:
+
+1. **Charter check.** Check it against `strategy/CHARTER.md`: is this the decision the
+   engagement set out to make, does it respect the stated constraints and non-goals,
+   and does the deliberation match the required confidence? A divergence is not a
+   block — the problem may have legitimately moved — but it's named to the user and
+   recorded in the Synthesise section (update the charter if they confirm the change).
+   If no charter exists (an older project), record that in the same place.
+2. **Kernel check (record, never block).** Does the committed strategy have the kernel:
+   a **diagnosis** (what's actually going on), a **guiding policy** (the approach that
+   addresses it), and **coherent actions** (moves that reinforce each other) — plus an
+   **advantage mechanism** (why this works for *this* user) and explicit **exclusions**
+   (what committing rules out)? Record each part present / thin / absent in the
+   Synthesise section. An absent part is not a block; it's a named gap the user commits
+   to with open eyes.
+3. **Write the decision record** — `strategy/DECISION.md`, a standing document a reader
+   can execute cold, no engagement archaeology: the decision; owner/approver; the
+   alternatives considered and why each lost; the trade-offs accepted; the risky
+   assumptions it rests on (claim ownership marked, as everywhere); confidence and
+   reversibility; the review trigger and reopen conditions ("we revisit this if X").
+   Working Read hypotheses this commitment settles graduate here and leave the list.
+   On a later iteration through Synthesise, revise the record — don't fork it.
 
 ## Step 5: Pushback Audit, then update STATE and advance
 
@@ -402,8 +446,11 @@ Then render the transition:
 | Building on conversation memory that contradicts the files | Step 0 file primacy: STATE.md and brief.md win over chat memory and compaction summaries, silently. |
 | Revising an upstream stage and leaving downstream work certified | Step 5.4 marks later completed stages `stale (premise changed)`; Step 1 warns when working on or past a stale premise. |
 | The reader brief erasing who owns a claim | Step 4 claim-ownership marking; Reader-Brief Style Rules carry ownership in prose plus the "What this rests on" close. |
-| A declined pressure-test leaving no trace — untested reads as tested | Step 4b.6: the decline is respected once stated, and recorded in STATE, brief.md, and the reader brief's limitations. |
-| Treating the commitment-gate critic as a blocker | Step 4b.5: findings inform, the user decides; nothing in the loop blocks. |
+| A declined pressure-test leaving no trace — untested reads as tested | Step 4b: the decline is respected once stated, and recorded in STATE, brief.md, and the reader brief's limitations. |
+| Treating the commitment-gate critic as a blocker | Step 4b: findings inform, the user decides; nothing in the loop blocks. |
+| Ratifying the only candidate anyone bothered to draft | Step 4b real-alternatives-first: sibling directions from the insights, with the honest-singleton valve. |
+| A dimension quietly skipped at Analyse because it looked obvious | Step 3 analysis ledger: every Frame dimension gets a row — answered, or unobtainable with a plan; never silently dropped. |
+| Forcing a framework where none fits | Step 2 no-framework path: "no framework — first-principles" is an honest recorded outcome; the done-bar still applies. |
 | Leaving the brief as disconnected fragments | Step 4 keeps `brief.md` readable as one continuous argument. |
 | The stage flowed too smoothly — every answer accepted as-is | Step 5 Self-Audit (friction check): name the least-examined load-bearing answer and grade it before closing. |
 | Manufacturing a concern to satisfy the friction ritual | Step 5 friction check valve: challenges ground in the user's material; "named, graded sound" is a legitimate recorded outcome. |

@@ -26,8 +26,8 @@ Never narrate the steps: no "migrating state," no "re-adopting the Working Read,
    directory and point to `/strategist:init`. Stop.
 2. Read `strategy/STATE.md` and `strategy/brief.md` in full (with the Read tool — the
    injected snapshot above is not a substitute when you later need to edit). Read
-   `strategy/CHARTER.md` if it exists, and the project config (`./CLAUDE.md` or
-   `strategy/strategist-config.md`).
+   `strategy/CHARTER.md` and `strategy/DECISION.md` if they exist, and the project
+   config (`./CLAUDE.md` or `strategy/strategist-config.md`).
 3. **Anti-contamination rule.** Carry forward only what the files document. Do not
    carry forward interpretations, conclusions, or impressions from conversation
    history — including compaction summaries of earlier sessions. Files are trusted;

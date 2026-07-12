@@ -45,7 +45,8 @@ built on — name which stages need reconciling), and any `Pressure-tested` cell
 Also check for the reader-facing brief at `strategy/strategy-brief.md` (path may be
 overridden as `reader_brief` in config). It's expected once the Story stage is complete.
 If Story is complete but the reader brief is missing, surface that as a non-blocking note
-— Story is supposed to produce it.
+— Story is supposed to produce it. Same shape for `strategy/DECISION.md` once Synthesise
+is complete — the commitment gate is supposed to produce it.
 
 ## Output
 
