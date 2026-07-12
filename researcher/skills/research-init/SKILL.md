@@ -774,7 +774,7 @@ Compiled by /research:init from the audience answer. Read by /research:audit-cla
 
 ## Waiver protocol
 
-The commissioner may waive a specific violation with `waive: <claim> — <rationale>`. The rationale appears verbatim in the output's Methodology & Limitations section. Waivers are per-claim, never blanket.
+The commissioner may waive a specific violation with `waive: <claim> — <rationale>`. The waiver is recorded when it is granted — audit report, gate log, and verbatim in the output's Methodology & Limitations section — and the draft promotes on the next audit run. Waivers are per-claim, never blanket. Only audience-standard violations are waivable; evidence-accuracy findings (unsupported claims, misrepresented sources, figures that don't match their notes) have no waiver exit.
 ```
 
 - Write `${CLAUDE_PROJECT_DIR}/research/reference/backstage-tasks.md` — the agent's private prep queue, distinct from the user-facing Next Action and from `notes-to-self.md` (user capture). Initial content:

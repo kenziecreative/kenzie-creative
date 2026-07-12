@@ -19,6 +19,7 @@ The user will provide a filepath to audit (should be a file in `research/drafts/
 3. **Read `research/reference/writing-standards.md`** for precision preservation and synthesis rules.
 4. **Read `${CLAUDE_PLUGIN_ROOT}/reference/evidence-failure-modes.md`** for the catalog of evidence degradation patterns. Check for each pattern type during the audit.
 4a. **Read the project's commissioned evidence standard.** Read `research/reference/evidence-standard.md` (written by `/research:init`). If it does not exist (project predates the convention), fall back to the "Audience & Evidence Standard" section of the project's `CLAUDE.md`. If neither exists, note in the audit report: "No audience evidence standard on file — standard gate inactive for this project" and skip the standard checks below. The standard's Enforceable Rules are part of this audit's pass/fail criteria — see "Audience-standard violations" under Pass/Fail Criteria.
+4b. **Read the waivers already standing against this draft.** Read the existing audit report at `research/audits/<original-filename>-audit.md` (if one exists from a prior audit) and the draft's Methodology & Limitations section. Collect every waiver recorded for this draft — each names a claim and carries the commissioner's rationale verbatim. A finding covered by a standing waiver is still found and still reported (it appears in the findings table, marked `waived`), but it does not fail the draft. A waiver covers only the claim it names: it does not carry to a different claim, or to a different violation on the same claim. If a waived claim has changed materially since the waiver was granted — the figure moved, the sourcing changed — the waiver has lapsed: report the violation as open and say why.
 5. **For every factual claim in the document:**
    - Does it trace to a file in `research/notes/` or a previous phase output? If yes, note the source.
    - Is the claim accurately represented? Check against the source note — same numbers, same ranges, same qualifiers.
@@ -36,7 +37,7 @@ The user will provide a filepath to audit (should be a file in `research/drafts/
    - **Single-source findings list** consistent with what this audit itself found — a finding the audit traced to one independent source must appear here (or the draft must gain it as a mechanical fix).
    - **Commissioner overrides listed**, matching the field comparison in step 5 — every resolution whose `user_resolution` differs from its `suggested_resolution` appears.
    - **Counter-evidence status** (PRD Validation and Exploratory Thesis only): either the credible challenger(s) cited, or the documented-adverse-search stamp. **When the stamp is present, verify the record behind it:** `research/discovery/negative-searches.md` must contain a matching entry for this phase (queries, channels, acknowledgment). A stamp with no matching record is an unsupported claim about the research process itself — high severity; the stamp comes out or the valve is run properly.
-   - **Waiver lines** for any waivers granted in this or a prior audit of the draft.
+   - **Waiver lines** for every waiver standing against this draft (step 4b) — granted during an audit or recorded between audits. A waiver on record whose rationale is not in the M&L verbatim is a recording failure, not a mechanical fix to paper over: write the line, and say you did.
 
    A missing section, a missing sampling disclosure, or a stamp without its record fails the draft (classification: **Methodology omission**). A missing-but-derivable element (the sampling disclosure, a single-source list the audit just computed) is a mechanical fix — apply it per the FAIL sequence. A missing negative-search record is never mechanical: the audit cannot invent the search.
 6. **Cross-document consistency check:** If other files already exist in `research/outputs/` or `research/drafts/`, check whether this draft and those documents cite the same numbers for the same claims. Flag any inconsistencies.
@@ -153,7 +154,11 @@ A draft passes when:
 
 There is no percentage threshold. Every specific claim must check out. The scorecard is for visibility into the draft's quality, not for setting a "good enough" bar.
 
-**Audience-standard violations fail by default — a named waiver is the only other exit.** The evidence standard captured at init is a contract the user commissioned; enforcing it is user sovereignty, not agent paternalism. When a violation is found, present it and the two options: fix the claim (add sources, cut it, or requalify it), or grant a waiver. A waiver requires the user's own words in the format `waive: <claim or finding> — <rationale>` — do not draft the rationale for them, and do not accept "just waive it" without one. Record the waiver in the audit report and in the gate-log row's Detail column, and insert the rationale verbatim into the draft's Methodology & Limitations section before promotion: `Waiver (commissioner): "<rationale>" — applies to: <claim>`. Waivers are per-claim, never blanket. A draft with an unwaived standard violation does not promote.
+**Audience-standard violations fail by default — a named waiver is the only other exit.** The evidence standard captured at init is a contract the user commissioned; enforcing it is user sovereignty, not agent paternalism. When a violation is found, present it and the two options: fix the claim (add sources, cut it, or requalify it), or grant a waiver. A waiver requires the user's own words in the format `waive: <claim or finding> — <rationale>` — do not draft the rationale for them, and do not accept "just waive it" without one. Waivers are per-claim, never blanket. A draft with an unwaived standard violation does not promote.
+
+A waiver is recorded the moment it is granted, in all three loci — audit report, gate-log Detail, and the draft's Methodology & Limitations verbatim (`Waiver (commissioner): "<rationale>" — applies to: <claim>`). Most waivers arrive as a bare message after a failed audit, with no audit running; record them then, on that turn. See "Waiver Arriving Between Audits" below.
+
+Only audience-standard violations are waivable. The standard gate has a waiver exit because the user commissioned the standard and can amend their own contract. Evidence accuracy has no such exit — an unsupported claim, a misrepresented source, a number that doesn't match its note, an undisclosed override, or an identity exposure cannot be waived by anyone. If the user tries, say which of the two kinds of finding they are looking at and why this one has no waiver door.
 
 **Confidence tiers are advisory — they indicate evidence strength, not audit compliance.** A section can be High confidence and fail (misrepresented claim) or Low confidence and pass (single source but accurately cited). A Low-confidence section that passes the audit is promoted with its tier visible in the audit report. Do not use confidence tier as a reason to fail or hold a draft — with one exception: a rule the project's own evidence standard declares (step 4a) is enforced at this gate. That is not tier-based grading; it is the standard the user themselves set at init, applied where it was always meant to apply.
 
@@ -242,7 +247,39 @@ There is no percentage threshold. Every specific claim must check out. The score
 
   3. **List what you did and what remains.** For each mechanical fix applied, show: file, line, before → after. For each judgment issue, describe what needs to change and why the user must decide.
 
-  4. **Tell the user to re-run the audit.** End with: "Fixes applied. Re-run `/research:audit-claims <filepath>` to verify." Never auto-re-run — re-audit is always user-invoked so each audit is a fresh, full check (fixes can introduce new problems).
+  4. **Tell the user to re-run the audit.** End with: "Fixes applied. Re-run `/research:audit-claims <filepath>` to verify." Never auto-re-run — re-audit is always user-invoked so each audit is a fresh, full check (fixes can introduce new problems). If the user's next message is a waiver rather than a re-run, follow "Waiver Arriving Between Audits" below: record it, then hand the re-run back to them.
+
+## Waiver Arriving Between Audits
+
+A waiver almost never arrives during an audit. It arrives after one — the user reads the findings, decides a violation is a risk they will carry, and types `waive: <claim> — <rationale>` as a bare message. No audit is running when it lands.
+
+**Record it on that turn.** Recording is not re-auditing. "Never auto-re-run" restrains the audit loop; it says nothing about the record, and the two must not be confused. A waiver accepted in conversation and written to no file is the user exercising control that leaves no trace — indistinguishable, a week later, from having been ignored. Deferring the write to a re-audit that may never happen is not caution; it is the failure.
+
+When a `waive:` message arrives outside an audit run:
+
+1. **Validate it.** The message must carry the user's own rationale in the format `waive: <claim or finding> — <rationale>`. "Just waive it," "fine, ship it," or a bare `waive:` with no rationale is not a waiver — re-ask with the format and record nothing. Never author the rationale.
+
+   It must also name a finding on record. Read the audit report at `research/audits/<original-filename>-audit.md`. If no audit report exists, or it holds no open audience-standard violation this waiver could address, say so and ask the user to run `/research:audit-claims <filepath>` first — a waiver against nothing is not recorded. If the finding it names is real but not an audience-standard violation, it is not waivable (see Pass/Fail Criteria): tell the user which kind of finding it is and that evidence accuracy has no waiver exit.
+
+2. **Scope it to what the rationale actually covers.** A waiver covers the finding(s) its rationale speaks to — not every finding open on the draft. If the audit found two violations and the rationale addresses one, the second stays open, and the draft still does not promote. Do not stretch the user's words to cover a finding they did not address, and do not ask them to re-type a waiver you could scope yourself. State plainly which findings the waiver clears and which remain.
+
+3. **Record it in all three loci, now.**
+
+   a. **Draft Methodology & Limitations** — insert the rationale verbatim: `Waiver (commissioner): "<rationale>" — applies to: <claim>`. If the section carries a `Waivers: none` placeholder, replace it. The draft is in `research/drafts/`, so Edit is ungated.
+
+   b. **Audit report** (`research/audits/<original-filename>-audit.md`) — append or update a `## Waivers` section: date, the claim, the rationale verbatim, and which finding it clears. The finding stays in the findings table, marked `waived`. A waiver does not erase the violation; it sits next to it. The reader of the audit must be able to see both what was found and what the commissioner chose to carry.
+
+   c. **Gate-log** (`research/audits/gate-log.md`) — append one row:
+
+      ```
+      | <ISO-8601 UTC timestamp> | waive | waived | research/drafts/<filename> | <finding> — commissioner waiver: "<rationale>" |
+      ```
+
+      The Result column is `waived`, never `pass`: a waiver authorizes no promotion by itself, and the hook reads the most recent row. The File column points at the draft, which is where the file still is.
+
+   After writing, re-read each of the three files and confirm the waiver text landed. If any write failed, say which one, with the path — do not report the waiver as recorded.
+
+4. **Confirm, and hand the re-run back.** Tell the user what was recorded and where, which findings it clears, which remain open, and that the draft has not moved. Then stop: `Recorded. Re-run /research:audit-claims <filepath> to verify the draft against the standing waiver.` Do not re-run the audit, do not promote, do not touch STATE.md. The next audit reads the waiver at step 4b and will not fail the draft on the waived finding.
 
 ## Phase Debrief (after pass)
 
@@ -283,6 +320,7 @@ Only after the user is done reacting to the debrief, render the transition promp
 
 - **No bypassing.** If the user asks to skip the audit or move a failed draft to outputs manually, refuse. Explain that the audit gate exists to protect research quality and that fixing the issues is faster than dealing with unreliable findings downstream.
 - **No soft passes.** Do not downgrade a high-severity issue to moderate to make the draft pass. If a claim doesn't trace to a source, it's unsupported regardless of whether the claim "feels right."
+- **Recording a waiver is not re-auditing.** A valid `waive:` message is recorded the moment it arrives — draft Methodology & Limitations, audit report, gate-log — even when no audit is running, and even though the draft does not promote until the user re-invokes the audit. The "never auto-re-run" rule below governs the audit loop, not the record. Never let a waiver the user granted end the turn with no trace on disk.
 - **Re-audit after fixes.** When a draft is fixed after a failed audit, run the full audit again — do not spot-check only the previously flagged issues. Fixes can introduce new problems. Re-audit is always user-invoked — the user runs `/research:audit-claims <same-filepath>` after fixing the draft, and each invocation is treated as a fresh audit (full check, no shortcuts). The agent does not automatically re-run audits in a loop.
 - **No confidence tier inflation.** Do not inflate confidence tiers. If a section relies on a single source, it is Low confidence regardless of how authoritative that source is. Single-source High confidence does not exist — triangulation requires multiple independent sources.
 - **Phase close is against the whole contract, never one file.** The deliverable manifest check (After Audit / If PASS step 2) is mandatory before any closeout. If the plan promises three synthesis outputs and one has been audited, the phase stays open — no debrief, no Active-phase advance, no "all phases complete." Record the partial progress in Next Action and stop.
@@ -299,6 +337,8 @@ Only after the user is done reacting to the debrief, render the transition promp
 | Consistency blind spot — auditing the draft in isolation without checking other outputs | Always run the cross-document consistency check and canonical figures check. Same claim, different numbers across documents is high-severity. |
 | Conflating confidence with audit pass/fail — treating low confidence as a failure | Confidence tier measures evidence strength (how well-supported). Audit pass/fail measures evidence accuracy (how truthfully represented). A section with one source, accurately cited, passes the audit with Low confidence — unless the project's own evidence standard names that pattern as unacceptable, in which case it fails as an audience-standard violation. The standard gate enforces the user's commissioned rules; the tier stays advisory for everything the standard doesn't name. |
 | Waiving standards on the user's behalf — treating a shrug as a waiver | A waiver exists only when the user typed `waive: <claim> — <rationale>` with a real rationale in their own words. "Fine, ship it" is not a waiver — re-ask with the format. Never author the rationale yourself; it appears verbatim in the deliverable's Methodology & Limitations under the commissioner's name. |
+| Accepting a waiver in conversation and recording it nowhere — deferring the write to a re-audit that may never come | The waiver arrives as a bare message after the failed audit; there is no audit running to carry the write. Record it on that turn, in all three loci (draft M&L verbatim, audit report Waivers section, gate-log `waived` row), then hand the re-run back to the user. Recording is not re-auditing — "never auto-re-run" restrains the loop, not the record. A granted waiver that leaves no on-disk trace reads, later, exactly like a waiver that was ignored. |
+| Blanket-waiving on a scoped rationale — letting one waiver clear every open finding | The waiver covers the finding its rationale addresses. Two violations and a rationale that speaks to one leaves the other open and the draft unpromoted. Say which findings the waiver clears and which remain — do not stretch the user's words, and do not make them re-type a waiver you could scope yourself. |
 | Override laundering — a commissioner override reaching the deliverable as if the evidence produced it | For every resolution the draft relies on, compare `user_resolution` to `suggested_resolution` in cross-reference.md — never trust the `user_override` boolean alone (a `confirm: side-A` against a side-B assessment may carry no flag). If the fields differ, verify the label survived into the draft (finding site + Methodology & Limitations). The internal record is not the disclosure — the reader of the output must see that the commissioner chose against the evidence assessment. |
 | Treating Methodology & Limitations as the writer's problem | Summarize-section writes the section; this audit gates on it (step 5b). A draft whose claims all trace but whose section is missing, boilerplate, or stamped with an adverse search that has no record does not promote. The section is part of the deliverable's evidence contract, not decoration. |
 | Closing a multi-deliverable phase on one audited file | The deliverable manifest check (If PASS step 2) reads the plan's promised output inventory and requires every deliverable to exist in `outputs/` with a passing audit before closeout. A synthesis phase promising executive summary + report + recommendations needs all three audited — auditing `00-executive-summary.md` alone leaves the phase open with Next Action pointing at the next deliverable. |
@@ -312,5 +352,7 @@ Only after the user is done reacting to the debrief, render the transition promp
 Scorecard summary and pass/fail status.
 
 **If failed:** Execute the full 4-step fail sequence (classify → apply mechanical fixes → list changes and remaining issues → tell user to re-run). Do NOT render a transition prompt — a failed audit is a loop, not a transition. Do NOT stop after listing issues — if any fix is mechanical, apply it before responding to the user.
+
+**If a waiver arrives after the failed audit:** record it on that turn — draft Methodology & Limitations verbatim, audit report Waivers section, gate-log `waived` row — then hand the re-run back to the user (see "Waiver Arriving Between Audits"). Do not defer the write to an audit that has not been invoked.
 
 **If passed:** confirm the promotion to `outputs/`, present the phase debrief (see above), wait for the user to react, and then render the transition prompt (format defined in `${CLAUDE_PLUGIN_ROOT}/reference/prompt-templates-runtime.md`). The transition prompt appears only after the user is done reacting to the debrief — not before.
