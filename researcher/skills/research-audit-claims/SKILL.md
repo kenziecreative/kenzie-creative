@@ -19,7 +19,7 @@ The user will provide a filepath to audit (should be a file in `research/drafts/
 3. **Read `research/reference/writing-standards.md`** for precision preservation and synthesis rules.
 4. **Read `${CLAUDE_PLUGIN_ROOT}/reference/evidence-failure-modes.md`** for the catalog of evidence degradation patterns. Check for each pattern type during the audit.
 4a. **Read the project's commissioned evidence standard.** Read `research/reference/evidence-standard.md` (written by `/research:init`). If it does not exist (project predates the convention), fall back to the "Audience & Evidence Standard" section of the project's `CLAUDE.md`. If neither exists, note in the audit report: "No audience evidence standard on file — standard gate inactive for this project" and skip the standard checks below. The standard's Enforceable Rules are part of this audit's pass/fail criteria — see "Audience-standard violations" under Pass/Fail Criteria.
-4b. **Read the waivers already standing against this draft.** Read the existing audit report at `research/audits/<original-filename>-audit.md` (if one exists from a prior audit) and the draft's Methodology & Limitations section. Collect every waiver recorded for this draft — each names a claim and carries the commissioner's rationale verbatim. A finding covered by a standing waiver is still found and still reported (it appears in the findings table, marked `waived`), but it does not fail the draft. A waiver covers only the claim it names: it does not carry to a different claim, or to a different violation on the same claim. If a waived claim has changed materially since the waiver was granted — the figure moved, the sourcing changed — the waiver has lapsed: report the violation as open and say why.
+4b. **Read the waivers already standing against this draft.** Read the existing audit report at `research/audits/<basename>-audit.md` (if one exists from a prior audit) and the draft's Methodology & Limitations section. Collect every waiver recorded for this draft — each names a claim and carries the commissioner's rationale verbatim. A finding covered by a standing waiver is still found and still reported (it appears in the findings table, marked `waived`), but it does not fail the draft. A waiver covers only the claim it names: it does not carry to a different claim, or to a different violation on the same claim. If a waived claim has changed materially since the waiver was granted — the figure moved, the sourcing changed — the waiver has lapsed: report the violation as open and say why.
 5. **For every factual claim in the document:**
    - Does it trace to a file in `research/notes/` or a previous phase output? If yes, note the source.
    - Is the claim accurately represented? Check against the source note — same numbers, same ranges, same qualifiers.
@@ -138,7 +138,7 @@ The user will provide a filepath to audit (should be a file in `research/drafts/
 
    **After writing, verify the write succeeded.** Re-read the file and confirm it parses as valid JSON with a `claims` array. If the read fails or the array is missing, log: "WARNING: claim-graph.json write failed — graph incomplete for this phase. Re-run `/research:audit-claims` to retry graph write without re-running the full audit." Do not fail the audit or block promotion.
 
-9. **Write audit report to `research/audits/<original-filename>-audit.md`** with: scorecard, pass/fail determination, findings table, list of claims that need correction, and the confidence tier table (section name, tier, rationale) from step 8a.
+9. **Write audit report to `research/audits/<basename>-audit.md`**, where `<basename>` is the draft's filename with its `.md` extension stripped — `research/drafts/04-test-section.md` audits to `research/audits/04-test-section-audit.md`, not `04-test-section.md-audit.md`. Include: scorecard, pass/fail determination, findings table, list of claims that need correction, and the confidence tier table (section name, tier, rationale) from step 8a.
 
    **After writing, verify the write succeeded.** Re-read the file path you just wrote and confirm it exists and contains the scorecard, findings table, and confidence tier table sections. If the read fails or any of those sections is missing, do not report "audit report written" — surface the write failure to the user with the exact path that failed, and do not advance to the pass/fail step until the write is confirmed.
 
@@ -247,7 +247,11 @@ Only audience-standard violations are waivable. The standard gate has a waiver e
 
   3. **List what you did and what remains.** For each mechanical fix applied, show: file, line, before → after. For each judgment issue, describe what needs to change and why the user must decide.
 
-  4. **Tell the user to re-run the audit.** End with: "Fixes applied. Re-run `/research:audit-claims <filepath>` to verify." Never auto-re-run — re-audit is always user-invoked so each audit is a fresh, full check (fixes can introduce new problems). If the user's next message is a waiver rather than a re-run, follow "Waiver Arriving Between Audits" below: record it, then hand the re-run back to them.
+  4. **Tell the user to re-run the audit.** End by handing the re-run back — and say only what is true of this audit:
+     - Mechanical fixes were applied → "Fixes applied. Re-run `/research:audit-claims <filepath>` to verify."
+     - No mechanical fixes existed (every finding is a judgment call — an audience-standard violation always is) → do NOT claim fixes were applied. End with: "No mechanical fixes to apply — the open findings need your decision. Re-run `/research:audit-claims <filepath>` once they're resolved."
+
+     Never auto-re-run — re-audit is always user-invoked so each audit is a fresh, full check (fixes can introduce new problems). If the user's next message is a waiver rather than a re-run, follow "Waiver Arriving Between Audits" below: record it, then hand the re-run back to them.
 
 ## Waiver Arriving Between Audits
 
@@ -259,7 +263,7 @@ When a `waive:` message arrives outside an audit run:
 
 1. **Validate it.** The message must carry the user's own rationale in the format `waive: <claim or finding> — <rationale>`. "Just waive it," "fine, ship it," or a bare `waive:` with no rationale is not a waiver — re-ask with the format and record nothing. Never author the rationale.
 
-   It must also name a finding on record. Read the audit report at `research/audits/<original-filename>-audit.md`. If no audit report exists, or it holds no open audience-standard violation this waiver could address, say so and ask the user to run `/research:audit-claims <filepath>` first — a waiver against nothing is not recorded. If the finding it names is real but not an audience-standard violation, it is not waivable (see Pass/Fail Criteria): tell the user which kind of finding it is and that evidence accuracy has no waiver exit.
+   It must also name a finding on record. Read the audit report at `research/audits/<basename>-audit.md`. If no audit report exists, or it holds no open audience-standard violation this waiver could address, say so and ask the user to run `/research:audit-claims <filepath>` first — a waiver against nothing is not recorded. If the finding it names is real but not an audience-standard violation, it is not waivable (see Pass/Fail Criteria): tell the user which kind of finding it is and that evidence accuracy has no waiver exit.
 
 2. **Scope it to what the rationale actually covers.** A waiver covers the finding(s) its rationale speaks to — not every finding open on the draft. If the audit found two violations and the rationale addresses one, the second stays open, and the draft still does not promote. Do not stretch the user's words to cover a finding they did not address, and do not ask them to re-type a waiver you could scope yourself. State plainly which findings the waiver clears and which remain.
 
@@ -267,7 +271,7 @@ When a `waive:` message arrives outside an audit run:
 
    a. **Draft Methodology & Limitations** — insert the rationale verbatim: `Waiver (commissioner): "<rationale>" — applies to: <claim>`. If the section carries a `Waivers: none` placeholder, replace it. The draft is in `research/drafts/`, so Edit is ungated.
 
-   b. **Audit report** (`research/audits/<original-filename>-audit.md`) — append or update a `## Waivers` section: date, the claim, the rationale verbatim, and which finding it clears. The finding stays in the findings table, marked `waived`. A waiver does not erase the violation; it sits next to it. The reader of the audit must be able to see both what was found and what the commissioner chose to carry.
+   b. **Audit report** (`research/audits/<basename>-audit.md`) — append or update a `## Waivers` section: date, the claim, the rationale verbatim, and which finding it clears. The finding stays in the findings table, marked `waived`. A waiver does not erase the violation; it sits next to it. The reader of the audit must be able to see both what was found and what the commissioner chose to carry.
 
    c. **Gate-log** (`research/audits/gate-log.md`) — append one row:
 
