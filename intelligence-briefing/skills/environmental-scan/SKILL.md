@@ -375,7 +375,7 @@ Every other missing field silently takes its default.
 
 **3. Build the collection plan.** Three sources of queries, in this order:
 
-   **(a) Due cells.** Every `matrix` row where `applicable: true` and (`next_due <= today` or the cell has never been scanned). Each due cell is a zone × domain-cell search: apply the zone's lens to the domain cell's territory. A cell marked `source_health: "suspect"` must **widen its channels** — do not repeat the search that already missed something.
+   **(a) Due cells.** Every `matrix` row where `applicable: true` and (`next_due <= today` or the cell has never been scanned). Each due cell is a zone × domain-cell search: apply the zone's lens to the domain cell's territory. A cell marked `source_health: "suspect"` must **widen its channels** — do not repeat the search that already missed something. Read that cell's `miss` records in `feedback.json` first: they name exactly what was missed, which tells you which kind of channel was blind.
 
    **(b) Due signposts.** Every `signposts.json` row where `status: "open"` and (`due <= today`, or `due` is null and no run in the last seven days lists it in `signposts_checked`). **This is a directed search for a specific named event.** It is not a zone sweep. Search for exactly the thing the signpost names.
 
@@ -393,13 +393,15 @@ Every other missing field silently takes its default.
 
    **Fill `captured_evidence` here, at gather time, before any compression.** Record the verbatim figures, ranges, dates, and qualifiers exactly as the source states them. If a source says "1–3x among surveyed firms, preliminary," that whole string is evidence. **This is the single most important write in the entire system** — everything downstream re-derives from it.
 
-   Classify (type, tier, corroboration, provisional disposition). Attach to a thread (step 7). Attach to zero or more drivers by `driver_ids`. Set `material` honestly: `false` still gets captured — the store is not the brief.
+   Classify (type, tier, corroboration, provisional disposition). Attach to a thread (step 7). Attach to zero or more drivers by `driver_ids` — and mirror every attachment on the driver side: append the `obs_id` to that driver's `supporting_observations` and increment its `observation_count`. Set `material` honestly: `false` still gets captured — the store is not the brief.
 
 **7. Update threads.** For each observation:
 
    - Matches an existing thread and represents a **material advance** (a new decision, a new publication *with a materially new result*, a funding event, a regulatory action, a measured outcome, a reversal, or a credible contradiction) → attach the observation, update `last_material_change` and `last_state`.
    - Matches an existing thread but is **derivative** (commentary, restatement, coverage of the same event) → attach the observation, do **not** update `last_material_change`. **The thread does not resurface in the brief.**
-   - Matches nothing → create a new thread. Assign its `thread_id` now; it is never re-derived.
+   - Matches nothing → create a new thread. Assign its `thread_id` now; it is never re-derived. Carry the observation's `driver_ids` onto the thread, and keep a thread's `driver_ids` in step with the observations attached to it.
+
+   Match against all threads regardless of status — a `dormant` thread that advances returns to `live`; it is the same story, not a new one. (Status transitions the other way — dormant, closed — happen in the review conversation on the user's say-so, never here.)
 
    > "A new publication" alone is **not** a material advance. Daily derivative commentary on an unchanged underlying state must produce an observation and no brief item.
 

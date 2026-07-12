@@ -24,6 +24,7 @@ Only one value has no defensible default and must be supplied: the **relevance c
 - **Cadence** — interval and timezone. Default: daily, in the user's timezone.
 - **Zone detail budget** — how many items per zone get full treatment; beyond it, material items compress to one line each (see LENGTH). It is a depth ceiling, not an emission cap. Default: 5.
 - **Max lead items** — default 3.
+- **Overall length** — the target read on a normal day. Default: a two-minute read. A guide for the normal case, not a cap: length tracks the day, and a big day is allowed to be big.
 - **Paths** — briefs directory, ledger file, intelligence state directory. Defaults: `./briefs/`, `./ledger.json`, `./intel/`.
 - **Output format** — `html` (default) or `markdown`. HTML produces a self-contained, styled brief (see `references/html-brief.md`); markdown produces the plain brief per the OUTPUT CONTRACT. The brief's *content* is identical either way.
 - **Theme** *(html only)* — `default` (system fonts, brand-neutral) or a path to a CSS override file in the deployment. Default: `default`.

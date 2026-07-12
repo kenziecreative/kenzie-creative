@@ -84,6 +84,10 @@ Set `status: "retired"`. **Never delete it.** Retired drivers and their confiden
 
 If the user asserts a view of the world worth tracking (*"I think the edge is in proprietary data"*), offer to hold it as a driver with `origin: "user_asserted"` — direction and certainty as they state it (never seeded at `High` certainty without evidence on file), plus a seed `confidence_log` entry. This is how held beliefs enter the system, and it is what the scan's mandatory falsifier search will then actively test.
 
+### A story that's over
+
+If the user says a story is done ("stop watching the Meta agent thing"), set its thread's `status` to `closed`; a story that's merely gone quiet can be marked `dormant`. **Never delete the thread** — the scan matches against all threads regardless of status, and a dormant story that advances comes back as itself, not as a new one. Thread status moves only here, on the user's say-so.
+
 ### A relevance correction
 
 Write a `relevance_correction` feedback record. Offer to edit the relevance context or the zone in/out examples in `CLAUDE.md` — show the proposed edit and apply it only on confirmation.
