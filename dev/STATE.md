@@ -26,14 +26,13 @@ None. Both checkouts clean; main fully pushed at `f387e5d`.
 
 1. **Kelsey: review the strategist STOP package** — `dev/convergence/review-queue/strategist-rubric-anchors.md` (primary checkout): Continuity + Register rubric dimensions (0–3 anchors), the `adv-mid-stage-resume` golden scenario, an adapter note. Ships as a strategist patch on approval, together with item 2.
 2. **Eval-pack follow-ups (ride with item 1):** (a) teach `single_stage_advance` in `eval/lib/run-gates.mjs` the 0.4.1 honest statuses — a Stage Record row `incomplete (advanced by user)` with `current_stage` advanced is a legitimate recorded non-certification, not a Δ0 fail (proof case: iteration-2 `adv-preference-over-evidence/run-1`); (b) pin `adv-preference-over-evidence`'s end-state (third scripted message or truncation semantics) so runner interpretation stops moving the gate signal.
-3. **If Kelsey commissions a Codex pass-3:** restage the packet — the `_scratch` staging dir still holds the **0.4.0** copy pass-2 reviewed. Re-rsync from main's `strategist/` (excludes: `.DS_Store`, `AGENTS.md`, `CHANGELOG.md`), write a fresh PASS-3 prompt with a finding→fix-location map for the six pass-2 repairs (zero rationale), appendix = the pass-2 raw verdict from `dev/blind-reviews/strategist-pass2-2026-07.md`. Protocol: `dev/convergence/codex-review-protocol.md` (local-only).
-4. **goal-setting convergence build/release** (next per A1) — brief at `dev/convergence/goal-setting-build-brief.md` (local-only); carry over the status-cell audit finding and consume the drift lint.
-5. **First live strategist session** graduates the SHIPPED-UNTESTED patterns (plan § How a Pattern Graduates).
+3. **goal-setting convergence build/release** (next per A1) — brief at `dev/convergence/goal-setting-build-brief.md` (local-only); carry over the status-cell audit finding and consume the drift lint.
+4. **First live strategist session** graduates the SHIPPED-UNTESTED patterns (plan § How a Pattern Graduates).
 
 ## Open questions / decisions pending
 
 - Rubric anchors + golden scenario changes: Kelsey-gated (STOP protocol), package in the review queue.
-- Pass-3: whether/when is Kelsey's call (pass-2 closed 0/6 CLOSED — a re-attack on the repairs is plausible once the rubric package lands).
+- **Pass-3: SKIPPED (Kelsey, 2026-07-12).** Rationale: the protocol's stopping point is pass-2; the v0.4.1 repairs implemented Codex's own "what closes it" prescriptions nearly verbatim, so a third read would largely grade its own homework; the genuinely untested surface (live-session behavior) is one no text review can see. The 0/6 CLOSED verdict was "real control added, cheapest bypass remains," not failed repairs — all six bypasses were one family (status says *done* while a recorded exception stands), now a recorded audit pattern. **Tripwire that reopens it:** if the first live strategist session or the rubric-package patch surfaces another state-honesty defect in that family, the repairs didn't internalize the pattern — commission the pass-3 re-attack then. Restage recipe if fired: `_scratch` staging dir still holds the 0.4.0 copy; re-rsync from main's `strategist/` (excludes: `.DS_Store`, `AGENTS.md`, `CHANGELOG.md`), fresh PASS-3 prompt with a finding→fix-location map for the six pass-2 repairs (zero rationale), appendix = the pass-2 raw verdict from `dev/blind-reviews/strategist-pass2-2026-07.md`. Protocol: `dev/convergence/codex-review-protocol.md` (local-only).
 
 ## Session knowledge worth keeping
 
