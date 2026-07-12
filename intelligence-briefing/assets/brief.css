@@ -113,3 +113,58 @@ footer{margin-top:var(--s-8);padding-top:var(--s-4);border-top:1px solid var(--r
   .card-body{padding:var(--s-4);}
   .synthesis{padding:var(--s-5);}
 }
+
+/* ── Collection health (mandatory on every brief) ───────────── */
+.collect{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:var(--fg-muted);
+  padding:var(--s-3) 0;border-bottom:1px solid var(--rule);
+  display:flex;gap:var(--s-3);align-items:baseline;flex-wrap:wrap;}
+.collect .state{font-weight:700;text-transform:uppercase;color:var(--sage);white-space:nowrap;}
+.collect .detail{font-family:var(--font-body);font-size:var(--fs-sm);color:var(--fg-secondary);
+  letter-spacing:normal;text-transform:none;}
+.collect.is-quiet .state{color:var(--fg-muted);}
+.collect.is-degraded{background:var(--warn-tint);border-radius:var(--r-sm);border-bottom:none;
+  padding:var(--s-3) var(--s-4);margin-top:var(--s-4);}
+.collect.is-degraded .state{color:var(--warn-ink);}
+
+/* ── Signpost fired (the highest-value item in the system) ──── */
+.card.is-signpost{border-color:var(--accent);}
+.signpost-flag{align-self:flex-start;font-family:var(--font-mono);font-size:11px;font-weight:700;
+  letter-spacing:var(--tracking);text-transform:uppercase;color:#fff;background:var(--accent);
+  border-radius:var(--r-pill);padding:3px 10px;}
+
+/* ── Driver movement (a clause on an item, never a dashboard) ─ */
+.driver{border-top:1px solid var(--rule);padding-top:var(--s-3);
+  font-size:var(--fs-sm);line-height:1.55;color:var(--fg-secondary);}
+.driver .panel-label{color:var(--sage);}
+.driver .move{font-weight:700;color:var(--ink);}
+
+/* ── Zone overflow: compression, never deletion ─────────────── */
+.also{border:1px dashed var(--rule);border-radius:var(--r-sm);padding:var(--s-3) var(--s-4);
+  margin:var(--s-3) 0;font-size:var(--fs-sm);color:var(--fg-secondary);}
+.also .panel-label{color:var(--fg-muted);}
+.also ul{margin:var(--s-2) 0 0;padding-left:var(--s-4);}
+.also li{margin:var(--s-1) 0;line-height:1.5;}
+.also a{color:var(--accent);text-decoration:none;}
+.also a:hover{text-decoration:underline;}
+
+/* ── Emergent driver proposal ───────────────────────────────── */
+.propose{border:1px dashed var(--accent);border-radius:var(--r-sm);padding:var(--s-4);
+  margin:var(--s-3) 0;font-size:var(--fs-sm);line-height:1.55;color:var(--fg-secondary);}
+.propose .panel-label{color:var(--accent);}
+
+/* ── The reckoning (monthly section, not a separate document) ─ */
+.reckoning{border:1px solid var(--rule-strong);border-radius:var(--r-md);
+  padding:var(--s-6);margin:var(--s-4) 0;}
+.reckoning-title{font-family:var(--font-display);font-size:23px;font-weight:600;line-height:1.25;
+  letter-spacing:-.005em;margin:0 0 var(--s-5);}
+.reck-block{border-top:1px solid var(--rule);padding-top:var(--s-4);margin-top:var(--s-4);}
+.reck-block:first-of-type{border-top:none;padding-top:0;margin-top:0;}
+.reck-block p{font-size:var(--fs-sm);line-height:1.6;color:var(--fg-secondary);margin:var(--s-2) 0 0;}
+.reck-block.is-wrong{background:var(--warn-tint);border-radius:var(--r-sm);
+  padding:var(--s-4);border-top:none;}
+.reck-block.is-wrong .panel-label{color:var(--warn-ink);}
+.moved{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--ink);}
+
+@media (max-width:600px){
+  .reckoning{padding:var(--s-5);}
+}

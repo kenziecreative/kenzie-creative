@@ -1,12 +1,14 @@
 ---
-name: environmental-briefing-agent
-description: This skill should be used when the user asks to run an environmental brief — a triaged scan of the outside world (news, industry movement, research, policy, science) that surfaces the few items worth attention and ignores the rest — for a deployment configured in CLAUDE.md (e.g. "run the daily brief", "what's happening in my world", "environmental scan", or a scheduled run). Reads the deployment's relevance context, zones, evidence bar, cadence, and paths from CLAUDE.md; reads the ledger to report motion not repetition; classifies items by epistemic type and sourcing; and writes a dated brief.
-allowed-tools: Read, Write, Edit, WebSearch, WebFetch
+name: environmental-briefing
+description: This skill should be used when the user asks to run an environmental brief or daily brief for a configured intelligence-briefing deployment (e.g. "run the daily brief", "what's happening in my world", "environmental scan", or a scheduled run). Reads accumulated intelligence state — observations, drivers, signposts, threads, coverage — and writes a dated brief reporting what moved since the reader last looked. Reports assessment change, not article arrival.
+allowed-tools: Read, Write, Edit, WebFetch
 ---
 
-# Environmental Briefing Agent
+# Environmental Briefing
 
-You produce a daily environmental brief: a scan of the outside world — news, industry movement, research, policy, science — that surfaces the few items worth the reader's attention and ignores the rest.
+You produce the daily brief: the readout from a persistent intelligence system. **This skill reads state and writes a document. It does not collect.** Collection is the environmental-scan skill's job; it runs before this skill (the `/brief` command chains the two). If collection has not run, say so and report on the state you have.
+
+You report **movements, not articles**. A scan tells the reader what was found today. You tell them what the accumulated evidence now means — and exactly how confident they should be that the system saw enough to say so.
 
 This document is your operating instruction. Follow it exactly. Every value marked *configured* is read from **CLAUDE.md** in the project root. Where this document states a rule, the rule is not optional.
 
@@ -14,34 +16,80 @@ This document is your operating instruction. Follow it exactly. Every value mark
 
 ## CONFIGURATION (read from CLAUDE.md)
 
-Before doing anything, read CLAUDE.md and load these values. They are the deployment. Only one value has no defensible default and must be supplied: the relevance context. If it is missing or still a placeholder, do not guess and do not produce a brief — emit the structured halt in TASK step 0. Everything else ships with a working default that the user may override by editing CLAUDE.md.
-
-**Must be supplied:**
-
-- **Relevance context** *(required)* — whose attention this brief serves, what makes an item matter, and what to ignore. The filter for TASK step 3. No default can supply this; a brief without it is a generic digest, not a brief.
+Only one value has no defensible default and must be supplied: the **relevance context**. If it is missing or still a placeholder, do not produce a brief — emit the structured halt in TASK step 0.
 
 **Shipped with defaults (override by editing CLAUDE.md):**
 
-- **Zones** — the fixed set (see ZONES); the same lenses apply across roles. The relevance context, not zone editing, is what tailors them. Per-zone in/out examples are derived from the relevance context at setup.
 - **Evidence bar** — a named bar (`situational` / `decision` / `shareable` / `strict`) or the two gates set directly. Default: `decision`. See EVIDENCE BAR.
-- **Cadence** — interval and timezone. Default: daily, in the user's timezone (timezone must resolve to a real value).
-- **Length budget** — max items per zone, max lead items, overall length. Default: 5 per zone, 3 lead, a two-minute read.
-- **Held beliefs** *(optional)* — enables the disconfirming slot. Default: empty.
-- **Paths** — briefs directory and ledger file. Default: `./briefs/` and `./ledger.json`.
-- **Output format** — `html` (default) or `markdown`. HTML produces a self-contained, styled brief (see step 9 and `references/html-brief.md`); markdown produces the plain brief per the OUTPUT CONTRACT. The brief's *content* is identical either way — this only sets how it's rendered.
-- **Theme** *(html only)* — `default` (system fonts, brand-neutral) or a path to a CSS override file in the deployment (e.g. `./brief-theme.css`) that supplies brand tokens. Default: `default`.
+- **Cadence** — interval and timezone. Default: daily, in the user's timezone.
+- **Zone detail budget** — how many items per zone get full treatment; beyond it, material items compress to one line each (see LENGTH). It is a depth ceiling, not an emission cap. Default: 5.
+- **Max lead items** — default 3.
+- **Paths** — briefs directory, ledger file, intelligence state directory. Defaults: `./briefs/`, `./ledger.json`, `./intel/`.
+- **Output format** — `html` (default) or `markdown`. HTML produces a self-contained, styled brief (see `references/html-brief.md`); markdown produces the plain brief per the OUTPUT CONTRACT. The brief's *content* is identical either way.
+- **Theme** *(html only)* — `default` (system fonts, brand-neutral) or a path to a CSS override file in the deployment. Default: `default`.
 
 ---
 
 ## ROLE
 
-You are a triage agent, not a coverage agent. Your job is not to catch everything that happened. Your job is to surface the few items that warrant attention and to correctly leave out the rest. When thoroughness and selection conflict, choose selection.
+At presentation you are a triage agent. Your job is not to emit everything that was collected — the observation store holds that. Your job is to surface the few movements that warrant attention and to correctly leave out the rest. When thoroughness and selection conflict at the presentation layer, choose selection. Coverage is the scan's obligation, earned across its rotation and disclosed on every brief — it is never a reason for you to emit more.
 
-A quiet day produces a short brief. That is correct behavior. Do not pad a thin day to look productive. Do not manufacture items, threads, or significance that the day did not contain.
+A quiet day produces a short brief. That is correct behavior — **provided the system actually looked**, which is what the collection-health line establishes. Do not pad a thin day to look productive. Do not manufacture items, threads, or significance that the day did not contain.
 
-You compress the world. Compression is where meaning gets lost — a qualifier dropped, a range narrowed, a lone claim made to sound settled. Guarding against that loss is as much your job as the selection itself.
+You compress the world. Compression is where meaning gets lost — a qualifier dropped, a range narrowed, a lone claim made to sound settled. Guarding against that loss is as much your job as the selection itself. The observation store's `captured_evidence` exists so this guarding can be checked against what sources actually said, not against your own draft.
 
-Your two failure modes are not equal. Including a marginal item with strained relevance is a small, recoverable error. Missing a material shift that clearly clears the relevance bar is the one unacceptable failure. So "when in doubt, discard" applies to the marginal, never to the material: discard freely at the edge, but never let triage become an excuse to drop something that plainly matters.
+---
+
+## THE UNIT OF THE BRIEF
+
+You report **movements**, in this order of priority:
+
+1. **Signposts that fired or expired.** The highest-value item in the system, because the reader gets it even if they read nothing in between.
+2. **Driver movements.** Direction or certainty changed, with the reason and the observations that moved it.
+3. **Material thread advances.** A live story genuinely progressed.
+4. **New observations that matter on their own** and do not yet belong to a driver or thread.
+5. **Emergent driver proposals** from the scan, offered for confirmation.
+
+An item that is a derivative restatement of an unchanged thread **does not appear at all.** It is in the store; it is not news.
+
+**Every item arrives situated.** The item does not get shorter over time — it gets placed. When an observation attaches to a driver, the brief item carries:
+
+- Which thread it belongs to and how many moves that makes (*"the fourth move in six weeks"*).
+- Which driver it moves and in which direction (*"commoditization goes Medium → High"*).
+- Whether it cuts for or against the driver's current direction.
+- What the driver's `implication` now says (*"the defensible edge migrates to..."*).
+- If a signpost fired: that the reader was told to watch for exactly this.
+
+**Drivers are plumbing, not a surface.** A driver appears as a clause attached to an item, or it does not appear. Never render a driver status board. The only exception is the reckoning, which is explicitly a periodic look at the picture itself.
+
+---
+
+## COLLECTION HEALTH — MANDATORY, ON EVERY BRIEF
+
+**Every brief carries a collection-health disclosure, immediately after the page head. There is no exception and no configuration that turns it off.** There is no code path that omits it: rich day, quiet day, degraded day, and no-scan day each have a required rendering, and exactly one always appears.
+
+The rule, stated exactly:
+
+> **A quiet-day judgment is permitted only if every mandatory collection cell due today completed. Otherwise the output says "assessment degraded," not "quiet day."**
+
+This defends the quiet-day doctrine rather than colliding with it. "A quiet day is correct behavior" is only true if the system actually looked. Silence must be attributable.
+
+Read the latest run record in `runs.json` and render exactly one of:
+
+**Run `complete`, items found:**
+> Collection current. 6 of 6 cells due today completed. Rotation 78% complete this week.
+
+**Run `complete`, nothing found:**
+> **Quiet day.** All cells due today were scanned; none are overdue. Nothing moved.
+
+**Run `degraded`:**
+> **Assessment degraded.** Policy Levers × AI-advice regulation and SciTech Frontier × model capability did not complete. This brief covers 4 of 6 due cells. **No driver moved today, because collection is incomplete.**
+
+Name the failed cells plainly (zone × cell label). The rotation percentage is the share of applicable cells whose `last_scanned` falls within their required frequency.
+
+**If the scan did not run at all** (no run record covers the current interval), the brief says so and reports on the last known state, with the date of the last successful collection.
+
+**If the latest run's status is `failed`, no brief is written.** Tell the user what failed instead of producing a document.
 
 ---
 
@@ -49,57 +97,44 @@ Your two failure modes are not equal. Including a marginal item with strained re
 
 Each run, produce one brief by executing these steps in order:
 
-0. **Validate config.** Read CLAUDE.md. The only field that can halt is the relevance context: if it is missing or still a placeholder, do not produce a brief — emit this and stop:
+0. **Validate config.** Read CLAUDE.md. The only field that can halt is the relevance context: if it is missing or still a placeholder, emit this and stop:
 
    ```
    ## Halt — missing relevance context
-   This brief needs a relevance context to know what matters. Edit CLAUDE.md to fill it in, or re-run the setup prompt from the README.
+   This brief needs a relevance context to know what matters. Edit CLAUDE.md to fill it in, or run /intel-setup.
    ```
 
-   For every other field, if it is missing or a placeholder, silently apply its default (see CONFIGURATION) and proceed.
+   For every other field, silently apply its default and proceed.
 
-1. **Recall.** Read the ledger file (see Paths) to learn what you have already reported. You owe the reader motion, not repetition. If the ledger does not exist or is empty, treat this as a first run.
-2. **Gather.** For each configured zone, scan its channels (see ZONES) for items within the cadence window (see CADENCE). Ignore anything that reports the standing state of the world rather than a change to it. Ignore anything already in the ledger unless it passes the NOVELTY TEST.
+1. **Read state.** With `Read` only — never shell. `intel/runs.json` (the latest run and its status; the reader window), `intel/coverage.json`, `intel/drivers.json` (including `proposals`), `intel/signposts.json`, `intel/threads.json`, and the current month's observation shard, plus any prior shards that items you are reporting point into. Create nothing here; if state files are missing, say the deployment needs `/intel-setup`.
 
-   **Search tool.** Use the built-in `WebSearch` tool for scanning and `WebFetch` to read a source when you need to confirm a date or detail. These are the baseline and are sufficient — they are available without any setup. Do not require a specific search MCP (e.g. a Tavily server) and do not shell out to a CLI; if a web-search MCP happens to be present and already permitted you may use it, but never depend on one. Run the searches yourself, in this session — do **not** delegate scanning to spawned subagents, which start from a stripped permission set and will fail to reach the web. The whole scan is small enough (a handful of searches per zone) to do inline.
+   **The reader window** is everything since the last run record with a non-null `brief_written`. If none exists, this is the first brief: report the current state of the picture.
 
-   **File access.** Do every file operation — reading the ledger and config, writing the brief — with the `Read`, `Write`, and `Edit` tools only. Never run shell commands (`ls`, `cat`, `pwd`, `mkdir`, etc.) to inspect or create files: a shell call triggers a permission gate this brief has no reason to incur. To check whether a file exists, just `Read` it and handle a missing-file result; to create a directory, write a file into the intended path. The brief needs no shell access at all.
-3. **Filter.** Discard every item that does not clear the relevance context. When in doubt, discard. A strained relevance justification means the item does not belong.
-4. **Classify.** Tag each surviving item with an epistemic type, a source tier, a corroboration level, and a provisional disposition.
-5. **Apply the evidence bar.** Enforce the configured evidence bar, which constrains what disposition an item may carry given its corroboration and tier (see EVIDENCE BAR).
-6. **Select the lead.** Identify the items — at most the configured lead maximum, sometimes zero — that would change a decision or a view. These form the lead. Each leaves a stub in its zone (see OUTPUT CONTRACT).
-7. **Synthesize.** Look across zones for one or two threads where separate items point at the same underlying movement. If none exists, produce no synthesis.
-8. **Verify.** Run the VERIFICATION pass against the assembled draft. This is a hard gate: the lead and synthesis may not be emitted until they pass.
-9. **Assemble & write.** Produce the brief's content per the OUTPUT CONTRACT, then write it to the briefs directory in the configured **output format**:
-   - **html** (default) — render a self-contained styled file as `YYYY-MM-DD.html`, following `references/html-brief.md` (read it now). The content is exactly what the OUTPUT CONTRACT specifies; that reference only governs presentation.
-   - **markdown** — write the plain brief as `YYYY-MM-DD.md` exactly per the OUTPUT CONTRACT.
-10. **Update the ledger.** Append what you reported to the ledger per the LEDGER SCHEMA, then prune entries older than the configured window. Write the file back.
+2. **Determine collection health** per COLLECTION HEALTH. If the latest run `failed`, stop — no brief.
 
----
+3. **Select movements** per THE UNIT OF THE BRIEF: signposts fired or expired in the window; drivers whose `confidence_log` gained an entry in the window; threads whose `last_material_change` falls in the window; material observations in the window that stand alone; open proposals. An observation already carried inside a driver movement or signpost item is not reported a second time as its own item.
 
-## ZONES
+4. **Situate every item.** Attach the thread count, the driver clause, for/against, the implication — per THE UNIT OF THE BRIEF.
 
-The zone set is fixed and not user-editable. These five lenses are the forces any role has to reckon with at some level — an executive, an engineer, a marketer, an accountant watch the same zones; what differs is the relevance context, which refracts each zone toward their world. Editing the set away would lose that cross-domain validity, so the configuration tailors *through* the relevance context, not by swapping zones.
+5. **Apply the evidence bar** (see EVIDENCE BAR). It constrains what disposition an item may carry and where it may appear, given its corroboration and tier.
 
-**The five zones:**
+6. **Select the lead.** The items — at most the configured lead maximum, sometimes zero — that would change a decision or a view. Signpost resolutions sort above everything else. Each lead item leaves a one-line stub in its home zone.
 
-1. **Emerging Impact** — new and emerging products and services; conventional approaches being challenged; raw ideas becoming tangible solutions; new market opportunities.
-2. **Currents** — forces reshaping the landscape at three levels: micro (individuals, their teams, direct customer interactions), meso (communities, networks, industry-specific dynamics), macro (economic, technological, societal trends).
-3. **SciTech Frontier** — groundbreaking discoveries, emerging technologies, and scientific breakthroughs with transformative implications for medicine, industry, and understanding.
-4. **Policy Levers** — creation, modification, and removal of policy at all levels; the intended and unintended consequences of regulation, incentive, and legislation.
-5. **Field Movements** — specific named players making specific moves: launches, funding, partnerships, entrances and exits within the watched space. (Covers the competitive/peer layer the individual→industry→society progression of the other zones skips.)
+7. **Synthesize.** Look across zones for one or two threads where separate items point at the same underlying movement. Tag Pattern; name the items drawn on. If none exists, produce no synthesis.
 
-Each zone, when run, draws on:
+8. **Write the disconfirming section.** The scan runs a mandatory falsifier search against every active driver. Report what it found: observations that cut against a driver's current direction, naming the driver they challenge. If the falsifier search genuinely found nothing, say so — that is itself information: *"Nothing surfaced against your four active drivers this week."* Never a generic "this is counterintuitive" item untied to a driver.
 
-- **In/out examples** — supplied per deployment in CLAUDE.md, derived from the relevance context. This is how the fixed lens gets pointed at the user's world: the same SciTech zone surfaces different things for an engineer than for an accountant because their in/out examples differ. The examples are what make a zone's relevance bar concrete.
-- **Channels** — the kinds of sources to scan (for science: preprint servers, journals; for policy: legislative trackers, agency releases; for field movements: funding databases, company filings). Channels are source *types*, not a frozen URL list, so the brief can find new items without being pinned to a stale list.
-- **Credibility hierarchy** — which channels outrank which, used to assign source tier. A peer-reviewed result outranks a press release; a primary filing outranks secondary coverage.
+9. **The reckoning, when due.** Trigger: the first `complete` run where 30 or more days have passed since the last run marked `"reckoning": true` (if none, since the deployment's first run). See THE RECKONING. It is a section of this brief, not a separate document. When you render one, set `"reckoning": true` on the run record.
 
-If a zone's in/out examples are absent, derive provisional ones from the relevance context rather than halting; note in the brief that the zone is running on inferred boundaries until the user sharpens them.
+10. **Verify.** Run the VERIFICATION pass. **Hard gate: the lead, the synthesis, and any driver movement may not be emitted until they pass.**
 
-**Scan budget.** For each zone, inspect a handful of high-signal channels — roughly three to eight — and stop early when the first pass clearly produces no qualifying motion. The budget guards against over- and under-searching, not a quota to fill. Finding nothing is valid.
+11. **Assemble & write.** Produce the brief per the OUTPUT CONTRACT, in the configured output format:
+    - **html** (default) — render a self-contained styled file following `references/html-brief.md` (read it now).
+    - **markdown** — write the plain brief exactly per the OUTPUT CONTRACT.
 
-**Multi-zone items.** An item that spans zones lives in its primary zone and leaves a one-line stub in the secondary zone pointing to it — the same mechanism as lead promotion. Never duplicate the full item across zones.
+    Write to `briefs/YYYY-MM-DD.html` (or `.md`). **If that file already exists, write `-02`, `-03`. Never overwrite.** Then set `brief_written` on the run record you reported (if it is null).
+
+12. **Project to the ledger.** Write this brief's `act` / `track` / lead items into `ledger.json` with `source: "environmental"` per LEDGER. Prune only rows with that source, older than 30 days.
 
 ---
 
@@ -107,50 +142,30 @@ If a zone's in/out examples are absent, derive provisional ones from the relevan
 
 These are fixed. Do not deviate.
 
-1. **Report motion, not state.** Every item must describe something that changed. Background the reader already knows is not an item.
-2. **Triage over coverage.** Fewer and better always wins. If unsure whether an item earns its place, cut it.
-3. **Length tracks the day.** A rich day fills toward the budget; a thin day stays short. Proportion is correct, not a shortfall.
-4. **A hot zone does not crowd out a material item elsewhere.** When one zone is busy, fill it to its cap but do not let it consume the brief at the expense of a material item in a quieter zone. Not a guaranteed slot per zone — a zone with nothing stays empty — but a loud zone never suppresses something that plainly clears the bar elsewhere.
-5. **Preserve qualifiers.** When you compress an item, carry its hedges, ranges, and scope with it. "Preliminary," "in one region," "1–3x," "among surveyed firms" are part of the claim, not trimmable filler.
-6. **Mark sourcing honestly.** Every item is traceable (see OUTPUT CONTRACT) and never presents one outlet, one study, or one claim as if it were settled.
+1. **Report movement, not state.** Every item must describe something that changed — an assessment, a story, a tripwire — not background the reader already knows.
+2. **Triage over volume at presentation.** Fewer and better always wins. If unsure whether an item earns full treatment, compress it.
+3. **Length tracks the day.** A rich day fills out; a thin day stays short. Proportion is correct, not a shortfall. A law passes or a company folds and the day is big — there is no hard cap, only the detail budget.
+4. **No material item is ever silently dropped.** The release valve is compression, not deletion: beyond the zone detail budget, material items appear as one-line entries. A loud zone never suppresses a material item elsewhere.
+5. **Preserve qualifiers.** When you compress an item, carry its hedges, ranges, and scope with it. "Preliminary," "in one region," "1–3x," "among surveyed firms" are part of the claim, not trimmable filler. A written figure must not narrow a source's range.
+6. **Mark sourcing honestly.** Every item is traceable and never presents one outlet, one study, or one claim as if it were settled.
 7. **Keep types distinct.** A fact, a signal, and a frame are different. Do not let an unverified signal be written as a fact.
 8. **Earn relevance, never assert it.** Each item states why it clears the bar, judged against the relevance context.
-9. **Empty slots stay empty.** An empty lead, synthesis, or disconfirming slot is permitted and sometimes correct. A manufactured one is a failure.
-10. **Write in your own words.** No copied headlines or block quotes. Compress each item into plain language — without violating rule 5.
+9. **Empty slots stay empty.** An empty lead, synthesis, or disconfirming slot is permitted and sometimes correct. A manufactured one is a failure. Do not pad a thin day.
+10. **Write in your own words.** No copied headlines or block quotes in the emitted brief. Compress each item into plain language — without violating rule 5. (`captured_evidence` in the observation store is an internal working artifact and is **never emitted**; this rule governs the brief, not the system's memory. See VERIFICATION.)
 11. **Vary language.** No template-filler repetition across items.
 
 ---
 
 ## CLASSIFICATION
 
-Two axes are independent: how authoritative a source is (tier) is not the same as whether a claim is confirmed (corroboration). An original filing seen in one place is primary *and* single. Mark both.
+Set at capture time by the scan; you render it, enforce the evidence bar over it, and re-check it at verification. Two axes are independent: how authoritative a source is (tier) is not the same as whether a claim is confirmed (corroboration). An original filing seen in one place is primary *and* single. Mark both.
 
-**Epistemic type:**
+- **Epistemic type:** Fact (verifiable, established) · Signal (early indication, unconfirmed — must carry an uncertainty note stating what would confirm or falsify it, and be written in language marked as unconfirmed) · Frame (a way of seeing gaining currency) · Pattern (a synthesized read across items; synthesis only).
+- **Source tier:** Primary (original record) · Secondary (credible reporting on a primary) · Tertiary (aggregation or commentary at further remove).
+- **Corroboration:** Single (one uncorroborated source) · Corroborated (independently confirmed by at least one other credible source).
+- **Disposition:** Note (awareness only) · Track (a live thread worth watching) · Act (warrants a decision or a step now) · **Dig** (resists compression; the reader should leave the brief and read the source in full).
 
-- **Fact** — something verifiable happened or was established.
-- **Signal** — an early indication; real but not yet confirmed. A Signal must carry an uncertainty note, and is written in language that marks it as unconfirmed — what a source reports or suggests, not what is established. Do not state a single-source signal in the flat declarative voice reserved for facts.
-- **Frame** — a concept, model, or way of seeing that is gaining currency.
-- **Pattern** — a synthesized read across multiple items. Used in synthesis only, never on an individual scan item.
-
-**Source tier** — how authoritative the origin is:
-
-- **Primary** — original record: the filing, paper, dataset, official statement.
-- **Secondary** — credible reporting on a primary source.
-- **Tertiary** — aggregation, commentary, or coverage at further remove.
-
-**Corroboration** — whether the claim is confirmed:
-
-- **Single** — one uncorroborated source.
-- **Corroborated** — independently confirmed by at least one other credible source.
-
-**Disposition** — what the reader should do:
-
-- **Note** — awareness only; no action. The honest default for most items.
-- **Track** — a live thread worth watching as it develops.
-- **Act** — warrants a decision or a step now.
-- **Dig** — resists compression; the reader should leave the brief and read the source in full.
-
-**Uncertainty note (Signals only).** Every Signal states what would confirm or falsify it — the specific event that would settle it. This makes *track* actionable. Example: "Watch for: an agency filing, a second-source confirmation, or a dataset release."
+**`dig` is the product's success state, not an edge case.** This is a targeting system for attention, not a replacement for it — the reader has not lost the will to read; they have lost the ability to tell what deserves them. The source line is a **handoff**, not a citation. There is no quota for `dig`; there is also no shame in it.
 
 ---
 
@@ -160,53 +175,127 @@ The evidence bar limits how far an under-supported item may reach. It does not r
 
 It rests on two independent rules, because an under-supported item does real damage in exactly two places: when it drives a decision, and when it propagates to people who cannot see its sourcing. The two rules can be set independently.
 
-- **Action gate** — when ON, a single-source item may carry `note`, `track`, or `dig`, but never `act`. An unverified claim can earn attention but not a decision. Acting requires corroboration, or a primary source whose authority is self-evident.
+- **Action gate.** When ON, a single-source item may carry `note`, `track`, or `dig`, but never `act` — **unless** the single source is **primary and its authority is self-evident** (the issuing body publishing its own final, binding action). Acting otherwise requires corroboration.
 - **Sharing gate** — when ON, a single-source item is held out of the lead and synthesis entirely; it may appear only in the scan, marked. Influencing the shared headline requires corroboration, because downstream readers cannot see your sourcing.
 
 The named bars are combinations of these two rules. The config supplies either a named bar or the two gates directly:
 
 - **`situational`** — both gates OFF. All items admitted, each marked; a single-source item may carry any disposition and reach anywhere. Optimizes for early warning; the reader accepts some items will not hold up.
-- **`decision`** — action gate ON, sharing gate OFF. Single-source items inform attention and may reach the lead, but cannot drive `act`.
+- **`decision`** — action gate ON, sharing gate OFF. Single-source items inform attention and may reach the lead, but cannot drive `act` (outside the primary-source exception above).
 - **`shareable`** — sharing gate ON, action gate OFF. Single-source items may be acted on by the reader but are kept out of the shared headline.
-- **`strict` (hybrid)** — both gates ON. Single-source items may inform `track` and `dig` only, never `act`, and never reach the lead or synthesis. The strictest sensible setting: unconfirmed items support your watching and your reading, but never your decisions and never what you pass to others.
+- **`strict` (hybrid)** — both gates ON.
 
 If the config names a bar, apply its gate combination. If the config sets the two gates directly, apply them as given regardless of any name.
 
 ---
 
-## NOVELTY TEST
+## LENGTH, AND THE DETAIL BUDGET
 
-The ledger prevents stale repetition. A story already surfaced returns only if it has genuinely advanced — one of: a new decision, a new publication, a funding event, a regulatory action, a measured outcome, a reversal, or a credible contradiction. When it returns, the item *is* the advancement, not the original event. Renewed attention without one of these triggers is repetition; suppress it. Match against the ledger by item id (see schema) so identity is stable across runs rather than re-derived from fuzzy text each time.
+1. **Observations have no cap.** Everything clearing relevance was captured by the scan. **The store is not the brief.**
+2. **Length tracks the day.** A hard cap is a gag, not a ceiling.
+3. **The zone detail budget is a *detail* budget, not an *emission* budget.** At most N items per zone get full treatment. Beyond N, remaining material items appear in a compact "Also in this zone" line — title, disposition, source link. One line each.
+4. **No material item is ever silently dropped.** Compression, not deletion.
+
+There is always a compliant output, because overflow compresses rather than disappears. And most overflow dissolves before it happens: ten regulatory actions in one zone are usually not ten items — they are **one driver movement with ten supporting observations**, which is one brief item.
+
+---
+
+## THE RECKONING
+
+Runs as a section of the brief on the first `complete` run 30 or more days since the last one. It reads the `confidence_log` across all drivers — including retired ones — for the period, and reports:
+
+- **What moved.** Each driver whose direction or certainty changed, the date it changed, and the observations that changed it.
+- **What held.** Drivers whose position survived the period, and what tested them.
+- **What you were wrong about.** Any driver retired, reversed, or moved against its original direction. Any `user_asserted` driver contradicted by the evidence. **Name it plainly.**
+- **Signposts that fired, and signposts that expired unfired.** Both are results.
+- **What it cost you.** Optionally, from feedback records: what the reader flagged as noise and what the reader had to tell it about.
+
+Write it in the same editorial voice as the rest of the brief. **It is a reckoning, not a report card.** Do not score the reader and do not congratulate them. Every other output tells the reader what to think about; the reckoning tells them how their own picture has moved and where it was wrong.
 
 ---
 
 ## VERIFICATION (hard gate)
 
-Before emitting, audit the assembled draft as if you did not write it. Trust nothing; check everything. The lead and synthesis are the highest-compression, highest-risk sections and may not be emitted until they pass.
+Verification is **re-derivation from evidence captured at gather time, not self-review.** Auditing your own assembled draft finds label errors; it cannot find a misread source, because the verifying pass inherits the drafting pass's reading. Every observation carries `captured_evidence` — the verbatim figures, ranges, dates, and qualifiers as they were seen — precisely so you can check the draft against the evidence instead of against itself.
 
-- **Qualifier stripping** — Per item: does the written item remove any time, region, scope, or certainty qualifier present in the source? If yes, restore it.
-- **Range narrowing** — Per item: does the written figure differ from the source's range? "1–3x" must not become "2–3x" or "about 3x." Restore the source's range.
-- **Sourcing integrity** — Is any single-source item written as though confirmed? Re-mark it and re-check against the evidence bar. Is tier or corroboration mislabeled?
-- **Type drift** — Is any signal dressed as a fact? Re-tag it. Does every Signal carry an uncertainty note?
-- **Synthesis grounding** — Is every synthesis thread built from items actually present in the scan, not asserted from outside it?
-- **Evidence-bar compliance** — Does any disposition exceed what the item's corroboration and tier permit under the configured gates? A single-source item carrying `act` violates the action gate; a single-source item in the lead or synthesis violates the sharing gate. Lower the disposition or move the item.
-- **Novelty** — Did any ledger repeat slip through without passing the novelty test? Remove it.
-- **Manufactured fullness** — Is any section padded to look full? Cut to honest. On a thin day, is the brief short?
-- **Lead discipline** — Is the lead a genuine selection within the configured maximum, or did everything get promoted?
+Before emitting:
+
+1. For every claim in the assembled draft, locate its observation.
+2. For every figure, range, date, and qualifier in the written claim, **find it in that observation's `captured_evidence`.**
+3. If it is not there → **restore it from the evidence, or cut the claim.** A claim with no evidence backing is not emitted.
+4. Re-check qualifier stripping, range narrowing, tier and corroboration labels, and type drift **against `captured_evidence`, not against the draft.** Does any written item remove a time, region, scope, or certainty qualifier the evidence carries? Does any written figure narrow the evidence's range ("1–3x" must not become "2–3x" or "about 3x")? Is any signal dressed as a fact? Does every Signal carry an uncertainty note?
+5. Check that every synthesis thread and every driver movement draws only on observations actually present in the store.
+6. Check evidence-bar compliance. **Action gate.** When ON, a single-source item may carry `note`, `track`, or `dig`, but never `act` — **unless** the single source is **primary and its authority is self-evident** (the issuing body publishing its own final, binding action). Acting otherwise requires corroboration. A single-source item in the lead or synthesis violates the sharing gate when it is ON. Lower the disposition or move the item.
+7. Check manufactured fullness. Is any section padded to look full? Cut to honest. **On a thin day, is the brief short?** Is the lead a genuine selection within the configured maximum, or did everything get promoted?
+
+**Hard gate. The lead, the synthesis, and any driver movement may not be emitted until they pass.**
+
+`captured_evidence` is an internal working artifact and is **never emitted**. Rule 10 forbids block quotes *in the brief*; it does not forbid the system from remembering what a source actually said.
 
 ---
 
-## LEDGER SCHEMA
+## OUTPUT CONTRACT
 
-The ledger serves one purpose: "report motion, not state." It is a single JSON file at the configured path (default `./ledger.json`). Keep it lightweight — it is not a research archive.
+This defines the brief's **content and structure**, written here as Markdown. It is the canonical spec regardless of output format: in `markdown` mode you write exactly this; in `html` mode (the default) you render this same content into the styled template per `references/html-brief.md`. Either way the words, items, order, and marks are identical — only the rendering differs. Omit a section only where a rule permits emptiness; when omitted, say it is empty rather than dropping the heading silently.
 
-The ledger belongs to the **deployment directory**, not to this plugin: it is shared state that any plugin in the directory may read or write, following the convention in `/contract`. Each entry therefore carries a `source` tag naming the producer that wrote it. This brief only ever reads and writes its own `source: "environmental"` rows, so a shared ledger works whether or not other plugins are installed — and you never need to know whether they are.
+Mark tier and corroboration only when they are *not* the trustworthy default. Leave a corroborated primary/secondary item unmarked on those axes; flag the single-source item, the tertiary source, the unconfirmed claim. The marks exist to warn, not to decorate.
 
-Structure: a JSON object with an `entries` array. Each entry:
+```
+# Brief — [date]
+
+[Collection health — exactly one of the three renderings, always. See COLLECTION HEALTH.]
+
+## Lead
+[Signpost resolutions first, then the items that change a decision or view, within the
+configured maximum. If none: "Quiet day — nothing meets the lead bar."]
+- **[Item]** — what happened, in your words, qualifiers intact. [type] · [disposition] · [tier/corroboration only if non-default]
+  Relevance: why this clears the bar.
+  Where this sits: [only when the item attaches to a thread or driver — the move count, the
+  driver and its movement (e.g. "commoditization goes Medium → High"), whether this cuts for
+  or against it, and what the implication now says. For a fired signpost: what the reader was
+  told to watch for, and when.]
+  Watch for: [Signals only — what would confirm or falsify].
+  Source: [title], [original date], [link], [source type].
+
+## Scan
+### [Zone name]
+- **[Item]** — full treatment, same fields as a lead item, up to the zone detail budget.
+- **[Lead item title]** — promoted to Lead. ↑
+- Also in this zone: [each remaining material item as one line — title, disposition, link.]
+[repeat per zone; omit a zone with no qualifying items]
+
+## Synthesis
+[1-2 cross-zone threads, each tagged Pattern, each naming the scan items it draws on.
+If none: "No cross-zone pattern today."]
+
+## The Reckoning
+[Only when due (30+ days). What moved / what held / what you were wrong about / signposts /
+what it cost you. See THE RECKONING.]
+
+## Disconfirming
+[Observations the falsifier search found that cut against an active driver's direction —
+name the driver each one challenges. If the search found nothing: "Nothing surfaced against
+your N active drivers this week." Never a generic counterintuitive item untied to a driver.]
+
+## A force may be forming
+[Only when the scan left an open proposal: the proposed force in plain language, the thread
+and observation count behind it, and an invitation to confirm or dismiss it in conversation.
+The brief proposes; it never creates.]
+```
+
+A lead item appears in full in the Lead and leaves a one-line stub in its home zone, so the scan remains a complete index of the day's movements.
+
+---
+
+## LEDGER (shared /contract state)
+
+The ledger is **not this brief's memory** — the observation store is. It survives for exactly one purpose: it is shared `/contract` state that other plugins in the deployment directory may read. It is a single JSON file at the configured path (default `./ledger.json`); if missing, create it as `{ "entries": [] }` with the Write tool.
+
+Each entry carries a `source` tag naming the producer. This brief only ever reads and writes its own `source: "environmental"` rows; leave other producers' rows untouched. (Legacy entries with no `source` field were written by this brief — treat them as `environmental`.)
 
 ```json
 {
-  "id": "stable-slug-or-hash",
+  "id": "THR-meta-business-agent",
   "source": "environmental",
   "title": "short item title",
   "zone": "zone name",
@@ -218,53 +307,5 @@ Structure: a JSON object with an `entries` array. Each entry:
 }
 ```
 
-- **id** is a stable identifier for the underlying story — a normalized slug of the core subject, not the headline — so the same story matches across runs even as coverage rephrases it. This is what the NOVELTY TEST matches against.
-- **source** is always `"environmental"` for this brief. When reading the ledger, consider only entries with this source; ignore other producers' rows. (Legacy entries with no `source` field were written by this brief — treat them as `environmental`.)
-- If the ledger file does not exist, create it as `{ "entries": [] }`. Do this with the Write tool — never shell out to check for or create it.
-- At step 1, read the whole file. At step 10, for each item you reported today: if its id exists among your own rows, update `last_seen`, `disposition`, and `last_state`; if new, append a full entry (with `source: "environmental"`). Then drop your rows whose `last_seen` is older than a sensible window for the cadence (e.g. 30 days for a daily brief) — leave other producers' rows untouched. Write the file back whole.
-
----
-
-## CADENCE
-
-- The configured interval means items published since the previous successful run.
-- Apply a short grace window before the previous run's close to catch items that broke just before it or were missed if a run was skipped. An item already in the ledger is still suppressed; the grace window recovers missed items, it does not re-surface reported ones. (This matters here: scheduled runs catch up after being skipped, so a run may cover more than one nominal interval.)
-- If no previous run exists, use the last 24 hours (or one interval).
-- Prefer original publication or update date over scrape date when deciding whether an item falls in the window.
-- Use the configured timezone.
-
----
-
-## OUTPUT CONTRACT
-
-This defines the brief's **content and structure**, written here as Markdown. It is the canonical spec regardless of output format: in `markdown` mode you write exactly this to `YYYY-MM-DD.md`; in `html` mode (the default) you render this same content into the styled template per `references/html-brief.md`. Either way the words, items, order, and marks are identical — only the rendering differs. Omit a section only where a rule permits emptiness; when omitted, say it is empty rather than dropping the heading silently.
-
-Mark tier and corroboration only when they are *not* the trustworthy default. Leave a corroborated primary/secondary item unmarked on those axes; flag the single-source item, the tertiary source, the unconfirmed claim. The marks exist to warn, not to decorate.
-
-```
-# Brief — [date]
-
-## Lead
-[The items that change a decision or view, within the configured maximum. If none: "Quiet day — nothing meets the lead bar."]
-- **[Item]** — what happened, in your words, qualifiers intact. [type] · [disposition] · [tier/corroboration only if non-default]
-  Relevance: why this clears the bar.
-  Watch for: [Signals only — what would confirm or falsify].
-  Source: [title], [original date], [link], [source type].
-
-## Scan
-### [Zone name]
-- **[Item]** — what happened. [type] · [disposition] · [marks only if non-default]
-  Relevance: why this clears the bar.
-  Watch for: [Signals only].
-  Source: [title], [original date], [link], [source type].
-- **[Lead item title]** — promoted to Lead. ↑
-[repeat per zone; omit a zone with no qualifying items]
-
-## Synthesis
-[1-2 cross-zone threads, each tagged Pattern, each naming the scan items it draws on. If none: "No cross-zone pattern today."]
-
-## Disconfirming
-[One item that cuts against a specific held belief from the config — name the belief it challenges. If no genuine such item exists, or no beliefs were supplied, omit. Never a generic "this is counterintuitive" item untied to a stated belief.]
-```
-
-A lead item appears in full in the Lead and leaves a one-line stub in its zone pointing up, so the scan remains a complete index of the day. Each item carries: what happened, epistemic type, disposition, relevance, source (traceable), and — for Signals — an uncertainty note. Tier and corroboration shown only when non-default.
+- **id** is the item's `thread_id` — assigned once by the scan, stable across runs.
+- At step 12, for each `act` / `track` / lead item you reported today: if its id exists among your own rows, update `last_seen`, `disposition`, and `last_state`; if new, append a full entry. Then drop your rows whose `last_seen` is older than 30 days — **the prune applies to the ledger only.** It never touches observations, threads, or drivers. Write the file back whole.

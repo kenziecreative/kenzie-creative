@@ -1,12 +1,12 @@
-# Daily Briefing — Project Configuration
+# Intelligence Briefing — Project Configuration
 
-This file configures one environmental briefing deployment. The briefing skill reads it at the start of every run. Most of it ships with working defaults — you can run a useful brief by supplying only your relevance context. Everything else is editable here at any time; the next run picks up your changes. No need to re-run setup to adjust anything.
+This file configures one intelligence-briefing deployment. The scan, the brief, and the review conversation all read it at the start of every run. Most of it ships with working defaults — you can run a useful brief by supplying only your relevance context. Everything else is editable here at any time; the next run picks up your changes. No need to re-run setup to adjust anything.
 
 One project = one brief. A personal scan and a brief you forward to your team are two projects, not one.
 
 > The only thing that will halt a run is a missing **relevance context** — it's the one thing no default can supply. Everything below it already has a sane value.
 
-> This template is installed by the `/intel-setup` command, which copies it into your project root and fills in the [FILL] fields by interviewing you. You can also copy it by hand and edit it directly.
+> This template is installed by the `/intel-setup` command, which copies it into your project root and fills in the [FILL] fields by interviewing you. You can also copy it by hand and edit it directly. Setup also creates the intelligence state under `./intel/` (the coverage matrix, your starting drivers, and the empty stores) — that state is managed by the system, not edited here.
 
 ---
 
@@ -30,7 +30,7 @@ One project = one brief. A personal scan and a brief you forward to your team ar
 
 How far an unconfirmed, single-source item is allowed to reach. The bar rests on two gates you can set independently:
 
-- **Action gate** — when ON, a single-source item can inform but cannot be marked `act`.
+- **Action gate.** When ON, a single-source item may carry `note`, `track`, or `dig`, but never `act` — **unless** the single source is **primary and its authority is self-evident** (the issuing body publishing its own final, binding action). Acting otherwise requires corroboration.
 - **Sharing gate** — when ON, a single-source item is kept out of the lead and synthesis (the parts others read).
 
 **Setting:** decision
@@ -48,21 +48,21 @@ How far an unconfirmed, single-source item is allowed to reach. The bar rests on
 
 - **Interval:** daily
 - **Timezone:** [your timezone, e.g. America/Chicago]
-- **Grace window:** 6 hours  <!-- recovers items missed when a scheduled run was skipped; matters because runs catch up after the machine wakes -->
+- **Grace window:** 6 hours  <!-- overlap added before the scan window to recover items missed by indexing lag; catch-up after a skipped run is automatic (the scan derives its window from the last run record) -->
 
 ---
 
 ## Length budget  (defaults shown)
 
-- **Max items per zone:** 5   <!-- a ceiling, not a target -->
+- **Zone detail budget:** 5   <!-- a depth ceiling, not an emission cap: at most this many items per zone get full treatment; further material items appear as one-line "Also in this zone" entries. Nothing material is ever dropped. -->
 - **Max lead items:** 3
-- **Overall length:** a two-minute read on a normal day
+- **Overall length:** a two-minute read on a normal day  <!-- length tracks the day; a big day is allowed to be big -->
 
 ---
 
 ## Zones  (fixed set — tailored through your relevance context, not by editing the list)
 
-These five lenses apply across roles; your relevance context is what points them at your world. You don't edit the set — you sharpen each zone's **in/out examples** so the brief knows what counts for you. Setup fills these from your relevance context; refine them anytime.
+These five lenses apply across roles; your relevance context is what points them at your world. You don't edit the set — you sharpen each zone's **in/out examples** so the scan knows what counts for you. Setup fills these from your relevance context; refine them anytime. (Where the scan looks, and how often, is the coverage matrix in `./intel/coverage.json` — zones crossed with your domain cells.)
 
 ### Emerging Impact
 New and emerging products/services; conventional approaches challenged; new market opportunities.
@@ -91,12 +91,9 @@ Specific named players making specific moves: launches, funding, partnerships, e
 
 <!-- Channels and credibility hierarchy per zone are handled by the skill's defaults; add zone-specific source notes here only if you have them. -->
 
----
-
-## Held beliefs  (default: empty — fill to enable the disconfirming slot)
-
-<!-- Views you currently hold, so the brief can surface a genuine item that cuts against one. Empty = no disconfirming item. Worth filling: it's the structural counter to the brief becoming an echo of your priors. -->
-[empty]
+<!-- Beliefs you want tested don't live in this file. Tell the system in conversation ("I think X")
+     and it becomes a driver with origin "user_asserted" — the scan then actively searches for
+     evidence against it every rotation. That's the disconfirming mechanism. -->
 
 ---
 
@@ -104,6 +101,7 @@ Specific named players making specific moves: launches, funding, partnerships, e
 
 - **Briefs output directory:** ./briefs/
 - **Ledger file:** ./ledger.json
+- **Intelligence state directory:** ./intel/
 
 ---
 

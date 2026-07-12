@@ -16,7 +16,7 @@
     {
       "name": "intelligence-briefing",
       "source": "./intelligence-briefing",
-      "description": "v0.3.0 — Start the day knowing what actually moved in your world, without reading the whole internet to find it. It scans news, industry, research, policy, and science, triages it down to the few items worth your attention (keyed to a relevance context you set once), and writes them up as a clean, self-contained page you can read anywhere or forward. Self-contained; runs on its own."
+      "description": "v1.0.0 — Start the day knowing what actually moved in your world — and exactly how much of it the system looked at to say so. A rotation-driven scan collects against a coverage matrix, keeps the forces in your world under continuous assessment, and comes back to check the tripwires it wrote down; the daily brief reports what moved, not what got published, with a collection-health line on every page. Tell it what it missed and it gets sharper. Exports warm drivers to Strategic Foresight. Self-contained; runs on its own."
     },
     {
       "name": "photo-generator",
