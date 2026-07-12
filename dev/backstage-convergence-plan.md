@@ -178,6 +178,12 @@ The convergence release shipped as **v0.4.0** (tag `strategist-v0.4.0`): all six
 > patterns SHIPPED-UNTESTED. STOP drafts pending Kelsey:
 > `dev/convergence/review-queue/goal-setting-playbook-f1-f2.md`,
 > `…/goal-setting-rubric-anchors.md`. Changelog: `goal-setting/CHANGELOG.md` § 0.2.0.
+> **Pass-2 re-attack complete (2026-07-12):** 2 CLOSED · 5 PARTIAL · 1 OPEN; 10/10
+> citations verified; all bypasses repaired same-day within the unpublished v0.2.0
+> (F7's full-enforcement ask = collision with the advisory lock, recorded not built).
+> Triage: `dev/blind-reviews/goal-setting-pass2-2026-07.md`. Durable lesson for the
+> sibling builders: state machines ported into skill prose need their state TYPED in
+> the state file, and the return protocol must ride the read-only/status entry too.
 
 Elements unchanged vs July-3 (Present 1,10,11 / Partial 2,3,5,6,8 / Absent 4,7,9) — Working Dynamic strengthened element 5 but is Setup-only (pulse/review never read it); the Self-Audit strengthened 10/11 while introducing the mandatory-dissent defect. Checklist 0P/5Pa/7A. Contract 0E/6P/5A. The Backstage/Return rooms are the structural hole — exactly where the blind review's fire landed.
 
