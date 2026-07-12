@@ -67,12 +67,19 @@ intelligent adaptation, not a guilt ritual — you're asking "is the design work
    no, or permission to infer.** If the user answers for one goal and trails off, or says
    "mostly," record `unknown` for what wasn't answered and move on — never fill it in from
    tone. An aggregate "yes, all of them ran" is a real answer for all three; "things went
-   fine" is not. If anything is no or unknown, capture the free-text "what needs to change."
+   fine" is not. When reality diverges *within* one goal — one KR up while another falls,
+   one of its systems ran and another didn't — record `mixed` with a one-line note naming
+   the split ("leads up, close rate down"). Mixed is a real answer; never average it to
+   yes or no. If anything is no, unknown, or mixed, capture the free-text "what needs to
+   change."
 
 2. **Sweep the weekly mitigation triggers** (one line, only if any exist): for each
    mitigation in `goals/active.md` with `check_frequency: weekly` — "any of these trip last
-   week: <conditions>?" If one fired, set its status to `triggered_active`, surface its
-   `then Y` action now, and note it in the journal entry. Don't expand this into a review.
+   week: <conditions>?" Three honest outcomes per signal: **fired** (set `triggered_active`,
+   surface its `then Y` action now), **clear** (the user actually read the signal — update
+   `last_checked`), or **unchecked** (they couldn't or didn't look — record `unchecked`
+   with the date, no guilt, and never write it down as clear). Note the sweep in the
+   journal entry. Don't expand this into a review.
 
 3. **Surface the classification** per goal that needs it (one or two lines total, not per
    goal):
@@ -83,6 +90,8 @@ intelligent adaptation, not a guilt ritual — you're asking "is the design work
      system (the Four Laws), don't blame willpower.
    - **Unknown** → say what's unknown and leave it unknown: "No read on [KR] this week —
      worth an actual look before the monthly."
+   - **Mixed** → don't flatten it; the one-line split is the record, and the monthly review
+     untangles it.
    - **Executed + progressing** → working. Say so plainly and stop.
 
 4. **Append the entry** to `goals/journal.md` under a weekly section (newest at top), one
@@ -90,9 +99,9 @@ intelligent adaptation, not a guilt ritual — you're asking "is the design work
 
    ```
    - **[YYYY-MM-DD] weekly**
-     - <Objective A>: executed: yes; progressing: no — flagged for monthly
+     - <Objective A>: executed: yes; progressing: mixed — leads up, close rate down
      - <Objective B>: executed: unknown; progressing: unknown
-     - mitigations checked: none fired | <condition> FIRED → <action taken/queued>
+     - mitigations: <id> clear | <id> unchecked (since <date>) | <condition> FIRED → <action taken/queued>
      - change: <text or "none">
    ```
 
@@ -104,27 +113,35 @@ intelligent adaptation, not a guilt ritual — you're asking "is the design work
 ### Restart hold (weekly mode while `mode: restart`)
 
 The Restart Protocol has an entrance *and an exit*, and the weekly pulse is the exit's
-evaluator. The criterion: **two consecutive weekly pulses with the reactivated system
-executed** (`yes` — an `unknown` doesn't count as clean).
+evaluator. The criterion: **two consecutive weekly pulses with the system under evaluation
+executed** (`yes` — an `unknown` doesn't count as clean). The evaluation state is the typed
+Active Flags in STATE (`restart_system`, `restart_clean_weeks`,
+`restart_last_clean_pulse`, `restart_queue`) — **every weekly pulse in restart mode updates
+them**, clean or not, so a context-lost next session reads week-one-vs-week-two from the
+file instead of guessing: clean → increment `restart_clean_weeks`, set
+`restart_last_clean_pulse`; unclean or unknown → reset `restart_clean_weeks: 0`. (If the
+flags are missing — a deployment restarted under an older version — reconstruct them once
+from the journal's restart and weekly entries, write them, and continue.)
 
-- **`restart_phase: stabilizing`** — one system is live. After the *first* clean week, ask
-  the one diagnostic question the restart deliberately skipped: "One clean week in — anything
-  about what knocked you off worth capturing now?" (One line; record durable causes in
-  Coaching Memory.) After the *second* consecutive clean week: the hold is met. If paused
-  systems remain, set `restart_phase: reintroducing`, have the user pick ONE paused system to
-  reactivate (`status: active` in `goals/active.md`), and the hold window restarts for it.
-  If nothing is paused, set `mode: ongoing`, `restart_phase: none`, and say plainly that the
-  practice is back.
-- **`restart_phase: reintroducing`** — same evaluation for the most recently reactivated
-  system. Each reactivation needs its own two clean weeks. When the last paused system the
-  user intends to run has held two weeks, set `mode: ongoing`, `restart_phase: none`. (A user
-  may retire a paused system instead of reactivating it — that's a recorded keep/retire call,
-  noted in `goals/active.md`.)
-- A missed or unclean week resets that system's hold count; it does not restart the whole
+- **`restart_phase: stabilizing`** — one system is live (`restart_system`). After the
+  *first* clean week (`restart_clean_weeks` hits 1), ask the one diagnostic question the
+  restart deliberately skipped: "One clean week in — anything about what knocked you off
+  worth capturing now?" (One line; record durable causes in Coaching Memory.) When
+  `restart_clean_weeks` hits 2: the hold is met. If `restart_queue` is non-empty, set
+  `restart_phase: reintroducing`, reactivate the FIRST queued system (`status: active` in
+  `goals/active.md` — the user may reorder the queue first), point `restart_system` at it,
+  and reset `restart_clean_weeks: 0`. If the queue is empty, set `mode: ongoing`,
+  `restart_phase: none`, clear the restart flags, and say plainly that the practice is back.
+- **`restart_phase: reintroducing`** — same evaluation for `restart_system`. Each
+  reactivation needs its own two clean weeks. When the queue is empty and the current
+  system has held two weeks, set `mode: ongoing`, `restart_phase: none`, clear the flags.
+  (A user may retire a queued system instead of reactivating it — a recorded keep/retire
+  call in `goals/active.md`; remove it from the queue.)
+- A missed or unclean week resets that system's count to 0; it does not restart the whole
   protocol or earn a lecture. Note it and keep going.
 
-Record every transition in the journal restart line and in STATE (`restart_phase`, flags,
-`Next due`).
+Record every transition in the journal restart line and in STATE (`restart_phase`, the
+restart flags, `Next due`).
 
 ---
 

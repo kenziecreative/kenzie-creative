@@ -48,7 +48,9 @@ For **each active Objective:**
    Most owners default to blaming execution when the goal is actually wrong. Push against that
    default — if the user reports they executed and it's not moving, name that it points at the
    goal. Where the week-by-week record shows `unknown`s, treat the diagnosis as thinner than
-   it looks and say so — a month of unknowns is not a month of yeses.
+   it looks and say so — a month of unknowns is not a month of yeses. Where it shows
+   `mixed`, untangle the split here: which KR moved, which system ran, and what that pair
+   actually says.
 3. **Check the countermetric** (if the Objective's goal contract names one): did the thing
    that must not deteriorate hold? A KR on track at the countermetric's expense is a finding,
    not a win.
@@ -81,7 +83,7 @@ Write the per-Objective assessment to `goals/journal.md` under a monthly section
 
 ## Quarterly mode (half day to full day)
 
-Five things in sequence. This is where replanning happens, so the three-goal rule is back in
+Six things in sequence. This is where replanning happens, so the three-goal rule is back in
 force — and **nothing gets planned until the outgoing quarter is closed.**
 
 1. **Close out the outgoing quarter (THE GATE — replanning does not open until this is
@@ -119,8 +121,13 @@ force — and **nothing gets planned until the outgoing quarter is closed.**
    which original mitigation triggers fired, and did they work? What unexpected risks surfaced?
    What's most likely to kill the *next* quarter, given what's now known? Produce a revised
    mitigation list (each with `if X` + `then Y` plus its monitored signal and check frequency,
-   tagged `source: recurring_premortem`). Refuse incomplete mitigations. Update
-   `goals/active.md`.
+   tagged `source: recurring_premortem`). Refuse incomplete mitigations. Keep weekly-frequency
+   checks scarce (at most ~3 — the pulse must stay five minutes); everything else is monthly.
+   Update `goals/active.md`.
+6. **Pre-commit red-team of the new quarter.** Before the quarterly entry closes, dispatch
+   the pressure-test against the new Objectives — same default-run, non-blocking, decline-
+   recorded protocol as the Setup close. New commitments get the critic before they start,
+   not after they wobble.
 
 Write the full quarterly entry to `goals/journal.md` (dispositions with lessons, updated
 scorecard snapshot, system keep/revise/retire decisions, backlog decisions, next-quarter

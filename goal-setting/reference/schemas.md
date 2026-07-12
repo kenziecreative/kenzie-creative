@@ -67,7 +67,7 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `trigger_detail`: e.g., "Mondays 9-11am" or "after morning coffee"
 - `four_laws`: { obvious, attractive, easy, satisfying } — short string per law
 - `version`: integer — increments on revision (Version 3 works)
-- `status`: active | retired | replaced
+- `status`: active | paused | retired | replaced — `paused` is the Restart Protocol's state (systems waiting to be reintroduced one at a time)
 - **Constraint:** one System per active anchor area at initial setup.
 
 **Mitigation** *(output of Stage 6 — Pre-mortem, and the Quarterly Recurring Pre-mortem; stored in `goals/active.md`)*
@@ -83,8 +83,13 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `owner`: who watches the signal (single-user deployments: the user; named third parties are recorded facts, not accepted commitments)
 - `deadline`: when the response must land once fired, if time-bound
 - `status`: untriggered | triggered_active | resolved
+- `last_checked`: date the monitored signal was last actually read — an unchecked sweep
+  records `unchecked`, not `clear`; a weekly-frequency mitigation unchecked for 2+
+  consecutive sweeps is surfaced by the session-start routing
 - `response_evidence`: what was actually done once fired — required to move `triggered_active` → `resolved`
 - `source`: launch_premortem | recurring_premortem
+- **Scarcity rule:** `check_frequency: weekly` is a scarce slot — at most ~3 mitigations
+  carry it (the pulse must stay five minutes); the rest check monthly
 - **Constraint:** a Mitigation requires both a `trigger_condition` and an `action`. Without both it is a hope, not a mitigation.
 - **Operating rule:** a fired trigger (`triggered_active`) surfaces at the next invocation of any skill, ahead of routine work — not at quarter end.
 
@@ -97,12 +102,18 @@ This appendix defines the core objects in the playbook and how they relate. It e
 
 **WeeklyPulseEntry**
 - `date`
-- `per_objective`: array of { objective_id, system_executed: yes | no | **unknown**,
-  kr_progressing: yes | no | unknown | n/a } — one record **per active Objective**; a mixed
-  week ("A ran, B didn't, no read on C") is representable, and a half-answer is recorded as
-  `unknown`, never inferred to yes or no
-- `mitigations_checked`: none_fired | array of fired mitigation IDs (weekly-frequency triggers)
-- `what_needs_to_change`: text (only if anything is no or unknown)
+- `per_objective`: array of { objective_id, system_executed: yes | no | unknown | **mixed**,
+  kr_progressing: yes | no | unknown | n/a | **mixed** } — one record **per active
+  Objective**; a mixed week across goals ("A ran, B didn't, no read on C") is representable,
+  and a half-answer is recorded as `unknown`, never inferred to yes or no. `mixed` is for
+  divergence *within* an Objective (two KRs moving opposite ways; one of its systems ran and
+  another didn't) and **requires a one-line note naming the split** — a mixed reality is
+  never averaged into a scalar
+- `mitigations_checked`: per weekly-frequency mitigation: fired ID | clear | **unchecked**
+  (the user couldn't or didn't read the signal — recorded as unchecked with the date, never
+  silently treated as clear); summary `none_fired` allowed only when every signal was
+  actually checked
+- `what_needs_to_change`: text (only if anything is no, unknown, or mixed)
 
 **MonthlyReview**
 - `date`

@@ -75,6 +75,37 @@ live engagement exercises it).
   confirm/refute conditions. The scaffold shape for plugins without an eval target
   (researcher copies it).
 
+### Pass-2 hardening (2026-07-12, same unpublished release — v0.2.0 had not shipped to any installer)
+
+The disclosed external re-attack (pass 2) returned 2 CLOSED (immutable history/closeout;
+provenance valve) · 5 PARTIAL · 1 OPEN. All verified bypasses repaired in-place; triage
+note at `dev/blind-reviews/goal-setting-pass2-2026-07.md` (primary checkout):
+
+- **Return routing blind paths (F1):** `/goal-setting:progress` now applies the heartbeat's
+  reading half — its Next action is the computed route, never a stale STATE line; the init
+  fallback for projects with an existing `CLAUDE.md` now APPENDS the session-start block
+  instead of dropping it; blank last-run dates compute overdue state from `Last setup
+  completed`; the annual check joined the cadence-trigger design.
+- **The pre-commit promise now has a producer (F2):** the pressure-test runs by default at
+  the two commitment moments — Setup close and quarterly replan — non-blocking, decline
+  recorded (the strategist E2 pattern). README says so.
+- **Restart state typed (F4):** `restart_system` / `restart_clean_weeks` /
+  `restart_last_clean_pulse` / `restart_queue` in STATE, written by restart, updated by
+  every pulse (clean or not) so week-one-vs-week-two survives context loss; `paused` added
+  to the System status enum (schemas + playbook appendix — a pre-existing v0.1.0 seam).
+- **Mixed state within a goal (F5a):** `mixed` joins yes/no/unknown for both weekly fields,
+  requiring a one-line note naming the split; the monthly untangles it. (Full per-KR/
+  per-System records were considered and set aside — one question per goal, five minutes,
+  is the decided shape.)
+- **Unchecked ≠ clear (F6):** mitigation sweeps record fired / clear / **unchecked** (with
+  date); `last_checked` added to the schema; a weekly signal unchecked 2+ sweeps is routed
+  at session start; weekly check slots capped at ~3 so the pulse stays five minutes.
+- **Setup-close reconciliation (F7, narrowed):** closing the arc with a missing or
+  unreconciled out-of-order stage now requires an explicit recorded decision — fill it, or
+  proceed with a visible gaps waiver revisited at the first monthly. The advisory
+  no-blocking philosophy is locked; the reviewer's full predecessor-enforcement ask is
+  recorded as a collision price tag, not adopted.
+
 ### Pending Kelsey review (drafted, NOT shipped — in `dev/convergence/review-queue/`)
 
 - **F1/F2 playbook wording** — the reconciled pulse diagnosis line + the

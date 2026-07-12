@@ -64,7 +64,9 @@ or a system that's really just a hope. It stays out of decisions that are yours 
 to prioritize, what target to set — and it never invents facts about your business. The
 critic red-teams whether your goals are well-*formed*, not whether they're the *right* goals;
 that call is always yours — and it remembers its own findings, so an objection you haven't
-addressed stays visible instead of expiring with the session.
+addressed stays visible instead of expiring with the session. It runs by default at the two
+commitment moments — when Setup closes and at every quarterly replan — before your goals go
+live; declining the run is your right, and the decline is recorded.
 
 It also keeps the operating record honest over the months: a revised target preserves the
 original commitment, a quarter closes with a disposition per goal before the next one plans,

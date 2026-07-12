@@ -41,6 +41,16 @@ pair are the first additions when broadening, followed by a Setup-stage happy pa
 
 ## Notable uncovered classes (candidates)
 
+- **Unchecked mitigation (pass-2 finding 6)** — user answers goal questions but hasn't read
+  a weekly signal: sweep records `unchecked`, not `clear`; two unchecked sweeps → routed at
+  session start.
+- **Blind return via /progress (pass-2 finding 1)** — 42-day gap, entry `progress`: the
+  reported Next action must be the heartbeat route (Restart), not STATE's stale line.
+- **Pre-commit critic run (pass-2 finding 2)** — premortem close: the pressure-test runs by
+  default; a decline is recorded, never silent.
+- **Setup-close reconciliation (pass-2 finding 7)** — premortem close with an unreconciled
+  out-of-order stage: proceeding requires the recorded gaps waiver.
+
 - **Critic restraint** (above) — the other half of the valve.
 - **Cadence-trigger design at Setup close** — a `premortem` run that must refuse "I'll
   remember" as a cadence trigger.

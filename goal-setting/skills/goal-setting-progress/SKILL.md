@@ -9,6 +9,14 @@ model: sonnet
 
 Show where the deployment stands. Read-only — this skill writes nothing.
 
+Apply the *reading* half of `${CLAUDE_PLUGIN_ROOT}/reference/heartbeat.md` before reporting:
+trust order (files win), and the overdue computation + routing. This skill performs no
+route — it is read-only — but the **Next action it reports is the heartbeat's route**, not
+a stale `Next due` line from STATE: a ~6-week gap reports the Restart Protocol as the next
+action; a passed quarter boundary reports the closeout; a fired (or long-unchecked)
+mitigation leads the warnings. A dashboard that shows a 42-day-old "next: Monday pulse" is
+lying about where the user stands.
+
 ## Current State
 
 !`cat goals/STATE.md 2>/dev/null || echo "No goals/STATE.md found — run /goal-setting:init first."`
@@ -69,7 +77,8 @@ Infrastructure: N/4 checks passed
 - Daily: <last run / —>   ·   Weekly: <last run / —>
 - Monthly: <last run / —>   ·   Quarterly: <last run / —>   ·   Annual: <last run / —>
 
-**Next action:** <the Next Action / Next due line from STATE.md>
+**Next action:** <the heartbeat route when anything is overdue; otherwise the Next Action
+line from STATE.md>
 ```
 
 For a deployment still in the Setup Arc, show the Setup Stage Record (which stages are complete,

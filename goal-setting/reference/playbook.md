@@ -718,7 +718,7 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `trigger_detail`: e.g., "Mondays 9-11am" or "after morning coffee"
 - `four_laws`: { obvious, attractive, easy, satisfying } — short string per law
 - `version`: integer — increments on revision (Version 3 works)
-- `status`: active | retired | replaced
+- `status`: active | paused | retired | replaced — `paused` is the Restart Protocol's holding state
 
 **Mitigation** *(output of Stage 6 and the Quarterly Recurring Pre-mortem)*
 - `id`, `risk_description`
@@ -729,8 +729,10 @@ This appendix defines the core objects in the playbook and how they relate. It e
 - `action`: the "then Y" clause
 - `monitored_signal`, `threshold`, `check_frequency` (weekly | monthly | quarterly),
   `owner`, `deadline` — what's watched, what counts as fired, and which cadence sweeps it
+  (weekly slots are scarce — at most ~3, so the pulse stays five minutes)
 - `status`: untriggered | triggered_active | resolved (resolution requires
-  `response_evidence`)
+  `response_evidence`); `last_checked` records when the signal was actually read — an
+  unchecked sweep is recorded as unchecked, never as clear
 - `source`: launch_premortem | recurring_premortem
 
 ### Cadence entries
@@ -740,11 +742,12 @@ This appendix defines the core objects in the playbook and how they relate. It e
 
 **WeeklyPulseEntry**
 - `date`
-- `per_objective`: array of { objective_id, system_executed: yes | no | unknown,
-  kr_progressing: yes | no | unknown | n/a } — one record per active Objective; a
-  half-answer is recorded as `unknown`, never inferred
-- `mitigations_checked`: none_fired | fired mitigation IDs
-- `what_needs_to_change`: text (only if anything is no or unknown)
+- `per_objective`: array of { objective_id, system_executed: yes | no | unknown | mixed,
+  kr_progressing: yes | no | unknown | n/a | mixed } — one record per active Objective; a
+  half-answer is recorded as `unknown`, never inferred; `mixed` (divergence within one
+  goal) carries a one-line note naming the split
+- `mitigations_checked`: per weekly mitigation: fired ID | clear | unchecked (with date)
+- `what_needs_to_change`: text (only if anything is no, unknown, or mixed)
 
 **MonthlyReview**
 - `date`

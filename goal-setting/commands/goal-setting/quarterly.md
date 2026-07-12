@@ -10,9 +10,10 @@ It **closes out the outgoing quarter first** — every ending Objective gets a d
 (achieved / missed / abandoned / superseded) and its lessons, recorded in `goals/history.md`,
 before any replanning opens — then re-runs the Anchor Areas Scorecard (new dated snapshot in
 `goals/scorecard.md`), audits each system keep/revise/retire, reviews the candidate backlog,
-plans the next quarter's Objectives and KRs under the same hard constraints as setup, and runs
+plans the next quarter's Objectives and KRs under the same hard constraints as setup, runs
 the **recurring pre-mortem** — sharper than the launch version because the user now has a
-quarter of real data. Writes the full review to `goals/journal.md` and updates
-`goals/active.md`.
+quarter of real data — and red-teams the new quarter's goals with the pressure-test before
+the entry closes (declining is recorded). Writes the full review to `goals/journal.md` and
+updates `goals/active.md`.
 
 Half a day to a full day. This is the deepest cadence below the annual vision check.

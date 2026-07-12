@@ -46,12 +46,18 @@ authoritative over anything a skill remembers about the structure.
 
 From the Cadence Calendar (last-run dates and triggers) and today's date, work out the
 overdue state — do the date arithmetic; don't trust an old `Next due` line over the math.
+**Blank dates are not a pass:** when a cadence has never run (`—`), compute its overdue
+state from `Last setup completed` instead — and if that's blank too, from STATE's
+`updated` timestamp. A deployment that finished Setup six weeks ago and never ran its
+first pulse is exactly as lapsed as one that stopped.
+
 Then route. Highest-priority match wins, and it folds into your opening naturally rather
 than being announced as a procedure:
 
 | Signal | Route |
 |---|---|
 | A mitigation in `goals/active.md` is `triggered_active` with no response evidence | Surface it NOW, ahead of whatever was asked — the "then Y" the user committed to is due. |
+| A weekly-frequency mitigation is `unchecked` for 2+ consecutive sweeps | Surface it: the user is flying blind on a risk they named. One line — get the reading, don't lecture. |
 | Quarter boundary passed and the quarterly review hasn't run | The closeout gate is open: outgoing Objectives need dispositions before any replanning. Say so and offer `/goal-setting:quarterly`. |
 | ~6 weeks or more since the last pulse or daily entry | Don't resume as if nothing happened. Offer the Restart Protocol (`/goal-setting:restart`) — falling off is data, not a verdict. |
 | Several cadences missed (2+ weekly pulses, or a monthly slipped past) | A one-line recovery check: acknowledge the gap, offer the most valuable catch-up (usually the pulse). No guilt. |

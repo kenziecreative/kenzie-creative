@@ -58,8 +58,11 @@ monthly comes first, then the next quarterly.
   state machine with an executable exit, and **the weekly pulse is its evaluator** (see the
   pulse skill's "Restart hold"): stabilizing (one system, two consecutive clean weekly
   pulses) → reintroducing (paused systems return one at a time, two clean weeks each) →
-  ongoing (`mode: ongoing`, `restart_phase: none`). Record the chosen system and the hold
-  criterion in the Active Flags so the pulse can evaluate it without re-deriving. Update the
+  ongoing (`mode: ongoing`, `restart_phase: none`). Fill the typed Active Flags so a
+  context-lost future session can evaluate the hold from the file alone:
+  `restart_system: <the chosen system>` · `restart_clean_weeks: 0` ·
+  `restart_last_clean_pulse: —` · `restart_queue: <the paused systems, in the order the
+  user intends to bring them back — ask; "decide later" is a recorded answer>`. Update the
   `Next due` line (the daily ritual tomorrow).
 - Record the restart's cause — if the user volunteered one — as a Coaching Memory line
   (pattern, not blame). The deliberate diagnosis waits for the first clean week; don't force

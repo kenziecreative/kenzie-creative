@@ -17,7 +17,7 @@ Foreshadowing failure has research behind it — work associated with the Balcet
 3. **Brainstorm internal causes.** What inside the business — execution gaps, team issues, resource/capacity limits, capability gaps?
 4. **Surface hidden assumptions.** What is the user assuming will be true that might not be? Assumptions you can't articulate are the ones that kill you.
 5. **Prioritize by likelihood × impact.** Rate each failure low/medium/high on each. Focus on anything high in either dimension.
-6. **Build mitigations with explicit triggers.** For each high-priority risk, define a mitigation as *"If X happens, then Y."* A mitigation without a trigger is a hope; a mitigation with a trigger is a system. And a trigger nothing watches is still a hope — so each mitigation also names its **monitored signal** (the observable that tells you X happened), the **threshold** that counts as fired, and a **check frequency** (weekly or monthly — which cadence sweeps it). See `Mitigation` in `../schemas.md`.
+6. **Build mitigations with explicit triggers.** For each high-priority risk, define a mitigation as *"If X happens, then Y."* A mitigation without a trigger is a hope; a mitigation with a trigger is a system. And a trigger nothing watches is still a hope — so each mitigation also names its **monitored signal** (the observable that tells you X happened), the **threshold** that counts as fired, and a **check frequency** (weekly or monthly — which cadence sweeps it). **Weekly is a scarce slot: at most ~3 mitigations check weekly** — the pulse has five minutes and the sweep rides inside it; everything else checks monthly. Force the triage: which risks genuinely move week to week? See `Mitigation` in `../schemas.md`.
 
 ## Diagnostic
 

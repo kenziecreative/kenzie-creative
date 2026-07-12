@@ -197,17 +197,37 @@ Then advance `goals/STATE.md`:
    out-of-order stage as a revision pass (its inputs just changed) and clear the marker.
    Add it to `completed_stages`; set the next stage `active` and `current_stage`; refresh
    `updated`.
-2. If **premortem** just completed: before switching modes, **design the cadence triggers
-   with the user.** The method's own trigger test applies to the method itself — "every
-   Monday" is a cadence label, not a system. For each of daily, weekly, monthly, and
-   quarterly, ask what will actually fire it: a time trigger (a recurring calendar block
-   that exists, not one they intend to create), a location trigger, or a habit-stack trigger
-   ("with the first coffee, at the kitchen counter"). "I'll remember" is a hope, not a
-   trigger — push back once, then record what the user commits to. A CLI can't fire a
-   calendar, but it can refuse to pretend the user's memory is a trigger. Write each into
-   the Cadence Calendar's `trigger:` lines. Then set `mode: ongoing`,
-   `setup_status: complete`, fill `Last setup completed`, and set the Cadence Calendar
-   `Next due` to the daily ritual.
+2. If **premortem** just completed, three things happen before the mode switch, in order:
+
+   **(a) Reconcile the arc.** Check the Setup Stage Record: any stage missing, or completed
+   `out of order` with its dependency still unreconciled? If so, name it plainly and require
+   an explicit decision — go back and fill/reconcile now (the stage's inputs exist at last),
+   or proceed anyway. Proceeding is the user's right, and it is **recorded, never silent**:
+   note `setup completed with gaps: <list> — user's call` in the Stage Record and journal,
+   keep it visible in `/goal-setting:progress`, and revisit it at the first monthly review.
+   This is a recorded decision, not a gate — the arc's causality is the method's claim, so
+   closing the arc against known gaps is a choice the record must show.
+
+   **(b) Pre-commit red-team.** Dispatch the pressure-test (the full setup is the scope) —
+   this is the "before you commit" moment the critic exists for. It runs by default,
+   non-blocking: relay the findings, let the user decide what to act on; goals ship with
+   open findings if the user says so. If the user declines the run, record the decline in
+   STATE and the journal (visible at the next pressure-test and the first monthly). Never
+   skip silently in either direction.
+
+   **(c) Design the cadence triggers with the user.** The method's own trigger test applies
+   to the method itself — "every Monday" is a cadence label, not a system. For each of
+   daily, weekly, monthly, quarterly, and annual, ask what will actually fire it: a time
+   trigger (a recurring calendar block that exists, not one they intend to create), a
+   location trigger, or a habit-stack trigger ("with the first coffee, at the kitchen
+   counter"). The annual check may share the quarterly's mechanism (the Q4 review carries
+   it) — but say so explicitly rather than leaving it triggerless. "I'll remember" is a
+   hope, not a trigger — push back once, then record what the user commits to. A CLI can't
+   fire a calendar, but it can refuse to pretend the user's memory is a trigger. Write each
+   into the Cadence Calendar's `trigger:` lines.
+
+   Then set `mode: ongoing`, `setup_status: complete`, fill `Last setup completed`, and set
+   the Cadence Calendar `Next due` to the daily ritual.
 
 ## Step 7: Hand off
 

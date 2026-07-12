@@ -13,5 +13,6 @@ unrealistic, and writes the mitigations to `goals/active.md`.
 
 **Hard constraint:** every mitigation needs both an "if X" trigger condition and a "then Y"
 action — plus the signal that's watched and how often — the skill rejects incomplete
-mitigations. Completing this stage designs the cadence triggers with the user, closes the
-Setup Arc, and switches the deployment to Ongoing mode.
+mitigations. Completing this stage reconciles any Setup gaps (recorded, not blocked),
+runs the pre-commit pressure-test by default (declining is recorded), designs the cadence
+triggers with the user, closes the Setup Arc, and switches the deployment to Ongoing mode.

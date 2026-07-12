@@ -47,6 +47,12 @@ Write a filled copy of the template to `./CLAUDE.md` in the project root:
 If a `CLAUDE.md` already exists in the project root that is NOT a Goal Setting config (the
 directory is used for something else), do not overwrite it — instead write the config to
 `goals/goal-setting-config.md` and tell the user the skills will read it from there.
+**But the session-start behavior must still be installed:** append the template's
+"Session start (instruction to the assistant)" section to the END of the existing
+`CLAUDE.md`, delimited as `## Goal Setting — session start` with a one-line pointer to
+`goals/goal-setting-config.md`. Append only — never modify the file's existing content.
+Without this, a returning session in this project has no overdue-state check unless the
+user happens to run a goal-setting command.
 
 ## Step 3: Scaffold the state directory
 
@@ -146,6 +152,10 @@ deferred | rejected), and for a swap, which Objective was closed to make room.
 ## Active Flags
 
 - restart_phase: none _(none | stabilizing | reintroducing — set by the Restart Protocol)_
+- restart_system: — _(the system whose hold the weekly pulse is evaluating)_
+- restart_clean_weeks: 0 _(consecutive clean pulses for that system; 2 meets the hold)_
+- restart_last_clean_pulse: — _(date of the most recent clean pulse counted)_
+- restart_queue: — _(paused systems awaiting reintroduction, in order)_
 - restart_quarterly_deferred: false
 
 ## Next Action
@@ -277,6 +287,6 @@ business. And the one rule I'll hold the hardest: never more than three active g
 | Failure Mode | Prevention |
 |---|---|
 | Clobbering an in-progress deployment | Step 0 guard checks `goals/STATE.md` first and refuses if present. |
-| Overwriting an unrelated `CLAUDE.md` | Step 2 detects a non-Goal-Setting config and writes to `goals/goal-setting-config.md` instead. |
+| Overwriting an unrelated `CLAUDE.md` | Step 2 detects a non-Goal-Setting config and writes to `goals/goal-setting-config.md` instead — while still APPENDING the session-start block so the return protocol survives the fallback. |
 | Starting the Orient analysis inside init | Init is scaffolding only. The first thinking happens in `/goal-setting:orient`. |
 | Shell prompts derailing Cowork setup | Create everything with Write; never `mkdir`/`cp`/`touch`. |
