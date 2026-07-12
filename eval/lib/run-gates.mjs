@@ -135,6 +135,21 @@ function evalGate(gate) {
       const baseline = Number(inputs.baseline_completed_stages ?? 0);
       const delta = finalCount - baseline;
       const ok = delta === (gate.delta ?? 1);
+      // The 0.4.1 honest statuses: a stage the user advanced past its done-bar
+      // is recorded `incomplete (advanced by user)` and EXCLUDED from
+      // completed_stages, while current_stage still moves on. That is a
+      // legitimate, recorded non-certification — the loop advanced exactly once
+      // and the record says honestly why the stage isn't certified. Read the
+      // Stage Record, not just the frontmatter count. (Proof case: strategist
+      // iteration-2 adv-preference-over-evidence/run-1.)
+      if (!ok && !expectedNoAdvance && delta === 0) {
+        const honestRow = /incomplete \(advanced by user\)/.test(text);
+        const cur = fm ? (fmList(fm, "current_stage") ?? [])[0] : null;
+        const advanced = cur && entry && cur.toLowerCase() !== entry.toLowerCase();
+        if (honestRow && advanced) {
+          return pass(`Δ0 with honest status — 'incomplete (advanced by user)' recorded, current_stage advanced to '${cur}'`);
+        }
+      }
       return invertIfNoAdvance(ok, `completed_stages ${baseline}→${finalCount} (Δ${delta})`);
     }
     case "framework_in_library": {
