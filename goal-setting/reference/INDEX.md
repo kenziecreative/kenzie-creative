@@ -4,7 +4,7 @@ Every file in the reference library, in one table. See [README.md](README.md) fo
 
 | Path | Kind | What it covers |
 |------|------|----------------|
-| [playbook.md](playbook.md) | Methodology | The canonical method — Setup Arc (6 stages), Ongoing Arc (5 cadences), the science, the six principles, quick-start, Restart Protocol, object model, one-page summary |
+| [playbook.md](playbook.md) | Methodology | The canonical method — Setup Arc (6 stages), Ongoing Arc (5 cadences), the model underneath, the six principles, quick-start, Restart Protocol, object model, one-page summary |
 | [three-tyrants.md](three-tyrants.md) | Foundation | The philosophical diagnosis underneath the rules — Time, Efficiency, Things; energy-and-choice management; why max-three exists |
 | [schemas.md](schemas.md) | Object model | Direction, HorizonSet, AnchorArea, Objective, KeyResult, System, Mitigation + cadence entries; how they map to the `goals/` state files |
 | **Anchor Areas** | | |

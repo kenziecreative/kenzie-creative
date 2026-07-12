@@ -16,22 +16,22 @@ It's not a template. It's a method. Work the stages, in order, the first time. L
 
 ---
 
-## The science underneath
+## The model underneath
 
-Before the playbook itself, a short detour into why this works at the level of biology. Andrew Huberman's lab has covered goal-setting across several episodes; the core finding is that a key neural circuit is involved in goal-related behavior across goals of different sizes — the same machinery that helps you ship a wholesale channel helps you take a vacation. The circuit involves four brain regions working together:
+Before the playbook itself, a short detour into the model of motivation it leans on. Andrew Huberman's podcast has covered goal-setting across several episodes; the account he popularizes describes goal-related behavior — across goals of different sizes, so the same machinery that helps you ship a wholesale channel helps you take a vacation — as a circuit of four brain systems working together:
 
 - The **amygdala** processes fear and anxiety — including the anxiety of falling short.
 - The **basal ganglia** runs the go/no-go action pathway — what you actually do.
 - The **lateral prefrontal cortex** plans across timescales — bridging today's action and next year's outcome.
 - The **orbitofrontal cortex** orients your emotional response around the goal.
 
-**Dopamine** is the chemistry that ties the system together. It's released in response to progress toward milestones, and it's what makes pursuit feel rewarding. Crucially, you can leverage it — by structuring your goals and systems so that progress is visible and frequent, you generate the dopamine that keeps you in pursuit.
+In this model, **dopamine** ties the system together — the reward chemistry of visible progress, what makes pursuit feel worth continuing. The practical lever doesn't need the chemistry to be exactly right: structure your goals and systems so progress is visible and frequent, and pursuit stays rewarding.
 
-A note on the four-region model: this is a practical summary, not a strict statement of neuroanatomy. The brain is more interconnected than any clean four-region story implies, and the research literature uses more careful language. But the model is useful — it gives us four levers (anxiety, action, planning, emotion) that the playbook actually pulls.
+A note on the four-region model: it's a practical summary, not a strict statement of neuroanatomy. The brain is more interconnected than any clean four-region story implies, and the research literature uses more careful language. Treat it as a working model — what it earns is four levers (anxiety, action, planning, emotion) the playbook actually pulls, and every one of them is verifiable from an operator's own experience without a brain scan: fear of falling short is real fuel; you do what's triggered, not what's intended; attention drifts to the urgent; motivation follows visible progress.
 
-This is why the playbook works the way it does. The Setup Arc front-loads clarity and difficulty calibration so the circuit has something specific to chase. The Ongoing Arc provides high-frequency feedback so dopamine arrives when it's earned. The pre-mortem leverages the amygdala by routinely visualizing failure — research from the Balcetis lab shows this nearly doubles the probability of reaching a goal compared to focusing only on success. And the daily writing ritual embeds the goal into the nervous system itself.
+That's why the playbook works the way it does. The Setup Arc front-loads clarity and difficulty calibration so there's something specific to chase. The Ongoing Arc provides high-frequency feedback so the sense of progress arrives when it's earned. The pre-mortem routinely rehearses failure — research associated with the Balcetis lab found that people who visualized the obstacles substantially outperformed those who visualized only success. And the daily writing ritual makes the goal a daily act of attention and recommitment instead of a decoration.
 
-Same circuit, different framework. The playbook is a way to use the brain you already have.
+Same machinery, different framework. The playbook is a way to use the habits and attention you already have.
 
 ---
 
@@ -96,11 +96,11 @@ Pull out whatever goal you're considering. Run it through these:
 
 ### Difficulty calibration
 
-A goal that's too easy doesn't activate the neural circuit. A goal that's impossible activates the wrong part of it (anxiety, paralysis). The research is clear: goals should be **challenging but possible**. If you'd bet money on hitting it without changing anything, it's too easy. If you can't imagine a path to it even with effort, it's too hard.
+A goal that's too easy generates no pull. A goal that's impossible generates anxiety and paralysis instead of action. Goals should be **challenging but possible**. If you'd bet money on hitting it without changing anything, it's too easy. If you can't imagine a path to it even with effort, it's too hard.
 
 ### The warning: vision boards are not goals
 
-Writing down what you want and putting it on a corkboard *feels* like progress. It isn't. Research shows that people who create vision boards and wish-lists tend to feel accomplished from the act of creating them — which actually *reduces* the dopamine you need to do the work. Your brain treats the visualization like you've already won.
+Writing down what you want and putting it on a corkboard *feels* like progress. It isn't. People who create vision boards and wish-lists tend to feel accomplished from the act of creating them — and that satisfaction takes the edge off actually doing the work. You feel like you've already won.
 
 Vision boards are useful for clarifying what you want. They are not effective for achieving it. Don't confuse the two.
 
@@ -285,7 +285,7 @@ A real goal has a destination (the Objective) and proof of arrival (the Key Resu
 
 ### Specificity is non-negotiable
 
-The neuroscience is unambiguous on this. You cannot just set a state ("I want to be fit," "I want to be rich"). You need specificity built on verbs and actions, defined by *how much* and *by when*. The brain's goal circuit needs something concrete to track.
+Specificity is where the work happens. You cannot just set a state ("I want to be fit," "I want to be rich"). You need specificity built on verbs and actions, defined by *how much* and *by when*. Attention needs something concrete to track.
 
 ### Examples of objective + KR pairs
 
@@ -361,7 +361,7 @@ Adapted from James Clear's *Atomic Habits*, these four laws determine whether a 
 
 **Law 4: Make it Satisfying.** You repeat behaviors that feel rewarding in the moment. Build in immediate feedback.
 
-- Track weekly habit execution on a simple checklist — checking the box releases dopamine.
+- Track weekly habit execution on a simple checklist — checking the box is a small, immediate win.
 - Report completed execution to one trusted accountability partner *after* you've done the work.
 - Keep a "done" list, not just a to-do list.
 
@@ -373,7 +373,7 @@ When you're actually doing the work, physically narrow your visual field. Close 
 
 There's a popular myth, partly correct, that you shouldn't tell anyone your goals. The research — covered in the Huberman Lab podcast and originally surfaced in work by Peter Gollwitzer — is actually more specific than that.
 
-**Don't:** broadcast your goals to your social circle for encouragement *before* you've executed. The validation activates reward systems prematurely — your brain treats the announcement like an accomplishment and reduces the drive to do the work.
+**Don't:** broadcast your goals to your social circle for encouragement *before* you've executed. The validation lands like an accomplishment before anything has been done — announcing the goal satisfies some of the drive that should have gone into pursuing it.
 
 **Do:** report completed execution to one trusted accountability partner *after* the work is done. This is satisfaction (Law 4), not premature reward. Marcus texting his coach "5/5 this week" works because it celebrates execution, not intention.
 
@@ -401,7 +401,7 @@ Your goals are set. Your systems are designed. Before you launch, you do one mor
 
 This is the most counterintuitive piece of the playbook, and it has the strongest evidence behind it. Research from the Balcetis lab — covered extensively by Andrew Huberman — shows that **foreshadowing failure nearly doubles the probability of achieving a goal** compared to focusing only on success. Exact effect sizes vary across studies, and the pre-mortem protocol below is an adaptation of the underlying research rather than a direct replication of any single experiment. But the direction and magnitude of the finding is well-established.
 
-The neurochemistry explains why. When you visualize success, you get a short dopamine spike that feels good but fades quickly — your brain treats the visualization like you've already won. When you visualize failure, mentally rehearsing what could go wrong and how you'd respond, your brain releases dopamine, epinephrine, and acetylcholine together. These neurochemicals heighten alertness and learning readiness. You build neural pathways for problem-solving *before* the problem arrives.
+The working explanation is practical. Visualizing success feels like winning, and the satisfaction fades fast while blunting the urgency to act — you've already enjoyed the ending. Mentally rehearsing what could go wrong, and how you'd respond, does the opposite: it sharpens alertness, and it leaves you holding responses you've already thought through *before* the problem arrives.
 
 This isn't pessimism. It's preparation.
 
@@ -458,15 +458,15 @@ Total time investment: roughly 4-5 hours per week beyond normal operations. Abou
 
 ## The Daily Ritual: write the goal
 
-This is the highest-frequency touchpoint in the playbook, and it's based on direct neuroscience. Writing out your goal is the most effective way to embed it in the nervous system. But there's a catch.
+This is the highest-frequency touchpoint in the playbook. Writing out your goal by hand, every day, is the cheapest reliable way to keep it genuinely in front of you — a daily act of attention and recommitment, not decoration. But there's a catch.
 
 ### Why the Post-it on the fridge fails
 
-The nervous system adapts to its environment. If you write your goal once and stick it on the fridge, you'll see it every morning for a week. After that, it becomes part of the visual furniture — you'll stop registering it. The note is still there. The brain has stopped seeing it.
+You stop seeing what never changes. If you write your goal once and stick it on the fridge, you'll see it every morning for a week. After that, it becomes part of the visual furniture — you'll stop registering it. The note is still there. You've stopped seeing it.
 
 ### The protocol: write it out every day, change the location
 
-The fix is to **write the goal out by hand every day**, and to **vary where you do it**. Different room, different notebook, different time of day. The act of writing engages the motor cortex and the language centers together; the location variation prevents the adaptation that turns the goal into wallpaper.
+The fix is to **write the goal out by hand every day**, and to **vary where you do it**. Different room, different notebook, different time of day. Writing by hand is slower and more deliberate than typing or re-reading — it forces you to actually attend to the words; the location variation prevents the habituation that turns the goal into wallpaper.
 
 This takes 60 to 90 seconds. It is the cheapest, highest-impact daily habit in the playbook.
 

@@ -22,11 +22,11 @@ Run the user's candidate direction through all three. These are the bar — refe
 
 ## Difficulty calibration
 
-A goal too easy doesn't activate the goal circuit; a goal impossible activates anxiety and paralysis. The bar: **challenging but possible.** If the user would bet money on hitting it without changing anything, it's too easy. If they can't imagine a path to it even with effort, it's too hard.
+A goal too easy generates no pull; a goal impossible generates anxiety and paralysis. The bar: **challenging but possible.** If the user would bet money on hitting it without changing anything, it's too easy. If they can't imagine a path to it even with effort, it's too hard.
 
 ## The warning: vision boards are not goals
 
-Writing down what you want and putting it on a corkboard *feels* like progress and isn't — the visualization gives the brain a hit that *reduces* the drive to do the work. Clarifying what you want is fine; confusing it with achieving it is the trap. If the user's "direction" is really a wish-list, name it.
+Writing down what you want and putting it on a corkboard *feels* like progress and isn't — the visualization feels like achievement and takes the edge off the drive to do the work. Clarifying what you want is fine; confusing it with achieving it is the trap. If the user's "direction" is really a wish-list, name it.
 
 ## Posture notes
 

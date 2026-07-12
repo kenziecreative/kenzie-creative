@@ -1,6 +1,6 @@
 # Goal Setting
 
-**Set business goals that survive contact with reality, then actually operate against them — not a vision board you abandon by February.** A six-stage Setup Arc takes you from *what game am I playing* to goals stress-tested before launch; a five-cadence Ongoing Arc, from a 60-second daily writing ritual to an annual vision check, keeps them alive. A hard cap of three active goals and a critic that won't let you lie to yourself keep it honest.
+**Set business goals that survive contact with reality, then actually operate against them — not a vision board you abandon by February.** A six-stage Setup Arc takes you from *what game am I playing* to goals stress-tested before launch; a five-cadence Ongoing Arc, from a 60-second daily writing ritual to an annual vision check, keeps them alive. A hard cap of three active goals and a critic that red-teams every goal before you commit keep it honest.
 
 Part of the [Kenzie Creative marketplace](https://github.com/kenziecreative/kenzie-creative).
 
@@ -43,7 +43,7 @@ The methodology has two arcs.
 | Daily | `/goal-setting:daily` | 60–90 sec — write the goal by hand, vary the location |
 | Weekly | `/goal-setting:pulse` | 5 min, Mondays — executed? progressing? what changes? |
 | Monthly | `/goal-setting:monthly` | 1 hr — is the goal wrong or the execution wrong? |
-| Quarterly | `/goal-setting:quarterly` | half–full day — re-score, audit systems, replan, recurring pre-mortem |
+| Quarterly | `/goal-setting:quarterly` | half–full day — close out the quarter, re-score, audit systems, replan, recurring pre-mortem |
 | Annual | `/goal-setting:annual` | 1 day — still the right game? loops back to Orient |
 
 **Any time:**
@@ -62,8 +62,14 @@ once.** The plugin enforces that rule and won't let you quietly add a fourth.
 It is a rigorous chief-of-staff, not a motivational coach. It will push on a vague Objective
 or a system that's really just a hope. It stays out of decisions that are yours — which anchor
 to prioritize, what target to set — and it never invents facts about your business. The
-critic tests whether your goals are well-*formed*, not whether they're the *right* goals; that
-call is always yours.
+critic red-teams whether your goals are well-*formed*, not whether they're the *right* goals;
+that call is always yours — and it remembers its own findings, so an objection you haven't
+addressed stays visible instead of expiring with the session.
+
+It also keeps the operating record honest over the months: a revised target preserves the
+original commitment, a quarter closes with a disposition per goal before the next one plans,
+a fired mitigation trigger surfaces at your next session rather than at quarter end, and a
+long lapse routes you into the Restart Protocol instead of silence.
 
 For the full method, read [`reference/playbook.md`](reference/playbook.md) once you've
 installed; [`reference/three-tyrants.md`](reference/three-tyrants.md) is the *why* underneath

@@ -4,7 +4,7 @@ The read-only library behind the goal-setting plugin. The skills read these file
 
 ## What's here
 
-- **[playbook.md](playbook.md)** — the canonical methodology. Two arcs (Setup and Ongoing), the science underneath, the six foundational principles, the quick-start, the Restart Protocol, the object model, and the one-page summary. This is the source of truth for the method; everything else supports it.
+- **[playbook.md](playbook.md)** — the canonical methodology. Two arcs (Setup and Ongoing), the model underneath, the six foundational principles, the quick-start, the Restart Protocol, the object model, and the one-page summary. This is the source of truth for the method; everything else supports it.
 - **[three-tyrants.md](three-tyrants.md)** — the philosophical foundation underneath the playbook's constraints. Read it when a rule (especially the max-three rule) feels arbitrary and you want the *why*. The method works without it.
 - **[schemas.md](schemas.md)** — the object model (Direction, HorizonSet, AnchorArea, Objective, KeyResult, System, Mitigation, and the cadence entries) and how it maps onto the deployment's `goals/` state files. The implementation-neutral contract.
 - **[anchor-areas/](anchor-areas/README.md)** — one chapter per anchor area (beliefs, realities, practices, signals of strength, failure modes), plus a README carrying the body-systems metaphor and the scorecard mechanics. Companion to Stage 3.

@@ -33,8 +33,10 @@ system with a real trigger, not encouragement.
 - `agents/goal-setting-critic.md` — the goal-formulation critic subagent (no web, no Write;
   tests logic and methodology fidelity, not evidence).
 - `reference/` — read-only library: the canonical `playbook.md`, `three-tyrants.md`,
-  `schemas.md` (the object model), `anchor-areas/` (one chapter per area + README), and
-  `stages/` (one file per Setup stage + README), plus `INDEX.md` and `README.md`.
+  `schemas.md` (the object model), `heartbeat.md` (the agent-facing return protocol every
+  skill applies at Step 0 — trust order, stance restoration, additive state migration,
+  overdue-cadence routing), `anchor-areas/` (one chapter per area + README), and `stages/`
+  (one file per Setup stage + README), plus `INDEX.md` and `README.md`.
 - `hooks/` — one PreCompact staleness check. No outputs gate.
 - `templates/CLAUDE.md` — the per-deployment config `/goal-setting:init` installs into the
   user's project root.
@@ -42,10 +44,23 @@ system with a real trigger, not encouragement.
 ## Key mechanics
 
 - **Two arcs, one state directory.** The user's deployment keeps state in `goals/`:
-  `STATE.md` (loop position, mode, cadence calendar, flags), `vision.md` (Direction +
-  HorizonSet), `active.md` (Objectives + KRs + Systems + Mitigations), `scorecard.md` (Anchor
-  scores + history), `journal.md` (append-only cadence log). All Markdown with consistent
-  headers — human-readable, parseable, resumable across sessions.
+  `STATE.md` (loop position, mode, cadence calendar + triggers, Working Dynamic, Coaching
+  Memory, Backstage Tasks, Candidate Backlog, flags), `vision.md` (Direction + HorizonSet),
+  `active.md` (Objectives + KRs + goal contracts + Systems + Mitigations, with append-only
+  revision records), `scorecard.md` (Anchor scores + history), `journal.md` (append-only
+  cadence log), `history.md` (closed commitments with dispositions + lessons, append-only).
+  All Markdown with consistent headers — human-readable, parseable, resumable across sessions.
+- **Every skill starts with the return** (`reference/heartbeat.md`): files win over chat
+  memory, the recorded calibration is re-adopted, missing state sections are added
+  additively, and overdue state routes (missed pulse → offer; ~6 weeks → Restart Protocol;
+  quarter boundary → closeout gate; fired mitigation → surfaces immediately). Captured
+  commitments are operated, not just recorded: mitigation triggers are swept weekly/monthly,
+  the restart's exit is evaluated by the weekly pulse (stabilizing → reintroducing →
+  ongoing), and the critic receives its own prior findings on every dispatch.
+- **Record, never restrict.** Revisions preserve the original commitment; quarter-end forces
+  a disposition (achieved/missed/abandoned/superseded + lessons) per outgoing Objective
+  before replanning; a refused fourth goal lands in the Candidate Backlog with an explicit
+  swap/defer/reject decision; out-of-order stage completion is marked, not blocked.
 - **One engine, six Setup stages.** The 6 Setup stage commands all invoke
   `goal-setting-setup-stage` with a different `stage` arg; the skill reads the matching
   `reference/stages/<n>-<stage>.md` to drive the work and enforce that stage's constraints.
@@ -117,6 +132,10 @@ re-litigate; build to them.)
     touches Objectives, Anchor Areas, or Systems enforces it; don't let it slip into a warning.
   - The critic mirrors `strategist-critic` — small, restrained, logic-not-evidence. Don't
     expand its scope; its "What Is Not A Finding" section is what keeps its alarms credible.
+    Its memory (prior findings fed to every dispatch) extends recall, never remit.
+  - `reference/heartbeat.md` is doctrine-lives-once: skills point at it; never copy its
+    text into a skill. Same for the goal-contract spec (`stages/04-goals.md`) and the
+    mitigation schema (`schemas.md`).
   - `reference/playbook.md`, `reference/anchor-areas/`, and `reference/three-tyrants.md` are
     the canonical user-facing versions (migrated out of `dev/goal-setting/`); don't maintain
     parallel copies in `dev/`.
