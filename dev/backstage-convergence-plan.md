@@ -162,7 +162,22 @@ The convergence release shipped as **v0.4.0** (tag `strategist-v0.4.0`): all six
 6. **[SHIPPED 0.4.0, one STOP pending]** Provenance valve on the Self-Audit friction check; marketing copy unchanged per C2 (items 2+E2 earn it — linkage named in the plugin changelog); engagement charter REQUIRED at init per E3, wired to stage preconditions + the commitment gate; canon-sync drift lint shipped as the shared plugin-configurable tool (`dev/scripts/lint-doctrine-drift.mjs` + `drift-configs/strategist.json`, release-blocking; researcher/goal-setting add configs). **Rubric continuity + register dimensions: DRAFTED to `dev/convergence/review-queue/strategist-rubric-anchors.md` (anchors + mid-stage-resume scenario + adapter note) — awaiting Kelsey, ships as a follow-up patch on approval.**
 7. **[SHIPPED 0.4.0 except one]** Analysis plan-ledger, mandatory option set (honest-singleton valve), decision record (strategy/DECISION.md), Rumelt-kernel check in RECORD form (E3), no-framework path, backstage tasks — all shipped. **Eval-suite expansion from the Codex seeds: DEFERRED** (interlocks with the pending rubric package; landing together keeps coverage coherent).
 
-### goal-setting (v0.1.0) — re-audited 2026-07-11
+### goal-setting (v0.2.0) — re-audited 2026-07-11 · convergence release BUILT 2026-07-12
+
+> **v0.2.0 (convergence release, branch `convergence/goal-setting`; merges after
+> strategist per Decision A1):** items 1–4 SHIPPED (heartbeat + return incl. cadence-trigger
+> design and the hook register fix; history.md + revision records + quarterly closeout
+> gate; per-goal pulse + explicit UNKNOWN); item 5 SHIPPED per Decision C3 (promise
+> softened, paired with critic memory); item 6 SHIPPED except the F5b canonical wording
+> (drafted → review queue) and the drift lint (strategist's shared lint didn't exist at
+> build time — config deferred to a follow-up patch, not built twice); item 7 SHIPPED
+> (golden-set scaffold `eval/targets/goal-setting/` with ten goldens — rubric anchors
+> DRAFT → review queue; backstage tasks; fourth-goal protocol; goal contract +
+> countermetric; coaching memory) except G1 (deferred by decision). F3 claim softening
+> swept playbook/stages/pulse; playbook schema appendix synced to schemas.md. All ported
+> patterns SHIPPED-UNTESTED. STOP drafts pending Kelsey:
+> `dev/convergence/review-queue/goal-setting-playbook-f1-f2.md`,
+> `…/goal-setting-rubric-anchors.md`. Changelog: `goal-setting/CHANGELOG.md` § 0.2.0.
 
 Elements unchanged vs July-3 (Present 1,10,11 / Partial 2,3,5,6,8 / Absent 4,7,9) — Working Dynamic strengthened element 5 but is Setup-only (pulse/review never read it); the Self-Audit strengthened 10/11 while introducing the mandatory-dissent defect. Checklist 0P/5Pa/7A. Contract 0E/6P/5A. The Backstage/Return rooms are the structural hole — exactly where the blind review's fire landed.
 
