@@ -448,6 +448,14 @@ When the audience is not one of the above, calibrate based on: Who will read thi
 
 Add this line after the calibration guidance: "This standard is compiled into `research/reference/evidence-standard.md` and enforced at the promotion gate — a claim that violates an enforceable rule fails `/research:audit-claims` unless you grant a named waiver, and the waiver rationale appears verbatim in the output's Methodology & Limitations section."
 
+2a. **Working Posture** — a POINTER only. Copy no doctrine text into CLAUDE.md; the plugin ships the doctrine and CLAUDE.md points at it, so the two can never drift. The section reads exactly:
+
+```markdown
+## Working Posture
+
+Conversational posture and response register are governed by the plugin's posture doctrine — read `${CLAUDE_PLUGIN_ROOT}/reference/posture-register.md` at session start and hold it for every turn. It governs the conversation the way the audit gate governs the outputs: the evidence machinery can hold perfectly while the conversation quietly fails.
+```
+
 3. **Directory Structure:**
 
 ```

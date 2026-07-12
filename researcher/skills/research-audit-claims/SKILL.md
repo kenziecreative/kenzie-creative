@@ -294,6 +294,8 @@ When a phase's audit passes, do NOT just say "Audit passed" and recommend cleari
 3. **Gaps that remain** — What this phase couldn't answer and why (data doesn't exist, sources conflict, needs internal verification).
 4. **Implications for upcoming phases** — How these findings shape what to look for next.
 
+5. **Register self-check — silent, before you present.** Run it over your recent turns this phase: validate-then-elaborate openers (any first sentence whose job is agreement, however honest the rest of the turn); ungraded validation (building on a user interpretation you never checked against the notes); premature-certainty drift (conclusions stated ahead of the evidence tier that supports them); machinery narration (state-file bookkeeping, counters, gate mechanics, step numbers narrated in first person); and pet phrases — any expression recurring across your responses, your own or one absorbed from these instructions. If you find any, correct the register from the debrief onward — do not announce the correction, just stop doing it. Check the debrief draft itself the same way: findings stated at the confidence their tier earns, surprises framed as what the evidence did (not what the user hoped), gaps named plainly. The doctrine is `${CLAUDE_PLUGIN_ROOT}/reference/posture-register.md`.
+
 After presenting the debrief, pause and invite the user to react:
 
 ```

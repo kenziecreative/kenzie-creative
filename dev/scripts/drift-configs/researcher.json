@@ -65,6 +65,15 @@
       ]
     },
     {
+      "file": "reference/posture-register.md",
+      "markers": [
+        "## The opener reflex",
+        "## Register rules — every response",
+        "Keep the machinery backstage",
+        "## Pushback provenance"
+      ]
+    },
+    {
       "file": ".claude-plugin/plugin.json",
       "markers": ["every note to a declared source"]
     },
@@ -158,6 +167,15 @@
         "skills/research-audit-claims/SKILL.md"
       ],
       "reason": "pass-2 F5/F7 seam: summarize-section writes the section, audit-claims gates on it structurally (step 5b). A section required of the writer but unchecked by the audit is decoration."
+    },
+    {
+      "id": "posture_register_wiring",
+      "pattern": "posture-register\\.md",
+      "files": [
+        "skills/research-init/SKILL.md",
+        "skills/research-audit-claims/SKILL.md"
+      ],
+      "reason": "D1 register port: the doctrine ships as a reference file, init's CLAUDE.md template points at it (pointer only — no doctrine text copied, so the two cannot drift), and the phase-debrief register self-check names it. Break any leg and the doctrine is dead text nothing reads."
     },
     {
       "id": "independence_unknown_vocabulary",
