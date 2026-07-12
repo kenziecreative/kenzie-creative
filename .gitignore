@@ -30,3 +30,6 @@ __pycache__/
 
 # Blind-review working notes — candid defect lists of live products; local-only, never distributed
 dev/blind-reviews/
+
+# Convergence build execution layer — local-only working docs, same sensitivity as blind-reviews
+dev/convergence/

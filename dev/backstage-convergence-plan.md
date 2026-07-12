@@ -128,6 +128,8 @@ These resolve the [K] gates below into directives. Where a decision requires aut
 - **F4:** all three adopted in goal-setting's convergence release — fourth-goal protocol (backlog + explicit swap/defer/reject + formal closure), goal contract with countermetric, durable coaching memory (private-notebook register, never surfaced as accusation).
 - **G1 Deferred, recorded as decided:** strategist multi-stakeholder modes / owner-acceptance / data-workbench; goal-setting organizational-operation fork; researcher full-PRISMA machinery. Revisit after the convergence releases prove the single-user core.
 
+> **EXECUTION LAYER (2026-07-12):** the build itself runs from `dev/convergence/` (**local-only, gitignored**) — a coordination README (parallel-terminal rules, shared-tooling assignments, STOP-point protocol, definition of done) plus one build brief per plugin with the Decisions of Record already applied. A builder session needs nothing outside this repo. STOP-point drafts land in `dev/convergence/review-queue/` for Kelsey's review.
+
 ### Cross-plugin workstreams (shared shapes — implement per plugin, design once)
 
 1. **The return** — session-start stance restoration + files-win-over-memory trust order + (goal-setting) overdue-cadence routing. All three plugins; BC resume is the PROVEN source. The single highest-leverage family port.
