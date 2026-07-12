@@ -18,7 +18,7 @@ The stage is done when:
 
 Insight holds 25 frameworks. The form is not decoration — the right form is what makes the pattern visible. Pick by the *shape* of the insight you are surfacing.
 
-**The boundary.** Insight is the last of the perceiving stages: it names what the analysis means, it does not choose what to do about it. A handful of forms here can quietly carry decision work if you let them — dispositions on a 3x3, a target position on a Continuum, a capability gap read against a not-yet-chosen direction, a Gantt or One Pager of the new plan. Each of those entries states its own **Stage Boundary**: at Insight, use the current-state form only; the generative half belongs at Synthesise, Story, or Move. If you find yourself plotting the *future* at Insight, the decision is being made ahead of its gate — name it and hold it for Synthesise.
+**The boundary.** Insight is the last of the perceiving stages: it names what the analysis means, it does not choose what to do about it. The rule is blanket: **every form here is used in its current-state form at Insight** — plotting the *future* (a target position, a To column, a forward horizon, a phased route, a disposition, the new plan on a page) is a decision being made ahead of its gate; name it as a hypothesis and hold it for Synthesise. The eight forms that most invite the slip — 3x3, Continuum, Capability Map, Gantt, One Pager, From:To, Horizon, Chevron — each state their own **Stage Boundary**; the entries that don't state one are covered by the blanket rule all the same.
 
 ### Position and comparison — where things sit relative to each other
 
@@ -43,11 +43,11 @@ Insight holds 25 frameworks. The form is not decoration — the right form is wh
 - [Journey](journey.md) — the customer's experience phase by phase, with the moments that matter called out.
 - [Touchpoint](touchpoint.md) — which channel the customer uses at each stage, exposing gaps and redundancy.
 - [Timeline](timeline.md) — events or milestones on a line, showing order and spacing.
-- [Chevron](chevron.md) — arrow blocks, one per phase, showing destination and route in one view.
+- [Chevron](chevron.md) — arrow blocks, one per phase; at Insight, map an existing sequence — the forward route to a chosen destination is Move work.
 - [Gantt](gantt.md) — initiatives on a time axis, grouped by pillar; at Insight, the as-is plan only — the forward roadmap is Move work.
 - [Circular](circular.md) — a repeating cycle where the last step feeds the first.
-- [Horizon](horizon.md) — initiatives sorted into near, medium, and long-term horizons.
-- [From:To](from-to.md) — current state beside target state, making the gap concrete.
+- [Horizon](horizon.md) — initiatives sorted into near, medium, and long-term horizons; at Insight, the existing portfolio only — sorting new bets follows Synthesise.
+- [From:To](from-to.md) — current state beside target state; at Insight, build the From — the To column is written after Synthesise commits.
 
 ### A single finding, made to land — present one insight cleanly
 

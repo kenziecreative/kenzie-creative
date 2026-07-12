@@ -23,6 +23,31 @@
       "id": "synthesise_posthoc_offer",
       "pattern": "after \\*\\*Analyse\\*\\*, \\*\\*Synthesise\\*\\*|offers it after Analyse, Synthesise, and Move",
       "reason": "post-hoc pressure-test offer at Synthesise — superseded in 0.4.0 by the commitment-gate auto-run (stage engine Step 4b, decision E2)"
+    },
+    {
+      "id": "gate_offered_wiring",
+      "pattern": "checkpoint where `/strategist:pressure-test` is offered",
+      "reason": "stale offered-at-gate wiring — the commitment gate runs the critic automatically since 0.4.0; wording corrected in 0.4.1 (pass-2 F2)"
+    },
+    {
+      "id": "single_axis_ownership",
+      "pattern": "user-owned / agent-inferred / external-unverified",
+      "reason": "single-axis claim taxonomy — superseded in 0.4.1 by two-axis marking (origin × standing; user-relayed ≠ user-owned; pass-2 F1)"
+    },
+    {
+      "id": "binary_pressure_cell",
+      "pattern": "— \\| ✓ \\| declined|Pressure-tested` cell `✓`",
+      "reason": "binary pressure-test cell — superseded in 0.4.1 by clear / open (n) / declined (tested-with-a-standing-objection is not clear; pass-2 F2)"
+    },
+    {
+      "id": "unconditional_stale_clear",
+      "pattern": "stale stage clears when it's revised and re-confirmed",
+      "reason": "unconditional stale-clear — superseded in 0.4.1 by top-down clearing (complete (on stale inputs) otherwise; pass-2 F4)"
+    },
+    {
+      "id": "unconditional_complete",
+      "pattern": "set this stage's row to `complete` with the framework",
+      "reason": "unconditional complete-on-advance — superseded in 0.4.1 by earned statuses (complete / incomplete (advanced by user) / complete (on stale inputs); pass-2 F5)"
     }
   ],
   "canonRoot": "~/Documents/Claude/Projects/AI Operations/frameworks",
@@ -115,6 +140,39 @@
         "skills/strategist-resume/SKILL.md"
       ],
       "reason": "the charter captured at init must be read downstream (stage preconditions, commitment gate, resume) — a captured contract nothing reads is theater (checklist row 12)"
+    },
+    {
+      "id": "stale_stages_frontmatter",
+      "pattern": "stale_stages",
+      "files": [
+        "skills/strategist-stage/SKILL.md",
+        "skills/strategist-progress/SKILL.md",
+        "skills/strategist-init/SKILL.md",
+        "skills/strategist-resume/SKILL.md"
+      ],
+      "reason": "canonical staleness (0.4.1, pass-2 F4): stale stages leave completed_stages for stale_stages — written by the engine, defined at init, migrated at resume, surfaced by progress"
+    },
+    {
+      "id": "incomplete_advanced_status",
+      "pattern": "incomplete \\(advanced by user\\)",
+      "files": [
+        "skills/strategist-stage/SKILL.md",
+        "skills/strategist-progress/SKILL.md",
+        "skills/strategist-init/SKILL.md",
+        "skills/strategist-resume/SKILL.md"
+      ],
+      "reason": "honest advance-past-done-bar status (0.4.1, pass-2 F5): written by the engine, defined at init, surfaced by progress and resume"
+    },
+    {
+      "id": "open_n_pressure_vocabulary",
+      "pattern": "open \\(n\\)",
+      "files": [
+        "skills/strategist-stage/SKILL.md",
+        "skills/strategist-progress/SKILL.md",
+        "skills/strategist-init/SKILL.md",
+        "skills/strategist-pressure-test/SKILL.md"
+      ],
+      "reason": "tested-open pressure vocabulary (0.4.1, pass-2 F2): written by the gate and the pressure-test skill, defined at init, surfaced by progress"
     }
   ]
 }

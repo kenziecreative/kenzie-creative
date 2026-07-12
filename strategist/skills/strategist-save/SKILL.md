@@ -30,11 +30,11 @@ everything in this session, update:
 
 - **Stage Record + Position** — statuses, frameworks applied, pressure-tested cells,
   any staleness markings from this session.
-- **In-Flight (mid-stage)** — if a stage is underway, capture what a resumed session
-  needs to continue instead of restarting: the framework in play, the questions
-  answered so far (with the answers' one-line substance, not just topics), what's
-  still open, and any provisional conclusions. If the stage completed, clear this
-  section back to `(none)`.
+- **In-Flight (mid-stage)** — if a stage is underway, make this current: the framework
+  in play, the questions answered so far (with the answers' one-line substance, not
+  just topics), what's still open, and any provisional conclusions. The stage engine
+  keeps this fresh as the stage runs; at save, curate it — correct and consolidate,
+  don't just append. If the stage completed, clear this section back to `(none)`.
 - **Open Pressure-Test Findings** — anything raised this session and not yet resolved.
 - **Next Action** — specific enough that a new session resumes without re-reading
   everything ("Continue Analyse: dimensions 3 of 5 done, next is pricing power" — not

@@ -42,7 +42,7 @@ The `strategist-stage` skill runs this stage. Working from the insights Insight 
 
 1. Reconciles the insights into one coherent argument, resolving the tensions between them and naming the through-line.
 2. Prioritises — names what matters most and what is being set aside — using the build tools above.
-3. Runs the commitment gate: locks the decision with deliberation matched to its stakes, using the gate tools. This is the high-stakes checkpoint where `/strategist:pressure-test` is offered.
+3. Runs the commitment gate: makes sure the through-line stands against real alternatives, then locks the decision with deliberation matched to its stakes, using the gate tools. The gate runs the reasoning critic automatically before the decision locks — never blocking; a declined check or an unresolved finding is recorded rather than argued, and it travels with the strategy.
 4. Records the synthesis and the committed decision in `strategy/brief.md` under Synthesise.
 5. Advances `strategy/STATE.md` to Story once the through-line is coherent and the gate is passed.
 

@@ -61,7 +61,9 @@ Write the findings into the `## Open Pressure-Test Findings` section of
 `strategy/STATE.md` (replace `(none)` or append). Each as a short line tagged with the
 stage it bears on, so `/strategist:progress` can surface them and the user can clear
 them as they address them. Mark the stage's `Pressure-tested` cell in the Stage Record
-table.
+table honestly: `clear` if nothing load-bearing stands open, `open (n)` if n
+load-bearing findings remain unresolved — tested-with-a-standing-objection is not
+`clear`.
 
 Do **not** edit `brief.md`. Acting on a finding is the user's call, made by re-running
 the relevant stage — point them there:

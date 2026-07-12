@@ -51,21 +51,30 @@ template.
   Since 0.4.0 the engagement also carries `strategy/CHARTER.md` (captured at init, read
   by stage preconditions and the commitment gate) and `strategy/DECISION.md` (written at
   the Synthesise commitment gate).
-- **Record, never restrict (0.4.0).** Nothing in the loop blocks; every consequential
-  user call leaves a trace: claim ownership (user-owned / agent-inferred /
-  external-unverified) survives into the reader brief's "What this rests on" close, a
-  declined pressure-test is marked in STATE and said in the reader brief, a material
-  upstream revision marks later stages `stale (premise changed)`, unmet done-bars are
-  noted when the user advances anyway. Files win over chat memory, silently.
+- **Record, never restrict (0.4.0; hardened 0.4.1).** Nothing in the loop blocks; every
+  consequential user call leaves a trace — and since 0.4.1 the state vocabulary stops
+  conflating "the user chose to proceed" with "the work satisfies its contract."
+  Claim ownership is two-axis (origin: user/agent/external × standing:
+  first-hand/unverified/estimate; user-relayed ≠ user-owned) and survives into the
+  reader brief's "What this rests on" close. Pressure-test cells read
+  `clear / open (n) / declined`, and unresolved load-bearing findings travel into
+  DECISION.md and the reader brief. Staleness is canonical: stale stages leave
+  `completed_stages` for `stale_stages`, clear top-down only (else
+  `complete (on stale inputs)`); an unmet done-bar advanced past reads
+  `incomplete (advanced by user)` and never enters `completed_stages`. Files win over
+  chat memory, silently.
 - **The commitment gate (stage engine Step 4b).** At Synthesise, before the commitment
   write: sibling directions with the honest-singleton valve; the critic auto-runs
-  (non-blocking, decline recorded — decision E2); charter check; Rumelt-kernel check in
+  (non-blocking, decline recorded — decision E2) and receives the full option set and
+  why each alternative lost, not just the winner; charter check; Rumelt-kernel check in
   recording form (E3); DECISION.md written.
 - **The return restores stance.** `strategist-save` captures position + debrief
   (Working Dynamic / Working Read / Backstage Tasks / In-Flight, mid-stage);
   `strategist-resume` re-adopts them, continues in-flight work without re-asking, and
-  runs additive-only schema migration. Both carry narration firewalls — the machinery
-  stays backstage.
+  runs additive-only schema migration. Since 0.4.1 the engine also refreshes In-Flight
+  after each substantive answer, so an *unsaved* stop (auto-compaction, closed laptop)
+  is recoverable too — save is the curated debrief, not the only persistence path.
+  Both carry narration firewalls — the machinery stays backstage.
 - **One engine, seven stages.** The 7 stage commands all invoke `strategist-stage` with a
   different stage; the skill reads the matching `reference/<stage>/` to drive the menu and
   application. Adding or renaming a stage = a command wrapper + a `reference/<stage>/`

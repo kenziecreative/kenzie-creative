@@ -103,6 +103,7 @@ the Synthesise commitment gate; the reader line steers the Story-stage brief.*
 status: active
 current_stage: define
 completed_stages: []
+stale_stages: []
 problem: "<the user's problem statement>"
 pushback_calibration: unknown
 updated: <current UTC timestamp, ISO 8601>
@@ -120,9 +121,16 @@ updated: <current UTC timestamp, ISO 8601>
 
 ## Stage Record
 
-Status: `pending | active | complete | stale (premise changed)` — stale means an earlier
-stage was materially revised after this one was built; reconcile by re-running it.
-Pressure-tested: `— | ✓ | declined` — declined is a legitimate call, and it's recorded.
+Status: `pending | active | complete`, or `incomplete (advanced by user)`, or
+`stale (premise changed)`, or `complete (on stale inputs)`. Stale means an earlier stage was materially
+revised after this one was built (it leaves `completed_stages` until reconciled);
+incomplete-advanced means the user moved on past an unmet done-bar; on-stale-inputs
+means it was reconciled while its own upstream was still stale. Only `complete` rows
+sit in `completed_stages` — "the user chose to proceed" and "the work satisfies its
+contract" are different facts, and this table records both.
+Pressure-tested: `— | clear | open (n) | declined` — clear means the check ran with
+nothing load-bearing left open; open (n) means it ran and n load-bearing findings stand
+unresolved; declined is a legitimate call. All three are recorded, never argued.
 
 | # | Stage | Status | Framework(s) applied | Pressure-tested | Notes |
 |---|-------|--------|----------------------|-----------------|-------|

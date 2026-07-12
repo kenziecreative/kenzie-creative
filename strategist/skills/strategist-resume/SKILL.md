@@ -42,7 +42,8 @@ STATE.md against the template structure in the `strategist-init` skill: any sect
 defines that the project file lacks (Working Dynamic, Working Read, In-Flight,
 Backstage Tasks, Open Pressure-Test Findings) — ADD it, empty, with its template
 guidance, in the template's position. If the Stage Record lacks the `Notes` column,
-extend the table with empty cells. Never remove, rename, or rewrite existing content.
+extend the table with empty cells; if the frontmatter lacks `stale_stages`, add it as
+`[]`. Never remove, rename, or rewrite existing content.
 This runs silently.
 
 ## Step 3: Rebuild the working state
@@ -62,8 +63,11 @@ This runs silently.
    claims) silently, before the briefing; carry over anything that must wait; clear
    completed items. The user never sees this list — they just experience an advisor
    who showed up prepared.
-5. Note anything the Stage Record marks `stale (premise changed)` and any open
-   pressure-test findings — those are threads to surface in the briefing.
+5. Note anything the Stage Record marks `stale (premise changed)`, `complete (on
+   stale inputs)`, or `incomplete (advanced by user)`, and any open pressure-test
+   findings (`open (n)` cells included) — those are threads to surface in the
+   briefing, in plain language: what needs reconciling, what was advanced past its
+   own bar, what objection still stands.
 
 ## Step 4: Brief the user
 

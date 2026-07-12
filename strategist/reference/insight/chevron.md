@@ -75,6 +75,10 @@ Use the Chevron when the path to a goal is sequential and phased, and when the a
 
 Use **Gantt** instead when the audience needs to see specific timing, durations, and overlapping workstreams — the Gantt adds a time axis that the Chevron lacks. Use **Horizon** when the timeframe is multi-year and the communication priority is the strategic themes of each period rather than the operational steps within them.
 
+## Stage Boundary (Insight)
+
+A phased route presumes a destination, and the destination is what Synthesise decides. At Insight, a Chevron may only map a sequence that already exists — the current process, an inherited plan, how the incumbent operates — as perception of the present: where the phases actually break, where handoffs fail, which step everything queues behind. That reading is legitimate insight. Building the forward route to a chosen goal is generative work: the destination locks at Synthesise, Move builds the route, Story presents it.
+
 ## Things To Watch Out For
 
 - Chevron phases that all have the same length of activity lists suggest the grouping may be artificial. Phases should reflect the natural rhythm of the work, not a desire for visual symmetry.

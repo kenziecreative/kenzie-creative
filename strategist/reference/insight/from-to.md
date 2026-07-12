@@ -62,6 +62,10 @@ It is also the natural layout for any problem statement that has already been de
 
 Use **Continuum** instead when the change is better expressed as directional movement along defined dimensions rather than a structural description. Use **Chevron** or **Gantt** to show how the organisation gets from the current to the future state — the From:To tells you where you're going; those layouts tell you how.
 
+## Stage Boundary (Insight)
+
+The **To** column *is* the strategy — writing it commits to a destination, and that is a decision, not an observation. At Insight, build the honest half: describe the **From** — the current state, its problems and pain points, in the specific terms the analysis supports. That current-state picture is real insight on its own; it names exactly what any strategy would have to fix. The Future State column is Synthesise-onward work: return after the commitment gate to complete the pair, and present the finished From:To at Story. If a future state is taking shape during Insight, it's a hypothesis to hold for the gate, not a column to fill.
+
 ## Things To Watch Out For
 
 - A future state that doesn't directly address the pain points named in the current state is a strategy that doesn't solve the problem. Use the From:To as a coherence check: every pain point on the left should have a visible resolution on the right.

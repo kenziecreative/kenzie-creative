@@ -37,10 +37,13 @@ Findings. Read `strategy/brief.md` (the working document) to confirm which secti
 actually filled (a stage marked complete in STATE but still `_Not yet started._` in the
 brief is a discrepancy — report it).
 
-Two Stage Record markings belong in the report body, not buried in the table: any stage
-whose status is `stale (premise changed)` (an upstream revision moved the premise it was
-built on — name which stages need reconciling), and any `Pressure-tested` cell marked
-`declined` (the commitment was never stress-tested; the reader brief says so).
+Three Stage Record markings belong in the report body, not buried in the table: any
+stage whose status is `stale (premise changed)` or `complete (on stale inputs)` (an
+upstream revision moved the premise — name which stages need reconciling; read the
+`stale_stages` frontmatter list too), any status `incomplete (advanced by user)` (the
+user moved on past an unmet done-bar — say which bar, from the Notes cell), and any
+`Pressure-tested` cell marked `open (n)` or `declined` (a standing unresolved objection,
+or a commitment that was never stress-tested; the reader brief says so either way).
 
 Also check for the reader-facing brief at `strategy/strategy-brief.md` (path may be
 overridden as `reader_brief` in config). It's expected once the Story stage is complete.
@@ -57,16 +60,17 @@ Infrastructure: N/4 checks passed
 
 ### Strategy: <problem statement, trimmed>
 
-| # | Stage | Status | Framework(s) | Pressure-tested |
-|---|-------|--------|--------------|-----------------|
-| 1 | Define  | Complete | SCQ | ✓ |
-| 2 | Frame   | Active   | —   | — |
+| # | Stage | Status | Framework(s) | Pressure-tested | Notes |
+|---|-------|--------|--------------|-----------------|-------|
+| 1 | Define  | Complete | SCQ | clear | — |
+| 2 | Frame   | Active   | —   | — | — |
 | ... |
 
 **Loop position:** Define ▸ [Frame] ▸ Analyse ▸ Insight ▸ Synthesise ▸ Story ▸ Move
 **Open pressure-test findings:** [count, or "none"]
 [if any, list each with the stage it bears on]
-**Stale stages:** [any stage marked `stale (premise changed)`, with which upstream revision caused it — omit the line if none]
+**Stale stages:** [any stage marked `stale (premise changed)` or `complete (on stale inputs)`, with which upstream revision caused it — omit the line if none]
+**Unmet done-bars:** [any stage marked `incomplete (advanced by user)`, with the unmet bar from its Notes cell — omit the line if none]
 
 **Documents:** working brief.md ✓ · reader brief strategy-brief.md [✓ / not yet (Story) / MISSING]
 **Next action:** <the Next Action line from STATE.md>

@@ -69,6 +69,10 @@ Use the Horizon when you need to communicate how near-term and long-term investm
 
 Use **Gantt** when the audience needs specific timelines and workstream-level detail for H1 execution. Use **Chevron** when the three periods are better understood as sequential phases where one must complete before the next begins.
 
+## Stage Boundary (Insight)
+
+Sorting *new* strategic bets into future horizons is deciding the strategy's shape — which initiatives exist, and when the organisation commits to them — and that belongs after the commitment gate. At Insight, the legitimate Horizon chart is the *as-is* view: map the existing portfolio (what's already funded or running) into the three bands as evidence about the present — where effort currently sits, whether everything crowds into H1, whether anything at all feeds the future. That imbalance is a genuine insight. Building the forward three-horizon plan is Synthesise-onward work, presented at Story.
+
 ## Things To Watch Out For
 
 - Horizons are relative time bands, not fixed calendar years. Mapping all three rigidly onto single fiscal years collapses the essential "type of work" distinction that makes the framework useful.
