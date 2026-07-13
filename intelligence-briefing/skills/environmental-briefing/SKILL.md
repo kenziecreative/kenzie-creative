@@ -67,28 +67,38 @@ An item that is a derivative restatement of an unchanged thread **does not appea
 
 ## COLLECTION HEALTH — MANDATORY, ON EVERY BRIEF
 
-**Every brief carries a collection-health disclosure, immediately after the page head. There is no exception and no configuration that turns it off.** There is no code path that omits it: rich day, quiet day, degraded day, and no-scan day each have a required rendering, and exactly one always appears.
+**Every brief carries a collection-health disclosure, immediately after the page head. There is no exception and no configuration that turns it off.** There is no code path that omits it: rich day, quiet day, idle day, degraded day, and no-scan day each have a required rendering, and exactly one always appears.
 
 The rule, stated exactly:
 
-> **A quiet-day judgment is permitted only if every mandatory collection cell due today completed. Otherwise the output says "assessment degraded," not "quiet day."**
+> **A quiet-day judgment is permitted only if every mandatory collection obligation due today completed. Otherwise the output says "assessment degraded," not "quiet day."**
 
-This defends the quiet-day doctrine rather than colliding with it. "A quiet day is correct behavior" is only true if the system actually looked. Silence must be attributable.
+**A mandatory obligation is any of three things: a due cell, a due signpost check, or an active driver's falsifier search.** All three can fail, so all three can make the day's silence unattributable. A run whose cells all succeeded while every falsifier search rate-limited has not earned a quiet day — it has an untested set of drivers and no way to know it.
 
-Read the latest run record in `runs.json` and render exactly one of:
+This defends the quiet-day doctrine rather than colliding with it. "A quiet day is correct behavior" is only true if the system actually looked. Silence must be attributable — **and everything that can be silent must be attributable, not just the cells.**
+
+Read the latest run record in `runs.json` and render exactly one of these five:
 
 **Run `complete`, items found:**
-> Collection current. 6 of 6 cells due today completed. Rotation 78% complete this week.
+> Collection current. 6 of 6 cells due today completed; 4 drivers tested against. Rotation 78% complete this week.
 
 **Run `complete`, nothing found:**
-> **Quiet day.** All cells due today were scanned; none are overdue. Nothing moved.
+> **Quiet day.** Everything due today was scanned — 6 cells, 4 driver falsifiers, 1 signpost — and none are overdue. Nothing moved.
+
+**Run `idle` (nothing was due):**
+> **Nothing due today.** No cells fall due until tomorrow; the rotation is 71% through this week and on schedule. Reporting on the picture as it stands.
 
 **Run `degraded`:**
-> **Assessment degraded.** Policy Levers × AI-advice regulation and SciTech Frontier × model capability did not complete. This brief covers 4 of 6 due cells. **No driver moved today, because collection is incomplete.**
+> **Assessment degraded.** Policy Levers × AI-advice regulation and SciTech Frontier × model capability did not complete, and the falsifier search against *AI advisory commoditization* failed. This brief covers 4 of 6 due cells and tested 3 of 4 drivers. **No driver moved today, because collection is incomplete.** The cells that failed stay due and will be retried on the next run.
 
-Name the failed cells plainly (zone × cell label). The rotation percentage is the share of applicable cells whose `last_scanned` falls within their required frequency.
+**No scan at all:**
+> Reporting on state last collected [date]. No scan has run since. Nothing below reflects anything that happened after that date.
 
-**If the scan did not run at all** (no run record covers the current interval), the brief says so and reports on the last known state, with the date of the last successful collection.
+**"No scan at all" is a real determination, not a vibe.** Read the latest run record's `run_window_end` and compare it to now: if more than one cadence interval has passed, no scan covers the interval this brief is supposed to report on, and this rendering is the honest one — however rich the state you are reading. **A brief assembled from three-week-old state, with no health line saying so, is the original sin this product exists to not commit.**
+
+Name what failed plainly — cells as zone × cell label, falsifiers as the driver they were meant to test. **An `idle` run is not a degraded one and must never be rendered as a failure**: nothing was owed, so nothing was missed. It is also not a `complete` one — do not write "0 of 0 cells due today completed," which reads as a health claim while saying nothing.
+
+**The rotation percentage is the share of applicable cells whose `last_successful_scan` falls within their required frequency.** Read `last_successful_scan`, never `last_attempted` — a cell that was attempted and failed has not been scanned, and counting it as current is precisely the lie this line exists to prevent.
 
 **If the latest run's status is `failed`, no brief is written.** Tell the user what failed instead of producing a document.
 
@@ -123,7 +133,13 @@ Each run, produce one brief by executing these steps in order:
 
 7. **Synthesize.** Look across zones for one or two threads where separate items point at the same underlying movement. Tag Pattern; name the items drawn on. If none exists, produce no synthesis.
 
-8. **Write the disconfirming section.** The scan runs a mandatory falsifier search against every active driver. Report what it found: observations that cut against a driver's current direction, naming the driver they challenge. If the falsifier search genuinely found nothing, say so — that is itself information: *"Nothing surfaced against your four active drivers this week."* Never a generic "this is counterintuitive" item untied to a driver.
+8. **Write the disconfirming section.** The scan runs a mandatory falsifier search against every active driver and records the result of each one in the run record's `falsifiers` array. **Read that array. Do not infer the outcome from the absence of items.**
+
+   - Any falsifier returned `ok` → report what it found: observations that cut against a driver's current direction, naming the driver they challenge.
+   - **Every falsifier returned `empty`** → and only then may you write *"Nothing surfaced against your four active drivers this week."* That sentence is a claim about the world, and it is true only when every driver was actually searched against and the world came back quiet.
+   - **Any falsifier `failed`** → say that instead, naming the drivers that went untested: *"Two of your four drivers went untested today — the searches against commoditization and regulatory hardening did not complete. Nothing below should be read as evidence they still hold."* **An empty result and a failed search are not the same fact and must never render as the same sentence.** One says the world offered no counter-evidence; the other says nobody looked.
+
+   Never a generic "this is counterintuitive" item untied to a driver.
 
 9. **The reckoning, when due.** Trigger: the first `complete` run where 30 or more days have passed since the last run marked `"reckoning": true` (if none, since the deployment's first run). See THE RECKONING. It is a section of this brief, not a separate document. When you render one, set `"reckoning": true` on the run record.
 
@@ -194,8 +210,22 @@ If the config names a bar, apply its gate combination. If the config sets the tw
 
 1. **Observations have no cap.** Everything clearing relevance was captured by the scan. **The store is not the brief.**
 2. **Length tracks the day.** A hard cap is a gag, not a ceiling.
-3. **The zone detail budget is a *detail* budget, not an *emission* budget.** At most N items per zone get full treatment. Beyond N, remaining material items appear in a compact "Also in this zone" line — title, disposition, source link. One line each.
+3. **The zone detail budget is a *detail* budget, not an *emission* budget.** At most N items per zone get full treatment. Beyond N, remaining material items appear as compact one-line entries under "Also in this zone" — per the OVERFLOW LINE below.
 4. **No material item is ever silently dropped.** Compression, not deletion.
+
+### The overflow line
+
+**What compresses is the detail. What must never compress is the epistemic safety.** An item pushed into overflow is still an item the reader may act on, and it is exactly the item they will act on carelessly, because it arrives with no room to argue for itself. An overflow line therefore carries, always:
+
+- **The claim, with its qualifiers intact** — not a headline. "Preliminary," "in one region," "1–3x," "among surveyed firms" survive compression or the compression is a lie. Rule 5 does not have a length exemption.
+- **Type** (Fact / Signal / Frame) and **disposition**.
+- **Non-default source marks** — single-source, tertiary. Rule 6 does not have a length exemption either. The marks exist to warn, and the item that gets one line of the reader's attention is the one that most needs the warning.
+- **For a Signal: a compact uncertainty clause** — what would confirm or falsify it, in a few words.
+- **The link.**
+
+Six or seven words longer than a bare title, and the difference between a compressed item and a stripped one. **Cutting an item down to a title and a disposition does not preserve it; it launders it** — the reader sees a clean claim where the full treatment would have shown them a lone tertiary source reporting a preliminary regional finding. That is worse than dropping the item, because now it looks safe.
+
+The Markdown and HTML renderings of this line are identical in content (see OUTPUT CONTRACT and `references/html-brief.md`). Format changes the chrome, never the claim.
 
 There is always a compliant output, because overflow compresses rather than disappears. And most overflow dissolves before it happens: ten regulatory actions in one zone are usually not ten items — they are **one driver movement with ten supporting observations**, which is one brief item.
 
@@ -217,17 +247,22 @@ Write it in the same editorial voice as the rest of the brief. **It is a reckoni
 
 ## VERIFICATION (hard gate)
 
-Verification is **re-derivation from evidence captured at gather time, not self-review.** Auditing your own assembled draft finds label errors; it cannot find a misread source, because the verifying pass inherits the drafting pass's reading. Every observation carries `captured_evidence` — the verbatim figures, ranges, dates, and qualifiers as they were seen — precisely so you can check the draft against the evidence instead of against itself.
+Verification is **re-derivation from evidence captured at gather time, not self-review.** Auditing your own assembled draft finds label errors; it cannot find a misread source, because the verifying pass inherits the drafting pass's reading. Every observation carries `captured_evidence` — the source's own claim in its own words, plus the verbatim figures, ranges, dates, and qualifiers as they were seen — precisely so you can check the draft against the evidence instead of against itself.
+
+**The verb is a claim.** Most compression damage happens to numbers, and checking numbers is easy, so it is tempting to stop there. But a source that says an agency *proposed* a restriction, written up as an agency that *imposed* one, will pass every figure-and-qualifier check ever devised: the date is right, the region is right, the range is right, and the brief is wrong in the only way that matters. **`captured_evidence.claim` holds the source's own predicate for exactly this reason. Check against it.**
 
 Before emitting:
 
 1. For every claim in the assembled draft, locate its observation.
-2. For every figure, range, date, and qualifier in the written claim, **find it in that observation's `captured_evidence`.**
-3. If it is not there → **restore it from the evidence, or cut the claim.** A claim with no evidence backing is not emitted.
-4. Re-check qualifier stripping, range narrowing, tier and corroboration labels, and type drift **against `captured_evidence`, not against the draft.** Does any written item remove a time, region, scope, or certainty qualifier the evidence carries? Does any written figure narrow the evidence's range ("1–3x" must not become "2–3x" or "about 3x")? Is any signal dressed as a fact? Does every Signal carry an uncertainty note?
-5. Check that every synthesis thread and every driver movement draws only on observations actually present in the store.
-6. Check evidence-bar compliance. **Action gate.** When ON, a single-source item may carry `note`, `track`, or `dig`, but never `act` — **unless** the single source is **primary and its authority is self-evident** (the issuing body publishing its own final, binding action). Acting otherwise requires corroboration. A single-source item in the lead or synthesis violates the sharing gate when it is ON. Lower the disposition or move the item.
-7. Check manufactured fullness. Is any section padded to look full? Cut to honest. **On a thin day, is the brief short?** Is the lead a genuine selection within the configured maximum, or did everything get promoted?
+2. **Check the predicate first.** Does the written item's central verb match `captured_evidence.claim`? Proposed is not imposed. Considering is not deciding. May is not will. Piloting is not launching. Agreed to review is not agreed. If the draft's verb claims more than the evidence's verb → **rewrite it down to the evidence, or cut the claim.**
+3. For every figure, range, date, and qualifier in the written claim, **find it in that observation's `captured_evidence.details`.**
+4. If it is not there → **restore it from the evidence, or cut the claim.** A claim with no evidence backing is not emitted.
+5. Re-check qualifier stripping, range narrowing, tier and corroboration labels, and type drift **against `captured_evidence`, not against the draft.** Does any written item remove a time, region, scope, or certainty qualifier the evidence carries? Does any written figure narrow the evidence's range ("1–3x" must not become "2–3x" or "about 3x")? Is any signal dressed as a fact? Does every Signal carry an uncertainty note?
+6. **Check the evidence boundary.** Any item you are emitting with an `act` disposition, or that carries a driver movement, must sit on an observation whose `captured_evidence.source_opened` is `true`. **A search snippet is not a source.** If the observation was never opened, **`WebFetch` its `captured_evidence.locator` now**, repair the evidence from what the source actually says, and set `source_opened: true` — or lower the item's reach. It may inform; it may not drive an action or move a driver on the strength of a snippet. (This is the one place the briefing skill touches the web, and it is why it holds `WebFetch`. It re-opens a specific known URL; it never collects.)
+7. Check that every synthesis thread and every driver movement draws only on observations actually present in the store, **and that every driver movement rests on at least one `material_advance` observation.** A driver that moved on nothing but derivative coverage moved on an echo; unwind it.
+8. Check evidence-bar compliance. **Action gate.** When ON, a single-source item may carry `note`, `track`, or `dig`, but never `act` — **unless** the single source is **primary and its authority is self-evident** (the issuing body publishing its own final, binding action). Acting otherwise requires corroboration. A single-source item in the lead or synthesis violates the sharing gate when it is ON. Lower the disposition or move the item.
+9. Check manufactured fullness. Is any section padded to look full? Cut to honest. **On a thin day, is the brief short?** Is the lead a genuine selection within the configured maximum, or did everything get promoted?
+10. Check overflow integrity. Does every "Also in this zone" line carry its qualifiers, its type and disposition, its non-default source marks, and (for a Signal) its uncertainty clause? **A stripped overflow line is a compression failure, not a formatting one** — it is rule 5 and rule 6 breaking quietly at the bottom of a zone, where nobody is looking.
 
 **Hard gate. The lead, the synthesis, and any driver movement may not be emitted until they pass.**
 
@@ -262,7 +297,9 @@ configured maximum. If none: "Quiet day — nothing meets the lead bar."]
 ### [Zone name]
 - **[Item]** — full treatment, same fields as a lead item, up to the zone detail budget.
 - **[Lead item title]** — promoted to Lead. ↑
-- Also in this zone: [each remaining material item as one line — title, disposition, link.]
+- Also in this zone: [each remaining material item as ONE line, per THE OVERFLOW LINE — the claim
+  with its qualifiers intact, [type] · [disposition] · [non-default source marks], for a Signal a
+  compact "would confirm/falsify" clause, and the link. Never a bare title.]
 [repeat per zone; omit a zone with no qualifying items]
 
 ## Synthesis

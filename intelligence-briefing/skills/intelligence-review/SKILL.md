@@ -29,9 +29,9 @@ All state lives in the deployment directory (default `./intel/`, plus `CLAUDE.md
 - `intel/drivers.json` — the forces: `drivers` (each with `definition`, `direction`, `certainty`, `implication`, `status`, `origin`, append-only `confidence_log`, `supporting_observations`) and `proposals` (emergent-driver proposals, `status`: `open` | `confirmed` | `dismissed`).
 - `intel/signposts.json` — tripwires: `statement`, `driver_id`, `due`, `status` (`open` | `fired` | `expired` | `withdrawn`), `if_fired` (`strengthens` | `weakens`).
 - `intel/threads.json` — story identity: `label`, `status`, `observation_ids`, `last_state`. Never deleted.
-- `intel/coverage.json` — the zones × domain-cells matrix: per-cell `last_scanned`, `last_status` (`ok` | `empty` | `failed`), `next_due`, `source_health` (`ok` | `suspect`).
-- `intel/observations/YYYY-MM.json` — the archive, sharded by month. Each observation carries its source, verbatim `captured_evidence`, classification, `thread_id`, `driver_ids`.
-- `intel/runs.json` — append-only run records; which cells ran when, and with what status.
+- `intel/coverage.json` — the zones × domain-cells matrix: per-cell `last_attempted`, `last_successful_scan`, `last_status` (`ok` | `empty` | `failed`), `next_due`, `consecutive_failures`, `source_health` (`ok` | `suspect`). **`last_successful_scan` is the one that means anything** — a cell that was attempted and failed has not been scanned, and it stays due.
+- `intel/observations/YYYY-MM.json` — the archive, sharded by month. Each observation carries its source, `captured_evidence` (the source's own claim and verbatim details, with a locator), classification, `contribution` (`material_advance` | `derivative`), `thread_id`, `driver_ids`.
+- `intel/runs.json` — append-only run records; which cells, signposts, and driver falsifiers ran when, and with what outcome (`ok` | `empty` | `failed`).
 - `intel/feedback.json` — append-only; **this skill is the only writer.** Empty form `{ "feedback": [] }`; create it with `Write` if missing.
 
 A feedback record:
@@ -58,14 +58,18 @@ A feedback record:
 
 ### A question — read-only
 
-Answer from state. For a driver: its direction and certainty, how many times it moved, the confidence log entries that moved it, the observations behind it, its open signposts — and **what would tell us it's wrong** (its falsifier signposts, and what the scan's falsifier search has been finding). For a topic: the threads and observations that touch it, read out of the shards. For coverage: which cells are overdue, which are suspect, when each was last scanned. Show evidence, not vibes — cite observation ids and dates from the store.
+Answer from state. Show evidence, not vibes — cite observation ids and dates from the store.
+
+- **For a driver:** its direction and certainty, how many times it moved, the confidence log entries that moved it, the observations behind it (and how many of those are `material_advance` rather than derivative echo), its open signposts — and **what would tell us it's wrong.** That last one is answerable now, concretely, because the scan writes it down: read the run records' `falsifiers` array for this driver and report the **`counter_hypothesis` you have actually been searching against**, how often, and what came back. *"Every run for six weeks I've searched for platforms retreating from bundled AI advisors, or advisors failing to retain users. Four empties, one failure, nothing found. That's the strongest thing I can say for this driver — not that it's true, but that I've been trying to kill it and haven't managed."* **A driver whose falsifier searches keep failing is a driver nobody has tested. Say so plainly.**
+- **For a topic:** the threads and observations that touch it, read out of the shards.
+- **For coverage:** which cells are overdue, which are `suspect`, when each **last successfully scanned** — and, separately, when it was **last attempted.** Those diverge exactly when something is wrong: a cell attempted daily and successfully scanned two weeks ago is failing silently, and its `consecutive_failures` count is the system telling you where it is blind. **Report that divergence unprompted.** The user should learn about a blind spot from the coverage answer, not from having to discover it as a miss.
 
 ### A miss — the system scanned and still did not see it
 
 1. Write a `miss` feedback record.
 2. **Locate the cell.** Which zone × domain cell should have caught this? Say so plainly.
 3. If that cell was scanned in the relevant window and returned `empty` or `ok` without catching the item, set its `source_health: "suspect"` in `coverage.json`. A suspect cell forces the next scan to widen its channels instead of repeating the search that already missed something.
-4. **Search for the missed item now** (built-in `WebSearch` / `WebFetch`, inline — never a subagent). Capture it as an observation in the current month's shard, exactly as the scan would: source, verbatim `captured_evidence` (figures, ranges, dates, qualifiers exactly as the source states them), classification (type, tier, corroboration, provisional disposition), attach to its thread (create one if new; when unsure, attach to the existing thread), attach to its drivers.
+4. **Search for the missed item now** (built-in `WebSearch` / `WebFetch`, inline — never a subagent). Capture it as an observation in the current month's shard, exactly as the scan would: source; full `captured_evidence` (the source's own `claim` **with its own verb**, the verbatim `details`, the `locator` and `retrieved` timestamp, and `source_opened` — **open the source**, since a miss the user had to report is not one to re-capture from a snippet); classification (type, tier, corroboration, provisional disposition); `contribution` (`material_advance` or `derivative`); attach to its thread (create one if new; when unsure, attach to the existing thread); attach to its drivers, honoring `contribution` on the driver side exactly as the scan does.
 5. **Report what changed as a result** — *"That's Field Movements × smb-fintech. I scanned that cell on July 8 and came back empty, so I'm marking its sources suspect. Adding it as an observation against Commoditization — that makes five moves, not four."*
 
 ### Noise — the item wasted the reader's time
@@ -91,6 +95,17 @@ If the user says a story is done ("stop watching the Meta agent thing"), set its
 ### A relevance correction
 
 Write a `relevance_correction` feedback record. Offer to edit the relevance context or the zone in/out examples in `CLAUDE.md` — show the proposed edit and apply it only on confirmation.
+
+**Then reconcile the territory, in the same breath.** The relevance context says what matters; the **coverage matrix in `intel/coverage.json` is where the system actually looks** — and they are two different files. Editing the mandate and stopping there leaves the old territory being scanned indefinitely: the words change, the searches do not. **A correction that never reaches the matrix is not a correction.**
+
+Whenever the relevance context or a zone's in/out examples change:
+
+1. **Re-derive the domain cells** from the corrected context, exactly as `/intel-setup` step 4 does.
+2. **Name the difference out loud** — which cells the new mandate implies that the matrix does not have, and which existing cells it no longer justifies. *"You've moved from watching SMB fintech to watching SMB lending compliance. Nothing in the matrix covers lending compliance, so tomorrow morning I'd still be scanning the old territory. Want me to add it?"*
+3. **Offer the edit; apply it only on confirmation.** A new cell gets one row per zone crossing, each with a stated `applicable` call, and a `next_due` staggered into the existing rotation rather than landing every new row on the same morning.
+4. **Retire, never delete.** A cell the mandate no longer covers gets `applicable: false` and an `na_reason` recording that the relevance context changed, and when. Its scan history and its observations stay where they are — same doctrine as threads and drivers. **The matrix is the record of what was looked at; rewriting it destroys the only evidence of what the system used to be blind to.**
+
+Then report what changed, per rule 2.
 
 ---
 

@@ -39,10 +39,12 @@ Steps:
    | `time_horizon` | `time_horizon` | direct |
    | computed STEEP | `steep_primary` / `steep_secondary` | step 3 |
    | `cell_ids` | `domain_categories` | each cell's **label** from `coverage.json`, not its slug |
-   | `supporting_observations` | `supporting_hits` | observation ids carried as hit ids |
-   | `observation_count` | `hit_count` | direct |
+   | `supporting_observations` | `supporting_hits` | **only the `material_advance` ones** — see below |
+   | `observation_count` | `hit_count` | direct (it already counts only material advances) |
    | `confidence_log` | `confidence_log` | foresight has no equivalent; **exported anyway** — it only benefits |
    | `implication` | `implication` | no equivalent; **exported anyway** |
+
+   **Export evidence, not echoes.** A driver's `supporting_observations` includes `derivative` observations — the syndicated restatements and second-day commentary that attached to the story without advancing it. Filter those out: **`supporting_hits` carries only observations whose `contribution` is `material_advance`.** That keeps it consistent with `hit_count`, which already counts only those, and it keeps the export honest — a foresight driver backed by "seventeen hits" that are really one announcement reported seventeen times is a driver that will be trusted far past its evidence. The derivatives stay in the store, where they belong; they do not travel.
 
 5. **Write the export file.** Shape:
 

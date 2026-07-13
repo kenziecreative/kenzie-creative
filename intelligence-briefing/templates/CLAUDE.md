@@ -1,6 +1,8 @@
 # Intelligence Briefing — Project Configuration
 
-This file configures one intelligence-briefing deployment. The scan, the brief, and the review conversation all read it at the start of every run. Most of it ships with working defaults — you can run a useful brief by supplying only your relevance context. Everything else is editable here at any time; the next run picks up your changes. No need to re-run setup to adjust anything.
+This file configures one intelligence-briefing deployment. The scan, the brief, and the review conversation all read it at the start of every run. Most of it ships with working defaults — you can run a useful brief by supplying only your relevance context. Everything in this file is editable at any time, and the next run picks up your changes.
+
+**One thing this file cannot change by itself: where the system looks.** The territory is the coverage matrix in `./intel/coverage.json` — your domain cells, crossed with the five zones. Rewriting your relevance context here changes what *counts*; it does not change what gets *searched*. If your mandate moves, say so in conversation ("I've shifted from X to Y") and the review skill will re-derive the domain cells, tell you which ones the matrix is missing, and offer to add them. Edit the words here and the searches follow only once the matrix follows.
 
 One project = one brief. A personal scan and a brief you forward to your team are two projects, not one.
 
@@ -48,7 +50,7 @@ How far an unconfirmed, single-source item is allowed to reach. The bar rests on
 
 - **Interval:** daily
 - **Timezone:** [your timezone, e.g. America/Chicago]
-- **Grace window:** 6 hours  <!-- overlap added before the scan window to recover items missed by indexing lag; catch-up after a skipped run is automatic (the scan derives its window from the last run record) -->
+- **Grace window:** 6 hours  <!-- overlap added before each cell's collection window, to recover items missed by indexing lag. Catch-up after a skipped run is automatic: every cell searches back to its own last SUCCESSFUL scan, so a missed morning (or a search that failed) is picked up on the next run rather than lost. -->
 
 ---
 

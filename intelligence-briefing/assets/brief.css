@@ -138,7 +138,7 @@ footer{margin-top:var(--s-8);padding-top:var(--s-4);border-top:1px solid var(--r
 .driver .panel-label{color:var(--sage);}
 .driver .move{font-weight:700;color:var(--ink);}
 
-/* ── Zone overflow: compression, never deletion ─────────────── */
+/* ── Zone overflow: compression, never deletion or stripping ─── */
 .also{border:1px dashed var(--rule);border-radius:var(--r-sm);padding:var(--s-3) var(--s-4);
   margin:var(--s-3) 0;font-size:var(--fs-sm);color:var(--fg-secondary);}
 .also .panel-label{color:var(--fg-muted);}
@@ -146,6 +146,15 @@ footer{margin-top:var(--s-8);padding-top:var(--s-4);border-top:1px solid var(--r
 .also li{margin:var(--s-1) 0;line-height:1.5;}
 .also a{color:var(--accent);text-decoration:none;}
 .also a:hover{text-decoration:underline;}
+.also em{color:var(--fg-muted);font-style:italic;}
+/* Non-default source marks survive compression. A stripped item reads as a safe one. */
+.mark{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--warn-ink);background:var(--warn-tint);
+  border-radius:var(--r-pill);padding:1px 7px;white-space:nowrap;}
+
+/* A failed falsifier search is not an empty one. It must not look like one. */
+.disconf.is-degraded{border-style:solid;background:var(--warn-tint);
+  border-color:var(--warn-tint);color:var(--warn-ink);font-style:normal;}
 
 /* ── Emergent driver proposal ───────────────────────────────── */
 .propose{border:1px dashed var(--accent);border-radius:var(--r-sm);padding:var(--s-4);

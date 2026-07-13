@@ -4,6 +4,75 @@ All notable changes to the Intelligence Briefing plugin. Per-plugin semver; tags
 plugin-scoped (`intelligence-briefing-vX.Y.Z`). Entries below 0.3.0 are reconstructed from
 git history; the plugin's pre-marketplace iterations moved quickly, so early dates cluster.
 
+## 1.1.0 — 2026-07-12
+
+**Durable collection.** A disclosed re-attack on 1.0.0 (pass 2 of the external blind review)
+found the rebuild's state model sound but incomplete, with one disease showing through eight
+seams: **collection success was not durable.** The system recorded an obligation, failed it,
+and then lost the failure — a rate-limited cell was disclosed on the morning it failed, then
+advanced as though it had succeeded, so the next day's brief could call the rotation current
+while the missed interval was never recovered. 1.1.0 makes every mandatory collection
+obligation record an outcome, and makes that outcome gate what the brief is allowed to claim.
+No new dependencies, no subagents, no pruning; the editorial layer is untouched again.
+
+- **A failed obligation is a debt, not a completed step.** A cell that fails keeps its old
+  `last_successful_scan` and its old `next_due`, so it stays due and gets retried until it
+  actually succeeds. New `last_successful_scan` / `last_attempted` / `consecutive_failures`
+  fields separate "we tried" from "we saw," and **every gate reads the one that means
+  something.** The brief's rotation percentage now counts successful scans, never attempts.
+- **Signposts and driver falsifiers get outcomes too.** All three collection classes now share
+  one vocabulary (`ok` / `empty` / `failed`), and the run record persists a row per due
+  signpost and a row per active driver's falsifier search — the counter-hypothesis, the query,
+  and what came back. **Any failed obligation degrades the run**, not just a failed cell.
+  *"Nothing surfaced against your four active drivers"* is now legal only when all four
+  searches actually completed; a failed falsifier renders as untested drivers, because an empty
+  search and a search that never ran are different facts and must never read as the same
+  sentence.
+- **`idle`: a fourth run status.** With zero cells due, "every due cell succeeded" and "no cell
+  completed" were both vacuously true, so the same morning could be reported as full health or
+  as total collection failure. `idle` names the state where nothing was owed, and it gets its
+  own honest rendering — never "0 of 0 cells due today completed."
+- **The rotation is staggered at setup.** Cells' opening `next_due` dates now spread across the
+  first cycle instead of all falling due on day one. This is what makes a weekly matrix behave
+  as the "partial sweep each morning" it always promised: without it, a daily deployment had
+  every cell due on day one, nothing due for six days, and a first run of well over a hundred
+  searches that would rate-limit itself into a degraded first brief.
+- **Per-cell collection windows.** Each cell now searches back to *its own* last successful
+  scan, not to the last run's window. A weekly cell searches a week of territory even when
+  yesterday's daily run completed; previously it inherited the run's one-day window and six
+  days went missing. The run window, the cell windows, and the reader window are now three
+  named things that cannot be mistaken for one another.
+- **Derivative coverage no longer inflates drivers.** The material-advance judgment the scan
+  already made at the thread layer is now recorded on the observation (`contribution`) and
+  honored at the driver layer: a derivative observation attaches, but does not increment
+  `observation_count` and does not satisfy the reassessment cause gate. Ten outlets restating
+  one announcement used to make a driver look ten observations stronger; now it looks exactly
+  one event stronger, which is what happened. `/intel-export` carries only material advances,
+  so a foresight driver can't arrive backed by seventeen hits that are one story told
+  seventeen times.
+- **Observations dedupe on source URL** before capture — what the grace window always claimed
+  and never implemented. This is a check before a write, never a prune: nothing in this system
+  deletes an observation.
+- **Verification checks the verb.** `captured_evidence` now carries the source's own claim in
+  the source's own words, alongside the verbatim figures, plus a locator and a retrieval
+  timestamp. A source that *proposed* a restriction, written up as one that *imposed* it, used
+  to pass every check the brief could run — the date, the region, and the range all survive
+  that misreading intact. The predicate is now checked first, against the source's own. Any
+  item reaching `act`, or moving a driver, must rest on a source that was actually opened; a
+  search snippet is a pointer, not a source.
+- **Overflow preserves epistemic safety.** An item compressed to the "Also in this zone" line
+  now carries its qualifiers, its type, its disposition, its non-default source marks, and —
+  for a Signal — a compact uncertainty clause. Compressing a single-source tertiary preliminary
+  finding down to a bare title didn't preserve it, it laundered it: the reader saw a clean
+  claim exactly where they had least room to question it. Markdown and HTML now render this
+  line identically, as the "content identical across formats" guarantee always required.
+- **A corrected mandate now reaches the territory.** The relevance context says what matters;
+  the coverage matrix says where the system actually looks, and they are different files.
+  Editing the first no longer silently leaves the second scanning the old world: the review
+  conversation re-derives the domain cells, names the ones the matrix is missing, and offers to
+  add them — retiring the obsolete ones rather than deleting them, so the record of what the
+  system used to be blind to survives.
+
 ## 1.0.0 — 2026-07-12
 
 The rebuild. A hostile blind review of 0.3.0 confirmed nine findings with one root cause:

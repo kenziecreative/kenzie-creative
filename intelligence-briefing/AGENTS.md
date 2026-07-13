@@ -23,7 +23,15 @@ Grounding for the 1.0.0 architecture: `dev/rebuild/intelligence-briefing-v1-buil
 ## Key points
 
 - **The run is not the system.** State lives in the deployment under `intel/` (observations sharded by month and never pruned; append-only `confidence_log`, `runs.json`, `feedback.json`; threads and drivers never deleted, only dormant/retired). Do not reintroduce mechanics that make the brief depend on its own prior drafts — verification re-derives from `captured_evidence`.
-- **Silence must be attributable.** The collection-health line renders on every brief with no code path that omits it; a quiet day is only claimable when every due cell completed, else "assessment degraded." Don't weaken this to a config option.
+- **Silence must be attributable.** The collection-health line renders on every brief with no code path that omits it; a quiet day is only claimable when every mandatory obligation due today completed, else "assessment degraded." Don't weaken this to a config option.
+- **Collection success is durable (1.1.0, the pass-2 repair).** Three rules, and they are the spine of the state model:
+  1. **Every mandatory collection obligation records an outcome** (`ok` / `empty` / `failed`), and there are **three classes** of them: due cells, due signposts, and each active driver's falsifier search. An obligation with no recorded outcome is indistinguishable from one that never ran — that is how a mandatory step becomes theater.
+  2. **A failed obligation is a debt, not a completed step.** Never advance a success timestamp on a failure. `last_successful_scan` moves only on `ok`/`empty`; `last_attempted` records the try and gates nothing. A failed cell stays due until it succeeds. **Any failed obligation degrades the run.**
+  3. **The outcome gates the claim.** The rotation percentage reads `last_successful_scan`; *"nothing surfaced against your drivers"* is legal only when every falsifier completed. If you add a new collection obligation, it needs an outcome, a failure path, and a gate — all three, or it is decoration.
+- **Four run statuses, and `idle` is load-bearing.** `complete` / `degraded` / `idle` / `failed`. `idle` (nothing was due) exists because "every due cell succeeded" and "no cell completed" are *both* vacuously true at zero due cells; without a name for that state a weaker runtime can report the same morning as full health or as total failure. Test for `idle` before `complete`. **Never render "0 of 0 cells due today completed."**
+- **The rotation is staggered, and the stagger is the rotation.** `/intel-setup` spreads opening `next_due` dates across the first cycle. Do not "fix" the scan to treat never-scanned cells as due — that collapses the stagger on run one, re-synchronizes the whole matrix, and turns a daily product into a weekly one with a hundred-plus-search first session.
+- **Three windows, never confused:** the **cell collection window** (each cell searches back to *its own* last successful scan — a weekly cell searches a week even when yesterday's run completed), the **run window** (what a run covers, on the run record), and the **reader window** (what the brief reports on, from `brief_written`). Collapsing them is how six days go missing from a weekly cell.
+- **Derivative ≠ evidence.** The material-advance judgment is made once (scan step 7), recorded on the observation as `contribution`, and honored at *both* the thread layer and the driver layer. A derivative observation attaches but never increments `observation_count` and never satisfies the reassessment cause gate. Ten outlets restating one announcement is one event, not ten.
 - **The action-gate rule is worded identically in three places** — the briefing skill's EVIDENCE BAR, its VERIFICATION step 6, and `templates/CLAUDE.md`. If you edit it, edit all three to the same words; the 0.3.0 review's only architecture-independent bug was these drifting apart.
 - **Self-contained HTML brief** by default (`briefs/YYYY-MM-DD.html`, inlining `assets/brief.css`; a same-date rerun writes `-02`, never overwrites); `format: markdown` produces the plain brief. Content identical across formats.
 - **Cowork-safe rendering** is mandatory: system fonts, no JavaScript, no content-hiding entrance animations, flat design (no drop shadows, no colored edge bars). See the root `AGENTS.md`.
@@ -55,5 +63,16 @@ Grounding for the 1.0.0 architecture: `dev/rebuild/intelligence-briefing-v1-buil
   - **Cowork-safe HTML is mandatory** (see Key points). Hard rules, not preferences.
   - **`captured_evidence` is internal.** The no-block-quotes rule governs the emitted brief;
     the store remembers what sources actually said. Keep that seam stated in the skills.
+  - **`captured_evidence.claim` carries the source's own verb, and verification checks it
+    first.** This is not redundancy with `details`. A source that *proposed* a restriction,
+    compressed into one that *imposed* it, passes every figure/range/date/qualifier check ever
+    written — the numbers survive the misreading intact. Checking only what is easy to check is
+    how a verification gate becomes decoration. Don't narrow this back to figures.
+  - **Every field needs a reader.** Before shipping a schema change, grep each field for a
+    *consumer*: if the only hits are the definition, the writer, and the docs, the field is
+    decoration and the behavior it was supposed to enforce is not happening. Pass 1 taught this
+    as *config read by nobody*; pass 2 found the harder form — **written by a step, read by no
+    step** (`last_status` and the run windows both shipped in 1.0.0 that way, perfectly
+    implemented on the write side and consulted by nothing).
   - **Zone → STEEP mapping lives only in `/intel-export`.** The daily runtime never computes
     STEEP; drivers carry `steep_primary: null` until export. Don't "fix" that.

@@ -51,27 +51,41 @@ Use these exact patterns. They map 1:1 onto the brief's content — same items, 
 </div>
 ```
 
-**Collection health** — **MANDATORY, immediately after the page head, on every brief.** Three variants. Exactly one always renders. There is no fourth state and no way to omit it. (If the scan did not run at all, use the degraded variant's markup with a plain statement of when collection last succeeded.)
+**Collection health** — **MANDATORY, immediately after the page head, on every brief.** Five variants, one per run state. Exactly one always renders. There is no sixth state and no way to omit it. Content is set by COLLECTION HEALTH in SKILL.md; this is only its markup.
 
 ```
 <!-- run complete, items found -->
 <div class="collect">
   <span class="state">Collection current</span>
-  <span class="detail">6 of 6 cells due today completed. Rotation 78% complete this week.</span>
+  <span class="detail">6 of 6 cells due today completed; 4 drivers tested against. Rotation 78% complete this week.</span>
 </div>
 
 <!-- run complete, nothing found -->
 <div class="collect is-quiet">
   <span class="state">Quiet day</span>
-  <span class="detail">All cells due today were scanned; none are overdue. Nothing moved.</span>
+  <span class="detail">Everything due today was scanned — 6 cells, 4 driver falsifiers, 1 signpost — and none are overdue. Nothing moved.</span>
 </div>
 
-<!-- run degraded -->
+<!-- run idle: nothing was due. NOT a failure, and not "0 of 0 complete". -->
+<div class="collect is-quiet">
+  <span class="state">Nothing due today</span>
+  <span class="detail">No cells fall due until tomorrow; the rotation is 71% through this week and on schedule. Reporting on the picture as it stands.</span>
+</div>
+
+<!-- run degraded: ANY mandatory obligation failed — a cell, a signpost check, or a driver falsifier -->
 <div class="collect is-degraded">
   <span class="state">Assessment degraded</span>
-  <span class="detail">Policy Levers × AI-advice regulation and SciTech Frontier × model capability did not complete. This brief covers 4 of 6 due cells. <strong>No driver moved today, because collection is incomplete.</strong></span>
+  <span class="detail">Policy Levers × AI-advice regulation and SciTech Frontier × model capability did not complete, and the falsifier search against <em>AI advisory commoditization</em> failed. This brief covers 4 of 6 due cells and tested 3 of 4 drivers. <strong>No driver moved today, because collection is incomplete.</strong> The cells that failed stay due and will be retried on the next run.</span>
+</div>
+
+<!-- no scan has run for this interval -->
+<div class="collect is-degraded">
+  <span class="state">No scan since 2026-07-08</span>
+  <span class="detail">Reporting on state last collected July 8. Nothing below reflects anything that happened after that date.</span>
 </div>
 ```
+
+**The `is-degraded` state is for failure, and an `idle` run is not a failure** — nothing was owed, so nothing was missed. Render it with the quiet styling and honest words. Never render "0 of 0 cells due today completed": it reads as a health claim while asserting nothing.
 
 **Section head** (Lead / Scan / Synthesis / The Reckoning / Disconfirming):
 ```
@@ -134,16 +148,20 @@ An **expired** signpost (the predicted event did not happen) renders the same wa
 </div></article>
 ```
 
-**Zone overflow** — renders **only** when material items exceed the zone detail budget. Every dropped-to-a-line item still appears. **Compression, never deletion.**
+**Zone overflow** — renders **only** when material items exceed the zone detail budget. Every dropped-to-a-line item still appears. **Compression, never deletion — and never stripping.**
+
+Each line carries exactly what THE OVERFLOW LINE in SKILL.md requires: the claim with its qualifiers intact (not a headline), type, disposition, any non-default source marks, a compact uncertainty clause for a Signal, and the link. **Identical in content to the Markdown contract's overflow line.**
 ```
 <div class="also">
   <span class="panel-label">Also in this zone</span>
   <ul>
-    <li><a href="URL">Second state adopts an incompatible audit standard</a> — Fact · Track</li>
-    <li><a href="URL">Trade body publishes model compliance guidance</a> — Frame · Note</li>
+    <li><a href="URL">A second state adopts an audit standard incompatible with the first</a> — Fact · Track</li>
+    <li><a href="URL">Early data suggests 1–3x higher compliance cost among surveyed firms, preliminary and in one region</a> — Signal · Note · <span class="mark">single source, tertiary</span> — <em>confirmed or killed by the trade body's full survey, due Q4</em></li>
   </ul>
 </div>
 ```
+
+**The second example is the whole point of this block.** A single-source tertiary preliminary regional Signal, compressed to a bare title and a disposition, arrives looking like a settled fact — and it arrives in the one place where the reader is skimming and has no room to argue with it. **Compression takes the detail. It never takes the warning.**
 
 **Promoted stub** (a lead item's pointer in its home zone):
 ```
@@ -192,9 +210,16 @@ An **expired** signpost (the predicted event did not happen) renders the same wa
 
 Write the reckoning in the same editorial register as the rest of the brief. **It is a reckoning, not a report card.** Do not score the reader and do not congratulate them.
 
-**Disconfirming** — reports what the falsifier search found, naming the driver each item challenges (such items render as ordinary cards with a `.driver` clause). When it found nothing, that is itself information:
+**Disconfirming** — reports what the falsifier search found, naming the driver each item challenges (such items render as ordinary cards with a `.driver` clause). Read the run record's `falsifiers` array; do not infer the outcome from the absence of items.
+
+When **every** falsifier completed and came back empty, that is itself information:
 ```
 <div class="disconf">Nothing surfaced against your four active drivers this week.</div>
+```
+
+When **any** falsifier failed, the drivers it was meant to test went untested, and the brief says so instead. **An empty search and a failed search are different facts and never render as the same sentence.**
+```
+<div class="disconf is-degraded">Two of your four drivers went untested today — the searches against <em>AI advisory commoditization</em> and <em>regulatory hardening</em> did not complete. Nothing here should be read as evidence they still hold.</div>
 ```
 
 **Emergent driver proposal** — renders at the foot of the brief when the scan proposed a new force. **The brief proposes; it never creates.** Confirmation happens in the review conversation.

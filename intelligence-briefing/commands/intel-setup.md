@@ -45,6 +45,15 @@ Steps, in order:
 
    Set `required_frequency_days` per applicable cell. **Default 7.** Offer 1–3 days for cells the user says move fast. The rotation is what earns the coverage claim: a matrix where everything is weekly and the brief is daily will complete correctly over the week, a partial sweep each morning.
 
+   **Then stagger the matrix, which is what actually makes that true.** Spread the applicable cells' first `next_due` dates evenly across their frequency window rather than leaving them all to fall due at once: sort the applicable cells, then assign cell *i* an initial `next_due` of `today + (i mod required_frequency_days)` days. A weekly matrix of 21 cells becomes three cells a day for seven days, forever — not 21 cells on Monday and nothing until the next Monday.
+
+   Staggering does two jobs, and the second one is why it is not optional:
+
+   - **It makes the daily brief real.** Unstaggered, every cell is due on day one and no cell is due again until day eight. The brief then has nothing to collect on six mornings out of seven, and a daily product becomes a weekly one wearing a daily coat.
+   - **It caps the first run.** Unstaggered, run one is *every* cell at once — five zones times four to eight cells, at three to eight channels each, is a first session of well over a hundred searches, which is exactly how a first run rate-limits itself into a degraded brief. Staggered, day one is a handful of cells and the matrix fills in over the first cycle.
+
+   Some cells should still be due on day one — assign the fastest-moving ones (`required_frequency_days: 1`) offset 0 — but nothing requires the whole matrix to open its eyes in the same second.
+
 7. Ask the **evidence bar** as a single multiple-choice question — this one is a genuine discrete choice, so the question tool fits here. Offer:
    - `situational` — early-warning; unconfirmed single-source items can go anywhere, marked.
    - `decision` — unconfirmed items inform but can't drive an action. (default)
@@ -61,7 +70,7 @@ Steps, in order:
    b. Create the `briefs/` folder by writing the first state file below (writing a file into a path creates its folders), and create `ledger.json` containing exactly: `{"entries": []}`
 
    c. Create the six intelligence state files under `./intel/`:
-      - `intel/coverage.json` — `{"domain_cells": [...], "matrix": [...]}` filled from steps 4 and 6: every confirmed cell in `domain_cells`; one `matrix` row per zone × cell crossing, applicable rows with `required_frequency_days`, `last_scanned: null`, `last_status: null`, `next_due: null`, `scan_count: 0`, `observation_count: 0`, `source_health: "ok"`; non-applicable rows with `applicable: false` and their `na_reason`.
+      - `intel/coverage.json` — `{"domain_cells": [...], "matrix": [...]}` filled from steps 4 and 6: every confirmed cell in `domain_cells`; one `matrix` row per zone × cell crossing. Applicable rows carry `required_frequency_days`, **the staggered `next_due` date computed in step 6** (a real date, never null), `last_attempted: null`, `last_successful_scan: null`, `last_status: null`, `consecutive_failures: 0`, `scan_count: 0`, `observation_count: 0`, `source_health: "ok"`. Non-applicable rows carry `applicable: false` and their `na_reason`.
       - `intel/drivers.json` — `{"drivers": [...], "proposals": []}` with the confirmed forces from step 3 (each: `driver_id` `DRV-001`…, `name`, one-paragraph `definition`, `direction: "Uncertain"`, `certainty: "Low"|"Medium"`, `time_horizon` as best supported, `status: "active"`, `origin`, `implication` drawn from the user's "so what", `steep_primary: null`, `steep_secondary: []`, `cell_ids` for the cells it lives in, `supporting_observations: []`, `observation_count: 0`, the seed `confidence_log` entry, `created`, `last_reassessed: null`).
       - `intel/signposts.json` — `{"signposts": []}`
       - `intel/threads.json` — `{"threads": []}`
@@ -83,6 +92,8 @@ Steps, in order:
    Tell the user this file pre-approves only the system's own tools for this project, that they may be asked to trust the folder once, and that they can edit or delete it anytime. (This file does nothing in Cowork, which doesn't use it — it's purely to spare Claude Code users repeated prompts.)
 
 10. **Pre-flight check, then test run.** Before running the test brief, confirm a web-search tool is actually callable in this session (the scan can't collect without one). If `WebSearch` is available, proceed. If it is not, stop and tell the user plainly what to approve — e.g. "To run your first brief I need web search; please approve `WebSearch` when prompted (or add it to your allowlist)" — rather than launching the scan and letting it fail partway. Once web search is confirmed, show the finished CLAUDE.md, then run the `environmental-scan` skill followed by the `environmental-briefing` skill once as a test (the same chain `/brief` runs), so the user sees a real brief — with its collection-health line — before scheduling it.
+
+    **Set the expectation for what the first brief is.** Because the matrix is staggered (step 6), the first run scans the cells due *today* — a slice of the matrix, not all of it — plus a falsifier search against each seeded driver. Say so before the run, so a short first brief reads as the system working rather than the system failing: *"This first brief covers today's slice of the rotation. The rest of the matrix fills in over the next several days, and by the end of the first cycle every cell has been swept at least once."* A first run that tried to scan every crossing at once would be a hundred-plus searches, would likely rate-limit itself into a degraded brief, and would teach the rotation nothing.
 
 11. Tell the user how to schedule recurring runs: type `/schedule`, set the prompt to "Run /brief for this project" (or "Run the environmental scan and then the environmental briefing for this project"), match the frequency to their cadence, and pick a time. Mention that a run skipped because the machine was asleep catches up automatically — the scan derives its window from the last run record, so nothing is lost. Also mention the third surface: they can just talk to it — "you missed X", "what do we know about Y" — any time, and it gets sharper (the `intelligence-review` skill).
 

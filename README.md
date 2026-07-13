@@ -13,7 +13,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 | Plugin | Version | What you get | Guide |
 |---|---|---|---|
 | Goal Setting | 0.2.1 | Set business goals that survive contact with reality — and actually operate against them, not abandon them by February | [guide](./goal-setting/README.md) |
-| Intelligence Briefing | 1.0.0 | Know what actually moved in your world today — from a system that remembers what it saw and proves it looked | [guide](./intelligence-briefing/README.md) |
+| Intelligence Briefing | 1.1.0 | Know what actually moved in your world today — from a system that remembers what it saw and proves it looked | [guide](./intelligence-briefing/README.md) |
 | Photo Generator | 1.2.0 | Get a professional-grade photo from a plain-language description, without knowing what a key light or an 85mm prime is | [guide](./photo-generator/README.md) |
 | Researcher | 1.4.1 | Research you can stand behind, with every claim traced back to a real source | [guide](./researcher/README.md) |
 | Sage | 0.2.0 | Always know where a decision landed and who owes what, across a whole week of meetings | [guide](./sage/README.md) |
