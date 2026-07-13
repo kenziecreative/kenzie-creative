@@ -20,7 +20,7 @@
 
 1. **Kelsey: run Codex pass 2.** Fresh Codex context. Packet: `~/Projects/_scratch/kenzie-blind-reviews/intelligence-briefing/PASS-2-PROMPT.md` + `plugin/`. Paste the verdict back into a session for consumption.
 2. **Consume the verdict** per the protocol pipeline: verify every citation both directions, triage against `intelligence-briefing/AGENTS.md` locks (collisions are price tags, not work), file the note to `/Users/kelseyruger/Projects/_shared/core-kenzie-marketplace/dev/blind-reviews/intelligence-briefing-pass2-2026-07.md` (ONE INBOX — absolute path, not this worktree), repairs ship as a normal release.
-3. **Merge to main** (in `core-kenzie-marketplace`) when Kelsey is satisfied with the pass-2 outcome — installers pull main, so this is the real ship.
+3. **Merge to main** when Kelsey is satisfied with the pass-2 outcome — installers pull main, so this is the real ship. Two equivalent paths: merge in `core-kenzie-marketplace` (the strategist pattern), or the PR GitHub offered for the pushed branch: https://github.com/kenziecreative/kenzie-creative/pull/new/review/intelligence-briefing
 4. **Build the intelligence-briefing eval pack** (golden set + rubric) — now unblocked; grade behavior (health line always present, degraded ≠ quiet, no padding), never recommendation correctness.
 5. **Kelsey: strategist STOP package** — `dev/convergence/review-queue/strategist-rubric-anchors.md`, plus two eval-pack follow-ups (`single_stage_advance` must accept 0.4.1's honest statuses; pin `adv-preference-over-evidence`'s end-state).
 6. **goal-setting: first golden-set run.** Nothing gates it.
