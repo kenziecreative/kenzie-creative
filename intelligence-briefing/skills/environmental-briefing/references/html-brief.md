@@ -85,7 +85,17 @@ Use these exact patterns. They map 1:1 onto the brief's content — same items, 
 </div>
 ```
 
-**The `is-degraded` state is for failure, and an `idle` run is not a failure** — nothing was owed, so nothing was missed. Render it with the quiet styling and honest words. Never render "0 of 0 cells due today completed": it reads as a health claim while asserting nothing.
+**The `is-degraded` state is for failure, and an `idle` run is not a failure** — nothing was owed, so nothing was missed. Render it with the quiet styling and honest words.
+
+**Count only the classes that had something due.** On a staggered rotation many mornings have no cell falling due while the driver falsifiers still run — a `complete` run with zero due cells. **Never render "0 of 0 cells due today completed"** in *any* variant: it reads as a health claim while asserting nothing. Write "No cells fell due today" and report what was actually owed.
+
+```
+<!-- run complete, zero cells due, drivers still tested -->
+<div class="collect">
+  <span class="state">Collection current</span>
+  <span class="detail">No cells fell due today; 4 drivers tested against. Rotation 100% complete this week.</span>
+</div>
+```
 
 **Section head** (Lead / Scan / Synthesis / The Reckoning / Disconfirming):
 ```

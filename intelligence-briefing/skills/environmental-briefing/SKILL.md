@@ -77,19 +77,29 @@ The rule, stated exactly:
 
 This defends the quiet-day doctrine rather than colliding with it. "A quiet day is correct behavior" is only true if the system actually looked. Silence must be attributable — **and everything that can be silent must be attributable, not just the cells.**
 
+**Count only the classes that actually had something due.** A staggered rotation means many mornings have no cell falling due while the driver falsifiers still run — that is the rotation working, not a gap. **Never render a count for a class with nothing due.** "0 of 6 cells" is a real disclosure; **"0 of 0 cells" is not a disclosure at all** — it is a health claim that asserts nothing, and it is the exact noise the `idle` state exists to prevent. Say "no cells fell due today" and move on to what *was* owed.
+
 Read the latest run record in `runs.json` and render exactly one of these five:
 
 **Run `complete`, items found:**
 > Collection current. 6 of 6 cells due today completed; 4 drivers tested against. Rotation 78% complete this week.
+>
+> *(zero cells due, drivers still tested)* Collection current. No cells fell due today; 4 drivers tested against. Rotation 100% complete this week.
 
 **Run `complete`, nothing found:**
 > **Quiet day.** Everything due today was scanned — 6 cells, 4 driver falsifiers, 1 signpost — and none are overdue. Nothing moved.
+>
+> *(zero cells due)* **Quiet day.** No cells fell due today; all 4 driver falsifiers ran and found nothing. Nothing is overdue, and nothing moved.
 
-**Run `idle` (nothing was due):**
-> **Nothing due today.** No cells fall due until tomorrow; the rotation is 71% through this week and on schedule. Reporting on the picture as it stands.
+**Run `idle` (nothing was due at all — no cells, no signposts, no active drivers):**
+> **Nothing due today.** No cells fall due until tomorrow, and there are no active drivers to test. Reporting on the picture as it stands.
+
+*(`idle` is rare, and deliberately so: an active driver always owes a falsifier search, so a deployment with drivers essentially never idles. It exists for the genuine zero-obligation morning — every driver retired, nothing due — which is exactly the state that would otherwise be reported as both perfect health and total failure.)*
 
 **Run `degraded`:**
 > **Assessment degraded.** Policy Levers × AI-advice regulation and SciTech Frontier × model capability did not complete, and the falsifier search against *AI advisory commoditization* failed. This brief covers 4 of 6 due cells and tested 3 of 4 drivers. **No driver moved today, because collection is incomplete.** The cells that failed stay due and will be retried on the next run.
+>
+> *(zero cells due, a falsifier failed)* **Assessment degraded.** No cells fell due today, but the falsifier search against *AI advisory commoditization* did not complete, so 3 of your 4 drivers were tested and one was not. **No driver moved today.**
 
 **No scan at all:**
 > Reporting on state last collected [date]. No scan has run since. Nothing below reflects anything that happened after that date.
