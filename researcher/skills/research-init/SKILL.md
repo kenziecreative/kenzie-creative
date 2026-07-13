@@ -446,6 +446,16 @@ Evidence calibration — include the appropriate guidance based on the audience 
 
 When the audience is not one of the above, calibrate based on: Who will read this? What decisions will they make from it? What happens if a claim turns out to be wrong?
 
+Add this line after the calibration guidance: "This standard is compiled into `research/reference/evidence-standard.md` and enforced at the promotion gate — a claim that violates an enforceable rule fails `/research:audit-claims` unless you grant a named waiver, and the waiver rationale appears verbatim in the output's Methodology & Limitations section."
+
+2a. **Working Posture** — a POINTER only. Copy no doctrine text into CLAUDE.md; the plugin ships the doctrine and CLAUDE.md points at it, so the two can never drift. The section reads exactly:
+
+```markdown
+## Working Posture
+
+Conversational posture and response register are governed by the plugin's posture doctrine — read `${CLAUDE_PLUGIN_ROOT}/reference/posture-register.md` at session start and hold it for every turn. It governs the conversation the way the audit gate governs the outputs: the evidence machinery can hold perfectly while the conversation quietly fails.
+```
+
 3. **Directory Structure:**
 
 ```
@@ -461,6 +471,8 @@ research/
 ├── reference/                # Protocol and standards reference files
 │   ├── canonical-figures.json # Single source of truth for cross-phase numbers
 │   ├── claim-graph.json       # Claim graph registry, written by /research:audit-claims
+│   ├── evidence-standard.md   # Commissioned evidence rules — enforced at the audit gate
+│   ├── backstage-tasks.md     # Agent's private prep queue (read at phase start)
 │   └── retrieval-log.json     # Retrieval log registry, written by /research:discover
 ├── discovery/               # Discovery strategy and candidate sources
 ├── cross-reference.md        # Cross-source patterns
@@ -530,7 +542,7 @@ Read the research plan in `research/research-plan.md` before starting. It define
 
 **How to recommend an intra-phase clear:**
 
-At the end of a step where the criteria above apply, update STATE.md with a step-specific "Next Action" (see State Management section), then render the transition prompt (format defined in `${CLAUDE_PLUGIN_ROOT}/reference/prompt-templates-guide.md`, Example 4) pointing at `/clear` followed by the next step's command. The user decides whether to accept — if they decline, continue to the next step in the same context window.
+At the end of a step where the criteria above apply, run the session debrief first: (1) append a Working Read entry to `research/commonplace.md` (commonplace trigger 5 — in-flight hypotheses and half-formed reads, so the next session re-adopts the thinking, not just the position), (2) update STATE.md with a step-specific "Next Action" (see State Management section). Then render the transition prompt (format defined in `${CLAUDE_PLUGIN_ROOT}/reference/prompt-templates-guide.md`, Example 4) pointing at `/clear` followed by the next step's command. The user decides whether to accept — if they decline, continue to the next step in the same context window.
 
 **How to resume after an intra-phase clear:**
 
@@ -570,7 +582,7 @@ The "Active phase" field in STATE.md tells you which phase to work on. Do not wo
 
 8. **Context Management:**
 
-This is a long-running project. Clear context between research phases — each phase gets a fresh window for sharper analysis. STATE.md is the source of truth that carries everything forward. Before clearing context, always update STATE.md with current position, completed work, key decisions, and next action. After clearing or starting a new session: read `research/STATE.md` first. If unsure what's been done, run `/research:check-gaps` before starting new work.
+This is a long-running project. Clear context between research phases — each phase gets a fresh window for sharper analysis. STATE.md is the source of truth that carries everything forward. Before clearing context, always update STATE.md with current position, completed work, key decisions, and next action — and if the clear lands mid-phase, append a Working Read entry to commonplace.md (trigger 5) so the in-flight reasoning survives, not just the position. After clearing or starting a new session: read `research/STATE.md` first. If unsure what's been done, run `/research:check-gaps` before starting new work.
 
 9. **Commonplace Book:**
 
@@ -585,6 +597,8 @@ Research Agent maintains `research/commonplace.md` as a running record of observ
 3. **Mid-reasoning synthesis** that you produced in chat but that does not land in a draft, output, or source note. Example: while explaining the decision between two options, you produce a paragraph of synthesis that captures *why* the decision matters — not the decision itself (which goes in STATE.md or notes-to-self.md) but the reasoning that makes it consequential.
 
 4. **An explicit user request** — "note this," "remember this," "capture that" or anything equivalent. This is the highest-priority trigger — the user is telling you directly.
+
+5. **A contact boundary mid-phase.** Whenever you recommend a context clear (intra-phase or end-of-phase) or the session is winding down mid-cycle, append a **Working Read** entry before the boundary: the hypotheses currently in play, what the last few sources are confirming or challenging, and any half-formed read that hasn't landed in a draft or note yet. Position data (which step, what command is next) belongs in STATE.md's Next Action, not here — this entry preserves the *thinking* that would otherwise evaporate with the context. Use the standard entry format with the hook "Working Read at [step] boundary."
 
 **Do NOT append for:**
 - Routine status updates ("processed source 12, added to notes")
@@ -752,6 +766,37 @@ If you find yourself wanting to bypass the gate, you almost certainly want to re
 
 - Read `${CLAUDE_PLUGIN_ROOT}/reference/templates/canonical-figures.json` → Write to `${CLAUDE_PROJECT_DIR}/research/reference/canonical-figures.json`
 
+- Write `${CLAUDE_PROJECT_DIR}/research/reference/evidence-standard.md` — the compiled, enforceable form of the Question 3 answer. `/research:audit-claims` reads this file at every promotion gate. Derive 2–5 concrete, testable rules from the audience calibration — each rule must be checkable against a draft and its source notes (a rule that can't fail a specific claim is not a rule). Structure:
+
+```markdown
+# Evidence Standard
+
+Compiled by /research:init from the audience answer. Read by /research:audit-claims at every promotion gate — a claim that violates an enforceable rule fails the audit unless the commissioner grants a named waiver.
+
+**Audience:** [user's Question 3 answer, verbatim]
+**Calibration:** [the matched audience category, or "custom"]
+
+## Enforceable rules
+
+- [Concrete, testable rules derived from the calibration. Examples by audience: investment/due diligence — "Every quantitative financial claim requires 2+ independent sources; single-source financial claims are unacceptable." external publication — "No single-source finding may be presented as established; source qualifiers are mandatory in the draft." internal decision-making — "Single-source findings are acceptable only when flagged with 'single source suggests' language." Write the rules that fit THIS project's audience — do not copy all the examples.]
+
+## Waiver protocol
+
+The commissioner may waive a specific violation with `waive: <claim> — <rationale>`. The waiver is recorded when it is granted — audit report, gate log, and verbatim in the output's Methodology & Limitations section — and the draft promotes on the next audit run. Waivers are per-claim, never blanket. Only audience-standard violations are waivable; evidence-accuracy findings (unsupported claims, misrepresented sources, figures that don't match their notes) have no waiver exit.
+```
+
+- Write `${CLAUDE_PROJECT_DIR}/research/reference/backstage-tasks.md` — the agent's private prep queue, distinct from the user-facing Next Action and from `notes-to-self.md` (user capture). Initial content:
+
+```markdown
+# Backstage Tasks
+
+The agent's own prep queue — items the agent flagged for its own future attention ("the 18% figure looked shaky — re-verify against the original when Phase 4 touches financials"). Written at phase close by /research:audit-claims and whenever the agent spots something worth its own follow-up. Read and worked through silently by /research:start-phase at the next phase start; completed items are checked off with a one-line outcome.
+
+Not a user-facing to-do list, not part of any gate. If an item needs the user's attention, it belongs in the debrief or notes-to-self.md instead.
+
+---
+```
+
 - Write `${CLAUDE_PROJECT_DIR}/research/reference/claim-graph.json` with initial content `{"claims": []}` — this is the claim graph registry, populated by `/research:audit-claims` during each phase's Verify step.
 
 - Write `${CLAUDE_PROJECT_DIR}/research/reference/retrieval-log.json` with initial content `{"entries": []}` — this is the retrieval log registry, populated by `/research:discover` after each discovery run.
@@ -802,6 +847,8 @@ Before reporting to the user, verify the scaffolding is complete:
    - `reference/tools-guide.md`
    - `reference/canonical-figures.json`
    - `reference/claim-graph.json`
+   - `reference/evidence-standard.md`
+   - `reference/backstage-tasks.md`
    - `reference/retrieval-log.json`
    - `discovery/strategy.md`
    - `source-material-digest.md` (only required if `source-material/` contains non-dotfiles; skip otherwise)

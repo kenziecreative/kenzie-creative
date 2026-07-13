@@ -17,18 +17,19 @@ Show the current state of the research project as a dashboard.
 
 1. **Run infrastructure health checks** — collect all check results into a failures list (empty list = all pass):
 
-   **1a. Hooks active** — Read `.claude/settings.json` and verify the JSON contains:
-   - A `PreToolUse` entry with `matcher: "Write"` — failure name: "PreToolUse Write hook missing" — failure description: "this hook prevents unaudited writes to outputs/"
-   - A `PreToolUse` entry with `matcher: "Edit"` — failure name: "PreToolUse Edit hook missing" — failure description: "this hook prevents unaudited edits to outputs/"
-   - A `PreCompact` entry (any matcher) — failure name: "PreCompact hook missing" — failure description: "this hook ensures STATE.md is updated before context compacts"
+   **1a. Plugin hooks manifest sound** — Read `${CLAUDE_PLUGIN_ROOT}/hooks/hooks.json` (the plugin ships its hooks here — NOT in the project's `.claude/settings.json`) and verify:
+   - It parses as valid JSON with a `hooks` key.
+   - `hooks.PreToolUse` contains an entry whose `matcher` covers Write, Edit, and MultiEdit (the shipped form is the combined matcher `"Write|Edit|MultiEdit"` — a combined matcher passes this check) and whose command invokes `gate-outputs.sh` — failure name: "outputs gate hook missing from plugin hooks.json" — failure description: "this hook blocks unaudited Write/Edit/MultiEdit to research/outputs/ on Claude Code; in Cowork hooks don't run and the gate holds structurally (audit-claims is the only writer)"
+   - `hooks.PreCompact` contains an entry invoking `state-staleness-check.sh` — failure name: "PreCompact staleness hook missing from plugin hooks.json" — failure description: "this hook warns when STATE.md is stale before context compacts"
 
-   **1b. JSON valid** — Read `.claude/settings.json` and confirm it parses as valid JSON with a `hooks` key containing `PreToolUse` and `PreCompact` arrays.
-   - Failure name: "settings.json invalid or missing"
-   - Failure description: "the settings file must be valid JSON with hooks.PreToolUse and hooks.PreCompact arrays — without it, no audit gates are active"
+   **1b. Project pre-allow present** — Read `.claude/settings.json`. If it exists, confirm it parses as valid JSON and `permissions.allow` is an array (this is the pre-allow list `/research:init` writes so researcher's tools don't prompt per call — it does not carry hooks).
+   - Failure name: "project settings.json invalid or missing pre-allow"
+   - Failure description: "without the permissions.allow list from /research:init, Claude Code prompts on every tool call; the audit gate itself is unaffected (it ships in the plugin's hooks.json). Inert in Cowork."
+   - If the file does not exist, report this same failure (init writes it); if running in Cowork, note it as informational rather than a failure.
 
-   **1c. STATE.md structurally sound** — Read `research/STATE.md` and confirm YAML frontmatter exists (delimited by `---`) containing the keys `milestone`, `status`, and `progress`.
-   - Failure name: "STATE.md missing required frontmatter"
-   - Failure description: "STATE.md must have YAML frontmatter with milestone, status, and progress fields — these drive the progress dashboard"
+   **1c. STATE.md structurally sound** — Read `research/STATE.md` and confirm it contains a `## Current Position` section with an `Active phase:` field and a `## Current Phase Cycle` section with a five-step checklist. (STATE.md has no YAML frontmatter — the init template never writes one; do not check for frontmatter.)
+   - Failure name: "STATE.md missing required sections"
+   - Failure description: "STATE.md must carry Current Position (with Active phase) and Current Phase Cycle — these are what session resume and the cycle skills read; without them the project position is unrecoverable"
    - If `research/STATE.md` does not exist, this check passes silently (no active research project)
 
    **1d. Reference files present** — Glob `${CLAUDE_PLUGIN_ROOT}/reference/` for these specific items: `coverage-assessment-guide.md`, `evidence-failure-modes.md`, `pattern-recognition-guide.md`, `source-assessment-guide.md`, `tools-guide.md`, `writing-standards.md`, `templates/` directory.
@@ -66,8 +67,8 @@ When any checks fail, output a summary line plus only the failures (do not enume
 ### Infrastructure Health
 Infrastructure: [N]/5 checks passed
 
-- **PreToolUse Write hook missing** — this hook prevents unaudited writes to outputs/
-- **settings.json invalid or missing** — the settings file must be valid JSON with hooks.PreToolUse and hooks.PreCompact arrays — without it, no audit gates are active
+- **outputs gate hook missing from plugin hooks.json** — this hook blocks unaudited Write/Edit/MultiEdit to research/outputs/ on Claude Code; in Cowork the gate holds structurally
+- **project settings.json invalid or missing pre-allow** — without the permissions.allow list from /research:init, Claude Code prompts on every tool call; the audit gate itself is unaffected
 
 ---
 ```

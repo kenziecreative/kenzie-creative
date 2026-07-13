@@ -47,23 +47,36 @@ Before writing anything, verify:
    a. Scan all processed source notes in `research/notes/` for this phase.
    b. Look for findings tagged CHALLENGED (PRD Validation) or CONTRADICTED (Exploratory Thesis) from sources with credibility tier above "blog/opinion" level (official docs, analyst reports, peer-reviewed, industry data, developer community).
    c. If at least one credible source has a CHALLENGED or CONTRADICTED finding, the gate passes — proceed.
-   d. If no credible counter-evidence exists, block synthesis:
+   d. If no credible counter-evidence exists, check for a **documented adverse search** — the gate's second legitimate exit. Read `research/reference/retrieval-log.json` and the phase's candidates file(s) in `research/discovery/` and identify queries that specifically sought opposing evidence (negating/challenging terms, counter-viewpoint channels). If such a search was run and surfaced nothing credible, present the record for acknowledgment:
 
    ```
-   Synthesis blocked — no counter-evidence found for [research type].
+   No credible counter-evidence exists in the processed sources — but an adverse search was run and came back empty:
 
-   [Research type] requires at least one credible source that challenges the central claim before synthesis can proceed. This ensures the research stress-tests its thesis rather than just confirming it.
+   - Queries: [the challenging-term queries, verbatim, with dates]
+   - Channels: [channels searched]
+   - What came back: [N results reviewed; why none qualified as credible counter-evidence]
+
+   "Named, searched, none found" is a legitimate recorded outcome. If you acknowledge this record, synthesis proceeds and the output is stamped: "No credible counter-evidence found after documented search ([N] queries across [channels], [date]) — acknowledged by commissioner."
+
+   Acknowledge, or direct further search?
+   ```
+
+   On acknowledgment: append the record (phase, date, queries, channels, results reviewed, outcome, acknowledgment) to `research/discovery/negative-searches.md` (create with a one-line header if absent), then proceed to synthesis and include the stamp in the draft's Methodology & Limitations section.
+
+   e. If no credible counter-evidence exists AND no adverse search has been run, block synthesis:
+
+   ```
+   Synthesis blocked — no counter-evidence found for [research type], and no adverse search is on record.
+
+   [Research type] requires either a credible challenging source or a documented adverse search before synthesis can proceed. This ensures the research stress-tests its thesis rather than just confirming it.
 
    Current sources all [support/validate] the position. To proceed:
    1. Run /research:discover with terms like "[negating/challenging terms for the thesis]"
    2. Look for sources from [suggest specific channels: academic databases, industry analysts, competing viewpoints]
-   3. Process at least one source that presents counter-evidence
-   4. Then re-run /research:summarize-section
-
-   If after genuine search no counter-evidence can be found, note this explicitly — absence of opposition is itself a finding worth documenting.
+   3. Process any source that presents counter-evidence — or, if the search genuinely comes back empty, tell me: I'll record the negative search in research/discovery/negative-searches.md, you acknowledge it, and synthesis proceeds with the output stamped "no credible counter-evidence found after documented search."
    ```
 
-   This gate applies to every phase in PRD Validation and Exploratory Thesis types, not just the final synthesis.
+   This gate applies to every phase in PRD Validation and Exploratory Thesis types, not just the final synthesis. The valve (exit d) is not a bypass: it requires an actual adverse search recorded with queries and channels, plus explicit user acknowledgment. "We probably won't find anything" satisfies nothing.
 
 6. **Pre-check 6 — Lopsided coverage advisory.** Read `research/gaps.md` and find the questions relevant to this section. If any question has a lopsided coverage flag (only 1 independent Direct source), display an advisory:
 
@@ -87,6 +100,8 @@ If any pre-check fails, do not proceed. Tell the user which check failed and wha
 3. **Read `research/reference/source-standards.md`** for citation and evidence rules.
 4. **Read all relevant files in `research/notes/`** that pertain to this section.
 5. **Read `research/cross-reference.md`** for patterns relevant to this section. Include resolved contradiction decisions in the draft — present the resolution with the reasoning, not just the winning side. The reader should see that a disagreement existed and how it was resolved. Note any peripheral unresolved contradictions in the draft as open questions that do not affect the section's core findings.
+
+   **Commissioner overrides are disclosed where they land.** A resolution is an override when its recorded `user_resolution` differs from its recorded `suggested_resolution` — check the two fields, not just the `user_override` boolean (the flag corroborates; the field comparison decides; a `confirm: side-A` against a side-B assessment is an override however it was typed). For every override, the draft must say so at the finding site, not just internally: state what the evidence assessment was, then the commissioner's resolution, explicitly labeled — e.g., "Cross-referencing assessed Source B as stronger (disclosed methodology, recency); the commissioner directed resolution toward Source A **[commissioner override]**. Confidence in this finding is reduced accordingly." Never present an overridden resolution as if the evidence produced it, and list every override again in the Methodology & Limitations section.
 6. **Read `research/gaps.md`** — if there are unresolved gaps for this phase, note them explicitly in the draft as open questions.
 7. **Read `${CLAUDE_PLUGIN_ROOT}/reference/evidence-failure-modes.md`** to understand the evidence degradation patterns to avoid during synthesis.
 8. **Write a draft section** to `research/drafts/<part-number>-<section-slug>.md`.
@@ -100,6 +115,12 @@ If any pre-check fails, do not proceed. Tell the user which check failed and wha
    - Use prose paragraphs, not bullet lists (except for data tables and key findings)
    - Present contradictions when sources disagree
    - No orphan claims — if it can't be cited, flag it as inference
+   - **End every draft with a `## Methodology & Limitations` section.** This section is part of the deliverable, not backstage — it is what keeps the output honest to a reader who wasn't in the engagement. It contains:
+     1. **Sampling disclosure:** "Sources were gathered by purposive sampling through mapped discovery channels, not exhaustive literature coverage. Where this report notes that evidence was not found, that means 'not found via the mapped channels,' not 'does not exist.'" (Adapt the wording to the project; keep the substance.)
+     2. **Single-source findings:** list each finding resting on one independent source (or "none").
+     3. **Commissioner overrides:** each `user_override=true` resolution, labeled, with the evidence assessment it overrode (or "none").
+     4. **Counter-evidence status** (types with the counter-evidence gate): either the credible challenger(s) cited, or the adverse-search stamp from pre-check 5's documented-adverse-search exit.
+     5. **Waivers:** left as a placeholder line — `/research:audit-claims` inserts any commissioner waivers verbatim at audit time.
 8a. **Log assumptions to `research/assumptions.md`.** While writing the draft, identify any judgment or finding that meets these criteria:
     - Based on a single source (already flagged with "single source suggests" per guardrail 5)
     - Inferred from indirect evidence rather than directly stated
@@ -148,7 +169,8 @@ If any pre-check fails, do not proceed. Tell the user which check failed and wha
 7. Never synthesize past an unresolved core contradiction. If cross-reference.md shows unresolved contradictions on questions this section addresses, the pre-check should have caught it. If you reach synthesis and notice a contradiction that was not in cross-reference.md, stop and flag it — do not smooth it into consensus.
 8. When a source exceeds the staleness threshold, include its findings in the draft but add an explicit age caveat noting the data year. Do not silently present stale data as current.
 9. Every "single source suggests" finding in the draft must have a corresponding entry in `research/assumptions.md`. If you wrote "single source suggests" but did not log the assumption, go back and add it.
-10. Do not bypass the counter-evidence gate by re-tagging a supporting source as CHALLENGED. The gate requires genuinely opposing evidence from a credible source, not relabeled confirmatory evidence.
+10. Do not bypass the counter-evidence gate by re-tagging a supporting source as CHALLENGED. The gate requires genuinely opposing evidence from a credible source, not relabeled confirmatory evidence. The documented-adverse-search exit is equally protected: it requires a real search record (queries, channels, dates) and explicit user acknowledgment — do not fabricate or embellish a search record to unlock synthesis.
+11. **Real people are protected by default.** For research types that observe or profile real individuals (Person Research, Customer Safari), the draft anonymizes everyone other than the commissioned research subject unless a source note records explicit permission: no usernames, handles, or real names of community members or third parties; attribute quotes as "a community member on [platform]" or equivalent. Real specificity, not real identity — keep the exact words, the platform, and the context; drop the identity. The fail direction is always over-anonymization. (Notes may hold identifying source links for traceability; the *deliverable* does not expose them.)
 
 ## Common Failure Modes
 
@@ -162,7 +184,10 @@ If any pre-check fails, do not proceed. Tell the user which check failed and wha
 | Synthesizing past unresolved contradictions — smoothing disagreements into false consensus | Check cross-reference.md Contradictions section before writing. If any core contradiction is unresolved, stop. Do not proceed by picking the "more likely" side — the user must explicitly decide. |
 | Treating stale sources as equally current — using old data without age caveat | Check each source's data year against the type's staleness threshold. If stale, include the finding but add an age caveat: "Based on [YYYY] data..." so the reader knows the evidence may not reflect current conditions. |
 | Silent assumptions — presenting thin-evidence judgments as established findings without logging them | Before finalizing the draft, re-read it and check every finding: is it supported by 2+ independent credible sources with direct evidence? If not, it is an assumption and must be logged to `research/assumptions.md`. |
-| Counter-evidence theater — processing a weak source just to satisfy the gate | The counter-evidence gate requires a credible source (not blog/opinion tier) with a genuine CHALLENGED or CONTRADICTED finding. Processing a low-quality source and tagging it as challenging does not satisfy the gate — the source must genuinely present opposing evidence. |
+| Counter-evidence theater — processing a weak source just to satisfy the gate | The counter-evidence gate requires a credible source (not blog/opinion tier) with a genuine CHALLENGED or CONTRADICTED finding. Processing a low-quality source and tagging it as challenging does not satisfy the gate — the source must genuinely present opposing evidence. When opposition genuinely does not exist, the honest path is the documented-adverse-search exit (pre-check 5d), not a manufactured challenger. |
+| Manufacturing a challenger because the gate has no other visible exit | The gate has two exits: a credible challenging source, or a documented adverse search acknowledged by the user. If genuine search finds nothing, use the valve — record the negative search, get the acknowledgment, stamp the output. Never relabel a supporting source or process a straw-man source to escape the block. |
+| Presenting an overridden resolution as evidence-driven | Check every carried-forward resolution for `user_override=true`. If present, the finding site must show the evidence assessment AND the labeled commissioner override, and the override must appear in Methodology & Limitations. The internal cross-reference record is not the disclosure. |
+| Skipping the Methodology & Limitations section, or writing it as boilerplate | Every draft ends with the section, populated for THIS draft: real single-source findings listed, real overrides labeled, the actual counter-evidence status. A generic paragraph pasted across drafts defeats its purpose — the audit checks the content, not the heading. |
 | Synthesizing lopsided questions with confident language | Check gaps.md for lopsided flags on this section's questions. If a question has only 1 independent source, use "single source suggests" language — not "evidence shows" or "research confirms." |
 
 ## Output
