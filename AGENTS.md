@@ -12,6 +12,7 @@ Install: `/plugin marketplace add kenziecreative/kenzie-creative`, then `/plugin
 
 ## Plugins (current versions)
 
+- **blueprint** (0.1.0) — a process extraction interviewer: two capture modes (quick inventory pass, deep full extraction) that turn how a person actually works into a structured Process Blueprint with per-step autonomy ratings (Automate / Monitor / Human) and flagged unknowns. *Standalone.*
 - **goal-setting** (0.2.1) — a business goal-setting method in two arcs: a six-stage Setup Arc + a five-cadence Ongoing Arc over a Markdown `goals/` state dir, with a three-goal-rule hard cap, an operating heartbeat (overdue routing, closeout gate, operated mitigations), immutable goal history, and a goal-formulation critic with memory. *Standalone.*
 - **intelligence-briefing** (0.3.0) — a daily/weekly environmental brief that triages the outside world into a self-contained HTML brief. *Triage-stream.*
 - **photo-generator** (1.2.0) — a guided photography director: plain-language scene → physics-aware Nano Banana Pro prompt (camera, lens, lighting, grade from a bundled reference library), optionally rendered via the Gemini API; batch, variations, and a refinement loop. *Standalone.*
@@ -100,7 +101,8 @@ run it. New plugins start at `0.1.0`, tagged `<name>-v0.1.0`.
 
 Each plugin's own `AGENTS.md` carries its structure, mechanics, locked decisions, surface
 differences, and a `## Maintaining this plugin` section (the release ritual + that plugin's
-edit cautions): `goal-setting/AGENTS.md`, `intelligence-briefing/AGENTS.md`, `photo-generator/AGENTS.md`,
-`researcher/AGENTS.md`, `sage/AGENTS.md`, `strategist/AGENTS.md`, `thinkers/AGENTS.md`.
+edit cautions): `blueprint/AGENTS.md`, `goal-setting/AGENTS.md`, `intelligence-briefing/AGENTS.md`,
+`photo-generator/AGENTS.md`, `researcher/AGENTS.md`, `sage/AGENTS.md`, `strategist/AGENTS.md`,
+`thinkers/AGENTS.md`.
 
 ## Imported Claude Cowork project instructions
