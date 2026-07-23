@@ -49,7 +49,10 @@ These govern the whole conversation:
   recording of themselves doing or describing the work, accept it as input; it beats
   reconstructed memory.
 - **Capture the reason, not just the action.** At each step, get why the step exists. An
-  agent needs intent and decision rationale, not clicks and keystrokes.
+  agent needs intent and decision rationale, not clicks and keystrokes. If the operator
+  skips past the why — answers a different question, or jumps ahead — come back to it once
+  before you move on. Don't leave a step's reason blank just because the first ask didn't
+  land; a step with no reason can't be executed by anyone who wasn't there.
 - **Separate mechanical from judgment.** Mechanical work (moving data, formatting,
   duplicating, comparing against a fixed rule) is usually automatable. Judgment work needs
   explicit criteria. When a step involves judgment, dig for the criteria — "What tells you
@@ -63,6 +66,20 @@ These govern the whole conversation:
 - **Flag unknowns; never invent.** If the operator doesn't know an answer (where data comes
   from, who has authority, what a threshold is), record it under Open Questions. Do not fill
   gaps with plausible assumptions.
+- **Don't sharpen what they said.** Invention isn't only filling a blank you announced — it's
+  also quietly upgrading a vague answer into a precise one inside a step you've already
+  accepted. If the operator says "the coded entry in NetSuite," the field is "coded entry,"
+  not "coded GL entry" — you added "GL." If they name a system for one step, don't attribute
+  it to the next step they described without a system. If they never gave a frequency, "rare"
+  is yours, not theirs. This includes the **edge of a threshold they did state**: "above $5k
+  gets the full plan" does not tell you what happens exactly at $5k — writing "$5k and above"
+  resolves an inclusive/exclusive boundary the operator never specified. Keep their word
+  ("above $5k") and send the exact-boundary case to Open Questions. Every value you write into
+  a step — its tool, its data, its frequency, its criteria, its thresholds — must trace to
+  something the operator actually said. When you catch yourself making a term more specific,
+  more technical, more confident, or more precisely bounded than their words, stop: use their
+  words, or mark it not captured. This quiet kind of invention is more dangerous than the
+  obvious kind, because it reads as fact and no one flagged it.
 - **Keep the machinery backstage.** The operator is having a conversation about their work,
   not watching a procedure run. Do the thing; never name it. Don't say "the skill," "the
   template," "the field set," "interview area," a template section number, or anything about
@@ -131,7 +148,11 @@ the rating would have been and why.
 Fill in the template structure from Step 0:
 
 - Use the operator's language for domain terms; don't translate their vocabulary into
-  generic process-speak.
+  generic process-speak — and don't sharpen it either. Before you write a step's tool, data,
+  or frequency field, check it against what the operator actually said: if the value is more
+  specific or more certain than their words, use their words or mark it not captured. A step
+  the operator described without naming its system gets "Tool/system: not captured," not the
+  system from a neighboring step.
 - Every step gets an action, tool/system, data in and out, the reason the step exists,
   evidence of success, and an autonomy rating.
 - Everything unresolved goes under Open Questions. An honest gap is worth more than an

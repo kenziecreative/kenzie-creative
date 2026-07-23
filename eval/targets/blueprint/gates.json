@@ -103,7 +103,7 @@
     {
       "name": "no_interview_narration",
       "file": "blueprints/captured-blueprint.md",
-      "forbid": "(the interview (did|didn'?t|never|covered|ended)|person interviewed|(this |the )session (ran|ended|didn'?t)|(not |never )asked (before|during|yet)|asked,? not (yet )?answered|ran out of turns|not (covered|reached) (in|this|before) (this )?session|interview area|out of turns)",
+      "forbid": "(the interview (did|didn'?t|never|covered|ended)|person interviewed|(this |the )session (ran|ended|didn'?t)|(not |never )asked (before|during|yet)|asked,? not (yet )?answered|ran out of turns|not (covered|reached) (in|this|before) (this )?session|interview area|out of turns|the operator (first|initially) (said|stated|described|mentioned)|then (described|said) (this|it))",
       "flags": "mi",
       "feeds": "Register"
     }

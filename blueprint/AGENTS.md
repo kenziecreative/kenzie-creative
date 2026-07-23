@@ -68,7 +68,13 @@ so behavior is identical on both surfaces.
     without a decision — downstream Blueprints and training material reference them.
   - **Never let the skill fill gaps.** The flag-unknowns-don't-invent rule is what makes a
     Blueprint trustworthy as an automation spec. Any edit that softens it into "make a
-    reasonable assumption" breaks the product.
+    reasonable assumption" breaks the product. Note there are two kinds of invention and the
+    rule guards both: the obvious kind (filling an announced blank) and the quiet kind
+    (sharpening a vague answer into a precise one inside a step already accepted — "the entry
+    in NetSuite" written as "GL entry," a neighbor step's system borrowed onto one described
+    without one). Eval iteration-1 scored Non-Invention 2 on *both representative* scenarios
+    for the quiet kind while it held 3 under adversarial pressure — the quiet kind is the
+    real exposure because it surfaces in ordinary use, not just when a user pushes.
   - **Keep the interview conversational.** Small batches, anchored in a real run. Don't
     collapse the interview into a form the user fills in — that regenerates exactly the
     idealized-process documentation the plugin exists to avoid.
