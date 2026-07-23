@@ -28,9 +28,19 @@ Ask the user, in one short batch:
 
 1. Which process do they want to capture?
 2. Which mode — **quick** (~15 min: the trigger, the main steps, what comes out, and a
-   first-cut autonomy rating on each step; good for taking stock of several processes) or
+   first-cut autonomy rating on each step; a fast coarse model of one process) or
    **deep** (~45-60 min: adds the decision criteria, the exception paths, who can approve,
    and what a bad run costs; produces a document detailed enough to automate against)?
+
+**Starting from a Process Inventory candidate.** If the user is picking a candidate from a
+discovery sweep (they name one, or they just finished `/blueprint:discover`), read the
+`process-inventory.md` in the deployment (or `blueprints_dir`) and load that candidate's fields
+— working name, trigger, recent example, friction/consequence/variability signals — as
+**starting context**. Confirm mode, then go straight to the real-run anchor; don't re-ask what
+the inventory already holds. But treat those fields as **the operator's words, not established
+process detail** — the inventory recognized the work, it didn't model it. You still extract the
+steps, and everything the inventory left "Not yet established" is still unknown, not a fact to
+carry in.
 
 Describe the two modes to the operator in terms of what they'll get, as above — not in terms
 of which parts of your own structure each one covers.

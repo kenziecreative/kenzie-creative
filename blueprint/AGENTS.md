@@ -8,22 +8,32 @@ self-contained. (Current version lives in `plugin.json` and `CHANGELOG.md`.)
 
 ## What it is
 
-A process extraction interviewer. It turns how a person actually works into a structured
-Process Blueprint that a human, workflow, or AI agent could execute against — with explicit
-per-step autonomy ratings (Automate / Monitor / Human) marking where automation is safe and
-where a human must stay in the loop. "Correct" output is a Blueprint whose steps carry
-intent and observable success criteria, whose judgment calls have explicit criteria, and
-whose gaps are flagged in Open Questions rather than filled with invented detail. The target
-is not "document the task" but "model the work as a system."
+A process extraction interviewer with a discovery front-door. Three jobs, three
+skills/commands: **discover** finds recurring work the operator can't yet name and lists it
+in a thin Process Inventory; **capture** (quick or deep) turns one named process into a
+structured Process Blueprint that a human, workflow, or AI agent could execute against — with
+explicit per-step autonomy ratings (Automate / Monitor / Human) marking where automation is
+safe and where a human must stay in the loop; **guide** orients the user to the right entry
+point. The funnel is discover → capture; guide points people into it. "Correct" capture
+output is a Blueprint whose steps carry intent and observable success criteria, whose judgment
+calls have explicit criteria, and whose gaps are flagged rather than invented. The target is
+not "document the task" but "model the work as a system." Discovery's correct output is a thin
+inventory that recognizes work without inventing its boundaries.
 
 ## Structure
 
-- `commands/blueprint/` — one thin command wrapper: `capture` (`/blueprint:capture`).
-- `skills/blueprint-capture/SKILL.md` — the interview engine (both modes).
-- `reference/` — read-only library: `blueprint-template.md` (the output structure),
-  `example-blog-content-blueprint.md` (a worked example that sets the specificity bar),
-  and a `README.md` index.
-- `templates/CLAUDE.md` — optional per-deployment config (`blueprints_dir`).
+- `commands/blueprint/` — three thin command wrappers: `capture` (`/blueprint:capture`),
+  `discover` (`/blueprint:discover`), `guide` (`/blueprint:guide`). Each runs its matching skill.
+- `skills/blueprint-capture/SKILL.md` — the interview engine (both capture modes).
+- `skills/blueprint-discover/SKILL.md` — the recall sweep that produces the Process Inventory.
+- `skills/blueprint-guide/SKILL.md` — orientation + routing; explains the three jobs, sends the
+  user to discover or capture. Content lives inline (behavior, not a doctrine doc).
+- `reference/` — read-only library. Capture: `blueprint-template.md`,
+  `example-blog-content-blueprint.md`. Discover: `discovery-sweep.md` (recall cues + the three
+  prioritization lenses), `process-inventory-template.md` (the inventory structure). Plus a
+  `README.md` index.
+- `templates/CLAUDE.md` — optional per-deployment config (`blueprints_dir`); the Process
+  Inventory saves to `process-inventory.md` in that same directory.
 
 ## Key mechanics
 
@@ -41,15 +51,25 @@ is not "document the task" but "model the work as a system."
   happen?" — decides where checkpoints go. Checkpoints are deliberately sparse: review
   everywhere creates reviewer fatigue.
 - **Doctrine lives once.** The output structure lives in `reference/blueprint-template.md`
-  and the specificity bar in the worked example; the skill points at both and never copies
-  their content inline.
-- **State.** Blueprints are plain Markdown written to `blueprints/` in the deployment (or
-  `blueprints_dir` from the deployment `CLAUDE.md`). No ledger/candidates participation —
-  this is a standalone system, not a triage-stream.
+  and the specificity bar in the worked example; the skills point at reference files and
+  never copy their content inline. Discovery's doctrine (recall cues, three lenses) lives in
+  `reference/discovery-sweep.md`.
+- **Discovery is recognition, not understanding.** The sweep produces a *thin* inventory of
+  candidates — a lead per row, not a mini-Blueprint. It leads with artifacts and tool-traces
+  (the least-idealized cues), anchors recall in real recent windows, and stops when nothing
+  new surfaces. The `discover → capture` handoff seeds a capture from the inventory candidate
+  but treats those fields as the operator's words, not established facts — non-invention
+  carries across the seam.
+- **State.** Blueprints and the Process Inventory are plain Markdown written to `blueprints/`
+  in the deployment (or `blueprints_dir` from the deployment `CLAUDE.md`); the inventory is a
+  single living `process-inventory.md`, updated on re-sweep, never overwritten. No
+  ledger/candidates participation — this is a standalone system, not a triage-stream. The
+  Process Inventory is deliberately *not* the marketplace `candidates.json` triage queue; it's
+  Blueprint's own file.
 
 ## Surface differences (Claude Code vs Cowork)
 
-None. The skill uses Read/Write/Edit/Glob/Grep only — no hooks, no shell, no subagents —
+None. All three skills use Read/Write/Edit/Glob/Grep only — no hooks, no shell, no subagents —
 so behavior is identical on both surfaces.
 
 ## Maintaining this plugin
@@ -87,4 +107,24 @@ so behavior is identical on both surfaces.
     operator gets, never as which part of the structure it covers — the old Step 1 wording
     ("the full field set") is what taught the model to say it aloud.
   - **Template changes are additive.** Existing Blueprints in user deployments must remain
-    valid; don't remove or rename template sections.
+    valid; don't remove or rename template sections. Same rule for
+    `process-inventory-template.md`.
+  - **Discovery-specific locks:**
+    - **Discovery never invents a boundary.** The single discipline that makes the sweep
+      trustworthy: recognize a candidate, never manufacture its scope. "Monthly numbers work —
+      not yet established," never "Monthly Financial Reporting." This is the capture
+      non-invention rule one layer earlier, and it's where the temptation is highest (no steps
+      yet to discipline the guess). Any edit that lets discover tidy a vague mention into a
+      confident process name breaks it.
+    - **No autonomy ratings at discovery.** Discover must never assign Automate / Monitor /
+      Human. Those need steps, evidence, and failure impact that don't exist yet; a rating here
+      is the "annoying, therefore safe to automate" fallacy the plugin exists to prevent. The
+      `no_autonomy_ratings` gate in the `blueprint-discover` eval target enforces this
+      deterministically — if you find yourself wanting to loosen it, you're breaking the product.
+    - **Keep the inventory thin, preserve duplicates.** Candidates are leads, not mini-Blueprints;
+      possible duplicates/groupings are flagged, never silently merged (whether it's one process
+      or several is capture's question). Don't let the sweep chase completeness — stop-when-dry is
+      a feature, not a shortcut.
+    - **Three lenses, no magic score.** Prioritization stays automation-opportunity /
+      operational-exposure / knowledge-loss, recommending three starting points. Don't collapse
+      it to a single number — that re-narrows Blueprint to an automate-chores tool.

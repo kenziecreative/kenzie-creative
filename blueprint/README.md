@@ -6,6 +6,8 @@ Most process documentation explains "what we do." An automation-ready document h
 
 Blueprint fixes that by interviewing you. It walks you through your most recent real run of the process, asks the questions that surface the tacit detail, and writes the result into a structured Process Blueprint.
 
+And if you don't yet know *which* process to document — if the honest answer to "which one?" is "I'm not sure what I'd even call them" — Blueprint can find them first. A discovery sweep surfaces the recurring work you've stopped noticing you do, into a short inventory of candidates, then points you at the few worth capturing first.
+
 Part of the [Kenzie Creative marketplace](https://github.com/kenziecreative/kenzie-creative).
 
 ## Install
@@ -21,15 +23,22 @@ None required. Blueprints save to a `blueprints/` folder in whatever project you
 
 ## Use
 
-- `/blueprint:capture` — start a capture session. Blueprint asks which process you want to document and which mode you want.
-- Or just describe a process you'd like to document and Blueprint will offer to run a capture.
+Blueprint does three distinct things. The natural path runs left to right, but you can start anywhere.
 
-**Two modes:**
+**Discover → Capture (quick or deep).** Find the work, then understand it.
 
-- **Quick (~15 minutes).** A coarse-grained pass: trigger, main steps, outputs, and a first-cut autonomy rating per step. Good for building an inventory of your processes before deciding which ones deserve deep treatment.
+- `/blueprint:discover` — a short sweep that surfaces your recurring work into a **Process Inventory**: a list of candidate processes, each in your own words, plus a recommendation of which few to tackle first. Use this when you can't yet name your processes.
+- `/blueprint:capture` — model **one** process you can name. Blueprint asks which process and which mode.
+- `/blueprint:guide` — not sure which you need? This explains the three jobs and points you at the right first step. Or just ask "how does Blueprint work?" or "where do I start?"
+
+You can also just describe what you're after and Blueprint will offer the right one.
+
+**Two capture modes:**
+
+- **Quick (~15 minutes).** A coarse but grounded model of one process: trigger, main steps, outputs, and a first-cut autonomy rating per step. Good for taking stock of one process fast.
 - **Deep (~45-60 minutes).** The full field set: decision logic, exception paths, approval authority, evidence of completion, timing, risks, audit needs. Produces a document detailed enough to hand to an agent, a new team member, or an automation build.
 
-A good first target for a deep capture: the process with the biggest annoyance tax — the recurring work that eats your time without needing your judgment.
+**What to capture first.** Discovery ranks your inventory through three lenses, because process capture is worth more than automating chores: **automation opportunity** (frequent, mechanical, time-consuming work), **operational exposure** (high-consequence or key-person-dependent work, captured for resilience), and **knowledge-loss risk** (tacit work only one person knows how to do). A low-frequency, high-risk process can deserve capturing before a merely annoying one.
 
 ## What it does
 

@@ -3,6 +3,34 @@
 All notable changes to the Blueprint plugin. Per-plugin semver; tags are plugin-scoped
 (`blueprint-vX.Y.Z`).
 
+## 0.2.0 — 2026-07-23
+
+Adds a discovery front-door and makes the three jobs explicit. Blueprint was always excellent
+once you could name a process; its first question was effectively "which process?", which
+assumes you already see your work in process-shaped units. You often don't.
+
+- **New: `/blueprint:discover`** — a short, time-boxed recall sweep that surfaces the recurring
+  work you've stopped noticing you do, into a thin **Process Inventory** of candidates (each in
+  your own words), then recommends a small first portfolio to capture. It leads with what you
+  actually produced and touched recently rather than the org-chart version, stops when nothing
+  new surfaces, and — crucially — **never sharpens a vague mention into a confident process
+  name** ("monthly numbers work," not "Monthly Financial Reporting") and **never rates anything
+  for automation** (no steps exist yet to judge). Ranks the inventory through three lenses —
+  automation opportunity, operational exposure, knowledge-loss risk — so capture isn't only for
+  automating chores.
+- **New: `/blueprint:guide`** — explains the three jobs (discover, quick capture, deep capture)
+  and routes you to the right first step. Triggers on "how does this work" / "where do I start."
+- **Capture picks up from discovery.** Starting a capture on a candidate from your Process
+  Inventory seeds it with what's already known and jumps to the real-run anchor, instead of
+  re-asking. Inventory fields are treated as your words, not established facts — non-invention
+  carries across the seam.
+- **Positioning fix.** Quick mode is no longer described as "building an inventory of your
+  processes" — discovery owns that job now. Quick and deep each model one process; discovery
+  produces the inventory.
+- Runtime-QA: a dedicated `blueprint-discover` eval target guards the discovery invariants
+  (never invent a boundary, never rate at discovery, keep the inventory thin, flag duplicates
+  without merging).
+
 ## 0.1.1 — 2026-07-23
 
 Closes the one known limitation from 0.1.0. Full runtime-QA certification now green across
