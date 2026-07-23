@@ -172,6 +172,19 @@ Fill in the template structure from Step 0:
 - Delete the template's guidance comments (the `<!-- ... -->` blocks) from the finished
   document. They are instructions to you, not content for the reader.
 
+**Before you write, run a completeness sweep.** Look across every step you've gathered and
+list the ones still missing a reason ("why this step exists") or evidence of success. These
+two fields are what make a step executable by someone who wasn't there, and they're the first
+things an operator skips — they narrate what they do, not why it matters or how they know it
+worked. If any are blank and the operator is still with you, ask for them in one final
+batch — grouped, specific, one line per gap ("Two quick ones before I write this up: why does
+the welcome packet get sent, and what tells you the workspace was set up right?"). Fold the
+answers in. Only what's still unanswered after that ask gets "Not captured" and an Open
+Question. Don't write a step's why or evidence as blank on the strength of a single earlier
+question the operator talked past — a blank you never circled back to is a gap you created,
+not one they left. (What you must never do is invent the answer to close the blank: an
+unasked-answered why is worth less than nothing.)
+
 Save to the blueprints directory and tell the user where it is.
 
 ## Step 5: Validation pass

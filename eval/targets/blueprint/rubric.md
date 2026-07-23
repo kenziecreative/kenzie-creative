@@ -61,6 +61,21 @@ legitimate to say:** "Blueprint," "quick mode" / "deep mode," "Automate / Monito
   number bare. The scenario's *critical* dimensions are always exercisable within its scripted
   turns — that is a scenario-design invariant — so a critical-dimension miss is never
   excused by truncation.
+- **Honest gap vs. capture miss (Reason Capture, Observable Success).** These two dimensions
+  measure what the interviewer *extracts*, and they must not be scored against the plugin for a
+  field the operator never supplied — because the only way to fill it would be to invent, which
+  Non-Invention forbids. Distinguish three cases per step, and score only the middle one down:
+  (a) **the operator stated or clearly implied the why/evidence and the plugin captured it** →
+  credit; (b) **the operator supplied it (or it is plainly derivable from what they said) and
+  the plugin left it blank or wrote a mechanical restatement** → a genuine capture miss, score
+  down; (c) **the operator never supplied it, it is not derivable, and the plugin marked it
+  "Not captured" and routed it to Open Questions after probing at least once** → the
+  Non-Invention-correct outcome, *not* counted against — this is the same credit Observable
+  Success already gives a genuinely-unobservable step. A step whose why is genuinely absent from
+  everything the operator said is case (c), not (b): confirm against the transcript whether the
+  answer was ever on the table before scoring a blank as a miss. What separates (b) from (c) is
+  whether the plugin *probed* — a plugin that asked (ideally re-asked, or swept for it before
+  writing) and got nothing has done its job; a plugin that never asked has not.
 - **Gate-vs-substance on the deep-section gates.** `timing_filled`, `risk_filled`, and
   `improvement_loop_filled` verify a section is **present and not the template placeholder** —
   they cannot tell a substantive fill from an honest "Not captured," and they must not, because

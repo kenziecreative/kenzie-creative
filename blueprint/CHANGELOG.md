@@ -3,6 +3,21 @@
 All notable changes to the Blueprint plugin. Per-plugin semver; tags are plugin-scoped
 (`blueprint-vX.Y.Z`).
 
+## 0.1.1 — 2026-07-23
+
+Closes the one known limitation from 0.1.0. Full runtime-QA certification now green across
+the whole set: all 8 adversarial goldens **and** both representative scenarios pass 3/3
+(eval iterations 4 and 6).
+
+- **Completeness sweep before writing.** Deep captures now do a final pass over every step
+  still missing a "why" or evidence-of-success and ask for the gaps in one batch before the
+  Blueprint is written, instead of leaving a field blank on the strength of a single earlier
+  question the operator talked past. Whatever the operator still doesn't supply is marked
+  "Not captured" and routed to Open Questions — never invented.
+- **Non-Invention now guards the edge of a stated threshold**, not just invented values:
+  "above $5k" is kept verbatim and the exact-boundary case ("what happens at exactly $5k?")
+  goes to Open Questions rather than being silently hardened to "$5k and above."
+
 ## 0.1.0 — 2026-07-22
 
 Initial release.
@@ -20,8 +35,5 @@ never-invent (refuses to fabricate or to quietly sharpen a vague answer, down to
 of a stated threshold) and never-collapse-into-a-form. Machinery stays out of the delivered
 Blueprint.
 
-Known limitation (tracked for 0.1.1): on the most demanding deep captures — a 7-8 step
-process with a dodging operator and a tight turn budget — the interview can leave a per-step
-"why" or evidence-of-success field unfilled rather than re-asking. It marks these "Not
-captured" honestly (never invents), so the Blueprint stays trustworthy, but a long deep
-capture may need a manual second pass over blank reason/evidence fields.
+(The per-step "why"/evidence gap noted here at 0.1.0 is resolved in 0.1.1 by the
+completeness sweep.)
