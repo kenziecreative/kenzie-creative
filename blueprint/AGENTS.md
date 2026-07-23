@@ -22,16 +22,23 @@ inventory that recognizes work without inventing its boundaries.
 
 ## Structure
 
-- `commands/blueprint/` — three thin command wrappers: `capture` (`/blueprint:capture`),
-  `discover` (`/blueprint:discover`), `guide` (`/blueprint:guide`). Each runs its matching skill.
-- `skills/blueprint-capture/SKILL.md` — the interview engine (both capture modes).
+- `commands/blueprint/` — four thin command wrappers: `capture` (`/blueprint:capture`),
+  `discover` (`/blueprint:discover`), `design` (`/blueprint:design`), `guide` (`/blueprint:guide`).
+  Each runs its matching skill.
+- `skills/blueprint-capture/SKILL.md` — the interview engine (both capture modes); models a process
+  the operator *already runs*.
 - `skills/blueprint-discover/SKILL.md` — the recall sweep that produces the Process Inventory.
-- `skills/blueprint-guide/SKILL.md` — orientation + routing; explains the three jobs, sends the
-  user to discover or capture. Content lives inline (behavior, not a doctrine doc).
-- `reference/` — read-only library. Capture: `blueprint-template.md`,
-  `example-blog-content-blueprint.md`. Discover: `discovery-sweep.md` (recall cues + the three
-  prioritization lenses), `process-inventory-template.md` (the inventory structure). Plus a
-  `README.md` index.
+- `skills/blueprint-design/SKILL.md` — models a process that *doesn't exist yet*: a grounded
+  proposer that builds an intended flow only from the operator's real constraints + nearest analog,
+  written as a designed Blueprint ("proposed, not yet run").
+- `skills/blueprint-guide/SKILL.md` — orientation + routing; explains the four jobs (split on
+  whether the process already exists), sends the user to discover / design / capture. Content lives
+  inline (behavior, not a doctrine doc).
+- `reference/` — read-only library. Capture: `blueprint-template.md` (shared output structure,
+  Design mode + "Designed — not yet run" status), `example-blog-content-blueprint.md`. Discover:
+  `discovery-sweep.md`, `process-inventory-template.md`. Design: `design-doctrine.md` (grounded
+  proposer, constraint non-invention, proposed/rests-on/breaks-if step convention, lifecycle
+  bridge). Plus a `README.md` index.
 - `templates/CLAUDE.md` — optional per-deployment config (`blueprints_dir`); the Process
   Inventory saves to `process-inventory.md` in that same directory.
 
@@ -69,7 +76,7 @@ inventory that recognizes work without inventing its boundaries.
 
 ## Surface differences (Claude Code vs Cowork)
 
-None. All three skills use Read/Write/Edit/Glob/Grep only — no hooks, no shell, no subagents —
+None. All four skills use Read/Write/Edit/Glob/Grep only — no hooks, no shell, no subagents —
 so behavior is identical on both surfaces.
 
 ## Maintaining this plugin
@@ -146,3 +153,22 @@ so behavior is identical on both surfaces.
       promise in adopter copy — say "where automation is safe and where a human must stay in the
       loop." (Adopter-facing copy is Cowork's domain per the marketplace build model; keep it
       matching the artifact.)
+  - **0.3.0 locks (the design skill):**
+    - **Design is a *grounded proposer*, not a generator.** It proposes a flow — but every step must
+      be built from the operator's real goal/constraints and their nearest existing process, **never
+      generic best-practice**. This is the single discipline that keeps design from becoming the
+      confident-fabrication tool the plugin exists to avoid; it's the design-mode analog of capture's
+      "anchor in a real run." Any edit that lets it fill steps from general knowledge breaks it. The
+      `adv-generic-fill` golden guards it.
+    - **Constraint non-invention still binds.** Proposing *steps* is legitimate in design; inventing
+      *facts about the operator's situation* (the real deadline, the tools that exist, the approval
+      authority, the volume) is not — ask or flag, never assume. `adv-invent-constraint` guards it.
+    - **Everything designed is labelled proposed, never observed.** Mode `Design`, Status `Designed —
+      not yet run`, every step marked Proposed with Rests-on / Breaks-if. A designed Blueprint that
+      reads like a captured one has failed. `designed_status` / `steps_proposed` gates guard it.
+    - **Design ≠ capture; route accordingly.** Design is only for work with no lived run. If the
+      operator already runs it, route to capture (`adv-already-runs-it`). Capture's Step 1 routes the
+      inverse (net-new → design). Don't blur the line — it's the whole reason both exist.
+    - **Ratings conservative until run.** No Automate on a step that's never executed unless it's
+      unambiguously mechanical/low-risk and the tool exists; the automation handoff is gated twice
+      (validated *and* run). `adv-automate-the-unproven` guards it.

@@ -15,28 +15,34 @@ recommendation, not a manual. Don't dump this whole file at them; say what's use
 It turns how you actually work into a process document a person, a workflow, or an AI agent could
 execute against — built by interviewing you, not by asking you to write it up.
 
-## The three jobs (this is the thing to get across)
+## The jobs (this is the thing to get across)
 
-Blueprint does three distinct things. People conflate the first two; keep them separate.
+Blueprint does four distinct things. People conflate them; keep them separate — the key split is
+whether the process **already exists**.
 
 1. **Discover** (`/blueprint:discover`) — a short sweep that surfaces the recurring work you might
    want to document, when you *can't yet name your processes*. It produces a thin **Process
-   Inventory**: a list of candidate processes, each in your own words, plus a recommendation of which
-   three to tackle first. Use this when the honest answer to "which process?" is "I'm not sure what
-   I'd even call them."
+   Inventory**: candidate processes in your own words, plus which few to tackle first. Use this when
+   the honest answer to "which process?" is "I'm not sure what I'd even call them."
 
-2. **Quick capture** (`/blueprint:capture`, quick mode, ~15 min) — a coarse but grounded model of
-   **one** process you can already name: its trigger, main steps, outputs, and a first-cut read on
-   where automation is safe and where a human should stay in the loop. Good for taking stock of one
-   process fast.
+2. **Design** (`/blueprint:design`) — model a process you've been **handed but no one runs yet**
+   ("we need a process for X; nobody does it"). Since there's no real run to extract, it *proposes*
+   an intended flow — but built only from your real goal, constraints, and nearest existing process,
+   never generic best-practice — and writes it as a **designed Blueprint (proposed, not yet run)**.
+   Use this for genuinely new work.
 
-3. **Deep capture** (`/blueprint:capture`, deep mode, ~45-60 min) — the full model of **one** named
-   process: decision criteria, exception paths, approval authority, evidence of completion, timing,
-   and risk. Detailed enough to take to a new hire or an automation build once a stakeholder has
-   validated it.
+3. **Quick capture** (`/blueprint:capture`, quick mode, ~15 min) — a coarse but grounded model of
+   **one** process you already run: its trigger, main steps, outputs, and a first-cut read on where
+   automation is safe and where a human should stay in the loop.
 
-The natural path is **Discover → pick one → Capture (quick or deep)**. Discovery finds the work;
-capture understands it.
+4. **Deep capture** (`/blueprint:capture`, deep mode, ~45-60 min) — the full model of **one** process
+   you run: decision criteria, exception paths, approval authority, evidence, timing, and risk.
+   Detailed enough to take to a new hire or an automation build once a stakeholder has validated it.
+
+The dividing line: **capture is for work you already run; design is for work you don't yet.** A
+designed process graduates to a captured one once it's been run a few times — design proposes, reality
+corrects, capture records. The natural path is **Discover** (what do I have) → **Design** (something
+new) *or* **Capture** (something I run).
 
 ## Two things worth knowing
 
@@ -48,17 +54,21 @@ capture understands it.
 - **Blueprint never invents.** When you don't know an answer — where data comes from, who approves,
   what a threshold is — it records that as an open question rather than making something up. A flagged
   gap is worth more than a confident guess, because the whole point is a document you can trust enough
-  to automate against.
+  to automate against. (Design is the one place it *proposes* steps, since there's no real run to
+  extract — but even there it never invents your constraints, and it builds only from your real
+  situation and nearest existing process, marking every step "proposed, not yet run.")
 
 ## Route them
 
-Ask one question if it isn't already clear: **can they already name a specific process they want to
-document?**
+Ask what they're trying to do, and route on two questions: **can they name the process, and do they
+already run it?**
 
-- **No / "not sure where to start" / "I have lots of little things" →** recommend **discovery**. Offer
-  to run `/blueprint:discover` now.
-- **Yes, they can name one →** recommend **capture**. If they just want to take stock, quick mode; if
-  they want it automation- or handoff-ready, deep mode. Offer to run `/blueprint:capture` now.
+- **Can't name it / "not sure where to start" / "I have lots of little things" →** recommend
+  **discovery**. Offer to run `/blueprint:discover` now.
+- **A specific process they've been handed but don't yet run** ("we need a process for this; no one
+  does it") **→** recommend **design**. Offer to run `/blueprint:design` now.
+- **A specific process they already run →** recommend **capture**. Quick mode to take stock; deep mode
+  for automation- or handoff-ready. Offer to run `/blueprint:capture` now.
 - **They already have a Process Inventory from a past discovery →** point them at it, and offer to run
   a capture on whichever candidate they choose; capture will pick up what the inventory already holds.
 

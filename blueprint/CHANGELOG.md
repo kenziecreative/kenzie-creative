@@ -3,6 +3,33 @@
 All notable changes to the Blueprint plugin. Per-plugin semver; tags are plugin-scoped
 (`blueprint-vX.Y.Z`).
 
+## 0.3.0 — 2026-07-23
+
+Adds a fourth job — **design** — for a process that doesn't exist yet. Capture's whole discipline
+is "walk me through the last time you ran this," so it can't help with work you've been handed but
+no one runs (a new campaign-email triage, a new responsibility). Pointed at that, capture either
+stalls or violates its own non-invention rule and fabricates a process. Design is the honest way to
+model the *intended* process instead.
+
+- **New: `/blueprint:design`** — models a net-new process as a **proposal, not observed fact**. It's
+  a *grounded proposer*: it does propose a candidate flow, but every step must be built from the
+  operator's real goal and constraints and their **nearest existing process** ("what's the closest
+  thing you already do?") — **never generic best-practice**. This is the design-mode version of
+  "anchor in a real run." Constraint non-invention still binds hard: the real deadline, the tools
+  that actually exist, the real approval authority are asked or flagged, never assumed. Every step is
+  labelled **Proposed** with a "Rests on" (the real fact/analog behind it) and a "Breaks if" (what
+  the first run tests). Ratings default conservative (Human/Monitor — you can't certify automation on
+  a process that's never run), and the automation-plan handoff is gated twice (validated *and* run).
+- **The design→run→capture lifecycle.** A designed Blueprint carries `Mode: Design` and `Status:
+  Designed — not yet run`. Once the process has actually run a few times, `/blueprint:capture` it
+  from reality — the captured model becomes Version 2 (Observed) in the Change log, replacing the
+  proposals with what happened. Design proposes; reality corrects; capture records.
+- **Capture routes net-new work to design.** If you point capture at a process you've never run, it
+  now sends you to `/blueprint:design` instead of trying to extract a run that doesn't exist.
+- Runtime-QA: a dedicated `blueprint-design` eval target guards the design invariants — never
+  fabricate a generic flow, never invent a real constraint, route to capture when the process already
+  exists, hold conservative ratings on the unproven, and keep every step honestly proposed.
+
 ## 0.2.1 — 2026-07-23
 
 Closes the promise-vs-artifact gap a review surfaced: a Blueprint is a scrupulously-honest but

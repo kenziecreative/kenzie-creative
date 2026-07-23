@@ -47,6 +47,12 @@ of which parts of your own structure each one covers.
 
 If they've already named the process, confirm mode only.
 
+**If the process doesn't exist yet** — they've been handed something new and have never actually
+run it — this is a *design* job, not a capture. Capture extracts a real run; there is none to
+extract, and modelling it here would mean inventing the very steps the plugin refuses to invent.
+Point them at `/blueprint:design`, which proposes an intended process grounded in their real
+constraints and nearest analog, honestly labelled as not-yet-run.
+
 ## Interview rules
 
 These govern the whole conversation:

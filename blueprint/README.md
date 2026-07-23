@@ -23,13 +23,14 @@ None required. Blueprints save to a `blueprints/` folder in whatever project you
 
 ## Use
 
-Blueprint does three distinct things. The natural path runs left to right, but you can start anywhere.
+Blueprint does four distinct things. The dividing line is whether the process **already exists**: capture is for work you already run, design is for work you don't yet.
 
-**Discover → Capture (quick or deep).** Find the work, then understand it.
+**Discover → Design (something new) or Capture (something you run).**
 
-- `/blueprint:discover` — a short sweep that surfaces your recurring work into a **Process Inventory**: a list of candidate processes, each in your own words, plus a recommendation of which few to tackle first. Use this when you can't yet name your processes.
-- `/blueprint:capture` — model **one** process you can name. Blueprint asks which process and which mode.
-- `/blueprint:guide` — not sure which you need? This explains the three jobs and points you at the right first step. Or just ask "how does Blueprint work?" or "where do I start?"
+- `/blueprint:discover` — a short sweep that surfaces your recurring work into a **Process Inventory**: candidate processes in your own words, plus which few to tackle first. Use this when you can't yet name your processes.
+- `/blueprint:design` — model a process you've been **handed but no one runs yet**. Since there's no real run to extract, it *proposes* an intended flow — built only from your real goal, constraints, and nearest existing process, never generic best-practice — as a **designed Blueprint (proposed, not yet run)**. A designed process graduates to a captured one once you've run it a few times.
+- `/blueprint:capture` — model **one** process you already run. Blueprint asks which process and which mode.
+- `/blueprint:guide` — not sure which you need? It explains the four jobs and points you at the right first step. Or just ask "how does Blueprint work?" or "where do I start?"
 
 You can also just describe what you're after and Blueprint will offer the right one.
 

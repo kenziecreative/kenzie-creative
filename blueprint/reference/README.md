@@ -11,6 +11,14 @@ Used by `blueprint-capture`:
   workflow). Sets the specificity bar a finished Blueprint should hit. Illustrative
   content, not a real company's process.
 
+Used by `blueprint-design`:
+
+- `design-doctrine.md` — the grounded-proposer rule (propose only from the operator's real
+  goal/constraints and their nearest analog, never generic best-practice), constraint
+  non-invention, the proposed/rests-on/breaks-if step convention, conservative ratings, and the
+  design→run→capture lifecycle bridge. Capture's `blueprint-template.md` is the shared output
+  structure (Design mode + "Designed — not yet run" status).
+
 Used by `blueprint-discover`:
 
 - `discovery-sweep.md` — the recall cues that surface an operator's recurring work, and the

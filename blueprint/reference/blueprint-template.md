@@ -4,7 +4,7 @@
 |---|---|
 | **Business objective** | [What measurable value this process protects or creates] |
 | **Operator** | [Who runs it today] |
-| **Mode** | [Quick / Deep] |
+| **Mode** | [Quick / Deep / Design] |
 | **Captured** | [YYYY-MM-DD] |
 | **Version** | 1 |
 | **Status** | Draft — stakeholder validation not yet done |
@@ -12,7 +12,13 @@
 | **Next review** | Set after validation |
 
 <!-- In quick mode, mark any section the interview didn't cover "Not captured — quick
-     mode." Never silently omit a section. -->
+     mode." Never silently omit a section.
+     In DESIGN mode (a process modelled before it has ever run): set Mode to "Design" and Status
+     to "Designed — not yet run; validate against the first real executions." Every step is a
+     PROPOSAL — write it with the standard fields plus a "Proposed", a "Rests on" (the real fact
+     or analog it's built from), and a "Breaks if" (the assumption the first run tests). A
+     designed Blueprint must never read as observed practice. See reference/design-doctrine.md. -->
+
 
 ## 1. Purpose and outcome
 
