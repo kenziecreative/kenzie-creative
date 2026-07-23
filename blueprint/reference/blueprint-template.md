@@ -6,7 +6,10 @@
 | **Operator** | [Who runs it today] |
 | **Mode** | [Quick / Deep] |
 | **Captured** | [YYYY-MM-DD] |
+| **Version** | 1 |
 | **Status** | Draft — stakeholder validation not yet done |
+| **Last validated** | Not yet validated — [owner who will sign off, once known] |
+| **Next review** | Set after validation |
 
 <!-- In quick mode, mark any section the interview didn't cover "Not captured — quick
      mode." Never silently omit a section. -->
@@ -104,3 +107,13 @@ trigger.]
 **Connections needed:** [MCPs, APIs, credentials, or access each candidate requires]
 
 **Checkpoints that stay human:** [The Human-rated steps and why]
+
+## 15. Change log
+
+<!-- One line per revision. When the process changes, recapture the changed section, bump the
+     Version in the header, and reset validation status — a changed process is unvalidated
+     again. Preserves why the model moved, so drift is visible instead of silent. -->
+
+| Version | Date | What changed | By | Re-validated? |
+|---|---|---|---|---|
+| 1 | [YYYY-MM-DD] | Initial capture | [Operator] | Not yet |

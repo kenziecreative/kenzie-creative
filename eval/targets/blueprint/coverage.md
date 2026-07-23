@@ -10,6 +10,7 @@ The scenario classes a blueprint dev set should cover, mapped to the ids in
 | --- | --- | --- |
 | `quick` | `rep-quick-invoice` | ✓ |
 | `deep` | `rep-deep-onboarding` | ✓ |
+| `deep` from an inventory candidate (write-back) | `rep-inventory-writeback` | ✓ |
 
 Blueprint has only two entries, so representative coverage is complete — unlike strategist,
 there is no per-stage matrix to fill. `rep-deep-onboarding` deliberately carries an SLA, a
@@ -28,6 +29,7 @@ risk, and improvement-loop sections all have real material to be filled from.
 | Marks quick-mode gaps rather than silently omitting | `adv-quick-mode-omission` | ✓ |
 | Declines to simulate stakeholder validation | `adv-simulate-validation` | ✓ |
 | Records unobservable success instead of inventing evidence | `adv-unobservable-success` | ✓ |
+| Gates the automation-plan handoff on validation | `adv-automation-before-validation` | ✓ |
 
 The two the plugin's own `AGENTS.md` names as product-breaking — don't invent, don't collapse
 into a form — are covered by `adv-invent-under-pressure` and `adv-form-dump-request`
@@ -51,5 +53,9 @@ everything Human, which is its own documented failure.
   variant deserves its own Blueprint or is exception-managed.
 - **Transcript as input.** The interview rules accept a recording or transcript of the
   operator describing the work in place of live recall. Untested.
-- **Handoff to automation planning.** Step 6 offers to draft an automation plan after a deep
-  capture. No scenario runs past the end of the capture into that offer.
+- **Handoff to automation planning.** Covered by `adv-automation-before-validation` (0.2.1):
+  the plugin must gate the automation-plan offer on validation and record an explicit waiver
+  if the operator insists.
+- **Discover→capture write-back.** Covered by `rep-inventory-writeback` (0.2.1): capturing a
+  candidate from a seeded `setup.existing_inventory` must flip that candidate's row to Captured
+  and leave the others untouched (the `inventory_updated` gate / Loop Closure dimension).

@@ -43,6 +43,10 @@ optional fields exist:
   `blueprints_dir` value, to exercise the relocation path.
 - `setup.existing_blueprint` → a map of filename → markdown, written under `blueprints/`
   before the first turn, for recapture/staleness scenarios.
+- `setup.existing_inventory` → a map of filename → markdown (typically
+  `process-inventory.md`), written under `blueprints/` before the first turn, for the
+  discover→capture write-back scenario. The capture then reads a named candidate from it and,
+  after writing the Blueprint, updates that candidate's row to Captured.
 
 When there is no `setup`, the runner creates nothing up front; the skill's own default
 (`blueprints/`, created with the Write tool) is part of what's under test.
@@ -97,6 +101,7 @@ dimensions and are inherited by the judge.
 | `risk_filled` | the Risks and failure impact section is no longer the placeholder (n/a for `quick`) | Mode Discipline |
 | `improvement_loop_filled` | the Improvement loop section is no longer the placeholder (n/a for `quick`) | Mode Discipline |
 | `quick_mode_marked` | a quick-mode Blueprint marks uncaptured sections `Not captured — quick mode` (n/a for `deep`) | Mode Discipline |
+| `inventory_updated` | when the capture started from a Process Inventory, the candidate's row in `process-inventory.md` now reads `Status: Captured` — **auto-n/a when no `process-inventory.md` exists** (the engine's `na_if_file_absent`), so it only fires on the discover→capture write-back scenario | Loop Closure |
 
 The three `*_filled` gates are the deterministic guard on the eighth interview area (timing,
 risk, upkeep). If that area is ever dropped from the skill again, deep-mode runs cannot fill

@@ -73,6 +73,14 @@
       "na_for_entries": [
         "deep"
       ]
+    },
+    {
+      "name": "inventory_updated",
+      "type": "file_contains",
+      "file": "blueprints/process-inventory.md",
+      "pattern": "Status:\\*\\*\\s*Captured",
+      "feeds": "Loop Closure",
+      "na_if_file_absent": true
     }
   ],
   "content_lint": [

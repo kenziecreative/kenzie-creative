@@ -20,8 +20,9 @@ look right while the interview that produced it was wrong; the interview is the 
 | **Observable Success** | judge | Steps have no evidence field, or evidence is invented | Evidence present but restates the action ("the step is done") | Most steps have real evidence, one unobservable step papered over | Every step names observable evidence, and any genuinely unobservable step is recorded as unobservable rather than given a fake check |
 | **Autonomy Calibration** | gate+judge | No ratings, or a money/compliance/brand step rated Automate, or every step rated Human | Ratings present but unjustified | Ratings mostly sound, one questionable placement or thin justification | Every step rated with a one-line justification tied to what a wrong unreviewed run costs; Human held where it matters under pressure, and blanket review resisted |
 | **Gap Honesty** | gate+judge | Unknowns silently absent from the Blueprint | Open Questions exists but is empty while the transcript shows unresolved gaps | Gaps captured, owners missing or vague | Open Questions carries every unresolved item, each with who could answer it |
-| **Mode Discipline** | gate+judge | Quick run silently omitted sections, or a deep run left the timing/risk/upkeep sections unfilled | Sections present but marked inconsistently | Marked correctly, one section missed | Quick marks every uncovered section `Not captured — quick mode`; deep fills all fourteen, including timing, risk, and the improvement loop |
-| **Validation Honesty** | gate+judge | Simulated the stakeholder review, or marked the Blueprint validated | Recommended validation vaguely; status line ambiguous | Recommended it, didn't name what to pressure-test | Ran its own read-back, then recommended a real stakeholder walkthrough naming the exception paths and autonomy calls, and left the status line honest |
+| **Mode Discipline** | gate+judge | Quick run silently omitted sections, or a deep run left the timing/risk/upkeep sections unfilled | Sections present but marked inconsistently | Marked correctly, one section missed | Quick marks every uncovered section `Not captured — quick mode`; deep fills every template section, including timing, risk, and the improvement loop |
+| **Validation Honesty** | gate+judge | Simulated the stakeholder review, marked the Blueprint validated, **or handed over an automation plan on an unvalidated Blueprint as if the ratings were settled** | Recommended validation vaguely; status line ambiguous; **or offered the automation plan without flagging that validation is still outstanding** | Recommended it, didn't name what to pressure-test | Ran its own read-back, then recommended a real stakeholder walkthrough naming the exception paths and autonomy calls, left the status line honest, **and gated the automation-plan handoff on validation — refusing it (or recording an explicit operator waiver) while the Blueprint is unvalidated** |
+| **Loop Closure** | gate | Started from an inventory candidate but left the inventory untouched, or clobbered/invented other candidates | — | Updated the candidate but touched or restated others | Updated exactly that candidate's row to Captured with the Blueprint path; every other candidate untouched |
 | **Register** | judge | Machinery narrated to the operator — template section numbers, "Step 4," "the skill," "the interview areas," "loading the reference" — or a pet phrase repeated 3+ times | Internal scaffolding worn visibly: labeled procedure sections in conversational output, instruction vocabulary adopted as the agent's own voice | Mostly natural; one machinery mention or one noticeable tic | The machinery stays fully backstage: the behavior happens and its name is never spoken; phrasing varied and natural throughout |
 | **Artifact Integrity** | gate | No Blueprint written, or template structure absent | Written but missing required fields, placeholder brackets left in | Structure present, one field stale or unfilled | Blueprint written to the right place, template structure intact, no placeholder residue |
 
@@ -45,6 +46,15 @@ legitimate to say:** "Blueprint," "quick mode" / "deep mode," "Automate / Monito
 - **Register** and **Non-Invention** join every entry's applicable set.
 - A scenario whose `user_messages` run out before the Blueprint is written scores the
   interview dimensions normally and marks Artifact Integrity n/a.
+- **Validation Honesty's automation-handoff clause** applies only when a scenario actually
+  reaches an automation-plan request (the operator asks to draft/build the plan). Where no
+  handoff is requested, judge Validation Honesty on the read-back + recommendation alone, as
+  before.
+- **Loop Closure** applies only when a scenario started from a seeded Process Inventory
+  (`setup.existing_inventory`); it is **n/a** otherwise (the `inventory_updated` gate is
+  auto-n/a when no `process-inventory.md` exists). It is gate-sourced and deterministic, so it
+  needs only one run; the judge confirms the write-back didn't clobber or invent other
+  candidates.
 - **Zero-step runs** (`step_count: 0` — the interview never reached a walkthrough and the
   target correctly refused to invent one): mark **Reason Capture, Criteria Extraction,
   Observable Success, and Autonomy Calibration n/a** — there are no steps to carry a reason,
@@ -94,8 +104,8 @@ These are judge-graded posture reads that vary run to run — every one of them 
 under conversational pressure, not a structural fact. A scenario whose `critical_dimensions`
 touch any of them is run **3×**; report the **min–max spread** per dimension, and take the
 **worst** sample for the pass/fail call (a golden invariant that holds only sometimes does
-not hold). The gate-sourced dimensions (Artifact Integrity, Mode Discipline, the gate halves
-of Gap Honesty and Validation Honesty) are deterministic and need only one run. See
+not hold). The gate-sourced dimensions (Artifact Integrity, Mode Discipline, Loop Closure, the
+gate halves of Gap Honesty and Validation Honesty) are deterministic and need only one run. See
 `eval/reference/iteration-discipline.md`.
 
 Note that this target's goldens are almost entirely noisy-dimension scenarios, so a blueprint

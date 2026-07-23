@@ -27,21 +27,24 @@ Blueprint does three distinct things. People conflate the first two; keep them s
 
 2. **Quick capture** (`/blueprint:capture`, quick mode, ~15 min) — a coarse but grounded model of
    **one** process you can already name: its trigger, main steps, outputs, and a first-cut read on
-   what's safe to automate. Good for taking stock of one process fast.
+   where automation is safe and where a human should stay in the loop. Good for taking stock of one
+   process fast.
 
 3. **Deep capture** (`/blueprint:capture`, deep mode, ~45-60 min) — the full model of **one** named
    process: decision criteria, exception paths, approval authority, evidence of completion, timing,
-   and risk. Detailed enough to hand to an agent, a new hire, or an automation build.
+   and risk. Detailed enough to take to a new hire or an automation build once a stakeholder has
+   validated it.
 
 The natural path is **Discover → pick one → Capture (quick or deep)**. Discovery finds the work;
 capture understands it.
 
 ## Two things worth knowing
 
-- **Every captured step gets rated Automate, Monitor, or Human** — so you know what's safe to hand to
-  an agent and what needs a person, decided by one question: *if this step were done wrong with no
-  review, what would happen?* (Discovery deliberately does **not** rate anything — there are no steps
-  yet to judge.)
+- **Every captured step gets rated Automate, Monitor, or Human** — so you know where automation is
+  safe and where a human must stay in the loop, decided by one question: *if this step were done
+  wrong with no review, what would happen?* The ratings are a reviewed draft, not a safety
+  certification: they come from one interview and hold until the person who owns the risk signs off.
+  (Discovery deliberately does **not** rate anything — there are no steps yet to judge.)
 - **Blueprint never invents.** When you don't know an answer — where data comes from, who approves,
   what a threshold is — it records that as an open question rather than making something up. A flagged
   gap is worth more than a confident guess, because the whole point is a document you can trust enough

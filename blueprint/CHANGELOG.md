@@ -3,6 +3,32 @@
 All notable changes to the Blueprint plugin. Per-plugin semver; tags are plugin-scoped
 (`blueprint-vX.Y.Z`).
 
+## 0.2.1 — 2026-07-23
+
+Closes the promise-vs-artifact gap a review surfaced: a Blueprint is a scrupulously-honest but
+*unvalidated draft*, yet the plugin marketed itself as telling you "what's safe to automate" and
+offered an automation plan the moment capture ended. Both are now honest.
+
+- **The automation-plan handoff is gated on validation.** After a deep capture, the plugin no
+  longer offers to draft the automation plan while the Blueprint is still unvalidated. It names
+  what stands between here and safe automation — the stakeholder walkthrough hasn't happened, and
+  which open questions gate the Automate-rated steps — and offers to resolve or route them. If the
+  operator insists, it drafts the plan but records the ahead-of-validation waiver in the Blueprint,
+  leaving the status line and ratings honest.
+- **Discover → capture closes the loop.** Capturing a candidate from your Process Inventory now
+  updates that candidate's row to *Captured* with the Blueprint path, so a re-read shows at a glance
+  which work is modelled and which is still just recognized. Other candidates are left untouched.
+- **Blueprints carry lifecycle state.** The template gains Version, Last-validated (date + owner),
+  Next-review, and a Change log — the drift-guard an artifact meant to govern automation needs.
+- **Honest positioning.** The outward promise is reframed from "what's safe to automate" to "where
+  automation is safe and where a human must stay in the loop"; the ratings are described as a
+  reviewed draft, not a safety certification. Three stale "quick mode builds an inventory" surfaces
+  from the pre-discovery model (the capture command, the skill description, the root README) are
+  corrected.
+- Runtime-QA: two new capture eval scenarios — `adv-automation-before-validation` (gates the
+  handoff, records the waiver) and `rep-inventory-writeback` (updates the candidate, leaves the rest
+  untouched, via a new `inventory_updated` gate). Both certified 3/3; no existing golden regressed.
+
 ## 0.2.0 — 2026-07-23
 
 Adds a discovery front-door and makes the three jobs explicit. Blueprint was always excellent

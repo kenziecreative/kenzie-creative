@@ -12,7 +12,7 @@ Once a tool is installed, it shows up as commands and skills you can run in any 
 
 | Plugin | Version | What you get | Guide |
 |---|---|---|---|
-| Blueprint | 0.2.0 | Turn how you actually work into a process document an agent could execute, with every step rated for what's safe to automate — and discover which processes you have in the first place | [guide](./blueprint/README.md) |
+| Blueprint | 0.2.1 | Turn how you actually work into a structured process model, with every step rated for where automation is safe and where a human must stay in the loop — and discover which processes you have in the first place | [guide](./blueprint/README.md) |
 | Goal Setting | 0.2.1 | Set business goals that survive contact with reality — and actually operate against them, not abandon them by February | [guide](./goal-setting/README.md) |
 | Intelligence Briefing | 0.3.0 | Know what actually moved in your world today, without wading through the whole news cycle | [guide](./intelligence-briefing/README.md) |
 | Photo Generator | 1.2.0 | Get a professional-grade photo from a plain-language description, without knowing what a key light or an 85mm prime is | [guide](./photo-generator/README.md) |
@@ -27,7 +27,7 @@ Each version mirrors that plugin's `plugin.json`, which is the source of truth f
 
 ### Blueprint
 
-**Turn how you actually work into a process document a person, workflow, or agent could execute — with every step rated for whether it's safe to automate.** Most process docs describe the idealized version and forget the micro-steps, workarounds, and judgment calls that make the work actually run. Blueprint interviews you instead: it walks you through your most recent real run, asks the questions that surface the tacit detail, and writes a structured Process Blueprint where every step carries an autonomy rating — Automate, Monitor, or Human — decided by one question: if this step were done wrong with no review, what would happen? Quick mode (~15 min) builds a process inventory; deep mode (~45-60 min) produces a document detailed enough to hand to an agent, a new team member, or an automation build. It flags what it doesn't know instead of inventing detail.
+**Turn how you actually work into a structured process model — with every step rated for where automation is safe and where a human must stay in the loop.** Most process docs describe the idealized version and forget the micro-steps, workarounds, and judgment calls that make the work actually run. Blueprint interviews you instead: it walks you through your most recent real run, asks the questions that surface the tacit detail, and writes a structured Process Blueprint where every step carries an autonomy rating — Automate, Monitor, or Human — decided by one question: if this step were done wrong with no review, what would happen? Quick mode (~15 min) builds a coarse model of one process; deep mode (~45-60 min) produces a model detailed enough to hand to a new team member or take into an automation build once a stakeholder has validated it. It flags what it doesn't know instead of inventing detail, and it treats its own ratings as a reviewed draft — not a safety certification — until the person who owns the risk signs off.
 
 → **[Read the Blueprint guide](./blueprint/README.md)** for the two modes, the interview method, and the autonomy ratings.
 

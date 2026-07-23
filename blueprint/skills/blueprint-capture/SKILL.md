@@ -1,10 +1,10 @@
 ---
 name: blueprint-capture
-description: This skill should be used when the user asks to capture, document, model, or map a work process for automation (e.g. "capture this process", "document how we do X", "model this workflow", "which parts of this could an agent do"), or runs /blueprint:capture. Interviews the operator in two modes — quick (~15 min inventory pass) or deep (~45-60 min full extraction) — and writes a structured Process Blueprint with per-step autonomy ratings (Automate, Monitor, Human).
+description: This skill should be used when the user asks to capture, document, model, or map a work process for automation (e.g. "capture this process", "document how we do X", "model this workflow", "which parts of this could an agent do"), or runs /blueprint:capture. Interviews the operator in two modes — quick (~15 min, a coarse model of one process) or deep (~45-60 min, full extraction) — and writes a structured Process Blueprint with per-step autonomy ratings (Automate, Monitor, Human) marking where a human must stay in the loop.
 allowed-tools: Read, Write, Edit, Glob, Grep
 ---
 
-# blueprint-capture — Interview a process into an automation-ready Blueprint
+# blueprint-capture — Interview a process into a structured Blueprint
 
 You are a process extraction interviewer. Turn how a person actually works into a structured
 Process Blueprint that a human, a workflow, or an AI agent could execute against — with
@@ -197,6 +197,14 @@ unasked-answered why is worth less than nothing.)
 
 Save to the blueprints directory and tell the user where it is.
 
+**If this capture started from a Process Inventory candidate** (the Step 1 handoff path),
+close the loop: open `process-inventory.md` and update **that one candidate's** row — set its
+**Status** to `Captured — <blueprint path>, <quick/deep>, stakeholder validation not yet
+done`, and leave its remaining Open Questions as they are. Touch no other candidate, and
+never rewrite the whole file — a re-read of the inventory later should show at a glance which
+work has been modelled and which is still just recognized. Don't invent an inventory entry
+that wasn't there; if the capture didn't come from the inventory, skip this.
+
 ## Step 5: Validation pass
 
 Before calling it done:
@@ -227,8 +235,19 @@ Before calling it done:
 Suggest next steps in order:
 
 1. Quick capture with high automation potential → offer a deep capture.
-2. Deep capture complete → offer to draft the automation plan: which Automate-rated steps to
-   wire up first, what tools or connections each needs, and where the executing agent's
-   instructions would live.
+2. Deep capture complete → **the automation plan is gated on validation.** A Blueprint fresh
+   out of the interview is an unvalidated draft: its status line still reads "stakeholder
+   validation not yet done," and its autonomy ratings came from one operator's account. So
+   before offering to draft an automation plan, check two things: the status line no longer
+   says validation is outstanding, **and** the Open Questions that bear on the Automate-rated
+   steps are resolved. If either is unmet, don't hand over the plan. Say plainly what's
+   standing between here and safe automation — the stakeholder walkthrough hasn't happened,
+   and/or these specific open questions gate these specific Automate-rated steps — and offer
+   to help resolve or route them. If the operator insists on the plan anyway, you may draft
+   it, but record in the Blueprint that it was produced ahead of validation at their explicit
+   direction (an honest, recorded waiver — the same posture as declining to simulate the
+   stakeholder). Never present an automation plan built on an unvalidated Blueprint as if the
+   ratings were settled.
 3. Remind the user that Blueprints age. When the process changes, recapture the changed
-   section rather than letting the document drift.
+   section rather than letting the document drift — and bump the Blueprint's Version and reset
+   its validation status, since a changed process is an unvalidated one again.

@@ -1,6 +1,6 @@
 # Blueprint
 
-Turn how you actually work into a process document a person, workflow, or agent could execute — with every step rated for whether it's safe to automate.
+Turn how you actually work into a structured process model — with every step rated for where automation is safe and where a human must stay in the loop.
 
 Most process documentation explains "what we do." An automation-ready document has to capture more: what triggers the work, what data moves where, what decisions get made and by what criteria, what goes wrong and how you handle it, and where the cost of an unreviewed mistake is high enough that a human must stay in the loop. People can't write this from memory. They describe the idealized version and forget the micro-steps, the workarounds, and the judgment calls that make the process actually run.
 
@@ -36,7 +36,7 @@ You can also just describe what you're after and Blueprint will offer the right 
 **Two capture modes:**
 
 - **Quick (~15 minutes).** A coarse but grounded model of one process: trigger, main steps, outputs, and a first-cut autonomy rating per step. Good for taking stock of one process fast.
-- **Deep (~45-60 minutes).** The full field set: decision logic, exception paths, approval authority, evidence of completion, timing, risks, audit needs. Produces a document detailed enough to hand to an agent, a new team member, or an automation build.
+- **Deep (~45-60 minutes).** The full field set: decision logic, exception paths, approval authority, evidence of completion, timing, risks, audit needs. Produces a model detailed enough to take to a new team member or an automation build once a stakeholder has validated it.
 
 **What to capture first.** Discovery ranks your inventory through three lenses, because process capture is worth more than automating chores: **automation opportunity** (frequent, mechanical, time-consuming work), **operational exposure** (high-consequence or key-person-dependent work, captured for resilience), and **knowledge-loss risk** (tacit work only one person knows how to do). A low-frequency, high-risk process can deserve capturing before a merely annoying one.
 

@@ -121,7 +121,8 @@ just "the most annoying task."
 ## Step 6: Hand off to capture
 
 Invite the operator to run a capture on whichever candidate they pick — quick (~15 min, a coarse
-model) or deep (~45-60 min, an execution- and automation-ready model). Point them at
+model) or deep (~45-60 min, a full model detailed enough to take into an automation build once a
+stakeholder has validated it). Point them at
 `/blueprint:capture`, and note that capture will pick up what's already in the inventory for that
 candidate rather than starting from scratch. Discovery recognizes the work; capture is where it gets
 understood.

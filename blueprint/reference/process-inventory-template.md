@@ -28,6 +28,9 @@ capture surfaces.
 
 ### C1 — [Working name, in the operator's language]
 
+- **Status:** Discovered — not yet captured
+  <!-- Becomes "Captured — <blueprint path>, <quick/deep>, <validation status>" once a
+       /blueprint:capture is run on this candidate. Discovery only recognizes the work. -->
 - **Trigger / cadence:** [What makes it recur — an event, a date, a threshold]
 - **Outcome / artifact:** [What it appears to produce or protect]
 - **Who does it:** [Current operator; obvious handoffs]

@@ -128,3 +128,21 @@ so behavior is identical on both surfaces.
     - **Three lenses, no magic score.** Prioritization stays automation-opportunity /
       operational-exposure / knowledge-loss, recommending three starting points. Don't collapse
       it to a single number — that re-narrows Blueprint to an automate-chores tool.
+  - **0.2.1 locks (the promise-vs-artifact discipline):**
+    - **The automation-plan handoff is gated on validation (Step 6).** A fresh Blueprint is an
+      unvalidated draft; don't offer to draft the automation plan while its status line still says
+      validation is outstanding or open questions gate the Automate-rated steps. Name the blockers,
+      offer to route them, and only proceed on an *explicit operator waiver that gets recorded in
+      the Blueprint* (§14 note + a Change-log row) — the same refuse-or-record posture as declining
+      to simulate the stakeholder. Softening this back into an unconditional "want the automation
+      plan?" is the exact overreach 0.2.1 fixed. The `adv-automation-before-validation` golden
+      guards it.
+    - **The inventory write-back is candidate-scoped and non-destructive.** When a capture started
+      from a Process Inventory candidate, update *only that candidate's* Status row to Captured;
+      never touch other candidates, never rewrite the file, never invent a row. The
+      `inventory_updated` gate + Loop Closure dimension guard it.
+    - **Positioning stays honest.** The ratings are a *reviewed draft, not a safety certification*.
+      Don't reintroduce "what's safe to automate / safe to hand to an agent" as an unqualified
+      promise in adopter copy — say "where automation is safe and where a human must stay in the
+      loop." (Adopter-facing copy is Cowork's domain per the marketplace build model; keep it
+      matching the artifact.)

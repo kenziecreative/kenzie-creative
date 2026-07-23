@@ -108,6 +108,13 @@ function evalGate(gate) {
   if (naForZeroSteps(gate)) return { status: "n/a", evidence: "n/a — run captured zero steps; nothing to rate" };
   const filePath = gate.file ? join(workingDir, gate.file) : null;
   const text = filePath ? readIf(filePath) : null;
+  // A gate that only applies when its target file exists (e.g. an inventory
+  // write-back check that is only relevant when a capture started from a
+  // Process Inventory). Opt in with `na_if_file_absent`; a missing file is n/a,
+  // not a fail. Gates without the flag keep failing on a missing file.
+  if (gate.na_if_file_absent === true && text == null) {
+    return { status: "n/a", evidence: `n/a — ${gate.file} absent (gate applies only when present)` };
+  }
 
   switch (gate.type) {
     case "frontmatter_keys": {
