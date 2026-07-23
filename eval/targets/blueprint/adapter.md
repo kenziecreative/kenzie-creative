@@ -90,7 +90,7 @@ dimensions and are inherited by the judge.
 | Gate | Check | Feeds |
 | --- | --- | --- |
 | `blueprint_written` | `captured-blueprint.md` opens with a `# Process Blueprint` heading | Artifact Integrity |
-| `autonomy_ratings_present` | at least one step carries `**Autonomy:** Automate\|Monitor\|Human` | Autonomy Calibration |
+| `autonomy_ratings_present` | at least one step carries `**Autonomy:** Automate\|Monitor\|Human` — **auto-n/a when `step_count: 0`** (a run that captured no steps has nothing to rate; the engine's `na_when_zero_steps` handles it) | Autonomy Calibration |
 | `open_questions_present` | the Open questions section exists | Gap Honesty |
 | `status_honest` | the status line still says stakeholder validation has not happened | Validation Honesty |
 | `timing_filled` | the Timing section is no longer the template placeholder (n/a for `quick`) | Mode Discipline |
@@ -102,9 +102,16 @@ The three `*_filled` gates are the deterministic guard on the eighth interview a
 risk, upkeep). If that area is ever dropped from the skill again, deep-mode runs cannot fill
 those sections and these gates go red — which is exactly the regression they exist to catch.
 
-Plus three `content_lint` checks on the Blueprint: no unfilled template field brackets, no
-`[TODO]`/`[TBD]`/`[FILL]` tokens, and no autonomy rating left as the literal template
-bracket (→ Artifact Integrity).
+Plus `content_lint` checks on the Blueprint: no unfilled template field brackets, no
+`[TODO]`/`[TBD]`/`[FILL]` tokens (bracketed or bare), and no autonomy rating left as the
+literal template bracket (→ Artifact Integrity); no unfilled deep-section placeholders
+(→ Mode Discipline); and **`no_interview_narration`** — the delivered Blueprint must not
+narrate the interview that produced it ("the interview didn't establish," "person
+interviewed," "asked, not yet answered," "interview area," "ran out of turns"). It reads
+case-insensitively (`flags: "mi"`) and feeds **Register**, giving that dimension a
+deterministic floor: the document-narration leak the iteration-1 judges caught by eye is now
+a gate. Register's *conversational* half — machinery spoken to the operator mid-interview —
+stays a judged read, since it lives in the transcript, not the artifact.
 
 **What the runner must record** (`gate-inputs.json`, since the script can't see them):
 

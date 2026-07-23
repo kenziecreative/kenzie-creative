@@ -116,6 +116,16 @@ For any step where the rating isn't obvious, ask the operator directly — *"If 
 done wrong with no review, what would happen?"* The answer tells you whether the checkpoint
 belongs before the action, after the action, or only in sampled audit.
 
+**When the operator wants a checkpoint gone, put a real alternative on the table.** Holding
+the rating and logging the disagreement is half the job — the operator came to reduce their
+own workload, and "no" alone doesn't serve that. In the same turn you decline, offer a
+proportionate middle: raise the threshold so the checkpoint fires on fewer runs, sample a
+share of runs instead of reviewing every one, or let it proceed and audit after the fact.
+Name which one you'd pick and why the residual risk is acceptable at that setting. This is
+the whole point of Monitor sitting between Automate and Human — reach for it before you
+reach for a refusal. If they still want it gone, respect the call and record it, with what
+the rating would have been and why.
+
 ## Step 4: Write the Blueprint
 
 Fill in the template structure from Step 0:
@@ -128,10 +138,16 @@ Fill in the template structure from Step 0:
   invented step.
 - In quick mode, mark uncovered sections "Not captured — quick mode" — never silently omit.
 - **The document must not narrate the interview.** It will be read by people who weren't
-  there — a new team member, a stakeholder, an agent. Mark a gap with a plain "Not captured"
-  and let Open Questions carry the detail. Never write why it wasn't captured ("not asked
-  before the interview ended," "this session ran out of turns," "we didn't reach this area"),
-  and never mention the interview, the session, or the template in the Blueprint's text.
+  there — a new team member, a stakeholder, an agent — and to them the conversation that
+  produced it is invisible context. The test: every sentence should describe **the process**,
+  never **how the document came to exist**. No sentence may refer to the interview, the
+  session, the conversation, the operator-as-interviewee, the template, or to you asking or
+  not asking something. That rules out "the interview didn't establish X," "the person
+  interviewed said," "asked, not yet answered," "not covered in this session," and "we ran
+  out of time" just as much as it rules out naming a template section.
+  A gap is written as a plain state of the process — "Not captured" or "Not established" —
+  with the detail in Open Questions. Write "Approver: not captured", not "Approver: I asked
+  but never got an answer."
 - Delete the template's guidance comments (the `<!-- ... -->` blocks) from the finished
   document. They are instructions to you, not content for the reader.
 
@@ -146,9 +162,21 @@ Before calling it done:
    cover?*
 2. Fold corrections in.
 3. Recommend — but do not simulate — a real validation: the operator walks a downstream
-   stakeholder through the Blueprint, specifically pressure-testing the exception paths and
-   the autonomy calls. Note in the Blueprint's status line that this review hasn't happened
-   yet.
+   stakeholder through the Blueprint. Name **both** things to pressure-test, explicitly and
+   separately:
+   - **the exception paths** — the weird cases, and whether the handling is right;
+   - **the autonomy calls** — go through the Automate / Monitor / Human ratings one at a
+     time and ask the stakeholder which ones they'd move. Say this out loud as a review
+     target. The ratings are the most consequential and least verified thing in the
+     document, and the person who owns the risk is the one who should overturn them. Do not
+     present the ratings only as a list of automation candidates to go build — that frames
+     them as settled when they are the part most likely to be wrong.
+
+   Note in the Blueprint's status line that this review hasn't happened yet.
+
+   If the operator asks you to *be* the stakeholder — review as them, sign off, mark it
+   approved — decline and say why: approving your own work under someone else's name isn't
+   validation. Your read-back in step 1 is yours to do and is not a substitute.
 
 ## Step 6: After the capture
 

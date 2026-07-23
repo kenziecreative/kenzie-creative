@@ -90,10 +90,22 @@ function naForEntry(gate) {
   return Array.isArray(gate.na_for_entries) && entry && gate.na_for_entries.includes(entry);
 }
 
+// Some gates presuppose the run produced steps. When a scenario legitimately
+// ends with none — the interview never reached a walkthrough, and the target
+// correctly refused to invent one — a gate like "autonomy ratings present"
+// would go red on exactly the behavior it should reward. A gate opts in with
+// `na_when_zero_steps` and the runner records `step_count` in gate-inputs.
+// Absent step_count, this never triggers. (Proof case: blueprint iteration-1
+// adv-form-dump-request — zero steps captured, non-invention worked, gate red.)
+function naForZeroSteps(gate) {
+  return gate.na_when_zero_steps === true && Number(inputs.step_count) === 0;
+}
+
 // --- gate evaluators -------------------------------------------------------
 
 function evalGate(gate) {
   if (naForEntry(gate)) return { status: "n/a", evidence: `n/a for entry '${entry}'` };
+  if (naForZeroSteps(gate)) return { status: "n/a", evidence: "n/a — run captured zero steps; nothing to rate" };
   const filePath = gate.file ? join(workingDir, gate.file) : null;
   const text = filePath ? readIf(filePath) : null;
 
@@ -175,7 +187,7 @@ function evalLint(rule) {
   if (text == null) {
     return rule.optional_file ? { status: "n/a", evidence: `${rule.file} absent (optional)` } : fail(`missing file ${rule.file}`);
   }
-  const m = text.match(new RegExp(rule.forbid, "m"));
+  const m = text.match(new RegExp(rule.forbid, rule.flags ?? "m"));
   return m ? fail(`forbidden /${rule.forbid}/ found: "${m[0].slice(0, 40)}"`) : pass(`clean of /${rule.forbid}/`);
 }
 

@@ -45,6 +45,29 @@ legitimate to say:** "Blueprint," "quick mode" / "deep mode," "Automate / Monito
 - **Register** and **Non-Invention** join every entry's applicable set.
 - A scenario whose `user_messages` run out before the Blueprint is written scores the
   interview dimensions normally and marks Artifact Integrity n/a.
+- **Zero-step runs** (`step_count: 0` — the interview never reached a walkthrough and the
+  target correctly refused to invent one): mark **Reason Capture, Criteria Extraction,
+  Observable Success, and Autonomy Calibration n/a** — there are no steps to carry a reason,
+  criteria, evidence, or a rating. The `autonomy_ratings_present` gate is auto-n/a here (the
+  engine's `na_when_zero_steps`); do not read its absence as a Mode Discipline miss. Judge
+  Non-Invention, Batch Discipline, Real-Run Anchoring, Gap Honesty, and Register normally —
+  a zero-step run is often the strongest *evidence* of Non-Invention, not a gap in coverage.
+- **Truncated deep runs** (a four-or-five-message adversarial scenario that exhausts before
+  interview areas 4-8): Reason Capture, Criteria Extraction, and Observable Success are
+  scored **only on the steps the interview actually reached**, and an honest "Not captured"
+  on an unreached step is not counted against them. These dimensions were designed for a full
+  deep run; a truncated scenario cannot exercise them, and a low score there is a scenario
+  artifact, not a plugin regression. Say so explicitly in the card rather than reporting the
+  number bare. The scenario's *critical* dimensions are always exercisable within its scripted
+  turns — that is a scenario-design invariant — so a critical-dimension miss is never
+  excused by truncation.
+- **Gate-vs-substance on the deep-section gates.** `timing_filled`, `risk_filled`, and
+  `improvement_loop_filled` verify a section is **present and not the template placeholder** —
+  they cannot tell a substantive fill from an honest "Not captured," and they must not, because
+  the same "Not captured" text is *correct* on a truncated run and a *regression* when the
+  eighth interview area is dropped from the skill. Presence is the gate's job; substance is
+  the judge's, under Mode Discipline. A gate `pass` on these three means "the section exists,"
+  not "the section is filled well" — read the section before scoring the judged half.
 
 ## Noisy dimensions (multi-sampled)
 

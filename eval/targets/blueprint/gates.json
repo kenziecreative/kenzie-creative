@@ -1,6 +1,6 @@
 {
   "target": "blueprint",
-  "rubric_version": "1.0.0",
+  "rubric_version": "1.1.0",
   "gates": [
     {
       "name": "blueprint_written",
@@ -14,7 +14,8 @@
       "type": "file_contains",
       "file": "blueprints/captured-blueprint.md",
       "pattern": "\\*\\*Autonomy:\\*\\*\\s*(Automate|Monitor|Human)",
-      "feeds": "Autonomy Calibration"
+      "feeds": "Autonomy Calibration",
+      "na_when_zero_steps": true
     },
     {
       "name": "open_questions_present",
@@ -98,6 +99,13 @@
       "file": "blueprints/captured-blueprint.md",
       "forbid": "\\[(How long a run takes|What a bad run costs|How corrections and overrides)",
       "feeds": "Mode Discipline"
+    },
+    {
+      "name": "no_interview_narration",
+      "file": "blueprints/captured-blueprint.md",
+      "forbid": "(the interview (did|didn'?t|never|covered|ended)|person interviewed|(this |the )session (ran|ended|didn'?t)|(not |never )asked (before|during|yet)|asked,? not (yet )?answered|ran out of turns|not (covered|reached) (in|this|before) (this )?session|interview area|out of turns)",
+      "flags": "mi",
+      "feeds": "Register"
     }
   ]
 }
