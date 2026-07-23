@@ -47,6 +47,7 @@ The interview anchors in your most recent real run of the process (not the ideal
 
 Every step in the finished Blueprint carries an autonomy rating:
 
+
 - **Automate** — repetitive, low-risk, reversible, easy to validate. Safe for an agent.
 - **Monitor** — the agent can proceed, but a human watches through alerts, sampling, or periodic audit.
 - **Human** — the step affects money, compliance, customer trust, or brand-sensitive judgment. A person decides, every time.
